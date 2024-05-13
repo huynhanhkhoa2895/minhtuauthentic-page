@@ -1,0 +1,11 @@
+
+Htypescript:S1128"%Remove this unused import of 'Image'.(³¼Ö8ÄÑÛ—÷1
+Ktypescript:S1128"(Remove this unused import of 'useState'.(™Œæê8ÅÑÛ—÷1
+’typescript:S6606."jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(ÿôÎ±üÿÿÿÿ8ÅÑÛ—÷1
+Utypescript:S6759>"-Mark the props of the component as read-only.(áçÅéıÿÿÿÿ8ÅÑÛ—÷1
+typescript:S6606M"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(‡¬Ñ«8ÅÑÛ—÷1
+typescript:S6606R"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(«¿‹Ò8ÅÑÛ—÷1
+typescript:S6606W"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(«¿‹Ò8ÅÑÛ—÷1
+typescript:S6606["jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(ù­®…8ÅÑÛ—÷1
+Œtypescript:S6606]"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(øÖ¡8ÅÑÛ—÷1
+’typescript:S6606a"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(éï«ûÿÿÿÿ8«ËŞ—÷1
