@@ -8,6 +8,7 @@ import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/pagination';
 import SectionSwiperSlide from '@/components/organisms/sectionSwiper/slide';
+import { ImageDto } from '@/dtos/Image.dto';
 type Props = {
   classNameContainer?: string;
   classNameItems?: string;
@@ -19,6 +20,7 @@ type Props = {
   isGrid?: boolean;
   isUseHeightWrapper?: boolean;
   isCenter?: boolean;
+  onSlideChange?: (activeIndex: number) => void;
 };
 const SectionSwiper = ({
   classNameContainer,
@@ -31,6 +33,7 @@ const SectionSwiper = ({
   isGrid,
   isUseHeightWrapper,
   isCenter,
+  onSlideChange,
 }: Props) => {
   const rows = 2;
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
@@ -48,7 +51,7 @@ const SectionSwiper = ({
           }
         }}
         className={twMerge(
-          'absolute z-10 w-[32px] h-[32px] rounded-full border border-[#dad4d4] cursor-pointer top-[calc(50%-16px)] bg-white flex justify-center items-center',
+          'absolute z-[2] w-[32px] h-[32px] rounded-full border border-[#dad4d4] cursor-pointer top-[calc(50%-16px)] bg-white flex justify-center items-center',
           variant === 'next' ? 'right-[-16px]' : 'left-[-16px]',
         )}
       >
@@ -79,6 +82,9 @@ const SectionSwiper = ({
         wrapperClass={'mx-auto'}
         onSwiper={(swiper) => setSwiper(swiper)}
         centeredSlides={isCenter}
+        onSlideChange={() => {
+          onSlideChange && onSlideChange(swiper?.activeIndex || 0);
+        }}
       >
         {data &&
           data.map((content, index: number) => {

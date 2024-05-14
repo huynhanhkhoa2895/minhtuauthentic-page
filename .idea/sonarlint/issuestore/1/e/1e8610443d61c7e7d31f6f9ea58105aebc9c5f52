@@ -1,0 +1,5 @@
+
+Otypescript:S1128"-Remove this unused import of 'SectionSwiper'.(·ÕÇ38ü¹ûÁ÷1
+Ptypescript:S6759"-Mark the props of the component as read-only.(¶¯‚Á8ü¹ûÁ÷1
+Ftypescript:S6479p"Do not use Array index in keys(Ê¹¹óşÿÿÿÿ8™‰Â÷1
+typescript:S6606z"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(ªØ°¨8™‰Â÷1

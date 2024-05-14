@@ -2,8 +2,7 @@ import { NewsDto } from '@/dtos/News.dto';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import noImage from '@/static/images/no-image.png';
 import Image from 'next/image';
-import { ClockCircleOutlined } from '@ant-design/icons/lib/icons';
-import dayjs from 'dayjs';
+
 import Link from 'next/link';
 import { generateSlugToHref, truncateString } from '@/utils';
 import NewsClock from '@/components/atoms/news/clock';

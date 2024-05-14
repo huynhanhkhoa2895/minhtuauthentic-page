@@ -20,7 +20,7 @@ export const Header = () => {
       </div>
       <header
         id={'header'}
-        className={'bg-primary py-[15px] sticky top-0 left-0 z-[100] relative'}
+        className={'bg-primary py-[15px] sticky top-0 left-0 z-[3] relative'}
       >
         <div
           className={

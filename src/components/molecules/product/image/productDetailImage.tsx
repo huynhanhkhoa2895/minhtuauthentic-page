@@ -9,60 +9,33 @@ import SectionSwiper from '@/components/organisms/sectionSwiper';
 import noImage from '@/static/images/no-image.png';
 import Link from 'next/link';
 import Image from 'next/image';
+import { twMerge } from 'tailwind-merge';
+import { useProductImageDetail } from '@/hooks/useProductImageDetail';
+import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 type Props = {
   product: ProductDto;
+  containerClassName?: string;
+  setIsOpen?: (item: { display: boolean; image: ImageDto | null }) => void;
 };
-const ProductDetailImage = ({ product }: Props) => {
-  const [images, setImages] = useState<ImageDto[]>([]);
-  const [ready, setReady] = useState(false);
-  const [imageActive, setImageActive] = useState<ImageDto | null>(null);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  useEffect(() => {
-    setReady(true);
-    const images: ImageDto[] = product?.feature_image_detail?.image
-      ? [
-          {
-            ...product.feature_image_detail?.image,
-            alt: product.feature_image_detail.alt || product.name,
-          },
-        ]
-      : [];
-    let variant = (product?.variants || [])?.find(
-      (variant: VariantDto) => variant.is_default,
-    );
-    if (!variant) {
-      variant = product?.variants?.[0];
-    }
-    (variant?.images || []).map((item: ImageDetailDto) => {
-      if (item.image) {
-        images.push({
-          ...item.image,
-          alt: item.alt || product.name,
-        });
-      }
-    });
-    (product?.images || []).map((item: ImageDetailDto) => {
-      item.image &&
-        images.push({
-          ...item.image,
-          alt: item.alt || product.name,
-        });
-    });
-    setImages(images);
-    setImageActive(images[0]);
-  }, []);
+const ProductDetailImage = ({
+  product,
+  containerClassName,
+  setIsOpen,
+}: Props) => {
+  const { images, imageActive, setImageActive } = useProductImageDetail({
+    product,
+  });
 
   const handleClickImage = (image: ImageDto) => {
-    console.log('image', image);
     setImageActive(image);
   };
 
   return (
-    <div className={'p-3'}>
+    <div className={twMerge('p-3', containerClassName)}>
       <ImageMagnifier
         image={imageActive}
         onClick={(image: ImageDto | null) => {
-          console.log('click image', image);
+          setIsOpen && setIsOpen({ display: true, image });
         }}
       />
       <SectionSwiper
@@ -72,24 +45,35 @@ const ProductDetailImage = ({ product }: Props) => {
         }
         renderItem={(item) => {
           const imageItem = item as ImageDto;
-          const url = imageItem?.url || noImage;
           return (
-            <Image
+            <ImageWithFallback
+              image={imageItem}
+              className={
+                'w-full h-full object-contain hover:scale-105 transition-transform duration-300 cursor-pointer'
+              }
               onClick={() => handleClickImage(imageItem)}
               onMouseEnter={() => {
                 if (imageActive?.url !== imageItem.url) {
                   setImageActive(imageItem);
                 }
               }}
-              src={url}
-              alt={imageItem.alt || ''}
-              width={imageItem.width || 0}
-              height={imageItem.height || 0}
-              className={
-                'w-full h-full object-contain hover:scale-105 transition-transform duration-300 cursor-pointer'
-              }
-              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPs7u2tBwAFdgImpqLKKAAAAABJRU5ErkJggg=="
             />
+            // <Image
+            //   onClick={() => handleClickImage(imageItem)}
+            //   onMouseEnter={() => {
+            //     if (imageActive?.url !== imageItem.url) {
+            //       setImageActive(imageItem);
+            //     }
+            //   }}
+            //   src={url}
+            //   alt={imageItem.alt || ''}
+            //   width={imageItem.width || 0}
+            //   height={imageItem.height || 0}
+            //   className={
+            //     'w-full h-full object-contain hover:scale-105 transition-transform duration-300 cursor-pointer'
+            //   }
+            //   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPs7u2tBwAFdgImpqLKKAAAAABJRU5ErkJggg=="
+            // />
           );
         }}
         loop={true}
