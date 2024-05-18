@@ -5,8 +5,9 @@ import { VariantDto } from '@/dtos/Variant.dto';
 import { ImageDetailDto } from '@/dtos/ImageDetail.dto';
 type Props = {
   product: ProductDto;
+  variant?: VariantDto;
 };
-export function useProductImageDetail({ product }: Props) {
+export function useProductImageDetail({ product, variant }: Props) {
   const [images, setImages] = useState<ImageDto[]>([]);
   const [imageActive, setImageActive] = useState<ImageDto | null>(null);
   useEffect(() => {
@@ -18,13 +19,16 @@ export function useProductImageDetail({ product }: Props) {
           },
         ]
       : [];
-    let variant = (product?.variants || [])?.find(
-      (variant: VariantDto) => variant.is_default,
-    );
-    if (!variant) {
-      variant = product?.variants?.[0];
+    let _variant =
+      variant ||
+      (product?.variants || [])?.find(
+        (variant: VariantDto) => variant.is_default,
+      );
+    console.log('variant', _variant);
+    if (!_variant) {
+      _variant = product?.variants?.[0];
     }
-    (variant?.images || []).map((item: ImageDetailDto) => {
+    (_variant?.images || []).map((item: ImageDetailDto) => {
       if (item.image) {
         images.push({
           ...item.image,
@@ -39,9 +43,10 @@ export function useProductImageDetail({ product }: Props) {
           alt: item.alt || product.name,
         });
     });
+    console.log('images', images);
     setImages(images);
     setImageActive(images[0]);
-  }, []);
+  }, [variant]);
   return {
     images,
     imageActive,

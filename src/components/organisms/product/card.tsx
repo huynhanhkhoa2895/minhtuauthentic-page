@@ -38,7 +38,13 @@ const ProductCard = ({ product }: { product: ProductDto }) => {
           </Link>
         </h5>
         {product?.variants && (
-          <ProductPrice className={'px-2'} product={product} />
+          <ProductPrice
+            className={'px-2'}
+            variant={
+              product?.variants?.find((item) => item.is_default) ||
+              product?.variants[0]
+            }
+          />
         )}
       </div>
       <ProductCardButtonGroup className={'mt-[60px] px-2'} product={product} />

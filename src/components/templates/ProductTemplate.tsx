@@ -7,9 +7,15 @@ type Props = {
 };
 const ProductTemplate = ({ data }: Props) => {
   return (
-    <Suspense fallback={'Loading...'}>
-      {data?.product && <ProductDetailCard product={data.product} />}
-    </Suspense>
+    <>
+      {data?.product && (
+        <ProductDetailCard
+          product={data.product}
+          relatedProducts={data?.relatedProducts || []}
+          productConfigurations={data?.productConfigurations || []}
+        />
+      )}
+    </>
   );
 };
 export default ProductTemplate;

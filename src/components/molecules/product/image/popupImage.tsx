@@ -1,25 +1,33 @@
 import { createPortal } from 'react-dom';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { ProductDto } from '@/dtos/Product.dto';
 import { useProductImageDetail } from '@/hooks/useProductImageDetail';
 import { ImageDto } from '@/dtos/Image.dto';
-import SectionSwiper from '@/components/organisms/sectionSwiper';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 import Close from '@/components/icons/close';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectFade, Pagination, Autoplay } from 'swiper/modules';
 import { Swiper as SwiperClass } from 'swiper/types';
+import { VariantDto } from '@/dtos/Variant.dto';
 type Props = {
   open: boolean;
   product: ProductDto;
   image: ImageDto | null;
   setIsOpen?: (item: { display: boolean; image: ImageDto | null }) => void;
+  variantActive?: VariantDto;
 };
-export default function PopupImage({ open, product, image, setIsOpen }: Props) {
+export default function PopupImage({
+  open,
+  product,
+  image,
+  setIsOpen,
+  variantActive,
+}: Props) {
   const [isReady, setIsReady] = useState(false);
   const { images, imageActive, setImageActive } = useProductImageDetail({
     product,
+    variant: variantActive,
   });
   const swiperRef = useRef<SwiperClass | null>(null);
 
@@ -41,13 +49,42 @@ export default function PopupImage({ open, product, image, setIsOpen }: Props) {
     setIsReady(true);
   }, []);
 
+  const renderImage = useMemo(() => {
+    return (
+      <div className={'w-max mx-auto flex gap-3 h-full py-3'}>
+        {images.map((imageItem, index) => (
+          <div
+            className={twMerge(
+              'w-[80px] h-[80px]',
+              imageItem.id === imageActive?.id &&
+                'border-2 overflow-hidden rounded-[10px] border-primary',
+            )}
+            key={index}
+          >
+            <ImageWithFallback
+              // onClick={() => handleClickImage(imageItem)}
+              image={imageItem}
+              onMouseEnter={() => {
+                setImageActive(imageItem);
+              }}
+              alt={imageItem.alt || ''}
+              className={
+                'w-full h-full object-contain hover:scale-105 transition-transform duration-300 cursor-pointer'
+              }
+            />
+          </div>
+        ))}
+      </div>
+    );
+  }, [images]);
+
   return (
     <>
       {isReady &&
         createPortal(
           <div
             style={{
-              backgroundImage: `url(${imageActive?.url})`,
+              backgroundImage: `url("${imageActive?.url}")`,
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
               backgroundPosition: 'center',
@@ -83,8 +120,8 @@ export default function PopupImage({ open, product, image, setIsOpen }: Props) {
                       setImageActive(images[activeIndex]);
                     }}
                   >
-                    {images.map((image) => (
-                      <SwiperSlide key={image.url}>
+                    {images.map((image, index) => (
+                      <SwiperSlide key={image.url + '_' + index}>
                         <ImageWithFallback
                           className={'w-full h-full object-contain'}
                           image={image}
@@ -93,47 +130,18 @@ export default function PopupImage({ open, product, image, setIsOpen }: Props) {
                       </SwiperSlide>
                     ))}
                   </Swiper>
-                  {/*<ImageWithFallback*/}
-                  {/*  className={'w-full h-full object-contain'}*/}
-                  {/*  image={imageActive}*/}
-                  {/*  isFill={true}*/}
-                  {/*/>*/}
                 </div>
               </div>
-              <div className={'h-[120px] w-full'}>
-                <div className={'w-max mx-auto flex gap-3 h-full py-3'}>
-                  {images.map((imageItem, index) => (
-                    <div
-                      className={twMerge(
-                        'w-[80px] h-[80px]',
-                        imageItem.id === imageActive?.id &&
-                          'border-2 overflow-hidden rounded-[10px] border-primary',
-                      )}
-                      key={index}
-                    >
-                      <ImageWithFallback
-                        // onClick={() => handleClickImage(imageItem)}
-                        image={imageItem}
-                        onMouseEnter={() => {
-                          if (imageActive?.url !== imageItem.url) {
-                            setImageActive(imageItem);
-                          }
-                        }}
-                        alt={imageItem.alt || ''}
-                        className={
-                          'w-full h-full object-contain hover:scale-105 transition-transform duration-300 cursor-pointer'
-                        }
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <Close
-                className={'absolute top-3 right-3 cursor-pointer w-6 h-6'}
+              <div className={'h-[120px] w-full'}>{renderImage}</div>
+              <button
+                type="button"
+                className={'w-6 h-6 absolute top-3 right-3 cursor-pointer'}
                 onClick={() => {
                   setIsOpen && setIsOpen({ display: false, image: null });
                 }}
-              />
+              >
+                <Close className={' cursor-pointer w-6 h-6 block'} />
+              </button>
             </div>
           </div>,
           document.body,

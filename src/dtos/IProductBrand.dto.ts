@@ -6,5 +6,5 @@ export class IProductBrandDto extends BaseDto {
   product_id?: number;
   brand_id?: number;
   product?: ProductDto;
-  category?: BrandDto;
+  brand?: BrandDto;
 }
