@@ -1,6 +1,0 @@
-
-btypescript:S6754":useState call is not destructured into value + setter pair(ËŠÑèøÿÿÿÿ8¦ÛÉë÷1
-]typescript:S1854"5Remove this useless assignment to variable "isReady".(ºûàÛûÿÿÿÿ8¨˜Úë÷1
-typescript:S6606/"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(âÈ½ë8ø«Ûë÷1
-typescript:S6606I"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(Îÿœ¦8Ì¾Éë÷1
-typescript:S6606J"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(ı¹¶Š8ø«Ûë÷1

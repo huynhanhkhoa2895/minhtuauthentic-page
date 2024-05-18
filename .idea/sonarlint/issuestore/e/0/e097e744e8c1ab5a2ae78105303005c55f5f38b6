@@ -1,16 +1,0 @@
-
-Œtypescript:S6606"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(Êµù'8·Ó—÷1
-Œtypescript:S6606""jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(Êµù'8·Ó—÷1
-ptypescript:S1871&"HThis case's code block is the same as the block for the case on line 26.(‰ÆÄÎşÿÿÿÿ8·Ó—÷1
-Œtypescript:S6606."jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(Êµù'8·Ó—÷1
-’typescript:S6606:"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(Äü«âÿÿÿÿÿ8¸Ó—÷1
-ƒtypescript:S6582N"[Prefer using an optional chain expression instead, as it's more concise and easier to read.(”ÎÌèûÿÿÿÿ8·Ó—÷1
-Ftypescript:S6479U"Do not use Array index in keys(Ê¹¹óşÿÿÿÿ8¸Ó—÷1
-’typescript:S6606X"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(¨¥ß¢şÿÿÿÿ8¸Ó—÷1
-typescript:S6606Z"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(½©Å—8¸Ó—÷1
-typescript:S6606^"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(üÖâ®8¸Ó—÷1
-ƒtypescript:S6582l"[Prefer using an optional chain expression instead, as it's more concise and easier to read.(”ÎÌèûÿÿÿÿ8¸Ó—÷1
-Ftypescript:S6479s"Do not use Array index in keys(Ê¹¹óşÿÿÿÿ8¸Ó—÷1
-’typescript:S6606v"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(¨¥ß¢şÿÿÿÿ8¸Ó—÷1
-typescript:S6606x"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(½©Å—8ôºÕ—÷1
-typescript:S6606|"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(üÖâ®8å·á—÷1

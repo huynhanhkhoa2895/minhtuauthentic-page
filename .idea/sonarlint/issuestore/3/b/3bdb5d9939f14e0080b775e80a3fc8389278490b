@@ -1,12 +1,0 @@
-
-Ktypescript:S1128"(Remove this unused import of 'ImageDto'.(š¨–8èËèÁ÷1
-ëtypescript:S6848+"ÂAvoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.(¯ƒúÁøÿÿÿÿ8€µçÁ÷1
-‡typescript:S1082+"_Visible, non-interactive elements with click handlers must have at least one keyboard listener.(¯ƒúÁøÿÿÿÿ8€µçÁ÷1
-’typescript:S6606D"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(…¤ó§üÿÿÿÿ8€µçÁ÷1
-‹typescript:S6606K"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(®ğ‰›ùÿÿÿÿ
-typescript:S6606L"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(»Øñğ8€µçÁ÷1
-typescript:S6606P"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(¾‹€‘8€µçÁ÷1
-Œtypescript:S6606V"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(¾ğğr8˜íëÁ÷1
-wtypescript:S6582Y"[Prefer using an optional chain expression instead, as it's more concise and easier to read.(Íç—Ê
-Atypescript:S6479\"Do not use Array index in keys(•ïúÇ8€µçÁ÷1
-Ftypescript:S6479d"Do not use Array index in keys(Ê¹¹óşÿÿÿÿ8€µçÁ÷1

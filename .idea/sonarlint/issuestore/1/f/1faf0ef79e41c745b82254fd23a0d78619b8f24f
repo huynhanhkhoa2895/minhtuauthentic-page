@@ -1,23 +1,0 @@
-
-Gtypescript:S1128"+Remove this unused import of 'SettingsDto'.(œÙ·š
-Itypescript:S6759"-Mark the props of the component as read-only.(íå”¦
-‹typescript:S6606"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(‚îÛÄøÿÿÿÿ
-‹typescript:S6606"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(ÏëÈ¦üÿÿÿÿ
-‹typescript:S6606"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(¦ÄÒÚúÿÿÿÿ
-:typescript:S6479""Do not use Array index in keys(÷ÿã¶
-?typescript:S6479)"Do not use Array index in keys(á±áãøÿÿÿÿ
-†typescript:S6606,"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(´şÆ»
-†typescript:S6606,"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(´şÆ»
-:typescript:S64798"Do not use Array index in keys(÷ÿã¶
-‹typescript:S6606B"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(¶Û—ìùÿÿÿÿ
-‹typescript:S6606M"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(ÏëÈ¦üÿÿÿÿ
-‹typescript:S6606N"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(¦ÄÒÚúÿÿÿÿ
-?typescript:S6479P"Do not use Array index in keys(Á²›³ÿÿÿÿÿ
-?typescript:S6479T"Do not use Array index in keys(á±áãøÿÿÿÿ
-†typescript:S6606W"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(´şÆ»
-†typescript:S6606W"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(´şÆ»
-†typescript:S6606["jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.( ¯·
-‹typescript:S6606\"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(ˆí¬¥şÿÿÿÿ
-?typescript:S6479c"Do not use Array index in keys(á±áãøÿÿÿÿ
-†typescript:S6606d"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(áä
-‹typescript:S6606j"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(“‚£İùÿÿÿÿ

@@ -1,11 +1,0 @@
-
-Utypescript:S6759"-Mark the props of the component as read-only.(áì´°øÿÿÿÿ8²€³Á÷1
-Œtypescript:S6606"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(²ªÎ	8²€³Á÷1
-atypescript:S1854">Remove this useless assignment to variable "setMagnifierSize".(Ã¿Ş¼8²€³Á÷1
-[typescript:S1854"3Remove this useless assignment to variable "ready".(†Ì™ıÿÿÿÿ8²€³Á÷1
-ëtypescript:S6848"ÂAvoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.(¯ƒúÁøÿÿÿÿ8²€³Á÷1
-‡typescript:S1082"_Visible, non-interactive elements with click handlers must have at least one keyboard listener.(¯ƒúÁøÿÿÿÿ8²€³Á÷1
-’typescript:S6606$"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(â¾½şşÿÿÿÿ8²€³Á÷1
-Dtypescript:S18740"'pageXOffset' is deprecated.(á¨©¢şÿÿÿÿ8²€³Á÷1
-Dtypescript:S18741"'pageYOffset' is deprecated.(·ô­‡úÿÿÿÿ8²€³Á÷1
-atypescript:S6551R"9'src' may evaluate to '[object Object]' when stringified.(ÚòÜÆùÿÿÿÿ8²€³Á÷1

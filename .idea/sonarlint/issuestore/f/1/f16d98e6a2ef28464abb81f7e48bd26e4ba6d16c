@@ -1,7 +1,0 @@
-
-Htypescript:S1128"%Remove this unused import of 'Image'.(³¼Ö8Ô÷İÀ÷1
-Otypescript:S1128"'Remove this unused import of 'noImage'.(¦¬ìñÿÿÿÿÿ8œÔßÀ÷1
-typescript:S6606"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(¡°Âö8¿òŞÀ÷1
-’typescript:S6606"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(ÍÁ´¢úÿÿÿÿ8¿òŞÀ÷1
-stypescript:S1764"KCorrect one of the identical sub-expressions on both sides of operator "||"(ÍÁ´¢úÿÿÿÿ8Í–ßÀ÷1
-’typescript:S6606"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(ÍÁ´¢úÿÿÿÿ8ˆ‡àÀ÷1
