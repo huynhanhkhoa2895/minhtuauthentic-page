@@ -1,4 +1,5 @@
 import { Entity } from '@/config/enum';
+import { VariantDto } from '@/dtos/Variant.dto';
 
 export function formatMoney(
   amount: number | string,
@@ -93,4 +94,13 @@ export function isValidHttpUrl(string: string) {
     return false;
   }
   return url.protocol === 'http:' || url.protocol === 'https:';
+}
+
+export function calculatePricePercent(variant: VariantDto | undefined) {
+  if (!variant) return 0;
+  return Math.round(
+    (((variant?.price || 0) - (variant?.regular_price || 0)) /
+      (variant?.price || 1)) *
+      100,
+  );
 }

@@ -7,6 +7,11 @@ type Props = {
 };
 export default function ProductDescription({ product }: Props) {
   const [indexActive, setIndexActive] = useState<number>(0);
+  const [content, setContent] = useState<string[]>([
+    'Mô tả sản phẩm',
+    'Hướng dẫn mua hàng & thanh toán',
+    'Chính sách đổi trả & bảo hành',
+  ]);
   function renderButton(item: string, index: number) {
     const active = index === indexActive;
     return (
@@ -22,14 +27,13 @@ export default function ProductDescription({ product }: Props) {
       </button>
     );
   }
-
-  function renderContent() {
-    switch (indexActive) {
+  function renderContent(index: number) {
+    switch (index) {
       case 0:
         return (
           <div
             dangerouslySetInnerHTML={{
-              __html: product?.product_property?.description || '',
+              __html: product?.product_property?.content || '',
             }}
           />
         );
@@ -43,19 +47,30 @@ export default function ProductDescription({ product }: Props) {
   }
 
   return (
-    <>
+    <div className={'rounded-[10px] shadow-custom bg-white'}>
       <div
-        className={'flex items-center gap-3 pb-3 border-b-gray-300 border-b'}
+        className={
+          'flex items-center gap-3 pb-3 border-b-gray-300 border-b p-3'
+        }
       >
-        {[
-          'Mô tả sản phẩm',
-          'Hướng dẫn mua hàng & thanh toán',
-          'Chính sách đổi trả & bảo hành',
-        ].map((item: string, index: number) => {
+        {content.map((item: string, index: number) => {
           return renderButton(item, index);
         })}
       </div>
-      <div className={'p-3'}>{renderContent()}</div>
-    </>
+      {content.map((item: string, index: number) => {
+        const active = index === indexActive;
+        return (
+          <div
+            key={index}
+            className={twMerge(
+              'p-3 opacity-0 invisible transition-opacity duration-500',
+              active && 'opacity-100 visible',
+            )}
+          >
+            {renderContent(index)}
+          </div>
+        );
+      })}
+    </div>
   );
 }

@@ -24,7 +24,6 @@ export function useProductImageDetail({ product, variant }: Props) {
       (product?.variants || [])?.find(
         (variant: VariantDto) => variant.is_default,
       );
-    console.log('variant', _variant);
     if (!_variant) {
       _variant = product?.variants?.[0];
     }
@@ -43,7 +42,6 @@ export function useProductImageDetail({ product, variant }: Props) {
           alt: item.alt || product.name,
         });
     });
-    console.log('images', images);
     setImages(images);
     setImageActive(images[0]);
   }, [variant]);

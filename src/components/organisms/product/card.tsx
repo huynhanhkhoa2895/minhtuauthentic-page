@@ -6,7 +6,7 @@ import ProductCardButtonGroup from '@/components/molecules/product/button-group'
 import Badge from '@/components/atoms/badge';
 import { twMerge } from 'tailwind-merge';
 import { VariantDto } from '@/dtos/Variant.dto';
-import { truncateString } from '@/utils';
+import { calculatePricePercent, truncateString } from '@/utils';
 
 const ProductCard = ({ product }: { product: ProductDto }) => {
   const variant: VariantDto | undefined =
@@ -21,13 +21,7 @@ const ProductCard = ({ product }: { product: ProductDto }) => {
       <div>
         <div className={'flex items-center justify-end gap-2 px-2'}>
           <Badge className={'bg-green'}>
-            Giảm{' '}
-            {Math.round(
-              (((variant?.price || 0) - (variant?.regular_price || 0)) /
-                (variant?.price || 1)) *
-                100,
-            )}
-            %
+            Giảm {calculatePricePercent(variant)}%
           </Badge>
           <Badge className={'bg-price'}>Trả góp 0%</Badge>
         </div>

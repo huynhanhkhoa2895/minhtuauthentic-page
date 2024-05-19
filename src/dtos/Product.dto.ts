@@ -8,6 +8,8 @@ import { ProductPropertyDto } from '@/dtos/ProductProperty.dto';
 import { SlugDto } from '@/dtos/Slug.dto';
 import { VariantDto } from '@/dtos/Variant.dto';
 import { SeoDto } from '@/dtos/Seo.dto';
+import { ConcentrationGradientDto } from '@/dtos/ConcentrationGradient.dto';
+import { FragranceRetentionDto } from '@/dtos/FragranceRetention.dto';
 
 export class ProductDto extends BaseDto {
   name?: string;
@@ -18,7 +20,9 @@ export class ProductDto extends BaseDto {
   feature_image_detail?: ImageDetailDto;
   categories?: IProductCategoryDto[];
   concentration_gradients?: IProductConcentrationGradientDto[];
+  concentration_gradient?: ConcentrationGradientDto;
   fragrance_retentions?: IProductFragranceRetentionDto[];
+  fragrance_retention?: FragranceRetentionDto;
   brands?: IProductBrandDto[];
   variants?: VariantDto[];
   product_property?: ProductPropertyDto;

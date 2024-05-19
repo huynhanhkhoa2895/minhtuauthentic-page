@@ -10,6 +10,7 @@ import ProductCartCheckout from '@/components/molecules/product/productCartCheck
 import PromotionDescription from '@/components/molecules/product/promotionDescription';
 import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
+import StartRating from '@/components/atoms/product/startRating';
 type Props = {
   product: ProductDto;
   productConfigurations: ProductConfigurationsDto[];
@@ -25,7 +26,6 @@ const ProductProperty = ({
   const [_variantActive, setVariantActive] =
     useState<VariantDto>(variantActive);
   const [isReady, setIsReady] = useState(false);
-  console.log('product', product);
   useEffect(() => {
     setIsReady(true);
   }, []);
@@ -36,11 +36,11 @@ const ProductProperty = ({
 
   const renderSex = () => {
     switch (product?.product_property?.sex) {
+      case 0:
+        return 'Nữ';
       case 1:
         return 'Nam';
       case 2:
-        return 'Nữ';
-      default:
         return 'Unisex';
     }
   };
@@ -115,12 +115,7 @@ const ProductProperty = ({
           </div>
           <div className={'flex gap-2'}>
             <span>Đánh giá: </span>
-            <span className={'font-semibold text-primary flex pt-[2px]'}>
-              <Star className={'w-4 h-4'} />
-              <Star className={'w-4 h-4'} />
-              <Star className={'w-4 h-4'} />
-              <Star className={'w-4 h-4'} />
-            </span>
+            <StartRating />
           </div>
         </div>
         <hr className={'mt-3'} />

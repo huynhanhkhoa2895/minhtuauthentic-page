@@ -7,13 +7,19 @@ import { ImageDto } from '@/dtos/Image.dto';
 import { ProductConfigurationsDto } from '@/dtos/productConfigurations.dto';
 import { VariantDto } from '@/dtos/Variant.dto';
 import ProductDescription from '@/components/molecules/product/productDescription';
+import ProductInformation from '@/components/molecules/product/productInformation';
+import ProductRelation from '@/components/molecules/product/productRelation';
 
 type Props = {
   product: ProductDto;
   relatedProducts: ProductDto[];
   productConfigurations: ProductConfigurationsDto[];
 };
-const ProductDetailCard = ({ product, productConfigurations }: Props) => {
+const ProductDetailCard = ({
+  product,
+  productConfigurations,
+  relatedProducts,
+}: Props) => {
   const [isOpen, setIsOpen] = useState<{
     display: boolean;
     image: ImageDto | null;
@@ -48,12 +54,12 @@ const ProductDetailCard = ({ product, productConfigurations }: Props) => {
           />
         </div>
       )}
-      <div
-        className={
-          'p-3 grid grid-cols-1 lg:grid-cols-2 rounded-[10px] shadow-custom mt-3 bg-white gap-3'
-        }
-      >
+      <div className={'p-3 grid grid-cols-1 lg:grid-cols-2 gap-3 mt-3'}>
         <ProductDescription product={product} />
+        <div>
+          <ProductInformation product={product} />
+          <ProductRelation products={relatedProducts} />
+        </div>
       </div>
 
       <PopupImage

@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge';
 import noImage from '@/static/images/no-image.png';
 
 type Props = {
-  image: ImageDto | null;
+  image: ImageDto | null | undefined;
   isFill?: boolean;
   onMouseEnter?: (event: unknown) => void;
   onClick?: (image: ImageDto) => void;
