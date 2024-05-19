@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { ImageDto } from '@/dtos/Image.dto';
 import { ProductConfigurationsDto } from '@/dtos/productConfigurations.dto';
 import { VariantDto } from '@/dtos/Variant.dto';
+import ProductDescription from '@/components/molecules/product/productDescription';
 
 type Props = {
   product: ProductDto;
@@ -47,6 +48,13 @@ const ProductDetailCard = ({ product, productConfigurations }: Props) => {
           />
         </div>
       )}
+      <div
+        className={
+          'p-3 grid grid-cols-1 lg:grid-cols-2 rounded-[10px] shadow-custom mt-3 bg-white gap-3'
+        }
+      >
+        <ProductDescription product={product} />
+      </div>
 
       <PopupImage
         open={isOpen.display}

@@ -89,10 +89,12 @@ export default function Home({
           </div>
         </div>
         <BlockUnderSlide contents={homePage?.homeBlockUnderSlide || []} />
-        <HomeFeatureCategory
-          contents={homePage?.homeBlockFeaturedCategory || []}
-          setting={settings[SETTING_KEY.FEATURE_CATEGORY.KEY]}
-        />
+        {homePage?.homeBlockFeaturedCategory && (
+          <HomeFeatureCategory
+            contents={homePage?.homeBlockFeaturedCategory || []}
+            setting={settings[SETTING_KEY.FEATURE_CATEGORY.KEY]}
+          />
+        )}
         <HomeCategory
           homeCategory={homePage?.homeCategory || []}
           bannerUnderCategory={homePage?.bannerUnderCategory}

@@ -6,6 +6,10 @@ import { useEffect, useState } from 'react';
 import { ProductConfigurationsDto } from '@/dtos/productConfigurations.dto';
 import { VariantDto } from '@/dtos/Variant.dto';
 import ProductConfiguration from '@/components/molecules/product/configuration';
+import ProductCartCheckout from '@/components/molecules/product/productCartCheckout';
+import PromotionDescription from '@/components/molecules/product/promotionDescription';
+import Link from 'next/link';
+import { generateSlugToHref } from '@/utils';
 type Props = {
   product: ProductDto;
   productConfigurations: ProductConfigurationsDto[];
@@ -21,7 +25,7 @@ const ProductProperty = ({
   const [_variantActive, setVariantActive] =
     useState<VariantDto>(variantActive);
   const [isReady, setIsReady] = useState(false);
-
+  console.log('product', product);
   useEffect(() => {
     setIsReady(true);
   }, []);
@@ -136,6 +140,29 @@ const ProductProperty = ({
             onChange={handleConfigurationChange}
             value={getConfigurationValue()}
           />
+        </div>
+        <div className={'mt-3'}>
+          <ProductCartCheckout />
+        </div>
+        <PromotionDescription className={'mt-3'} />
+        <div className={'mt-3'}>
+          <span className={'font-semibold'}>Danh mục </span>
+          <span className={'text-[12px]'}>
+            {product?.categories?.map((item, index) => {
+              return (
+                <Link
+                  key={index}
+                  className={'text-gray-400'}
+                  href={generateSlugToHref(item.category?.slugs?.slug)}
+                >
+                  {(item.category?.name || '') +
+                    (index < (product?.categories?.length || 0) - 1
+                      ? ', '
+                      : '')}
+                </Link>
+              );
+            })}
+          </span>
         </div>
       </div>
     </div>
