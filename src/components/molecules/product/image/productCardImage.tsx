@@ -12,19 +12,27 @@ const ProductCardImage = ({
   product: ProductDto;
   className?: string;
 }) => {
-  const image: ImageDto | undefined = product?.images?.[0]?.image;
+  const image: ImageDto | undefined =
+    product?.feature_image_detail?.image ||
+    product?.images?.[0]?.image ||
+    undefined;
   return (
-    <Link className={'block p-2 '} href={`/${product.slugs?.slug}`}>
-      <div className={twMerge('w-full h-full overflow-hidden', className)}>
-        <ImageWithFallback
-          image={image || null}
-          className={
-            'object-cover w-full h-full hover:scale-105 transition-transform duration-300'
-          }
-          alt={product.name || product.name || ''}
-        />
-      </div>
-    </Link>
+    <div className={'relative pt-[100%]'}>
+      <Link
+        className={'block absolute w-full h-full inset-0 p-2 '}
+        href={`/${product.slugs?.slug}`}
+      >
+        <div className={twMerge('w-full h-full overflow-hidden', className)}>
+          <ImageWithFallback
+            image={image}
+            className={
+              'object-contain w-full h-full hover:scale-105 transition-transform duration-300'
+            }
+            alt={product.name || ''}
+          />
+        </div>
+      </Link>
+    </div>
   );
 };
 export default ProductCardImage;

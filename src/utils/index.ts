@@ -73,7 +73,7 @@ export const getModelEntity = (model: string) => {
 };
 
 export const generateSlugToHref = (slug?: string) => {
-  if (!slug) return '/';
+  if (!slug || slug === '/') return '/';
   if (slug.charAt(0) !== '/') return `/${slug}`;
   return slug;
 };
