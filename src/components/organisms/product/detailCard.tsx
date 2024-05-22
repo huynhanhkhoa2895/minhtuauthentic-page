@@ -54,8 +54,11 @@ const ProductDetailCard = ({
           />
         </div>
       )}
-      <div className={'p-3 grid grid-cols-1 lg:grid-cols-2 gap-3 mt-3'}>
-        <ProductDescription product={product} />
+      <div className={'p-3 grid grid-cols-1 lg:grid-cols-3 gap-3 mt-3'}>
+        <div className={'col-span-2'}>
+          <ProductDescription product={product} />
+        </div>
+
         <div>
           <ProductInformation product={product} />
           <ProductRelation products={relatedProducts} />

@@ -69,6 +69,12 @@ export enum SETTING_TYPE {
   HOME = 'home',
 }
 export const SETTING_KEY = {
+  GENERAL: {
+    PRIMARY_COLOR: {
+      KEY: 'primary_color',
+      LABEL: 'Màu chủ đạo',
+    },
+  },
   BRAND_SECTION: {
     KEY: 'brand_section',
     LABEL: 'Vùng thương hiệu nổi bật',
@@ -80,5 +86,17 @@ export const SETTING_KEY = {
   FEATURE_CATEGORY: {
     KEY: 'feature_category',
     LABEL: 'Danh mục nổi bật',
+  },
+  PRODUCT_DETAIL_OFFER_SPECIAL_CONTENT: {
+    KEY: 'product_detail_offer_special_content',
+    LABEL: 'Nội dung ưu đãi đặc biệt',
+  },
+  PRODUCT_DETAIL_HOW_TO_BUY: {
+    KEY: 'product_detail_how_to_buy',
+    LABEL: 'Hướng dẫn mua hàng và thanh toán',
+  },
+  PRODUCT_DETAIL_GUARANTEE: {
+    KEY: 'product_detail_guarantee',
+    LABEL: 'Chính sách đổi trả và bảo hành',
   },
 };
