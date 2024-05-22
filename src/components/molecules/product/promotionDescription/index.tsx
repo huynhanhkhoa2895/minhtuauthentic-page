@@ -22,6 +22,7 @@ export default function PromotionDescription({ className }: Props) {
     }
     return (
       <button
+        key={index}
         className={twMerge(
           'flex-1 bg-gray-100 p-3 border-b border-b-primary',
           classBorderLeftRight,

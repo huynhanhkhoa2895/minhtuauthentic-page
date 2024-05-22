@@ -6,6 +6,7 @@ type Props = {
   data: ResponseProductDetailPageDto;
 };
 const ProductTemplate = ({ data }: Props) => {
+  console.log('data', data);
   return (
     <>
       {data?.product && (

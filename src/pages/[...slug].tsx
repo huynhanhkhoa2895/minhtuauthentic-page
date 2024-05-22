@@ -33,22 +33,16 @@ export const getServerSideProps = (async (context) => {
   const dataFooter: { data: ResponseFooterDto } = resFooter
     ? await resFooter.json()
     : null;
-  const settings: Record<string, SettingOptionDto | undefined> = {};
-  // data?.data?.settings?.map((item) => {
-  //     settings[item?.key || ''] = item?.value;
-  // });
   return {
     props: {
       slug: data?.data,
       menu: dataMenu?.data,
-      settings,
       footerContent: dataFooter?.data,
     },
   };
 }) satisfies GetServerSideProps<{
   slug: ResponseSlugPageDto;
   menu: ResponseMenuDto;
-  settings: Record<string, SettingOptionDto | undefined>;
   footerContent: ResponseFooterDto;
 }>;
 export default function Page({
