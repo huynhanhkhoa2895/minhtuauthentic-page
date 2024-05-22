@@ -22,6 +22,7 @@ export default function ProductRelation({ products }: Props) {
               product?.variants?.[0];
             return (
               <div
+                  key={index}
                 className={twMerge(
                   'bg-white rounded-[10px] p-3 border-[#e4e4e4] border-2 transition-colors duration-500 hover:border-primary',
                 )}
