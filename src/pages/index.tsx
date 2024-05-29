@@ -67,7 +67,7 @@ export default function Home({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      <Header />
+      <Header homeMenuCategory={menu.homeMenuCategory} />
       <div className={'container mx-auto'}>
         <div
           id={'main-home-page'}

@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react';
 import Menu from '@/components/molecules/header/menu';
 import { createPortal } from 'react-dom';
 import { twMerge } from 'tailwind-merge';
+import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 
-const ButtonMenu = () => {
+const ButtonMenu = (menu: ResponseMenuDto | null) => {
   const [displayMenu, setDisplayMenu] = useState<boolean>(false);
   const [isReady, setIsReady] = useState<boolean>(false);
   useEffect(() => {
@@ -31,6 +32,7 @@ const ButtonMenu = () => {
         createPortal(
           <div className={'fixed left-0 top-[180px]'}>
             <Menu
+              data={menu?.homeMenuCategory || []}
               isPopup={true}
               className={twMerge(
                 'absolute left-0 transition-all duration-500',

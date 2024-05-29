@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { CategoryDto } from '@/dtos/Category.dto';
 import { createPortal } from 'react-dom';
 import { twMerge } from 'tailwind-merge';
+import { generateSlugToHref } from '@/utils';
 
 const Menu = ({
   data,
@@ -108,7 +109,7 @@ const Menu = ({
                     }, 500);
                   }}
                 >
-                  <Link href={item?.category?.slugs?.slug || ''}>
+                  <Link href={generateSlugToHref(item?.category?.slugs?.slug)}>
                     <div className={'flex items-center justify-between w-full'}>
                       <div className={'flex gap-2 items-center'}>
                         {image && (

@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useMemo, useState } from 'react';
 import { ImageDto } from '@/dtos/Image.dto';
 import Image from 'next/image';
 import noImage from '@/static/images/no-image.png';
@@ -21,20 +21,14 @@ export default function ImageMagnifier({
     100, 100,
   ]);
   const [ready, setReady] = useState(false);
-  return (
-    <div
-      className={
-        'relative pt-[100%] overflow-hidden rounded-[10px] z-1 cursor-pointer'
-      }
-      onClick={() => {
-        onClick && onClick(image);
-      }}
-    >
+
+  const renderImage = useMemo(() => {
+    return (
       <Image
         src={src}
         // style={{ height: image.height, width: image.width }}
         alt={alt || 'image'}
-        className={'object-cover w-full h-full'}
+        className={'object-cover w-full h-full absolute top-0 left-0 '}
         onMouseEnter={(e) => {
           const elem = e.currentTarget;
           const { width, height } = elem.getBoundingClientRect();
@@ -52,16 +46,30 @@ export default function ImageMagnifier({
         onMouseLeave={() => {
           setShowMagnifier(false);
         }}
-        fill={true}
         loading={'eager'}
         sizes={'(max-width: 768px) 100vw, 33vw'}
         blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPs7u2tBwAFdgImpqLKKAAAAABJRU5ErkJggg=="
+        width={image?.width || 0}
+        height={image?.height || 0}
         onLoad={(img: SyntheticEvent<HTMLImageElement>) => {
           const _img = img.target as HTMLImageElement;
           setSize([_img.width, _img.height]);
           setReady(true);
         }}
       />
+    );
+  }, [image]);
+
+  return (
+    <div
+      className={
+        'relative pt-[100%] overflow-hidden rounded-[10px] z-1 cursor-pointer'
+      }
+      onClick={() => {
+        onClick && onClick(image);
+      }}
+    >
+      {renderImage}
 
       <div
         style={{

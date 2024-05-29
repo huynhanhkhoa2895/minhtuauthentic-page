@@ -1,14 +1,14 @@
-import { useRouter } from 'next/router';
 import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
-import { SettingOptionDto } from '@/dtos/settingOption.dto';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import ProductTemplate from '@/components/templates/ProductTemplate';
 import { ResponseSlugPageDto } from '@/dtos/responseSlugPage.dto';
 import { Entity } from '@/config/enum';
 import { ResponseProductDetailPageDto } from '@/dtos/responseProductDetailPage.dto';
+import CategoryTemplate from '@/components/templates/CategoryTemplate';
+import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage.dto';
 export const getServerSideProps = (async (context) => {
   const { slug } = context.query;
   const res = await fetch(
@@ -50,10 +50,18 @@ export default function Page({
   footerContent,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const renderTemplate = () => {
+    console.log('slug?.model', slug);
     switch (slug?.model) {
       case Entity.PRODUCTS:
         return (
           <ProductTemplate data={slug?.data as ResponseProductDetailPageDto} />
+        );
+      case Entity.CATEGORIES:
+      case Entity.BRANDS:
+        return (
+          <CategoryTemplate
+            data={slug?.data as ResponseCategoryFilterPageDto}
+          />
         );
       default:
         return <div>Not Found</div>;

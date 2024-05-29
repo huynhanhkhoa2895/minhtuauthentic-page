@@ -9,6 +9,7 @@ import { VariantDto } from '@/dtos/Variant.dto';
 import ProductDescription from '@/components/molecules/product/productDescription';
 import ProductInformation from '@/components/molecules/product/productInformation';
 import ProductRelation from '@/components/molecules/product/productRelation';
+import ProductQuestionAnswer from '@/components/molecules/product/productQuestionAnswer';
 
 type Props = {
   product: ProductDto;
@@ -54,9 +55,10 @@ const ProductDetailCard = ({
           />
         </div>
       )}
-      <div className={'grid grid-cols-1 lg:grid-cols-3 gap-3 mt-3'}>
+      <div className={'grid grid-cols-1 lg:grid-cols-3 gap-3 my-3'}>
         <div className={'col-span-2'}>
           <ProductDescription product={product} />
+          <ProductQuestionAnswer questions={product?.question_answers || []} />
         </div>
 
         <div>

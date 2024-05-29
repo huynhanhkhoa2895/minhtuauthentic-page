@@ -10,8 +10,9 @@ import ButtonMenu from '@/components/organisms/header/buttonMenu';
 import { twMerge } from 'tailwind-merge';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 
-export const Header = () => {
+export const Header = (menu: ResponseMenuDto | null) => {
   const pathname = usePathname();
   return (
     <>
@@ -40,7 +41,7 @@ export const Header = () => {
             />
           </Link>
 
-          <ButtonMenu />
+          <ButtonMenu homeMenuCategory={menu?.homeMenuCategory} />
           <InputSearch />
           <HeaderItem
             className={'w-max'}
