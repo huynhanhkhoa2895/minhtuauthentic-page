@@ -34,7 +34,7 @@ const ProductPrice = ({
             )}
           >
             {variant.regular_price &&
-              formatMoney(variant.regular_price, 0, '.', ',')}
+              formatMoney(variant.regular_price, 0, '.', '.')}
           </span>
           <span
             className={twMerge(
@@ -42,7 +42,7 @@ const ProductPrice = ({
               classNamePrice,
             )}
           >
-            {variant.price && formatMoney(variant.price, 0, '.', ',')}
+            {variant.price && formatMoney(variant.price, 0, '.', '.')}
           </span>
           {displayGap && (
             <span className={classNameGap}>

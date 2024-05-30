@@ -58,6 +58,7 @@ export default function Page({
         );
       case Entity.CATEGORIES:
       case Entity.BRANDS:
+      case Entity.KEYWORDS:
         return (
           <CategoryTemplate
             data={slug?.data as ResponseCategoryFilterPageDto}
