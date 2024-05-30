@@ -11,7 +11,7 @@ import HomeNews from '@/components/organisms/home/homeNews';
 import HomeBrand from '@/components/organisms/home/homeBrand';
 import HomeSupport from '@/components/organisms/home/homeSupport';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
-import { SettingOptionDto } from '@/dtos/settingOption.dto';
+import { Index } from '@/dtos/SettingOption';
 import { SETTING_KEY } from '@/config/enum';
 import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
@@ -41,7 +41,7 @@ export const getServerSideProps = (async () => {
   const dataFooter: { data: ResponseFooterDto } = resFooter
     ? await resFooter.json()
     : null;
-  const settings: Record<string, SettingOptionDto | undefined> = {};
+  const settings: Record<string, Index | undefined> = {};
   data?.data?.settings?.map((item) => {
     settings[item?.key || ''] = item?.value;
   });
@@ -56,7 +56,7 @@ export const getServerSideProps = (async () => {
 }) satisfies GetServerSideProps<{
   homePage: ResponseHomePageDto;
   menu: ResponseMenuDto;
-  settings: Record<string, SettingOptionDto | undefined>;
+  settings: Record<string, Index | undefined>;
   footerContent: ResponseFooterDto;
 }>;
 export default function Home({

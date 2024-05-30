@@ -1,8 +1,8 @@
 import { BaseDto } from '@/dtos/Base.dto';
-import { SettingOptionDto } from '@/dtos/settingOption.dto';
+import { Index } from '@/dtos/SettingOption';
 
 export class SettingsDto extends BaseDto {
   key?: string;
-  value?: SettingOptionDto;
+  value?: Index;
   type?: string;
 }

@@ -1,4 +1,4 @@
-export class SettingOptionDto {
+export class Index {
   backgroundColor?: string;
   content?: string;
 }

@@ -1,10 +1,10 @@
 import { StaticContentsDto } from '@/dtos/StaticContents.dto';
 import SectionSwiper from '@/components/organisms/sectionSwiper';
 import BlockUnderSlideItem from '@/components/molecules/blockUnderSlide/item';
-import { SettingOptionDto } from '@/dtos/settingOption.dto';
+import { Index } from '@/dtos/SettingOption';
 type Props = {
   contents: StaticContentsDto[];
-  setting?: SettingOptionDto;
+  setting?: Index;
 };
 export default function HomeFeatureCategory({ contents, setting }: Props) {
   return (

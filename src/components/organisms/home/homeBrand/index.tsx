@@ -4,10 +4,10 @@ import noImage from '@/static/images/no-image.png';
 import Link from 'next/link';
 import SectionSwiper from '@/components/organisms/sectionSwiper';
 import { SettingsDto } from '@/dtos/Settings.dto';
-import { SettingOptionDto } from '@/dtos/settingOption.dto';
+import { Index } from '@/dtos/SettingOption';
 type Props = {
   contents: BrandDto[];
-  setting?: SettingOptionDto;
+  setting?: Index;
 };
 export default function HomeBrand({ contents, setting }: Props) {
   return (
