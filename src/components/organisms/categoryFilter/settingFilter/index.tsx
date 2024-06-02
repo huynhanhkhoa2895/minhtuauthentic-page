@@ -12,7 +12,6 @@ type Props = {
   settings?: ProductFilterOptionDto;
 };
 export default function SettingFilter({ settings }: Props) {
-  const handleChange = (value: number) => {};
   const renderTree = () => {
     let xhtml: ReactNode[] = [];
     for (const key in settings) {
@@ -22,9 +21,9 @@ export default function SettingFilter({ settings }: Props) {
             xhtml.push(
               <SettingFilterItem
                 key={key}
+                filterKey={key}
                 title={'Nồng độ'}
                 value={settings[key] || []}
-                onChange={handleChange}
               />,
             );
           break;
@@ -33,9 +32,9 @@ export default function SettingFilter({ settings }: Props) {
             xhtml.push(
               <SettingFilterItem
                 key={key}
+                filterKey={key}
                 title={'Lưu hương'}
                 value={settings[key] || []}
-                onChange={handleChange}
               />,
             );
           break;
@@ -44,12 +43,12 @@ export default function SettingFilter({ settings }: Props) {
             xhtml.push(
               <SettingFilterItem
                 key={key}
+                filterKey={key}
                 title={'Giới tính'}
                 value={(settings[key] || []).map((item) => ({
                   id: item,
                   name: SexName(item),
                 }))}
-                onChange={handleChange}
               />,
             );
           break;
@@ -58,6 +57,7 @@ export default function SettingFilter({ settings }: Props) {
             xhtml.push(
               <SettingFilterItem
                 key={key}
+                filterKey={key}
                 title={'Khoảng giá'}
                 value={(settings[key] || []).map(
                   (item: ProductFilterPriceRangeDto) => {
@@ -67,7 +67,6 @@ export default function SettingFilter({ settings }: Props) {
                     };
                   },
                 )}
-                onChange={handleChange}
               />,
             );
           break;
@@ -85,13 +84,13 @@ export default function SettingFilter({ settings }: Props) {
               }) => {
                 xhtml.push(
                   <SettingFilterItem
-                    key={item.configuration.id}
+                    key={key}
+                    filterKey={key}
                     title={item.configuration.name || ''}
                     value={item.values.map((value) => ({
                       id: value.id,
                       name: value.value,
                     }))}
-                    onChange={handleChange}
                   />,
                 );
               },

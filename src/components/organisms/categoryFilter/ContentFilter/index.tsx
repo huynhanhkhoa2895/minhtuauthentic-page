@@ -13,7 +13,11 @@ export default function ContentFilter({ products }: Props) {
     return (
       <div className={'grid grid-cols-1 lg:grid-cols-4 w-full gap-3'}>
         {products.map((product, index) => {
-          return <ProductCard key={index} product={product} />;
+          const variant = product?.variants?.find(item=>item.is_default || []);
+          if (!variant) {
+            return;
+          }
+          return <ProductCard key={index} product={product} variant={variant} />;
         })}
       </div>
     );

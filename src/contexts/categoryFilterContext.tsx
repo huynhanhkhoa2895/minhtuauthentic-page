@@ -18,6 +18,8 @@ export type TypeAppState = {
   setLimit: Dispatch<SetStateAction<number>> | undefined;
   settings?: Record<string, string>;
   setSettings?: Dispatch<SetStateAction<Record<string, string>>> | undefined;
+  filters?: Record<string, (number | string)[]>;
+  setFilters?: Dispatch<SetStateAction<Record<string, (number | string)[]>>> | undefined;
 };
 
 export const CategoryFilterProvider = ({
@@ -29,6 +31,7 @@ export const CategoryFilterProvider = ({
     CATEGORY_FILTER.SORT_BY.DATE_DESC,
   );
   const [limit, setLimit] = useState<number>(24);
+  const [filters, setFilters] = useState<Record<string, (number | string)[]>>({});
   const router = useRouter();
   const [count, setCount] = useState(0);
   const refTimer = React.useRef<NodeJS.Timeout | null>(null);
@@ -37,9 +40,8 @@ export const CategoryFilterProvider = ({
     const params = new URLSearchParams(window.location.search);
     params.set('sort', sortBy);
     params.set('limit', limit.toString());
-
     updateRouter(params.toString());
-  }, [sortBy, limit]);
+  }, [sortBy, limit, filters]);
 
   const updateRouter = (params: string) => {
     setCount(count + 1);
@@ -64,7 +66,7 @@ export const CategoryFilterProvider = ({
 
   return (
     <CategoryFilterContext.Provider
-      value={{ sortBy, setSortBy, limit, setLimit }}
+      value={{ sortBy, setSortBy, limit, setLimit, filters, setFilters }}
     >
       {children}
     </CategoryFilterContext.Provider>
