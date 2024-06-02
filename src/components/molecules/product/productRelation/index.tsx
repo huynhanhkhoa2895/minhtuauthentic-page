@@ -19,6 +19,7 @@ export default function ProductRelation({ products }: Props) {
             const _variantActive =
               product?.variants?.find((item) => item.is_default) ||
               product?.variants?.[0];
+            console.log('test', product?.feature_image_detail?.image?.url);
             return (
               <div
                 key={index}
@@ -37,8 +38,7 @@ export default function ProductRelation({ products }: Props) {
                     <ImageWithFallback
                       image={
                         product?.feature_image_detail?.image ||
-                        _variantActive?.images?.[0]?.image ||
-                        product?.images?.[0]?.image
+                        _variantActive?.images?.[0]?.image
                       }
                       className={'w-[100px] h-[100px] object-contain'}
                     />

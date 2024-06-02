@@ -104,3 +104,14 @@ export function calculatePricePercent(variant: VariantDto | undefined) {
       100,
   );
 }
+
+export function SexName(sex: number) {
+  switch (sex) {
+    case 0:
+      return 'Nữ';
+    case 1:
+      return 'Nam';
+    case 2:
+      return 'Unisex';
+  }
+}

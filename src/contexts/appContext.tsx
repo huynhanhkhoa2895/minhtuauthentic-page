@@ -10,12 +10,6 @@ export type TypeAppState = {
   settings?: Record<string, string>;
   setSettings?: Dispatch<SetStateAction<Record<string, string>>> | undefined;
 };
-const appState: TypeAppState = {
-  carts: [],
-  setCart: undefined,
-  settings: undefined,
-  setSettings: undefined,
-};
 
 const AppContext = createContext<TypeAppState | undefined>(undefined);
 

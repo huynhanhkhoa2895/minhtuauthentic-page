@@ -14,7 +14,7 @@ const ProductCardImage = ({
 }) => {
   const image: ImageDto | undefined =
     product?.feature_image_detail?.image ||
-    product?.images?.[0]?.image ||
+    product?.variants?.[0]?.images?.[0]?.image ||
     undefined;
   return (
     <div className={'relative pt-[100%]'}>

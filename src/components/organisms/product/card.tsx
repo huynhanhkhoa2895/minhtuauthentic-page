@@ -9,9 +9,7 @@ import { VariantDto } from '@/dtos/Variant.dto';
 import { calculatePricePercent, truncateString } from '@/utils';
 
 const ProductCard = ({ product }: { product: ProductDto }) => {
-  const variant: VariantDto | undefined =
-    product?.variants?.find((item: VariantDto) => item.is_default) ||
-    product?.variants?.[0];
+  const variant: VariantDto | undefined = product?.variants?.[0];
   return (
     <div
       className={twMerge(

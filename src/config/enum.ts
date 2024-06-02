@@ -100,3 +100,14 @@ export const SETTING_KEY = {
     LABEL: 'Chính sách đổi trả và bảo hành',
   },
 };
+
+export const CATEGORY_FILTER = {
+  SORT_BY: {
+    DATE_DESC: 'date_desc',
+    DATE_ASC: 'date_asc',
+    NAME_ASC: 'name_asc',
+    NAME_DESC: 'name_desc',
+    PRICE_ASC: 'price_asc',
+    PRICE_DESC: 'price_desc',
+  },
+};

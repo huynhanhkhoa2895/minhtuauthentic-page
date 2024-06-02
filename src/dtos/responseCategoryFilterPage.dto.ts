@@ -1,7 +1,7 @@
 import { ProductDto } from '@/dtos/Product.dto';
-import { SettingsDto } from '@/dtos/Settings.dto';
+import { ProductFilterOptionDto } from '@/dtos/ProductFilterSettingOption/ProductFilterOption.dto';
 
 export class ResponseCategoryFilterPageDto {
   products?: ProductDto[];
-  settings?: SettingsDto[];
+  settings?: ProductFilterOptionDto;
 }

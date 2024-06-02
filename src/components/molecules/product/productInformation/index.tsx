@@ -1,19 +1,10 @@
 import { ProductDto } from '@/dtos/Product.dto';
+import { SexName } from '@/utils';
 
 type Props = {
   product: ProductDto;
 };
 export default function ProductInformation({ product }: Props) {
-  const renderSex = (sex: number) => {
-    switch (sex) {
-      case 0:
-        return 'Nữ';
-      case 1:
-        return 'Nam';
-      case 2:
-        return 'Unisex';
-    }
-  };
   const fields = [
     {
       label: 'Thương hiệu',
@@ -27,7 +18,7 @@ export default function ProductInformation({ product }: Props) {
       label: 'Giới tính',
       value: (
         <span className={'font-bold'}>
-          {renderSex(product?.product_property?.sex || 3)}
+          {SexName(product?.product_property?.sex || 2)}
         </span>
       ),
     },

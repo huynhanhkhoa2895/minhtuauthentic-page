@@ -9,7 +9,7 @@ import ProductConfiguration from '@/components/molecules/product/configuration';
 import ProductCartCheckout from '@/components/molecules/product/productCartCheckout';
 import PromotionDescription from '@/components/molecules/product/promotionDescription';
 import Link from 'next/link';
-import { generateSlugToHref } from '@/utils';
+import { generateSlugToHref, SexName } from '@/utils';
 import StartRating from '@/components/atoms/product/startRating';
 type Props = {
   product: ProductDto;
@@ -33,17 +33,6 @@ const ProductProperty = ({
   useEffect(() => {
     onChange && onChange(_variantActive);
   }, [_variantActive]);
-
-  const renderSex = () => {
-    switch (product?.product_property?.sex) {
-      case 0:
-        return 'Nữ';
-      case 1:
-        return 'Nam';
-      case 2:
-        return 'Unisex';
-    }
-  };
 
   const handleConfigurationChange = (
     value: { configurationId: number; valueId: number }[],
@@ -97,7 +86,9 @@ const ProductProperty = ({
         </div>
         <div>
           <span>Giới tính: </span>
-          <span className={'font-semibold text-primary'}>{renderSex()}</span>
+          <span className={'font-semibold text-primary'}>
+            {SexName(product?.product_property?.sex || 2)}
+          </span>
         </div>
         <div>
           <span>Trạng thái: </span>
