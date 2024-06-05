@@ -50,7 +50,6 @@ export default function Page({
   footerContent,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const renderTemplate = () => {
-    console.log('slug?.model', slug);
     switch (slug?.model) {
       case Entity.PRODUCTS:
         return (

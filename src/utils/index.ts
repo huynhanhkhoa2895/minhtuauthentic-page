@@ -115,3 +115,37 @@ export function SexName(sex: number) {
       return 'Unisex';
   }
 }
+
+export function parseQueryString(queryString: string) {
+  // Decode the query string
+  const decodedString = decodeURIComponent(queryString);
+
+  // Split the query string into individual key-value pairs
+  const pairs = decodedString.split('&');
+
+  // Initialize the result object
+  const result: any = {};
+
+  pairs.forEach((pair) => {
+    // Split each pair into key and value
+    const [key, value] = pair.split('=');
+
+    // Extract the main key and index from the query key
+    const match = key.match(/filter\[(.*?)\]\[(\d+)\]/);
+
+    if (match) {
+      const mainKey = match[1];
+      const index = match[2];
+
+      // Initialize the array if it doesn't exist
+      if (!result[mainKey]) {
+        result[mainKey] = [];
+      }
+
+      // Assign the value to the correct index
+      result[mainKey][index] = value;
+    }
+  });
+
+  return result;
+}
