@@ -12,7 +12,11 @@ import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage
 export const getServerSideProps = (async (context) => {
   const { slug } = context.query;
   const res = await fetch(
-    process.env.BE_URL + '/api/pages/slug/' + (slug as string[]).join('/'),
+    process.env.BE_URL +
+      '/api/pages/slug/' +
+      (slug as string[]).join('/') +
+      '?' +
+      new URLSearchParams(context.query as any).toString(),
   ).catch((error) => {
     return null;
   });

@@ -11,10 +11,14 @@ const CategoryFilterContext = createContext<TypeAppState | undefined>(
 );
 import { useRouter } from 'next/router';
 import { parseQueryString } from '@/utils';
+import { ProductDto } from '@/dtos/Product.dto';
+import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage.dto';
 
 export type TypeAppState = {
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>> | undefined;
+  products: ProductDto[];
+  setProducts: Dispatch<SetStateAction<ProductDto[]>> | undefined;
   sortBy: string;
   setSortBy: Dispatch<SetStateAction<string>> | undefined;
   limit: number;
@@ -32,16 +36,20 @@ export const CategoryFilterProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [sortBy, setSortBy] = useState<string>(
-    CATEGORY_FILTER.SORT_BY.DATE_DESC,
-  );
-
-  const [limit, setLimit] = useState<number>(24);
-  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
   const queryString = new URLSearchParams(
     router.query as Record<string, string>,
   );
+  const [sortBy, setSortBy] = useState<string>(
+    queryString.get('sort') || CATEGORY_FILTER.SORT_BY.DATE_DESC,
+  );
+
+  const [limit, setLimit] = useState<number>(
+    Number(queryString.get('limit')) || 24,
+  );
+  const [products, setProducts] = useState<ProductDto[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
   const [filters, setFilters] = useState<Record<string, (number | string)[]>>(
     parseQueryString(queryString.toString()),
   );
@@ -53,7 +61,7 @@ export const CategoryFilterProvider = ({
     const params = new URLSearchParams();
     params.append('sort', sortBy);
     params.append('limit', limit.toString());
-    console.log('params', params);
+
     for (const key in filters) {
       for (const [index, value] of (filters[key] as any).entries()) {
         params.delete(`filter[${key}][${index}]`);
@@ -78,24 +86,28 @@ export const CategoryFilterProvider = ({
   };
 
   useEffect(() => {
-    if (count > 1 && router.query?.slug?.length && !loading) {
+    if (count > 1 && router.query?.slug?.length) {
+      setLoading(true);
       refTimer.current = setTimeout(() => {
-        setLoading(true);
         const params = new URLSearchParams(window.location.search);
         fetch(
           `/api/getProduct/${((router?.query?.slug as string[]) || []).join('/')}?` +
             params.toString(),
         )
-          .then((res) => {
+          .then((res) => res.json())
+          .then((res: { data: { data: ResponseCategoryFilterPageDto } }) => {
+            console.log(res?.data?.data);
+            setProducts(res?.data?.data?.products || []);
             setLoading(false);
           })
           .catch((err) => {
             setLoading(false);
           });
-      }, 500);
+      }, 200);
     }
     return () => {
       refTimer.current && clearTimeout(refTimer.current);
+      if (loading) setLoading(false);
     };
   }, [count]);
 
@@ -110,6 +122,8 @@ export const CategoryFilterProvider = ({
         setFilters,
         loading,
         setLoading,
+        products,
+        setProducts,
       }}
     >
       {children}
