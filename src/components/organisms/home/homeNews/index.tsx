@@ -6,14 +6,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { generateSlugToHref, truncateString } from '@/utils';
 import NewsClock from '@/components/atoms/news/clock';
-import { Index } from '@/dtos/SettingOption';
+import { SettingOptionDto } from '@/dtos/SettingOption.dto';
 
 type Props = {
   content: {
     featured: NewsDto[];
     news: NewsDto[];
   };
-  setting?: Index;
+  setting?: SettingOptionDto;
 };
 export default function HomeNews({ content, setting }: Props) {
   return (

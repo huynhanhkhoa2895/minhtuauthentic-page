@@ -11,11 +11,11 @@ import HomeNews from '@/components/organisms/home/homeNews';
 import HomeBrand from '@/components/organisms/home/homeBrand';
 import HomeSupport from '@/components/organisms/home/homeSupport';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
-import { Index } from '@/dtos/SettingOption';
 import { SETTING_KEY } from '@/config/enum';
 import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
+import { SettingOptionDto } from '@/dtos/SettingOption.dto';
 export const getServerSideProps = (async () => {
   // Fetch data from external API
   const res = await fetch(process.env.BE_URL + '/api/pages/home').catch(
@@ -41,7 +41,7 @@ export const getServerSideProps = (async () => {
   const dataFooter: { data: ResponseFooterDto } = resFooter
     ? await resFooter.json()
     : null;
-  const settings: Record<string, Index | undefined> = {};
+  const settings: Record<string, SettingOptionDto | undefined> = {};
   data?.data?.settings?.map((item) => {
     settings[item?.key || ''] = item?.value;
   });
@@ -56,7 +56,7 @@ export const getServerSideProps = (async () => {
 }) satisfies GetServerSideProps<{
   homePage: ResponseHomePageDto;
   menu: ResponseMenuDto;
-  settings: Record<string, Index | undefined>;
+  settings: Record<string, SettingOptionDto | undefined>;
   footerContent: ResponseFooterDto;
 }>;
 export default function Home({
