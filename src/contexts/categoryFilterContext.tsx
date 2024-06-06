@@ -50,10 +50,9 @@ export const CategoryFilterProvider = ({
   const refTimerCount = React.useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    let _filter = '';
-    params.set('sort', sortBy);
-    params.set('limit', limit.toString());
+    const params = new URLSearchParams();
+    params.append('sort', sortBy);
+    params.append('limit', limit.toString());
     console.log('params', params);
     for (const key in filters) {
       for (const [index, value] of (filters[key] as any).entries()) {
