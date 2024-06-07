@@ -7,67 +7,98 @@ import { SexName } from '@/utils';
 import { ProductConfigurationsDto } from '@/dtos/productConfigurations.dto';
 import { ProductConfigurationValuesDto } from '@/dtos/productConfigurationValues.dto';
 import { ProductFilterPriceRangeDto } from '@/dtos/ProductFilterSettingOption/ProductFilterPriceRange.dto';
+import { orderBy } from 'lodash';
+import { BrandDto } from '@/dtos/Brand.dto';
+import { CategoryDto } from '@/dtos/Category.dto';
+import { Entity } from '@/config/enum';
 
 type Props = {
   settings?: ProductFilterOptionDto;
 };
 export default function SettingFilter({ settings }: Props) {
-  const renderTree = () => {
-    let xhtml: ReactNode[] = [];
+  const renderTree = () : ReactNode[] => {
+    let xhtml: { sort: number, data: ReactNode }[] = [];
     for (const key in settings) {
       switch (key) {
+        case 'categories':
+          (settings[key] as CategoryDto[]).length > 0 &&
+          xhtml.push(
+            {
+              sort: 0,
+              data: <SettingFilterItem
+                key={key}
+                filterKey={key}
+                title={'Danh mục'}
+                value={settings[key] || []}
+                entity={Entity.CATEGORIES}
+              />,
+            }
+          );
+          break;
         case 'concentration_gradients':
           (settings[key] as ConcentrationGradientDto[]).length > 0 &&
             xhtml.push(
-              <SettingFilterItem
-                key={key}
-                filterKey={key}
-                title={'Nồng độ'}
-                value={settings[key] || []}
-              />,
+              {
+                sort: 4,
+                data: <SettingFilterItem
+                  key={key}
+                  filterKey={key}
+                  title={'Nồng độ'}
+                  value={settings[key] || []}
+                />,
+              }
             );
           break;
         case 'fragrance_retention':
           (settings[key] as FragranceRetentionDto[]).length > 0 &&
             xhtml.push(
-              <SettingFilterItem
-                key={key}
-                filterKey={key}
-                title={'Lưu hương'}
-                value={settings[key] || []}
-              />,
+              {
+                sort: 5,
+                data: <SettingFilterItem
+                  key={key}
+                  filterKey={key}
+                  title={'Lưu hương'}
+                  value={settings[key] || []}
+                />,
+              }
             );
           break;
         case 'sex':
           (settings[key] as number[]).length > 0 &&
             xhtml.push(
-              <SettingFilterItem
-                key={key}
-                filterKey={key}
-                title={'Giới tính'}
-                value={(settings[key] || []).map((item) => ({
-                  id: item,
-                  name: SexName(item),
-                }))}
-              />,
+              {
+                sort: 3,
+                data: <SettingFilterItem
+                  key={key}
+                  filterKey={key}
+                  title={'Giới tính'}
+                  value={(settings[key] || []).map((item) => ({
+                    id: item,
+                    name: SexName(item),
+                  }))}
+                />
+              }
             );
           break;
         case 'price_range':
           (settings[key] as ProductFilterPriceRangeDto[]).length > 0 &&
             xhtml.push(
-              <SettingFilterItem
-                key={key}
-                filterKey={key}
-                title={'Khoảng giá'}
-                value={(settings[key] || []).map(
-                  (item: ProductFilterPriceRangeDto) => {
-                    return {
-                      id: item.min + '_' + item.max,
-                      name: item.label,
-                    };
-                  },
-                )}
-              />,
+              {
+                sort: 1,
+                data: <SettingFilterItem
+                  key={key}
+                  filterKey={key}
+                  title={'Phạm Vi Giá'}
+                  value={(settings[key] || []).map(
+                    (item: ProductFilterPriceRangeDto) => {
+                      return {
+                        id: item.min + '_' + item.max,
+                        name: item.label,
+                      };
+                    },
+                  )}
+                />,
+              }
             );
           break;
         case 'product_configurations':
@@ -82,8 +113,9 @@ export default function SettingFilter({ settings }: Props) {
                 configuration: ProductConfigurationsDto;
                 values: ProductConfigurationValuesDto[];
               }) => {
-                xhtml.push(
-                  <SettingFilterItem
+                xhtml.push({
+                  sort: 2,
+                  data: <SettingFilterItem
                     key={key}
                     filterKey={key}
                     title={item.configuration.name || ''}
@@ -92,13 +124,35 @@ export default function SettingFilter({ settings }: Props) {
                       name: value.value,
                     }))}
                   />,
-                );
+                });
               },
             );
           break;
+        case 'brands':
+          (settings[key] as BrandDto[]).length > 0 &&
+          xhtml.push(
+            {
+              sort: 6,
+              data: <SettingFilterItem
+                key={key}
+                filterKey={key}
+                title={'Nhãn hiệu'}
+                entity={Entity.BRANDS}
+                value={(settings[key] || []).map(
+                  (item: BrandDto) => {
+                    return {
+                      id: item.id,
+                      name: item.name,
+                    };
+                  },
+                )}
+              />,
+            }
+          );
+          break
       }
     }
-    return xhtml;
+    return orderBy(xhtml, ['sort'], ['asc']).map((item) => item.data);
   };
   return <div className={'hidden lg:block p-3'}>{renderTree()}</div>;
 }

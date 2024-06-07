@@ -35,7 +35,7 @@ export default function ProductConfiguration({
         return (
           <div key={index}>
             <p>{item.name}: </p>
-            <div className={'flex gap-3'}>
+            <div className={'flex gap-3 items-center'}>
               {item?.product_configuration_values?.map((value, index2) => {
                 const isActived = valueIdActive.find(
                   (item) => item.valueId === value.id,

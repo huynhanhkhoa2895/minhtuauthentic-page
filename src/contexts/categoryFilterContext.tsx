@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { CATEGORY_FILTER } from '@/config/enum';
+import { CATEGORY_FILTER, Entity } from '@/config/enum';
 const CategoryFilterContext = createContext<TypeAppState | undefined>(
   undefined,
 );
@@ -13,10 +13,15 @@ import { useRouter } from 'next/router';
 import { parseQueryString } from '@/utils';
 import { ProductDto } from '@/dtos/Product.dto';
 import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage.dto';
+import { SlugDto } from '@/dtos/Slug.dto';
 
 export type TypeAppState = {
+  objFilterByValue: Record<string, Record<string, string>>;
+  setObjFilterByValue: Dispatch<SetStateAction<Record<string, Record<string, string>>>> | undefined;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>> | undefined;
+  dataSlug: SlugDto | null;
+  setDataSlug: Dispatch<SetStateAction<SlugDto | null>> | undefined;
   products: ProductDto[];
   setProducts: Dispatch<SetStateAction<ProductDto[]>> | undefined;
   sortBy: string;
@@ -43,13 +48,14 @@ export const CategoryFilterProvider = ({
   const [sortBy, setSortBy] = useState<string>(
     queryString.get('sort') || CATEGORY_FILTER.SORT_BY.DATE_DESC,
   );
+  const [dataSlug, setDataSlug] = useState<SlugDto | null>(null);
 
   const [limit, setLimit] = useState<number>(
     Number(queryString.get('limit')) || 24,
   );
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-
+  const [objFilterByValue, setObjFilterByValue] = useState<Record<string, Record<string, string>>>({});
   const [filters, setFilters] = useState<Record<string, (number | string)[]>>(
     parseQueryString(queryString.toString()),
   );
@@ -72,7 +78,15 @@ export const CategoryFilterProvider = ({
       updateRouter(params.toString());
     }, 500);
   }, [sortBy, limit, filters]);
-
+  useEffect(() => {
+    const _filters: Record<string,( string | number)[]> = {};
+    if (dataSlug?.model === Entity.CATEGORIES) {
+      _filters['categories'] = [dataSlug.model_id as number];
+    } else if (dataSlug?.model === Entity.BRANDS) {
+      _filters['brands'] = [dataSlug.model_id as number];
+    }
+    setFilters(Object.assign(_filters, filters));
+  }, [dataSlug]);
   const updateRouter = (params: string) => {
     setCount(count + 1);
     router.push(
@@ -124,6 +138,10 @@ export const CategoryFilterProvider = ({
         setLoading,
         products,
         setProducts,
+        objFilterByValue,
+        setObjFilterByValue,
+        dataSlug,
+        setDataSlug,
       }}
     >
       {children}

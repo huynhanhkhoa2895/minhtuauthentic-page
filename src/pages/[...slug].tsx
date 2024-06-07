@@ -64,7 +64,7 @@ export default function Page({
       case Entity.KEYWORDS:
         return (
           <CategoryTemplate
-            data={slug?.data as ResponseCategoryFilterPageDto}
+            slug={slug}
           />
         );
       default:

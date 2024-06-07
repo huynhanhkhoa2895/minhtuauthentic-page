@@ -5,17 +5,74 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 import PageLimit from '@/components/organisms/categoryFilter/ContentFilter/pageLimit';
 import CategoryFilterContext from '@/contexts/categoryFilterContext';
 import Loading from '@/components/atoms/loading';
+import FilterBy from '@/components/organisms/categoryFilter/ContentFilter/filterBy';
+import { ProductFilterOptionDto } from '@/dtos/ProductFilterSettingOption/ProductFilterOption.dto';
+import { ProductConfigurationValuesDto } from '@/dtos/productConfigurationValues.dto';
+import { SlugDto } from '@/dtos/Slug.dto';
 
 type Props = {
+  settings?: ProductFilterOptionDto;
   products: ProductDto[];
+  slugData: SlugDto;
 };
 
-export default function ContentFilter({ products }: Props) {
+export default function ContentFilter({ products, settings, slugData }: Props) {
   const ctx = useContext(CategoryFilterContext);
   const [_products, setProducts] = useState<ProductDto[]>(products);
   const [isReady, setIsReady] = useState(false);
+  const convertSettingToObject = () => {
+    let obj: Record<string, Record<string, string>> = {
+      sex: {
+        0: 'Nữ',
+        1: 'Nam',
+        2: 'Unisex'
+      }
+    };
+    if (settings) {
+      for (const setting in settings) {
+        const value = (settings as any)[setting];
+        if (Array.isArray(value)) {
+          switch (setting) {
+            case 'concentration_gradients':
+            case 'fragrance_retention':
+            case 'brands':
+            case 'categories':
+              obj[setting] = value.reduce((acc, item) => {
+                acc[item.id] = item.name;
+                return acc;
+              }, {});
+              break;
+            case 'price_range':
+              obj[setting] = value.reduce((acc, item) => {
+                acc[item.min+'_'+item.max] = item.label;
+                return acc;
+              }, {});
+              break;
+            case 'product_configurations':
+              obj[setting] = {};
+              value.map((item)=>{
+                item.values.map((item2: ProductConfigurationValuesDto)=>{
+                  obj[setting][item2.id as any] = item2.value || '';
+                })
+
+              });
+              break;
+          }
+        }
+      }
+    }
+    return obj;
+  }
   useEffect(() => {
     setIsReady(true);
+  }, []);
+  useEffect(() => {
+    if (ctx?.setObjFilterByValue && Object.keys(ctx?.objFilterByValue).length === 0) {
+      ctx.setObjFilterByValue(convertSettingToObject());
+    }
+    if (ctx?.setDataSlug) {
+      ctx.setDataSlug(slugData)
+    }
   }, []);
   useEffect(() => {
     if (isReady) {
@@ -51,8 +108,9 @@ export default function ContentFilter({ products }: Props) {
   }, [_products]);
   return (
     <div className={'p-3 w-full lg:col-span-5'}>
-      <div>
-        <span className={'font-semibold text-[16px]'}>Lọc theo:</span>
+      <div className={'mb-6'}>
+        <span className={'font-semibold text-[16px] shrink-0'}>Lọc theo:</span>
+        <FilterBy />
       </div>
       <div className={'flex flex-col mb-6'}>
         <span className={'font-semibold text-[16px] w-full mb-3'}>

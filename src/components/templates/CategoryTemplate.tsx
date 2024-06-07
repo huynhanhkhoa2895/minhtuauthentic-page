@@ -1,12 +1,15 @@
-import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage.dto';
 import SettingFilter from '@/components/organisms/categoryFilter/settingFilter';
 import ContentFilter from '@/components/organisms/categoryFilter/ContentFilter';
 import { CategoryFilterProvider } from '@/contexts/categoryFilterContext';
+import { ResponseSlugPageDto } from '@/dtos/responseSlugPage.dto';
+import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage.dto';
+import { SlugDto } from '@/dtos/Slug.dto';
 
 type Props = {
-  data: ResponseCategoryFilterPageDto;
+  slug: ResponseSlugPageDto;
 };
-export default function CategoryTemplate({ data }: Props) {
+export default function CategoryTemplate({ slug }: Props) {
+  const data = slug.data as ResponseCategoryFilterPageDto;
   return (
     <CategoryFilterProvider>
       <div
@@ -15,7 +18,11 @@ export default function CategoryTemplate({ data }: Props) {
         }
       >
         <SettingFilter settings={data.settings} />
-        <ContentFilter products={data.products || []} />
+        <ContentFilter products={data.products || []} settings={data.settings} slugData={new SlugDto({
+          model: slug.model,
+          model_id: slug.model_id,
+          slug: slug.slug,
+        })}/>
       </div>
     </CategoryFilterProvider>
   );
