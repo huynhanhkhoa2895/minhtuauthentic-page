@@ -2,11 +2,16 @@ import { ReactNode, useContext } from 'react';
 import CategoryFilterContext from '@/contexts/categoryFilterContext';
 import { ProductFilterOptionDto } from '@/dtos/ProductFilterSettingOption/ProductFilterOption.dto';
 import CloseCircle from '@/components/icons/closeCircle';
+import { getModelEntity } from '@/utils';
+import { Entity } from '@/config/enum';
 
 export default function FilterBy(){
   const ctx = useContext(CategoryFilterContext);
   const _settings = ctx?.objFilterByValue;
   const handleClose = (key: string,id: string| number) => {
+    if(getModelEntity(key) === Entity.CATEGORIES || getModelEntity(key) === Entity.BRANDS){
+      return;
+    }
     let _filter = { ...ctx?.filters };
     const value = _filter[key] || [];
     const indexValue = value.findIndex((item) => item.toString() === id.toString());
