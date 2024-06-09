@@ -16,6 +16,7 @@ import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { SettingOptionDto } from '@/dtos/SettingOption.dto';
+import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 export const getServerSideProps = (async () => {
   // Fetch data from external API
   const res = await fetch(process.env.BE_URL + '/api/pages/home').catch(
@@ -23,16 +24,7 @@ export const getServerSideProps = (async () => {
       return null;
     },
   );
-  const resMenu = await fetch(process.env.BE_URL + '/api/pages/menu').catch(
-    (error) => {
-      return null;
-    },
-  );
-  const resFooter = await fetch(process.env.BE_URL + '/api/pages/footer').catch(
-    (error) => {
-      return null;
-    },
-  );
+  const {resMenu, resFooter} = await getDefaultSeverSide()
 
   const data: { data: ResponseHomePageDto } = res ? await res.json() : null;
   const dataMenu: { data: ResponseMenuDto } = resMenu
