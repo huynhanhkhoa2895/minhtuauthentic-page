@@ -4,9 +4,10 @@ import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import LoginTemplate from '@/components/templates/LoginTemplate';
 
 export const getServerSideProps = (async () => {
-  const {resMenu, resFooter} = await getDefaultSeverSide();
+  const { resMenu, resFooter } = await getDefaultSeverSide();
   const dataMenu: { data: ResponseMenuDto } = resMenu
     ? await resMenu.json()
     : null;
@@ -22,17 +23,19 @@ export const getServerSideProps = (async () => {
 }) satisfies GetServerSideProps<{
   menu: ResponseMenuDto;
   footerContent: ResponseFooterDto;
-}>
+}>;
 
 export default function LoginPage({
   menu,
-  footerContent
+  footerContent,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  return(
+  return (
     <>
       <Header homeMenuCategory={menu.homeMenuCategory} />
-      <div className={'container mx-auto'}>Dang nhap</div>
+      <div className={'container mx-auto p-3'}>
+        <LoginTemplate />
+      </div>
       <Footer footerContent={footerContent} />
     </>
-  )
+  );
 }

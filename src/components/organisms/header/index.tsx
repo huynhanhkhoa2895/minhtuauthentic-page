@@ -11,6 +11,7 @@ import { twMerge } from 'tailwind-merge';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
+import { Button, Dropdown } from 'antd';
 
 export const Header = (menu: ResponseMenuDto | null) => {
   const pathname = usePathname();
@@ -33,7 +34,7 @@ export const Header = (menu: ResponseMenuDto | null) => {
               src={Logo}
               priority={true}
               height={54}
-              width={288}
+              width={227}
               className={'object-contain w-auto h-auto '}
               alt={
                 'Minh Tu Authentic, Nước hoa chính hãng Tphcm, Quận Tân Phú, Mỹ phẩm'
@@ -64,12 +65,36 @@ export const Header = (menu: ResponseMenuDto | null) => {
           >
             Giỏ hàng
           </HeaderItem>
-          <HeaderItem
-            className={'w-max'}
-            icon={<IconUser className={'w-[30px] h-[30px]'} />}
+          <Dropdown
+            menu={{
+              items: [
+                {
+                  key: '1',
+                  label: <Link href="/tai-khoan/dang-nhap">Đăng nhập</Link>,
+                },
+                {
+                  key: '2',
+                  label: <Link href="/tai-khoan/dang-ky">Đăng ký</Link>,
+                },
+              ],
+            }}
+            placement="bottomLeft"
           >
-            Tài Khoản
-          </HeaderItem>
+            <Button
+              icon={<IconUser className={'w-[30px] h-[30px]'} />}
+              type={'link'}
+              className={'text-white items-center flex hover:!text-white'}
+            >
+              Tài Khoản
+            </Button>
+            {/*<HeaderItem*/}
+            {/*  className={'w-max'}*/}
+            {/*  icon={<IconUser className={'w-[30px] h-[30px]'} />}*/}
+            {/*  isButton*/}
+            {/*>*/}
+            {/*  Tài Khoản*/}
+            {/*</HeaderItem>*/}
+          </Dropdown>
         </div>
       </header>
       <div
