@@ -1,7 +1,7 @@
 import { Form, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Button, Input } from 'antd';
+import { Button, Input, notification } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import GmailIcon from '@/components/icons/gmail';
 import FormControl from '@/components/molecules/form/FormControl';
@@ -9,6 +9,9 @@ import { UserDto } from '@/dtos/User.dto';
 import useUser from '@/hooks/useUser';
 import { useState } from 'react';
 import { handleDataFetch } from '@/utils/api';
+import Link from 'next/link';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 const schema = yup
   .object({
     username: yup.string().required('Vui lòng nhập tên đăng nhập'),
@@ -16,6 +19,7 @@ const schema = yup
   })
   .required();
 export default function FormLogin() {
+  const router = useRouter();
   const {
     handleSubmit,
     control,
@@ -28,6 +32,8 @@ export default function FormLogin() {
     },
   });
   const { setCookieUser } = useUser();
+  const [api, contextHolder] = notification.useNotification();
+
   const [errorSubmit, setErrorSubmit] = useState<string | null>(null);
   return (
     <form
@@ -40,11 +46,18 @@ export default function FormLogin() {
           .then((data) => handleDataFetch(data))
           .catch((error) => {
             setErrorSubmit('Tên đăng nhập hoặc mật khẩu không đúng');
+            toast.error('Đăng nhập thất bại');
             return null;
           });
-        console.log(rs);
         if (rs?.data?.token) {
+          toast.success('Đăng nhập thành công');
           setCookieUser(rs.data);
+          const redirect = router.query.redirectUrl;
+          if (redirect) {
+            router.push(redirect as string);
+          } else {
+            router.push('/');
+          }
         }
       })}
       onError={(errors) => {
@@ -79,10 +92,9 @@ export default function FormLogin() {
           <Button type="primary" htmlType={'submit'}>
             Đăng nhập
           </Button>
-          <Button
-            type={'link'}
-            className={'text-primary hover:!text-primary'}
-          ></Button>
+          <Button type={'link'} className={'text-primary hover:!text-primary'}>
+            <Link href={'/tai-khoan/dang-ky'}>Đăng ký</Link>
+          </Button>
         </div>
       </div>
       <div className={'login-options'}>

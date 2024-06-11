@@ -12,9 +12,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { Button, Dropdown } from 'antd';
+import useUser from '@/hooks/useUser';
+import { useRouter } from 'next/router';
 
 export const Header = (menu: ResponseMenuDto | null) => {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, logout } = useUser();
   return (
     <>
       <div className={'bg-primaryGrey relative z-[3]'}>
@@ -67,16 +71,49 @@ export const Header = (menu: ResponseMenuDto | null) => {
           </HeaderItem>
           <Dropdown
             menu={{
-              items: [
-                {
-                  key: '1',
-                  label: <Link href="/tai-khoan/dang-nhap">Đăng nhập</Link>,
-                },
-                {
-                  key: '2',
-                  label: <Link href="/tai-khoan/dang-ky">Đăng ký</Link>,
-                },
-              ],
+              items: user
+                ? [
+                    {
+                      key: '2',
+                      label: (
+                        <button type={'button'} onClick={() => logout()}>
+                          Đăng xuất
+                        </button>
+                      ),
+                    },
+                  ]
+                : [
+                    {
+                      key: '1',
+                      label: (
+                        <Link
+                          href={
+                            '/tai-khoan/dang-nhap?' +
+                            new URLSearchParams({
+                              redirectUrl: router.asPath,
+                            }).toString()
+                          }
+                        >
+                          Đăng nhập
+                        </Link>
+                      ),
+                    },
+                    {
+                      key: '2',
+                      label: (
+                        <Link
+                          href={
+                            '/tai-khoan/dang-ky' +
+                            new URLSearchParams({
+                              redirectUrl: router.asPath,
+                            }).toString()
+                          }
+                        >
+                          Đăng ký
+                        </Link>
+                      ),
+                    },
+                  ],
             }}
             placement="bottomLeft"
           >
@@ -85,7 +122,7 @@ export const Header = (menu: ResponseMenuDto | null) => {
               type={'link'}
               className={'text-white items-center flex hover:!text-white'}
             >
-              Tài Khoản
+              {user ? user.name || user.email : 'Tài Khoản'}
             </Button>
             {/*<HeaderItem*/}
             {/*  className={'w-max'}*/}

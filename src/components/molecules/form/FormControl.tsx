@@ -54,7 +54,6 @@ export default function FormControl({
   placeholder,
   prefix,
 }: Props) {
-  console.log('errors[name]', errors[name]);
   return (
     <div>
       <Controller
@@ -67,7 +66,6 @@ export default function FormControl({
             placeholder={placeholder}
             type={type}
             onChange={(value: string) => {
-              console.log('value change', value);
               field.onChange(value);
             }}
           />
