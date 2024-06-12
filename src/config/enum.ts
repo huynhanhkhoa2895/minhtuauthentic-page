@@ -100,6 +100,7 @@ export const SETTING_KEY = {
     LABEL: 'Chính sách đổi trả và bảo hành',
   },
 };
+export type OrderStatus = 'processing' | 'pending' | 'done' | 'new' | 'close';
 
 export const CATEGORY_FILTER = {
   SORT_BY: {

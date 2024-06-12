@@ -4,6 +4,7 @@ import { Roboto } from 'next/font/google';
 import { AppProvider } from '@/contexts/appContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { OrderProvider } from '@/contexts/orderContext';
 const roboto = Roboto({
   subsets: ['latin'],
   display: 'swap',
@@ -12,10 +13,12 @@ const roboto = Roboto({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <AppProvider>
-      <main className={roboto.className}>
-        <Component {...pageProps} />
-        <ToastContainer />
-      </main>
+      <OrderProvider>
+        <main className={roboto.className}>
+          <Component {...pageProps} />
+          <ToastContainer />
+        </main>
+      </OrderProvider>
     </AppProvider>
   );
 }

@@ -14,6 +14,7 @@ import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { Button, Dropdown } from 'antd';
 import useUser from '@/hooks/useUser';
 import { useRouter } from 'next/router';
+import HeaderCart from '@/components/icons/header-cart';
 
 export const Header = (menu: ResponseMenuDto | null) => {
   const pathname = usePathname();
@@ -65,7 +66,7 @@ export const Header = (menu: ResponseMenuDto | null) => {
 
           <HeaderItem
             className={'w-max'}
-            icon={<IconCart className={'w-[30px] h-[30px]'} />}
+            icon={<HeaderCart className={'w-[40px] h-[40px]'} />}
           >
             Giỏ hàng
           </HeaderItem>

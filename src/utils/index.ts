@@ -1,5 +1,6 @@
 import { Entity } from '@/config/enum';
 import { VariantDto } from '@/dtos/Variant.dto';
+import { IVariantProductConfigurationValuesDto } from '@/dtos/iVariantProductConfigurationValues.dto';
 
 export function formatMoney(
   amount: number | string,
@@ -148,4 +149,15 @@ export function parseQueryString(queryString: string) {
   });
 
   return result;
+}
+
+export function variantName(
+  variant_product_configuration_values?: IVariantProductConfigurationValuesDto[],
+) {
+  if (!variant_product_configuration_values) return '';
+  let str = '';
+  variant_product_configuration_values.map((item) => {
+    str += `(${item?.product_configuration_value?.product_configuration?.name}: ${item?.product_configuration_value?.value}) `;
+  });
+  return str.trim();
 }
