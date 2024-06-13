@@ -23,8 +23,12 @@ html, body {
   @apply min-h-[300px];
 }
 
-.ant-btn-primary {
+.ant-btn-primary, ant-btn-primary:hover{
   @apply bg-primary;
+}
+
+.ant-btn-link, .ant-btn-link:hover {
+  @apply text-primary;
 }
 
 .login-options{

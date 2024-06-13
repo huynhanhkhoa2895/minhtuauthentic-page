@@ -2,6 +2,7 @@ import { BaseDto } from '@/dtos/Base.dto';
 import { VariantDto } from '@/dtos/Variant.dto';
 import { OrdersDto } from '@/dtos/Orders.dto';
 import { CouponDetailDto } from '@/dtos/CouponDetail.dto';
+import { ImageDto } from '@/dtos/Image.dto';
 
 export class OrderItemsDto extends BaseDto {
   type?: string;
@@ -17,7 +18,7 @@ export class OrderItemsDto extends BaseDto {
   variant?: VariantDto;
   order?: OrdersDto;
   coupons?: CouponDetailDto[];
-
+  image?: ImageDto;
   constructor(init?: Partial<OrderItemsDto>) {
     super();
     Object.assign(this, init);

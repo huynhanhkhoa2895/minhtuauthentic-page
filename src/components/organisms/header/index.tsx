@@ -15,11 +15,16 @@ import { Button, Dropdown } from 'antd';
 import useUser from '@/hooks/useUser';
 import { useRouter } from 'next/router';
 import HeaderCart from '@/components/icons/header-cart';
+import CartPreview from '@/components/molecules/header/cartPreview';
+import { CloseCircleOutlined } from '@ant-design/icons';
+import OrderContext from '@/contexts/orderContext';
+import { useContext } from 'react';
 
 export const Header = (menu: ResponseMenuDto | null) => {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useUser();
+  const orderCtx = useContext(OrderContext);
   return (
     <>
       <div className={'bg-primaryGrey relative z-[3]'}>
@@ -63,13 +68,41 @@ export const Header = (menu: ResponseMenuDto | null) => {
             <p className={'w-max'}>Tra cứu</p>
             <p className={'w-max'}>đơn hàng</p>
           </HeaderItem>
+          <div className={'relative'}>
+            <HeaderItem
+              className={'w-max'}
+              icon={<HeaderCart className={'w-[40px] h-[40px]'} />}
+              isButton
+              onClick={() =>
+                orderCtx?.setIsOpenHeaderCart &&
+                orderCtx?.setIsOpenHeaderCart(!orderCtx?.isOpenHeaderCart)
+              }
+            >
+              Giỏ hàng
+            </HeaderItem>
+            <div
+              className={twMerge(
+                'absolute top-12 -left-12 bg-white p-3 z-[2] rounded-[10px] shadow-custom transition-opacity duration-500',
+                orderCtx?.isOpenHeaderCart
+                  ? 'visible opacity-100 '
+                  : 'invisible opacity-0',
+              )}
+            >
+              <div className={'flex justify-between items-center mb-3 w-full'}>
+                <span className={'text-black font-semibold'}>Giỏ hàng</span>
+                <Button
+                  icon={<CloseCircleOutlined />}
+                  type={'link'}
+                  onClick={() => {
+                    orderCtx?.setIsOpenHeaderCart &&
+                      orderCtx?.setIsOpenHeaderCart(false);
+                  }}
+                ></Button>
+              </div>
+              <CartPreview />
+            </div>
+          </div>
 
-          <HeaderItem
-            className={'w-max'}
-            icon={<HeaderCart className={'w-[40px] h-[40px]'} />}
-          >
-            Giỏ hàng
-          </HeaderItem>
           <Dropdown
             menu={{
               items: user
@@ -125,13 +158,6 @@ export const Header = (menu: ResponseMenuDto | null) => {
             >
               {user ? user.name || user.email : 'Tài Khoản'}
             </Button>
-            {/*<HeaderItem*/}
-            {/*  className={'w-max'}*/}
-            {/*  icon={<IconUser className={'w-[30px] h-[30px]'} />}*/}
-            {/*  isButton*/}
-            {/*>*/}
-            {/*  Tài Khoản*/}
-            {/*</HeaderItem>*/}
           </Dropdown>
         </div>
       </header>

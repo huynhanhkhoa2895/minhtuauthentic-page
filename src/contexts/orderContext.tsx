@@ -1,4 +1,10 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 import { VariantDto } from '@/dtos/Variant.dto';
 import { toast } from 'react-toastify';
@@ -7,12 +13,15 @@ const OrderContext = createContext<TypeAppState | undefined>(undefined);
 export type TypeAppState = {
   cart: OrderItemsDto[];
   addCart: (product_name: string, variantDto: VariantDto, qty?: number) => void;
-  updateCart: (variantDto: VariantDto, qty?: number) => void;
+  updateCart: (index: number, qty?: number) => void;
   removeCart: (variantDto: VariantDto) => void;
+  isOpenHeaderCart?: boolean;
+  setIsOpenHeaderCart?: Dispatch<SetStateAction<boolean>>;
 };
 export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<OrderItemsDto[]>([]);
   const [ready, setReady] = useState(false);
+  const [isOpenHeaderCart, setIsOpenHeaderCart] = useState(false);
   useEffect(() => {
     const cart = localStorage.getItem('cart');
     if (cart) {
@@ -24,11 +33,14 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     ready && localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
-  const addCart = (
+  const addCart = async (
     product_name: string,
     variant: VariantDto,
     qty: number = 1,
   ) => {
+    const detailVariant: { data: VariantDto } = await fetch(
+      `/api/variant/${variant.id}`,
+    ).then((res) => res.json());
     const newCart = [...cart];
     const index = newCart.findIndex((item) => item.variant_id === variant.id);
     const orderItem = newCart[index];
@@ -47,27 +59,30 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
           variant_id: variant.id,
           qty,
           price: variant.price,
-          variant_name: product_name,
+          variant_name:
+            product_name +
+            variantName(
+              detailVariant?.data?.variant_product_configuration_values,
+            ),
           variant_price: variant.price,
           variant_regular_price: variant.regular_price,
+          image: detailVariant?.data?.images?.[0]?.image,
         }),
       ]);
     }
   };
 
-  const updateCart = (product: VariantDto, qty: number = 1) => {
-    const exist = cart.find((item) => item.variant_id === product.id);
+  const updateCart = (index: number, qty: number = 1) => {
+    const newCart = [...cart];
     if (qty < 1) {
       toast.error('Số lượng phải lớn hơn 0');
       return;
     }
-    if (exist) {
-      if (qty === 0) {
-        removeCart(product);
-      } else {
-        exist.qty = qty;
-        setCart([...cart]);
-      }
+    if (index !== -1) {
+      const orderItem = newCart[index];
+      orderItem.qty = qty;
+      newCart[index] = orderItem;
+      setCart(newCart);
     }
   };
 
@@ -85,6 +100,8 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
         addCart,
         updateCart,
         removeCart,
+        isOpenHeaderCart,
+        setIsOpenHeaderCart,
       }}
     >
       {children}

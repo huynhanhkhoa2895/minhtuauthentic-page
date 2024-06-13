@@ -7,11 +7,13 @@ const HeaderItem = ({
   children,
   className,
   isButton,
+  onClick,
 }: {
   icon: React.ReactNode;
   children: React.ReactNode;
   className?: string;
   isButton?: boolean;
+  onClick?: () => void;
 }) => {
   const renderItem = () => {
     return (
@@ -24,7 +26,9 @@ const HeaderItem = ({
   return (
     <>
       {isButton ? (
-        <Button>{renderItem()}</Button>
+        <button type={'button'} onClick={onClick}>
+          {renderItem()}
+        </button>
       ) : (
         <Link
           href={'/'}

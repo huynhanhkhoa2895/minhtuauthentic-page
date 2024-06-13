@@ -19,8 +19,8 @@ export default function HomeFeatureCategory({ contents, setting }: Props) {
         </h3>
       </div>
       <SectionSwiper
-        slidesPerView={12}
-        spaceBetween={12}
+        slidesPerView={10}
+        spaceBetween={10}
         renderItem={(item: unknown) => {
           const content = item as StaticContentsDto;
           return <BlockUnderSlideItem content={content} />;

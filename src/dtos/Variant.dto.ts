@@ -2,6 +2,7 @@ import { BaseDto } from '@/dtos/Base.dto';
 import { ProductDto } from '@/dtos/Product.dto';
 import { ImageDetailDto } from '@/dtos/ImageDetail.dto';
 import { IVariantProductConfigurationValuesDto } from '@/dtos/iVariantProductConfigurationValues.dto';
+import { ImageDto } from '@/dtos/Image.dto';
 
 export class VariantDto extends BaseDto {
   product_id?: number;
@@ -9,6 +10,7 @@ export class VariantDto extends BaseDto {
   price?: number;
   is_default?: boolean;
   product?: ProductDto;
+  image?: ImageDto;
   images?: ImageDetailDto[];
   variant_product_configuration_values?: IVariantProductConfigurationValuesDto[];
 
