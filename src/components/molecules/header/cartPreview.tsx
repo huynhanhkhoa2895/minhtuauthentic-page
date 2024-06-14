@@ -6,6 +6,7 @@ import { InputNumber } from 'antd';
 import { Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { formatMoney } from '@/utils';
+import Link from 'next/link';
 
 export default function CartPreview() {
   const order = useContext(OrderContext);
@@ -13,7 +14,7 @@ export default function CartPreview() {
     order?.updateCart && order.updateCart(index, value || 0);
   };
   return (
-    <div className={'flex flex-col'}>
+    <div className={'flex flex-col gap-3'}>
       {order?.cart?.map((item: OrderItemsDto, key: number) => {
         return (
           <div
@@ -47,6 +48,7 @@ export default function CartPreview() {
           </div>
         );
       })}
+      <Link className={'block w-full p-2 text-lg font-semibold bg-primary text-white text-center rounded-[10px] shadow-custom cursor-pointer'} href={'/gio-hang/tom-tat'}>Thanh toán</Link>
     </div>
   );
 }

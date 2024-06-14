@@ -66,6 +66,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
             ),
           variant_price: variant.price,
           variant_regular_price: variant.regular_price,
+          slug: detailVariant?.data?.product?.slugs?.slug,
           image: detailVariant?.data?.images?.[0]?.image,
         }),
       ]);
