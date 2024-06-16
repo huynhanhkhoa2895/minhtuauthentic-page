@@ -5,7 +5,7 @@ import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 import { InputNumber } from 'antd';
 import { Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import { formatMoney } from '@/utils';
+import { formatMoney, generateSlugToHref } from '@/utils';
 import Link from 'next/link';
 
 export default function CartPreview() {
@@ -28,9 +28,12 @@ export default function CartPreview() {
               />
             </div>
             <div className={'flex flex-col gap-2 '}>
-              <span className={'text-primary text-[12px] text-left'}>
+              <Link
+                href={generateSlugToHref(item?.slug)}
+                className={'text-primary text-[12px] text-left'}
+              >
                 {item?.variant_name}
-              </span>
+              </Link>
               <div className={'flex justify-between items-center'}>
                 <InputNumber
                   min={1}
@@ -43,12 +46,24 @@ export default function CartPreview() {
               </div>
             </div>
             <div>
-              <Button icon={<DeleteOutlined />} danger type={'link'}></Button>
+              <Button
+                icon={<DeleteOutlined />}
+                danger
+                type={'link'}
+                onClick={() => order?.removeCart && order.removeCart(key)}
+              ></Button>
             </div>
           </div>
         );
       })}
-      <Link className={'block w-full p-2 text-lg font-semibold bg-primary text-white text-center rounded-[10px] shadow-custom cursor-pointer'} href={'/gio-hang/tom-tat'}>Thanh toán</Link>
+      <Link
+        className={
+          'block w-full p-2 text-lg font-semibold bg-primary text-white text-center rounded-[10px] shadow-custom cursor-pointer'
+        }
+        href={'/gio-hang/tom-tat'}
+      >
+        Thanh toán
+      </Link>
     </div>
   );
 }

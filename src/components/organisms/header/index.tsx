@@ -82,7 +82,7 @@ export const Header = (menu: ResponseMenuDto | null) => {
             </HeaderItem>
             <div
               className={twMerge(
-                'absolute top-12 -left-12 bg-white p-3 z-[2] rounded-[10px] shadow-custom transition-opacity duration-500',
+                'absolute max-h-[500px] overflow-auto top-12 -left-12 bg-white p-3 z-[2] rounded-[10px] shadow-custom transition-opacity duration-500',
                 orderCtx?.isOpenHeaderCart
                   ? 'visible opacity-100 '
                   : 'invisible opacity-0',
@@ -154,7 +154,7 @@ export const Header = (menu: ResponseMenuDto | null) => {
             <Button
               icon={<IconUser className={'w-[30px] h-[30px]'} />}
               type={'link'}
-              className={'text-white items-center flex hover:!text-white'}
+              className={'!text-white items-center flex hover:!text-white'}
             >
               {user ? user.name || user.email : 'Tài Khoản'}
             </Button>

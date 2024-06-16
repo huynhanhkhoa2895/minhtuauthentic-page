@@ -57,16 +57,15 @@ export default function Page({
     switch (slug?.model) {
       case Entity.PRODUCTS:
         return (
-          <ProductTemplate data={slug?.data as ResponseProductDetailPageDto} />
+          <ProductTemplate
+            key={slug?.data?.product?.id}
+            data={slug?.data as ResponseProductDetailPageDto}
+          />
         );
       case Entity.CATEGORIES:
       case Entity.BRANDS:
       case Entity.KEYWORDS:
-        return (
-          <CategoryTemplate
-            slug={slug}
-          />
-        );
+        return <CategoryTemplate slug={slug} />;
       default:
         return <div>Not Found</div>;
     }

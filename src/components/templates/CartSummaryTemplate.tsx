@@ -1,15 +1,18 @@
 import { twMerge } from 'tailwind-merge';
 import { useContext } from 'react';
 import OrderContext from '@/contexts/orderContext';
-import { Button, Table } from 'antd';
-import type { TableProps } from 'antd';
+import { Button, InputNumber, Table } from 'antd';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
-import { DeleteRowOutlined } from '@ant-design/icons';
+import { DeleteOutlined, DeleteRowOutlined } from '@ant-design/icons';
 import { formatMoney, generateSlugToHref } from '@/utils';
 import Link from 'next/link';
+import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
 
 export default function CartSummaryTemplate() {
   const orderCtx = useContext(OrderContext);
+  const total = orderCtx?.cart?.reduce((acc, item) => {
+    return acc + (item.variant_price || 0) * (item.qty || 0);
+  }, 0);
   return (
     <div
       className={twMerge(
@@ -18,38 +21,104 @@ export default function CartSummaryTemplate() {
     >
       <table className={'border border-gray-200 w-full'}>
         <thead>
-        <tr>
-          <th>Hình ảnh</th>
-          <th>Sản phẩm</th>
-          <th>Giá</th>
-          <th>Số lượng</th>
-          <th>Tổng tiền</th>
-          <th>Xóa</th>
-        </tr>
+          <tr>
+            <th>Hình ảnh</th>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Tổng tiền</th>
+            <th>Xóa</th>
+          </tr>
         </thead>
         <tbody>
           {orderCtx?.cart?.map((item, index) => {
             return (
-              <tr key={item.variant_id+'_'+index}>
-                <td className={'border-y border-gray-200'}>
-                  <div className={'w-[100px] h-[100px]'}>
-                    <ImageWithFallback className={'w-[100px] h-[100px]'} image={item?.image} alt={item.variant_name} />
+              <tr key={item.variant_id + '_' + index}>
+                <td className={'border-y border-gray-200 p-3 text-center'}>
+                  <div className={'w-[100px] h-[100px] mx-auto'}>
+                    <ImageWithFallback
+                      className={'w-[100px] h-[100px]'}
+                      image={item?.image}
+                      alt={item.variant_name}
+                    />
                   </div>
                 </td>
-                <td className={'border-y border-gray-200'}>
-                  <Link href={generateSlugToHref(item.slug)}>{item.variant_name}</Link>
+                <td className={'border-y border-gray-200 max-w-[200px]'}>
+                  <Link
+                    href={generateSlugToHref(item.slug)}
+                    className={'text-primary font-semibold '}
+                  >
+                    {item.variant_name}
+                  </Link>
                 </td>
-                <td className={'border-y border-gray-200'}>{formatMoney(item.variant_price || 0)}</td>
-                <td className={'border-y border-gray-200'}></td>
-                <td className={'border-y border-gray-200'}>{formatMoney(((item.variant_price || 0) * (item.qty || 0)) || 0)}</td>
-                <td className={'border-y border-gray-200'}>
-                  <Button icon={<DeleteRowOutlined />}></Button>
+                <td className={'border-y border-gray-200 text-center'}>
+                  <PriceWithLineThrough
+                    regularPrice={item.variant_regular_price}
+                    price={item.variant_price}
+                  />
+                </td>
+                <td className={'border-y border-gray-200 text-center'}>
+                  <InputNumber
+                    min={1}
+                    value={item.qty}
+                    onChange={(value) => {
+                      orderCtx?.updateCart &&
+                        orderCtx.updateCart(index, value || 1);
+                    }}
+                  />
+                </td>
+                <td className={'border-y border-gray-200 text-center'}>
+                  {formatMoney(
+                    (item.variant_price || 0) * (item.qty || 0) || 0,
+                    0,
+                    '.',
+                    '.',
+                  )}
+                </td>
+                <td className={'border-y border-gray-200 text-center'}>
+                  <Button icon={<DeleteOutlined />} danger></Button>
                 </td>
               </tr>
-            )
+            );
           })}
         </tbody>
       </table>
+      <div className={'w-full lg:w-[40%] lg:ml-auto max-w-full mt-6'}>
+        <h4 className={'text-2xl text-primary font-bold mb-3'}>
+          Tổng giỏ hàng
+        </h4>
+        <table className={'w-full border border-gray-200'}>
+          <tbody>
+            <tr>
+              <td className={'p-3 border-b border-gray-200'}>Tạm tính</td>
+              <td
+                className={
+                  'text-right text-primary font-semibold p-3 border-b border-gray-200'
+                }
+              >
+                {formatMoney(total || 0, 0, '.', '.')}
+              </td>
+            </tr>
+            <tr>
+              <td className={'p-3'}>
+                <p>Tổng tiền</p>
+                <p className={'text-sm italic'}>(Miễn phí vận chuyển)</p>
+              </td>
+              <td className={'text-right text-primary font-semibold p-3'}>
+                {formatMoney(total || 0, 0, '.', '.')}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <Link
+          href={'/gio-hang/thanh-toan'}
+          className={
+            'block w-full p-3 text-xl font-semibold bg-primary text-white text-center rounded-[10px] shadow-custom cursor-pointer mt-3'
+          }
+        >
+          Tiến hành thanh toán
+        </Link>
+      </div>
     </div>
-  )
+  );
 }

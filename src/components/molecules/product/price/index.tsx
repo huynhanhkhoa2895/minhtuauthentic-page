@@ -2,6 +2,7 @@ import { ProductDto } from '@/dtos/Product.dto';
 import { twMerge } from 'tailwind-merge';
 import { formatMoney } from '@/utils';
 import { VariantDto } from '@/dtos/Variant.dto';
+import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
 
 const ProductPrice = ({
   variant,
@@ -27,23 +28,12 @@ const ProductPrice = ({
       {variant && (
         <p className={twMerge('flex items-center gap-2', className)}>
           {prefix && <span className={classNamePrefix}>{prefix}</span>}
-          <span
-            className={twMerge(
-              'text-[16px] font-semibold text-price',
-              classNameRegularPrice,
-            )}
-          >
-            {variant.regular_price &&
-              formatMoney(variant.regular_price, 0, '.', '.')}
-          </span>
-          <span
-            className={twMerge(
-              'text-[12px] text-textSecondary line-through',
-              classNamePrice,
-            )}
-          >
-            {variant.price && formatMoney(variant.price, 0, '.', '.')}
-          </span>
+          <PriceWithLineThrough
+            regularPrice={variant.regular_price}
+            price={variant.price}
+            classNamePrice={classNamePrice}
+            classNameRegularPrice={classNameRegularPrice}
+          />
           {displayGap && (
             <span className={classNameGap}>
               -

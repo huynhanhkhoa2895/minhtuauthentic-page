@@ -3,22 +3,26 @@ import React, {
   Dispatch,
   SetStateAction,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 import { VariantDto } from '@/dtos/Variant.dto';
 import { toast } from 'react-toastify';
 import { variantName } from '@/utils';
+import { usePathname } from 'next/navigation';
 const OrderContext = createContext<TypeAppState | undefined>(undefined);
 export type TypeAppState = {
   cart: OrderItemsDto[];
   addCart: (product_name: string, variantDto: VariantDto, qty?: number) => void;
   updateCart: (index: number, qty?: number) => void;
-  removeCart: (variantDto: VariantDto) => void;
+  removeCart: (index: number) => void;
   isOpenHeaderCart?: boolean;
   setIsOpenHeaderCart?: Dispatch<SetStateAction<boolean>>;
 };
 export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
+  const pathname = usePathname();
+  const ref = useRef(pathname);
   const [cart, setCart] = useState<OrderItemsDto[]>([]);
   const [ready, setReady] = useState(false);
   const [isOpenHeaderCart, setIsOpenHeaderCart] = useState(false);
@@ -32,6 +36,13 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     ready && localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
+
+  useEffect(() => {
+    if (ref.current !== pathname) {
+      setIsOpenHeaderCart(false);
+    }
+    ref.current = pathname;
+  }, [pathname]);
 
   const addCart = async (
     product_name: string,
@@ -87,11 +98,12 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const removeCart = (product: VariantDto) => {
-    const exist = cart.find((item) => item.variant_id === product.id);
-    if (exist) {
-      setCart(cart.filter((item) => item.variant_id !== product.id));
-    }
+  const removeCart = (index: number) => {
+    setCart((cart) => {
+      const newCart = [...cart];
+      newCart.splice(index, 1);
+      return newCart;
+    });
   };
 
   return (
