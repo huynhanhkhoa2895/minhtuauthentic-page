@@ -25,16 +25,17 @@ const ProductCardButtonGroup = ({
         <EyeOutlined />
       </button>
       <button
+        type={'button'}
         className={
           'block grow bg-primary text-white rounded-[8px] p-[8px_10px]'
         }
+        onClick={() => {
+          order?.addCart && order.addCart(product.name || '', variant);
+        }}
       >
         <ShoppingCartOutlined />
         <span
           className={'ml-2'}
-          onClick={() => {
-            order?.addCart && order.addCart(product.name || '', variant);
-          }}
         >
           Thêm vào giỏ hàng
         </span>
