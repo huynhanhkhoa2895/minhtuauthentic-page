@@ -5,6 +5,7 @@ import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import CartSummaryTemplate from '@/components/templates/CartSummaryTemplate';
+import { useEffect } from 'react';
 
 export const getServerSideProps = (async () => {
   const { resMenu, resFooter } = await getDefaultSeverSide();
@@ -26,9 +27,9 @@ export const getServerSideProps = (async () => {
 }>;
 
 export default function Register({
-                                   menu,
-                                   footerContent,
-                                 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  menu,
+  footerContent,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Header homeMenuCategory={menu.homeMenuCategory} />

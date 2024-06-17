@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   if (req.method === 'POST') {
     const url = `${process.env.BE_URL}/api/users/register`;
-    fetch(url, {
+    await fetch(url, {
       method: 'POST',
       body: req.body,
       headers: {
