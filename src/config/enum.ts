@@ -112,3 +112,7 @@ export const CATEGORY_FILTER = {
     PRICE_DESC: 'price_desc',
   },
 };
+export enum PROVINCE {
+  DISTRICT = 'district',
+  WARD = 'ward',
+}

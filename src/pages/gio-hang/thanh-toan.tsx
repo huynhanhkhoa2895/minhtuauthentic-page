@@ -5,7 +5,6 @@ import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import CheckoutTemplate from '@/components/templates/CheckoutTemplate';
-import { useEffect } from 'react';
 
 export const getServerSideProps = (async () => {
   const { resMenu, resFooter } = await getDefaultSeverSide();
@@ -30,15 +29,7 @@ export default function Checkout({
   menu,
   footerContent,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  useEffect(() => {
-    getProvince().catch();
-  }, []);
-  const getProvince = async () => {
-    const res = await fetch(`/api/orders/province`, {
-      method: 'GET',
-    });
-    return res.json();
-  };
+
   return (
     <>
       <div className={'container mx-auto p-3'}>

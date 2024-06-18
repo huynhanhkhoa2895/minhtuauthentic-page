@@ -1,4 +1,4 @@
-import { Checkbox, Input } from 'antd';
+import { Checkbox, Input, Select } from 'antd';
 import { Controller } from 'react-hook-form';
 import { ReactNode } from 'react';
 import { UserOutlined } from '@ant-design/icons';
@@ -9,8 +9,10 @@ type Props = {
   name: string;
   type: string;
   placeholder?: string;
+  className?: string;
   prefix?: ReactNode;
   field?: any;
+  selectOptions?: { label: string | ReactNode; value: string }[];
 };
 type RenderFieldProps = Omit<Props, 'control' | 'errors' | 'name'> & {
   onChange: (value: string) => void;
@@ -21,6 +23,7 @@ const RenderField = ({
   prefix,
   placeholder,
   onChange,
+  selectOptions,
 }: RenderFieldProps) => {
   switch (type) {
     case 'password':
@@ -35,6 +38,13 @@ const RenderField = ({
       );
     case 'checkbox':
       return <Checkbox {...field} />;
+    case 'select':
+      return <Select
+        className={'w-full'}
+        options={selectOptions || []}
+        onChange={(value) => onChange(value)}
+        placeholder={placeholder}
+      />
     default:
       return (
         <Input
@@ -53,9 +63,11 @@ export default function FormControl({
   type,
   placeholder,
   prefix,
+  className,
+  selectOptions,
 }: Props) {
   return (
-    <div>
+    <div className={className}>
       <Controller
         name={name}
         control={control}
@@ -65,6 +77,7 @@ export default function FormControl({
             prefix={prefix}
             placeholder={placeholder}
             type={type}
+            selectOptions={selectOptions}
             onChange={(value: string) => {
               field.onChange(value);
             }}

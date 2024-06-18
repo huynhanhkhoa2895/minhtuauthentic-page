@@ -32,7 +32,6 @@ export default function FormLogin() {
     },
   });
   const { setCookieUser } = useUser();
-  const [api, contextHolder] = notification.useNotification();
 
   const [errorSubmit, setErrorSubmit] = useState<string | null>(null);
   return (
