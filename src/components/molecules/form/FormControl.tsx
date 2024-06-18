@@ -1,8 +1,9 @@
-import { Checkbox, Input, Select } from 'antd';
+import { Checkbox, Input, Radio, Select } from 'antd';
 import { Controller } from 'react-hook-form';
 import { ReactNode } from 'react';
 import { UserOutlined } from '@ant-design/icons';
-
+import RadioForm from '@/components/atoms/radioForm';
+const { TextArea } = Input;
 type Props = {
   control: any;
   errors: any;
@@ -12,7 +13,12 @@ type Props = {
   className?: string;
   prefix?: ReactNode;
   field?: any;
-  selectOptions?: { label: string | ReactNode; value: string }[];
+  selectOptions?: {
+    label: string | ReactNode;
+    value: string;
+    code_name?: string;
+  }[];
+  radioOptions?: { label: string; value: string }[];
 };
 type RenderFieldProps = Omit<Props, 'control' | 'errors' | 'name'> & {
   onChange: (value: string) => void;
@@ -24,6 +30,7 @@ const RenderField = ({
   placeholder,
   onChange,
   selectOptions,
+  radioOptions,
 }: RenderFieldProps) => {
   switch (type) {
     case 'password':
@@ -38,18 +45,50 @@ const RenderField = ({
       );
     case 'checkbox':
       return <Checkbox {...field} />;
+    case 'radio':
+      return (
+        <RadioForm
+          radioOptions={radioOptions || []}
+          value={field.value}
+          onChange={(value) => onChange(value)}
+        />
+      );
     case 'select':
-      return <Select
-        className={'w-full'}
-        options={selectOptions || []}
-        onChange={(value) => onChange(value)}
-        placeholder={placeholder}
-      />
+      return (
+        <Select
+          className={'w-full'}
+          options={selectOptions || []}
+          onChange={(value) => onChange(value)}
+          placeholder={placeholder}
+          showSearch
+          filterOption={(input, option) => {
+            return (
+              (option?.label || '')
+                ?.toString()
+                .toLowerCase()
+                .search(input.toLowerCase()) >= 0 ||
+              (option?.code_name || '')
+                ?.toString()
+                .toLowerCase()
+                .search(input.toLowerCase()) >= 0
+            );
+          }}
+        />
+      );
+    case 'textarea':
+      return (
+        <TextArea
+          placeholder={placeholder}
+          onChange={(e) => onChange(e.target.value)}
+          style={{ height: 100 }}
+          value={field.value}
+        />
+      );
     default:
       return (
         <Input
           placeholder={placeholder}
-          {...field}
+          value={field.value}
           prefix={prefix}
           onChange={(e) => onChange(e.target.value)}
         />
@@ -65,6 +104,7 @@ export default function FormControl({
   prefix,
   className,
   selectOptions,
+  radioOptions,
 }: Props) {
   return (
     <div className={className}>
@@ -78,6 +118,8 @@ export default function FormControl({
             placeholder={placeholder}
             type={type}
             selectOptions={selectOptions}
+            radioOptions={radioOptions}
+            field={field}
             onChange={(value: string) => {
               field.onChange(value);
             }}

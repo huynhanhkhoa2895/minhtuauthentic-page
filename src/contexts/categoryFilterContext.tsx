@@ -17,7 +17,9 @@ import { SlugDto } from '@/dtos/Slug.dto';
 
 export type TypeAppState = {
   objFilterByValue: Record<string, Record<string, string>>;
-  setObjFilterByValue: Dispatch<SetStateAction<Record<string, Record<string, string>>>> | undefined;
+  setObjFilterByValue:
+    | Dispatch<SetStateAction<Record<string, Record<string, string>>>>
+    | undefined;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>> | undefined;
   dataSlug: SlugDto | null;
@@ -55,7 +57,9 @@ export const CategoryFilterProvider = ({
   );
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [objFilterByValue, setObjFilterByValue] = useState<Record<string, Record<string, string>>>({});
+  const [objFilterByValue, setObjFilterByValue] = useState<
+    Record<string, Record<string, string>>
+  >({});
   const [filters, setFilters] = useState<Record<string, (number | string)[]>>(
     parseQueryString(queryString.toString()),
   );
@@ -79,7 +83,7 @@ export const CategoryFilterProvider = ({
     }, 500);
   }, [sortBy, limit, filters]);
   useEffect(() => {
-    const _filters: Record<string,( string | number)[]> = {};
+    const _filters: Record<string, (string | number)[]> = {};
     if (dataSlug?.model === Entity.CATEGORIES) {
       _filters['categories'] = [dataSlug.model_id as number];
     } else if (dataSlug?.model === Entity.BRANDS) {
@@ -110,7 +114,6 @@ export const CategoryFilterProvider = ({
         )
           .then((res) => res.json())
           .then((res: { data: { data: ResponseCategoryFilterPageDto } }) => {
-            console.log(res?.data?.data);
             setProducts(res?.data?.data?.products || []);
             setLoading(false);
           })

@@ -3,7 +3,7 @@ import { BaseDto } from '@/dtos/Base.dto';
 
 export class PaymentsDto extends BaseDto {
   name?: string;
-  value?: number;
+  label?: string;
   type?: number;
   orders?: OrdersDto[];
 }

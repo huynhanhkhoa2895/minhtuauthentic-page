@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -8,9 +8,15 @@ import FormControl from '@/components/molecules/form/FormControl';
 import { UserOutlined } from '@ant-design/icons';
 import { ProvinceDto } from '@/dtos/Province.dto';
 import { PROVINCE } from '@/config/enum';
-const fetcher = () => fetch(`/api/orders/province`, {
-  method: 'GET',
-}).then(res => res.json());
+import { Button, Radio } from 'antd';
+import { UserDto } from '@/dtos/User.dto';
+import { PaymentsDto } from '@/dtos/Payments.dto';
+import OrderContext from '@/contexts/orderContext';
+import { OrderItemsDto } from '@/dtos/OrderItems.dto';
+const fetcher = () =>
+  fetch(`/api/orders/province`, {
+    method: 'GET',
+  }).then((res) => res.json());
 const schema = yup
   .object({
     name: yup.string().required('Vui lòng nhập tên'),
@@ -18,12 +24,35 @@ const schema = yup
     shipping_district: yup.string().required('Vui lòng chọn quận/huyện'),
     shipping_ward: yup.string().required('Vui lòng chọn phường/xã'),
     address: yup.string().required('Vui lòng nhập địa chỉ'),
-    email: yup.string().email('Vui lòng nhập đúng dạng email').required('Vui lòng nhập email'),
+    note: yup.string(),
+    payment_id: yup.number().required('Vui lòng chọn phương thức thanh toán'),
+    email: yup
+      .string()
+      .email('Vui lòng nhập đúng dạng email')
+      .required('Vui lòng nhập email'),
+    phone: yup.string().required('Vui lòng nhập số điện thoại'),
   })
   .required();
-export default function FormCheckout() {
+type FormData = {
+  name: string;
+  email: string;
+  phone: string;
+  shipping_city: string;
+  shipping_district: string;
+  shipping_ward: string;
+  address: string;
+  payment_id: number;
+  note?: string;
+};
+export default function FormCheckout({
+  user,
+  payments,
+}: {
+  user?: UserDto;
+  payments: PaymentsDto[];
+}) {
   const { data, error } = useSWR('/api/orders/province', fetcher);
-  const { user } = useUser();
+  const orderCtx = useContext(OrderContext);
   const [districts, setDistricts] = useState<ProvinceDto[]>([]);
   const [wards, setWards] = useState<ProvinceDto[]>([]);
   const {
@@ -32,8 +61,7 @@ export default function FormCheckout() {
     control,
     formState: { errors },
     setValue,
-    getValues
-  } = useForm({
+  } = useForm<FormData>({
     resolver: yupResolver(schema),
     defaultValues: {
       name: user?.name || '',
@@ -42,38 +70,66 @@ export default function FormCheckout() {
       shipping_city: '',
       shipping_ward: '',
       address: '',
+      payment_id: payments[0]?.id || 0,
+      note: '',
+      phone: user?.phone || '',
     },
   });
   useEffect(() => {
-    if(watch('shipping_city')){
-      fetchDataProvince(PROVINCE.DISTRICT, watch('shipping_city')).then((rs) => {
-        setDistricts(rs?.data || []);
-        setWards([])
-        setValue('shipping_ward', '');
-        setValue('shipping_district', '');
-      })
+    if (watch('shipping_city')) {
+      fetchDataProvince(PROVINCE.DISTRICT, watch('shipping_city')).then(
+        (rs) => {
+          setDistricts(rs?.data || []);
+          setWards([]);
+          setValue('shipping_ward', '');
+          setValue('shipping_district', '');
+        },
+      );
     }
-  },[watch('shipping_city')]);
+  }, [watch('shipping_city')]);
   useEffect(() => {
-    if(watch('shipping_district')){
-      fetchDataProvince(PROVINCE.WARD, watch('shipping_district')).then((rs) => {
-        setWards(rs?.data || []);
-        setValue('shipping_ward', '');
-      })
+    if (watch('shipping_district')) {
+      fetchDataProvince(PROVINCE.WARD, watch('shipping_district')).then(
+        (rs) => {
+          setWards(rs?.data || []);
+          setValue('shipping_ward', '');
+        },
+      );
     }
-  },[watch('shipping_district')]);
+  }, [watch('shipping_district')]);
   const fetchDataProvince = async (parent_key: string, parent_id: string) => {
     const query = new URLSearchParams();
     query.append('parent_key', parent_key);
     query.append('parent_id', parent_id);
-    const rs = await fetch('/api/orders/province?'+query.toString(), {
+    const rs = await fetch('/api/orders/province?' + query.toString(), {
       method: 'GET',
     }).then((rs) => rs.json());
     return rs;
-  }
-  return(
-    <form>
-      <h2 className={'text-3xl font-bold'}>Thông tin vận chuyển</h2>
+  };
+
+  const onSubmit = (data: FormData) => {
+    const orderTotalPrice =
+      orderCtx?.cart?.reduce(
+        (total, item) => total + (item.price || 0) * (item.qty || 0),
+        0,
+      ) || 0;
+    const order: FormData & {
+      total_price: number;
+      user_id: number;
+      shipping_price: number;
+      order_items: OrderItemsDto[];
+    } = {
+      ...data,
+      total_price: orderTotalPrice,
+      user_id: user?.id || 0,
+      shipping_price: 0,
+      order_items: orderCtx?.cart || [],
+    };
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <h3 className={'text-3xl font-bold mb-6'}>Thông tin vận chuyển</h3>
       <div className={'grid grid-cols-2 gap-3'}>
         <FormControl
           control={control}
@@ -93,7 +149,7 @@ export default function FormCheckout() {
         <FormControl
           control={control}
           errors={errors}
-          name={'email'}
+          name={'phone'}
           type={'text'}
           placeholder={'Số điện thoại'}
         />
@@ -101,11 +157,12 @@ export default function FormCheckout() {
           control={control}
           errors={errors}
           className={'col-span-2'}
-          selectOptions={(data?.data || []).map((item: ProvinceDto)=>{
+          selectOptions={(data?.data || []).map((item: ProvinceDto) => {
             return {
-              label: <span>{item?.full_name}</span>,
-              value: item?.code
-            }
+              label: item?.full_name,
+              value: item?.code,
+              code_name: item?.code_name,
+            };
           })}
           name={'shipping_city'}
           type={'select'}
@@ -114,11 +171,11 @@ export default function FormCheckout() {
         <FormControl
           control={control}
           errors={errors}
-          selectOptions={(districts || []).map((item: any)=>{
+          selectOptions={(districts || []).map((item: any) => {
             return {
-              label: <span>{item?.full_name}</span>,
-              value: item?.code
-            }
+              label: item?.full_name,
+              value: item?.code,
+            };
           })}
           name={'shipping_district'}
           type={'select'}
@@ -127,17 +184,58 @@ export default function FormCheckout() {
         <FormControl
           control={control}
           errors={errors}
-          selectOptions={(wards || []).map((item: any)=>{
+          selectOptions={(wards || []).map((item: any) => {
             return {
-              label: <span>{item?.full_name}</span>,
-              value: item?.code
-            }
+              label: item?.full_name,
+              value: item?.code,
+            };
           })}
           name={'shipping_ward'}
           type={'select'}
           placeholder={'Phường/ Xã'}
         />
+        <FormControl
+          control={control}
+          errors={errors}
+          name={'address'}
+          type={'text'}
+          placeholder={'Địa chỉ'}
+          className={'col-span-2'}
+        />
       </div>
+      <h3 className={'text-3xl font-bold my-6'}>Phương thức vận chuyển</h3>
+      <div className={'flex flex-col'}>
+        <Radio checked>Miễn phí vận chuyển</Radio>
+      </div>
+      <h3 className={'text-3xl font-bold my-6'}>Phương thức thanh toán</h3>
+      <div className={'flex flex-col'}>
+        <FormControl
+          control={control}
+          errors={errors}
+          radioOptions={payments.map((item) => ({
+            label: item?.label || '',
+            value: item?.id ? item?.id.toString() : '',
+          }))}
+          name={'payment_id'}
+          type={'radio'}
+          placeholder={'Chọn phương thức thanh toán'}
+          className={'col-span-2'}
+        />
+      </div>
+      <h3 className={'text-3xl font-bold my-6'}>Ghi chú</h3>
+      <div className={'flex flex-col'}>
+        <FormControl
+          control={control}
+          errors={errors}
+          name={'note'}
+          type={'textarea'}
+          placeholder={'Ghi chú'}
+          className={'col-span-2'}
+        />
+      </div>
+      <Button htmlType={'submit'} className={'mt-6'} type={'primary'}>
+        Thanh toán
+      </Button>
     </form>
-  )
+  );
 }

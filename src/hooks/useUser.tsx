@@ -1,13 +1,20 @@
 import { UserDto } from '@/dtos/User.dto';
 import { getCookie, setCookie, deleteCookie } from 'cookies-next';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function useUser() {
+  const router = useRouter();
+  const pathnameNeedLogin = ['/gio-hang/thanh-toan', '/tai-khoan/lich-su'];
   const [user, setUser] = useState<UserDto | null>(null);
   useEffect(() => {
     const user = getCookie('user');
     if (user) {
       setUser(JSON.parse(user));
+    } else {
+      if (pathnameNeedLogin.includes(router.pathname)) {
+        router.push('/dang-nhap?redirectUrl=' + router.pathname);
+      }
     }
   }, []);
   const setCookieUser = (user: UserDto) => {
@@ -19,7 +26,6 @@ export default function useUser() {
   };
 
   const logout = () => {
-    console.log('logout');
     setUser(null);
     deleteCookie('user');
   };

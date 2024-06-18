@@ -10,7 +10,9 @@ html, body {
   font-size: 14px;
   background-color: #F8F9FA;
 }
-
+.ant-input-number-handler-wrap {
+  opacity: 1 !important;
+}
 .ant-tabs-content.ant-tabs-content-top {
   @apply h-full;
 }
@@ -23,12 +25,16 @@ html, body {
   @apply min-h-[300px];
 }
 
-.ant-btn-primary, ant-btn-primary:hover{
-  @apply bg-primary;
+.ant-btn-primary, .ant-btn-primary:hover{
+  @apply !bg-primary;
 }
 
 .ant-btn-link, .ant-btn-link:hover {
   @apply text-primary;
+}
+
+.ant-radio-checked::after {
+  @apply !border-primary;
 }
 
 .login-options{

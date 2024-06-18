@@ -19,7 +19,6 @@ export default function ProductRelation({ products }: Props) {
             const _variantActive =
               product?.variants?.find((item) => item.is_default) ||
               product?.variants?.[0];
-            console.log('test', product?.feature_image_detail?.image?.url);
             return (
               <div
                 key={index}

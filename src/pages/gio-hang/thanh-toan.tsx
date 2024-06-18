@@ -1,39 +1,27 @@
-import Header from '@/components/organisms/header';
-import Footer from '@/components/organisms/footer';
-import getDefaultSeverSide from '@/utils/getDefaultServerSide';
-import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
-import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import CheckoutTemplate from '@/components/templates/CheckoutTemplate';
+import { PaymentsDto } from '@/dtos/Payments.dto';
 
 export const getServerSideProps = (async () => {
-  const { resMenu, resFooter } = await getDefaultSeverSide();
-  const dataMenu: { data: ResponseMenuDto } = resMenu
-    ? await resMenu.json()
-    : null;
-  const dataFooter: { data: ResponseFooterDto } = resFooter
-    ? await resFooter.json()
-    : null;
+  const payments: { data: { list: PaymentsDto[] } } = await fetch(
+    `${process.env.BE_URL}/api/payments/getAll`,
+  ).then((res) => res.json());
   return {
     props: {
-      menu: dataMenu?.data,
-      footerContent: dataFooter?.data,
+      payments: payments?.data?.list || [],
     },
   };
 }) satisfies GetServerSideProps<{
-  menu: ResponseMenuDto;
-  footerContent: ResponseFooterDto;
+  payments: PaymentsDto[];
 }>;
 
 export default function Checkout({
-  menu,
-  footerContent,
+  payments,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-
   return (
     <>
       <div className={'container mx-auto p-3'}>
-        <CheckoutTemplate />
+        <CheckoutTemplate payments={payments} />
       </div>
     </>
   );
