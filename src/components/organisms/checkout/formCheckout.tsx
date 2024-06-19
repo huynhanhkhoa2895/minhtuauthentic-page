@@ -3,9 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import useUser from '@/hooks/useUser';
 import FormControl from '@/components/molecules/form/FormControl';
-import { UserOutlined } from '@ant-design/icons';
 import { ProvinceDto } from '@/dtos/Province.dto';
 import { PROVINCE } from '@/config/enum';
 import { Button, Radio } from 'antd';
@@ -13,6 +11,9 @@ import { UserDto } from '@/dtos/User.dto';
 import { PaymentsDto } from '@/dtos/Payments.dto';
 import OrderContext from '@/contexts/orderContext';
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+import { handleDataFetch } from '@/utils/api';
 const fetcher = () =>
   fetch(`/api/orders/province`, {
     method: 'GET',
@@ -51,6 +52,7 @@ export default function FormCheckout({
   user?: UserDto;
   payments: PaymentsDto[];
 }) {
+  const router = useRouter();
   const { data, error } = useSWR('/api/orders/province', fetcher);
   const orderCtx = useContext(OrderContext);
   const [districts, setDistricts] = useState<ProvinceDto[]>([]);
@@ -125,6 +127,19 @@ export default function FormCheckout({
       shipping_price: 0,
       order_items: orderCtx?.cart || [],
     };
+    fetch('/api/orders/create', {
+      method: 'POST',
+      body: JSON.stringify(order),
+    })
+      .then((rs) => rs.json())
+      .then((data) => {
+        const _data = handleDataFetch(data);
+        toast.success('Đặt hàng thành công');
+        orderCtx?.clearCart && orderCtx?.clearCart();
+        router.push('/gio-hang/thanh-cong?orderId=' + _data?.data?.id);
+      }).catch(()=>{
+        toast.error('Đã có lỗi xảy ra')
+    });
   };
 
   return (

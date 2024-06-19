@@ -17,6 +17,7 @@ export type TypeAppState = {
   addCart: (product_name: string, variantDto: VariantDto, qty?: number) => void;
   updateCart: (index: number, qty?: number) => void;
   removeCart: (index: number) => void;
+  clearCart: () => void;
   isOpenHeaderCart?: boolean;
   setIsOpenHeaderCart?: Dispatch<SetStateAction<boolean>>;
 };
@@ -106,6 +107,11 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
+  const clearCart = () => {
+    setCart([]);
+  }
+
+
   return (
     <OrderContext.Provider
       value={{
@@ -115,6 +121,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
         removeCart,
         isOpenHeaderCart,
         setIsOpenHeaderCart,
+        clearCart,
       }}
     >
       {children}

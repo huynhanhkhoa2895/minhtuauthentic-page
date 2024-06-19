@@ -20,8 +20,9 @@ export default function RadioForm({ value, onChange, radioOptions }: Props) {
   const handleChange = (e: RadioChangeEvent) => {
     setVal(e.target.value);
   };
+
   return (
-    <Radio.Group onChange={handleChange} value={_val}>
+    <Radio.Group onChange={handleChange} value={_val.toString()}>
       {radioOptions.map((option) => (
         <Radio key={option.value} value={option.value}>
           {option.label}
