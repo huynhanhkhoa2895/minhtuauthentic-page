@@ -24,10 +24,10 @@ export const getServerSideProps = (async () => {
   footerContent: ResponseFooterDto;
 }>;
 
-export default function UserHistory({
-  menu,
-  footerContent,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function UserHistoryDetail({
+                                      menu,
+                                      footerContent,
+                                    }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Header homeMenuCategory={menu.homeMenuCategory} />

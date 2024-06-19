@@ -9,9 +9,12 @@ export default function OrderSuccessTemplate(){
     <div className={'w-full flex items-center justify-center flex-col gap-6'}>
       <h1 className={'text-3xl text-primary font-bold'}>Cảm ơn bạn đã mua hàng thành công.</h1>
       <CheckCircleFilled className={'text-5xl text-primary'} />
-      <h3 className={'text-xl'}><Link href={'/tai-khoan/lich-su/'+orderId}>Đơn hàng #{orderId}</Link></h3>
+      <h3 className={'text-2xl'}><Link href={'/tai-khoan/lich-su/' + orderId}>Đơn hàng <span className={'text-primary font-semibold'}>#{orderId}</span></Link></h3>
       <p className={'text-lg text-center'}>
-        Đơn hàng của bạn đã được đặt thành công. Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.
+        Đơn hàng của bạn đã được đặt thành công.
+      </p>
+      <p className={'text-lg text-center'}>
+        Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.
       </p>
     </div>
   )

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 export default function useUser() {
   const router = useRouter();
-  const pathnameNeedLogin = ['/gio-hang/thanh-toan', '/tai-khoan/lich-su'];
+  const pathnameNeedLogin = ['/gio-hang/thanh-toan', '/gio-hang/thanh-cong', '/tai-khoan/lich-su/[id]'];
   const [user, setUser] = useState<UserDto | null>(null);
   useEffect(() => {
     const user = getCookie('user');
@@ -13,7 +13,7 @@ export default function useUser() {
       setUser(JSON.parse(user));
     } else {
       if (pathnameNeedLogin.includes(router.pathname)) {
-        router.push('/dang-nhap?redirectUrl=' + router.pathname);
+        router.push('/tai-khoan/dang-nhap?redirectUrl=' + router.pathname);
       }
     }
   }, []);

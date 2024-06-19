@@ -108,6 +108,14 @@ export const Header = (menu: ResponseMenuDto | null) => {
               items: user
                 ? [
                     {
+                      key: '1',
+                      label: (
+                        <Link href={'/tai-khoan/lich-su'}>
+                          Tài khoản
+                        </Link>
+                      ),
+                    },
+                    {
                       key: '2',
                       label: (
                         <button type={'button'} onClick={() => logout()}>
@@ -115,6 +123,7 @@ export const Header = (menu: ResponseMenuDto | null) => {
                         </button>
                       ),
                     },
+
                   ]
                 : [
                     {
