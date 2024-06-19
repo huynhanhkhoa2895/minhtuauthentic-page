@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { getCookie } from '@/utils';
+
 
 export function middleware(request: NextRequest) {
   const user = getCookie('user', request.headers.get('cookie') || '');
@@ -16,8 +18,4 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 }
-function getCookie(name: string, cookie: string) {
-  const value = `; ${cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return (parts.pop() || '').split(';').shift();
-}
+

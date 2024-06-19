@@ -15,6 +15,7 @@ export default async function handler(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + req.cookies['token'] || '',
       },
       body: req.body,
     })
