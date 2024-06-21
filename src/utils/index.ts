@@ -162,8 +162,21 @@ export function variantName(
   return str.trim();
 }
 
-export function getCookie(name: string, cookie: string) {
+export function getCookie(name: string, cookie: string, toObject: boolean = false) {
+  if (toObject) {
+    const rs = cookie.split(';').reduce((cookieObject: any, cookieString) => {
+      let splitCookie: any = cookieString.split('=')
+      try {
+        cookieObject[splitCookie[0].trim()] = decodeURIComponent(splitCookie[1])
+      } catch (error) {
+        cookieObject[splitCookie[0].trim()] = splitCookie[1]
+      }
+      return cookieObject
+    }, [])
+    return rs ? rs[name] : null
+  }
   const value = `; ${cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return (parts.pop() || '').split(';').shift();
 }
+

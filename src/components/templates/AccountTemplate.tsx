@@ -1,6 +1,7 @@
 import Link from 'next/link';
+import { ReactNode } from 'react';
 
-export default function AccountTemplate(){
+export default function AccountTemplate({children}: {children: ReactNode}){
   return (
     <>
       <h1 className={'text-3xl text-primary font-bold my-6'}>Tài khoản</h1>
@@ -10,7 +11,9 @@ export default function AccountTemplate(){
             <Link className={'text-lg'} href={'/tai-khoan/lich-su'}>Lịch sử mua hàng</Link>
           </li>
         </ul>
-        <div className={'col-span-3'}>Content</div>
+        <div className={'col-span-3 p-3 bg-white rounded-[10px]'}>
+          {children}
+        </div>
       </div>
     </>
 
