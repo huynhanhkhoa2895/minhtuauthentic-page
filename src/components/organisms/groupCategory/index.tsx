@@ -78,11 +78,21 @@ const GroupCategory = ({
         isUseHeightWrapper={true}
         renderItem={(item: unknown) => {
           const iProduct = item as IProductCategoryDto;
-          const variant = iProduct.product?.variants?.find(item=>item.is_default || []);
+          const variantMap = new Map(
+            iProduct.product?.variants?.map((variant) => [
+              variant.is_default,
+              variant,
+            ]),
+          );
+          const variant = variantMap.get(true);
           if (!variant) {
             return;
           }
-          return iProduct.product && <ProductCard product={iProduct.product} variant={variant}/>;
+          return (
+            iProduct.product && (
+              <ProductCard product={iProduct.product} variant={variant} />
+            )
+          );
         }}
         data={
           staticComponent?.category?.products?.filter(

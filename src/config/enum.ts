@@ -83,6 +83,10 @@ export const SETTING_KEY = {
     KEY: 'news_section',
     LABEL: 'Vùng tin tức',
   },
+  FLASH_SALE_SECTION: {
+    KEY: 'flash_sale',
+    LABEL: 'Vùng Flash Sale',
+  },
   FEATURE_CATEGORY: {
     KEY: 'feature_category',
     LABEL: 'Danh mục nổi bật',

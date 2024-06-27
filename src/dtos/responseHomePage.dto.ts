@@ -3,6 +3,7 @@ import { StaticComponentDto } from '@/dtos/StaticComponent.dto';
 import { BrandDto } from '@/dtos/Brand.dto';
 import { NewsDto } from '@/dtos/News.dto';
 import { SettingsDto } from '@/dtos/Settings.dto';
+import { PromotionsDto } from '@/dtos/Promotions.dto';
 
 export class ResponseHomePageDto {
   banners?: StaticContentsDto[];
@@ -10,6 +11,7 @@ export class ResponseHomePageDto {
   homeBlockUnderSlide?: StaticContentsDto[];
   homeBlockFeaturedCategory?: StaticContentsDto[];
   homeBrand?: BrandDto[];
+  homeFlashSale?: PromotionsDto;
   homeNews?: {
     featured: NewsDto[];
     news: NewsDto[];
