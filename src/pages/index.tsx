@@ -58,7 +58,6 @@ export default function Home({
   settings,
   footerContent,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log('homePage?.homeFlashSale', homePage?.homeFlashSale);
   return (
     <>
       <Header homeMenuCategory={menu.homeMenuCategory} />
