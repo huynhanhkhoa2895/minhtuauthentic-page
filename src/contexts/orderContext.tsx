@@ -56,6 +56,10 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     const newCart = [...cart];
     const index = newCart.findIndex((item) => item.variant_id === variant.id);
     const orderItem = newCart[index];
+    const coupons = [];
+    if (variant.coupon) {
+      coupons.push(variant.coupon);
+    }
     if (orderItem) {
       if (orderItem.qty) {
         orderItem.qty += qty;
@@ -70,7 +74,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
         new OrderItemsDto({
           variant_id: variant.id,
           qty,
-          price: variant.price,
+          price: variant.regular_price,
           variant_name:
             product_name +
             variantName(
@@ -80,6 +84,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
           variant_regular_price: variant.regular_price,
           slug: detailVariant?.data?.product?.slugs?.slug,
           image: detailVariant?.data?.images?.[0]?.image,
+          coupons: coupons,
         }),
       ]);
     }
@@ -109,8 +114,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
 
   const clearCart = () => {
     setCart([]);
-  }
-
+  };
 
   return (
     <OrderContext.Provider

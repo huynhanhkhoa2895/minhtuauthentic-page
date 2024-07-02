@@ -7,6 +7,7 @@ import Badge from '@/components/atoms/badge';
 import { twMerge } from 'tailwind-merge';
 import { VariantDto } from '@/dtos/Variant.dto';
 import { calculatePricePercent } from '@/utils';
+import CouponsDto from '@/dtos/Coupons.dto';
 
 const ProductCard = ({
   product,

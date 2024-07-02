@@ -11,7 +11,7 @@ import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
 export default function CartSummaryTemplate() {
   const orderCtx = useContext(OrderContext);
   const total = orderCtx?.cart?.reduce((acc, item) => {
-    return acc + (item.variant_price || 0) * (item.qty || 0);
+    return acc + (item.price || 0) * (item.qty || 0);
   }, 0);
   return (
     <div
@@ -53,7 +53,7 @@ export default function CartSummaryTemplate() {
                 </td>
                 <td className={'border-y border-gray-200 text-center'}>
                   <PriceWithLineThrough
-                    regularPrice={item.variant_regular_price}
+                    regularPrice={item.price}
                     price={item.variant_price}
                   />
                 </td>
@@ -69,7 +69,7 @@ export default function CartSummaryTemplate() {
                 </td>
                 <td className={'border-y border-gray-200 text-center'}>
                   {formatMoney(
-                    (item.variant_price || 0) * (item.qty || 0) || 0,
+                    (item.price || 0) * (item.qty || 0) || 0,
                     0,
                     '.',
                     '.',

@@ -120,3 +120,12 @@ export enum PROVINCE {
   DISTRICT = 'district',
   WARD = 'ward',
 }
+
+export enum PROMOTION_TYPE {
+  FLASH_SALE = 'flash-sale',
+}
+
+export enum PROMOTION_PRICE_TYPE {
+  PERCENT = 'percent',
+  PRICE = 'price',
+}
