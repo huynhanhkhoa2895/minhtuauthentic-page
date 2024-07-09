@@ -98,10 +98,22 @@ export function isValidHttpUrl(string: string) {
   return url.protocol === 'http:' || url.protocol === 'https:';
 }
 
-export function getPriceWithCoupon(price: number, coupon: CouponsDto) {
-  if (coupon.price_minus_type === PROMOTION_PRICE_TYPE.PRICE)
-    return price - (coupon?.price_minus_value || 0);
-  return price - (price * (coupon?.price_minus_value || 0)) / 100;
+export function getPriceWithCoupon(
+  price: number,
+  coupons: CouponsDto | CouponsDto[],
+) {
+  if (!Array.isArray(coupons)) {
+    coupons = [coupons];
+  }
+  for (const coupon of coupons) {
+    if (coupon.price_minus_type === PROMOTION_PRICE_TYPE.PRICE) {
+      price = price - (coupon?.price_minus_value || 0);
+    } else {
+      price = price - (price * (coupon?.price_minus_value || 0)) / 100;
+    }
+  }
+  console.log('test price', price);
+  return price;
 }
 
 export function calculatePricePercent(variant: VariantDto | undefined) {

@@ -9,7 +9,7 @@ import React, {
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 import { VariantDto } from '@/dtos/Variant.dto';
 import { toast } from 'react-toastify';
-import { variantName } from '@/utils';
+import { getPriceWithCoupon, variantName } from '@/utils';
 import { usePathname } from 'next/navigation';
 const OrderContext = createContext<TypeAppState | undefined>(undefined);
 export type TypeAppState = {
@@ -51,15 +51,26 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     qty: number = 1,
   ) => {
     const detailVariant: { data: VariantDto } = await fetch(
-      `/api/variant/${variant.id}`,
-    ).then((res) => res.json());
+      `/api/orders/addToCart`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ variant_id: variant.id }),
+      },
+    )
+      .then((res) => res.json())
+      .catch(() => {
+        return null;
+      });
+    if (!detailVariant?.data) {
+      toast('Không thể thêm vào giỏ hàng', { type: 'error' });
+    }
     const newCart = [...cart];
     const index = newCart.findIndex((item) => item.variant_id === variant.id);
     const orderItem = newCart[index];
-    const coupons = [];
-    if (variant.coupon) {
-      coupons.push(variant.coupon);
-    }
+
     if (orderItem) {
       if (orderItem.qty) {
         orderItem.qty += qty;
@@ -69,12 +80,16 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
       newCart[index] = orderItem;
       setCart(newCart);
     } else {
+      let price = getPriceWithCoupon(
+        detailVariant?.data?.regular_price || 0,
+        detailVariant?.data?.coupons || [],
+      );
       setCart([
         ...newCart,
         new OrderItemsDto({
           variant_id: variant.id,
           qty,
-          price: variant.regular_price,
+          price,
           variant_name:
             product_name +
             variantName(
@@ -84,7 +99,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
           variant_regular_price: variant.regular_price,
           slug: detailVariant?.data?.product?.slugs?.slug,
           image: detailVariant?.data?.images?.[0]?.image,
-          coupons: coupons,
+          coupons: detailVariant?.data?.coupons,
         }),
       ]);
     }
