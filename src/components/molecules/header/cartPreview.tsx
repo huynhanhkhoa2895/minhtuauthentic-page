@@ -56,7 +56,9 @@ export default function CartPreview() {
                     icon={<DeleteOutlined />}
                     danger
                     type={'link'}
-                    onClick={() => order?.removeCart && order.removeCart(key)}
+                    onClick={() =>
+                      order?.updateCart && order.updateCart(key, 0)
+                    }
                   ></Button>
                 </div>
               </div>

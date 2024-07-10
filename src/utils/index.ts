@@ -112,7 +112,6 @@ export function getPriceWithCoupon(
       price = price - (price * (coupon?.price_minus_value || 0)) / 100;
     }
   }
-  console.log('test price', price);
   return price;
 }
 

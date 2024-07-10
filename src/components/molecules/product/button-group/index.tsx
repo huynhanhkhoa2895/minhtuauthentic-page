@@ -30,15 +30,11 @@ const ProductCardButtonGroup = ({
           'block grow bg-primary text-white rounded-[8px] p-[8px_10px]'
         }
         onClick={() => {
-          order?.addCart && order.addCart(product.name || '', variant);
+          order?.addCart && order.addCart(variant);
         }}
       >
         <ShoppingCartOutlined />
-        <span
-          className={'ml-2'}
-        >
-          Thêm vào giỏ hàng
-        </span>
+        <span className={'ml-2'}>Thêm vào giỏ hàng</span>
       </button>
     </div>
   );
