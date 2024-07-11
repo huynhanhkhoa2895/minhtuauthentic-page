@@ -44,14 +44,14 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     ref.current = pathname;
   }, [pathname]);
 
-  const callAddUpdateCart = async (variant: VariantDto, qty: number) => {
+  const callAddUpdateCart = async (variant_id: number, qty: number) => {
     return await fetch(`/api/orders/addToCart`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        variant_id: variant.id,
+        variant_id: variant_id,
         current_cart: cart,
         qty,
       }),
@@ -63,8 +63,17 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const addCart = async (variant: VariantDto) => {
-    console.log('variant', variant);
-    const newCartResponse = await callAddUpdateCart(variant, 1);
+    const currentVariantOnCart = cart.find(
+      (item) => item.variant_id === variant.id,
+    );
+    if (!variant?.id) {
+      toast('Variant không tồn tại', { type: 'error' });
+      return;
+    }
+    const newCartResponse = await callAddUpdateCart(
+      variant.id,
+      currentVariantOnCart?.qty ? currentVariantOnCart?.qty + 1 : 1,
+    );
     if (!newCartResponse?.data) {
       toast('Không thể thêm vào giỏ hàng', { type: 'error' });
     }
@@ -73,11 +82,11 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
 
   const updateCart = async (index: number, qty: number = 1) => {
     const orderItem = cart[index];
-    if (!orderItem.variant) {
+    if (!orderItem.variant_id) {
       toast('Variant không tồn tại', { type: 'error' });
       return;
     }
-    const newCartResponse = await callAddUpdateCart(orderItem.variant, qty);
+    const newCartResponse = await callAddUpdateCart(orderItem.variant_id, qty);
     setCart(newCartResponse?.data || []);
   };
 
