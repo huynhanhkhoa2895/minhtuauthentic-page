@@ -7,11 +7,13 @@ import { DeleteOutlined, DeleteRowOutlined } from '@ant-design/icons';
 import { formatMoney, generateSlugToHref } from '@/utils';
 import Link from 'next/link';
 import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
+import PriceOnCart from '@/components/atoms/priceOnCart';
+import PriceMinus from '@/components/atoms/PriceMinus';
 
 export default function CartSummaryTemplate() {
   const orderCtx = useContext(OrderContext);
   const total = orderCtx?.cart?.reduce((acc, item) => {
-    return acc + (item.price || 0) * (item.qty || 0);
+    return acc + (item.price || 0);
   }, 0);
   return (
     <div
@@ -25,6 +27,7 @@ export default function CartSummaryTemplate() {
             <th>Hình ảnh</th>
             <th>Sản phẩm</th>
             <th>Giá</th>
+            <th>Khuyến mãi</th>
             <th>Số lượng</th>
             <th>Tổng tiền</th>
             <th>Xóa</th>
@@ -53,9 +56,14 @@ export default function CartSummaryTemplate() {
                 </td>
                 <td className={'border-y border-gray-200 text-center'}>
                   <PriceWithLineThrough
-                    regularPrice={item.price}
+                    regularPrice={item.variant_regular_price}
                     price={item.variant_price}
                   />
+                </td>
+                <td className={'border-y border-gray-200 text-center'}>
+                  <div className={'flex flex-col gap-1'}>
+                    <PriceMinus item={item} />
+                  </div>
                 </td>
                 <td className={'border-y border-gray-200 text-center'}>
                   <InputNumber
@@ -68,12 +76,7 @@ export default function CartSummaryTemplate() {
                   />
                 </td>
                 <td className={'border-y border-gray-200 text-center'}>
-                  {formatMoney(
-                    (item.price || 0) * (item.qty || 0) || 0,
-                    0,
-                    '.',
-                    '.',
-                  )}
+                  {formatMoney(item.price || 0, 0, '.', '.')}
                 </td>
                 <td className={'border-y border-gray-200 text-center'}>
                   <Button icon={<DeleteOutlined />} danger></Button>

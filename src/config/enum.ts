@@ -123,6 +123,7 @@ export enum PROVINCE {
 
 export enum PROMOTION_TYPE {
   FLASH_SALE = 'flash-sale',
+  DEAL_SOCK = 'deal-sock',
 }
 
 export enum PROMOTION_PRICE_TYPE {

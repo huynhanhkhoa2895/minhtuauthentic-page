@@ -7,6 +7,7 @@ import { Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { formatMoney, generateSlugToHref } from '@/utils';
 import Link from 'next/link';
+import PriceOnCart from '@/components/atoms/priceOnCart';
 
 export default function CartPreview() {
   const order = useContext(OrderContext);
@@ -46,9 +47,7 @@ export default function CartPreview() {
                       value={item.qty}
                       onChange={(value) => onChange(value, key)}
                     />
-                    <span className={'text-red-600 font-semibold'}>
-                      {formatMoney(item?.price || 0, 0, '.', '.')}
-                    </span>
+                    <PriceOnCart item={item} isDisplayTotal={true} />
                   </div>
                 </div>
                 <div>

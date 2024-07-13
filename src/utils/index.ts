@@ -106,13 +106,19 @@ export function getPriceWithCoupon(
     coupons = [coupons];
   }
   for (const coupon of coupons) {
-    if (coupon.price_minus_type === PROMOTION_PRICE_TYPE.PRICE) {
-      price = price - (coupon?.price_minus_value || 0);
-    } else {
-      price = price - (price * (coupon?.price_minus_value || 0)) / 100;
-    }
+    price = price - calculatePriceMinus(price, coupon);
   }
   return price;
+}
+
+export function calculatePriceMinus(price: number, coupon: CouponsDto) {
+  let priceMinus = 0;
+  if (coupon.price_minus_type === PROMOTION_PRICE_TYPE.PRICE) {
+    priceMinus = coupon.price_minus_value || 0;
+  } else {
+    priceMinus = (price * (coupon?.price_minus_value || 0)) / 100;
+  }
+  return priceMinus;
 }
 
 export function calculatePricePercent(variant: VariantDto | undefined) {
