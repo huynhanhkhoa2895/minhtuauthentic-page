@@ -79,7 +79,10 @@ export default function CartSummaryTemplate() {
                   {formatMoney(item.price || 0, 0, '.', '.')}
                 </td>
                 <td className={'border-y border-gray-200 text-center'}>
-                  <Button icon={<DeleteOutlined />} danger></Button>
+                  <Button icon={<DeleteOutlined />} danger onClick={()=>{
+                    orderCtx?.updateCart &&
+                    orderCtx.updateCart(index, 0);
+                  }}></Button>
                 </td>
               </tr>
             );
