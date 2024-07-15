@@ -125,7 +125,7 @@ const ProductProperty = ({
         />
       </div>
       <div className={'mt-3'}>
-        <ProductCartCheckout />
+        <ProductCartCheckout variant={_variantActive} />
       </div>
       <PromotionDescription className={'mt-3'} />
       <div className={'mt-3'}>

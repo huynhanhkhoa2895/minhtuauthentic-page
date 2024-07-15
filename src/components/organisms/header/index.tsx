@@ -32,7 +32,7 @@ export const Header = (menu: ResponseMenuDto | null) => {
       </div>
       <header
         id={'header'}
-        className={'bg-primary py-[15px] sticky top-0 left-0 z-[3] relative'}
+        className={'bg-primary py-[10px] sticky top-0 left-0 z-[3] relative'}
       >
         <div
           className={
@@ -109,11 +109,7 @@ export const Header = (menu: ResponseMenuDto | null) => {
                 ? [
                     {
                       key: '1',
-                      label: (
-                        <Link href={'/tai-khoan/lich-su'}>
-                          Tài khoản
-                        </Link>
-                      ),
+                      label: <Link href={'/tai-khoan/lich-su'}>Tài khoản</Link>,
                     },
                     {
                       key: '2',
@@ -123,7 +119,6 @@ export const Header = (menu: ResponseMenuDto | null) => {
                         </button>
                       ),
                     },
-
                   ]
                 : [
                     {

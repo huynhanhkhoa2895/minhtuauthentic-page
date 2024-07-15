@@ -1,7 +1,6 @@
-import { calculatePriceMinus, formatMoney } from '@/utils';
+import { calculatePriceMinus, formatMoney, promotionName } from '@/utils';
 import { Tooltip } from 'antd';
 import CouponsDto from '@/dtos/Coupons.dto';
-import { PROMOTION_TYPE } from '@/config/enum';
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 
 type Props = {
@@ -10,16 +9,6 @@ type Props = {
 };
 
 export default function PriceMinus({ item }: Props) {
-  const getPromotionName = (coupon: CouponsDto): string => {
-    switch (coupon?.promotion?.type) {
-      case PROMOTION_TYPE.FLASH_SALE:
-        return 'Flash Sale';
-      case PROMOTION_TYPE.DEAL_SOCK:
-        return 'Deal Sock';
-      default:
-        return coupon?.promotion?.name || '';
-    }
-  };
   return (
     <>
       {(item?.coupons || []).map((coupon: CouponsDto, index: number) => {
@@ -27,7 +16,7 @@ export default function PriceMinus({ item }: Props) {
           <Tooltip
             key={index}
             placement="topRight"
-            title={getPromotionName(coupon)}
+            title={promotionName(coupon.promotion)}
           >
             <span className={'text-red-600 text-sm text-right cursor-pointer'}>
               -

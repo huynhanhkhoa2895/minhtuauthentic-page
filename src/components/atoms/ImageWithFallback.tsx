@@ -13,6 +13,7 @@ type Props = {
   className?: string;
   loading?: 'lazy' | 'eager';
   priority?: boolean;
+  unoptimized?: boolean;
 };
 const ImageWithFallback = ({
   image,
@@ -23,6 +24,7 @@ const ImageWithFallback = ({
   className,
   loading,
   priority,
+  unoptimized,
 }: Props) => {
   const [imgActiveSrc, setImageActiveSrc] = useState<string | StaticImageData>(
     image?.url || noImage,
@@ -44,6 +46,7 @@ const ImageWithFallback = ({
             fill={true}
             sizes={'(max-width: 768px) 100vw, 33vw'}
             className={className}
+            unoptimized={unoptimized}
             onError={() => {
               setImageActiveSrc(noImage);
             }}
@@ -63,6 +66,7 @@ const ImageWithFallback = ({
             alt={alt || image?.alt || ''}
             width={image?.width || 0}
             height={image?.height || 0}
+            unoptimized={unoptimized}
             priority={priority}
             className={className}
             onError={() => {

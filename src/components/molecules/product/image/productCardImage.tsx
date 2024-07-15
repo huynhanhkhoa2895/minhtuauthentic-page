@@ -8,9 +8,11 @@ import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 const ProductCardImage = ({
   product,
   className,
+  priority = true,
 }: {
   product: ProductDto;
   className?: string;
+  priority?: boolean;
 }) => {
   const image: ImageDto | undefined =
     product?.feature_image_detail?.image ||
@@ -28,6 +30,7 @@ const ProductCardImage = ({
             className={
               'object-contain w-full h-full hover:scale-105 transition-transform duration-300'
             }
+            priority={priority}
             alt={product.name || ''}
           />
         </div>

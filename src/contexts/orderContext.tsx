@@ -82,7 +82,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
 
   const updateCart = async (index: number, qty: number = 1) => {
     const orderItem = cart[index];
-    if (!orderItem.variant_id) {
+    if (!orderItem?.variant_id) {
       toast('Variant không tồn tại', { type: 'error' });
       return;
     }

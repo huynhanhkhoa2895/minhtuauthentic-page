@@ -84,7 +84,7 @@ const Menu = ({
       <div
         ref={ref}
         className={twMerge(
-          'w-[220px] rounded-[10px] shadow-custom py-1 shrink-1 z-[1] bg-white overflow-hidden relative',
+          'w-[180px] rounded-[10px] shadow-custom py-1 shrink-1 z-[1] bg-white overflow-hidden relative',
           className,
         )}
       >

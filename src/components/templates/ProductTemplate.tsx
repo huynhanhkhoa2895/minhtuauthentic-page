@@ -30,6 +30,7 @@ const ProductTemplate = ({ data }: Props) => {
           product={data.product}
           relatedProducts={data?.relatedProducts || []}
           productConfigurations={data?.productConfigurations || []}
+          promotionsProducts={data?.promotionsProducts}
         />
       )}
     </>

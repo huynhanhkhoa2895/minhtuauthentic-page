@@ -1,7 +1,8 @@
-import { Entity, PROMOTION_PRICE_TYPE } from '@/config/enum';
+import { Entity, PROMOTION_PRICE_TYPE, PROMOTION_TYPE } from '@/config/enum';
 import { VariantDto } from '@/dtos/Variant.dto';
 import { IVariantProductConfigurationValuesDto } from '@/dtos/iVariantProductConfigurationValues.dto';
 import CouponsDto from '@/dtos/Coupons.dto';
+import { PromotionsDto } from '@/dtos/Promotions.dto';
 
 export function formatMoney(
   amount: number | string,
@@ -111,8 +112,9 @@ export function getPriceWithCoupon(
   return price;
 }
 
-export function calculatePriceMinus(price: number, coupon: CouponsDto) {
+export function calculatePriceMinus(price: number, coupon?: CouponsDto) {
   let priceMinus = 0;
+  if (!coupon) return priceMinus;
   if (coupon.price_minus_type === PROMOTION_PRICE_TYPE.PRICE) {
     priceMinus = coupon.price_minus_value || 0;
   } else {
@@ -208,4 +210,17 @@ export function getCookie(
   const value = `; ${cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return (parts.pop() || '').split(';').shift();
+}
+
+export function promotionName(promotion?: PromotionsDto) {
+  if (!promotion) return '';
+  if (promotion.name) {
+    return promotion.name;
+  }
+  switch (promotion.type) {
+    case PROMOTION_TYPE.DEAL_SOCK:
+      return 'Deal Sock';
+    case PROMOTION_TYPE.FLASH_SALE:
+      return 'Flash Sale';
+  }
 }

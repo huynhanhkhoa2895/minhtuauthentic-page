@@ -20,10 +20,14 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
           style={{ backgroundColor: setting?.backgroundColor || '#fff' }}
         >
           <div
-            className={'flex justify-end mb-3 items-center h-[120px] w-full'}
+            className={
+              'flex justify-end mb-3 items-center h-[150px] w-full object-contain px-3'
+            }
+            style={{
+              backgroundImage: `url(${promotion?.images?.[0]?.image?.url})`,
+            }}
           >
             <Countdown end_date={endDate} />
-            {/*<Countdown value={deadline} />*/}
           </div>
           <SectionSwiper
             isGrid={true}
@@ -49,6 +53,7 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
                       ...variant,
                       ...{ regular_price: newPrice, coupon: iCoupon },
                     }}
+                    promotions={promotion && [promotion]}
                   />
                 )
               );

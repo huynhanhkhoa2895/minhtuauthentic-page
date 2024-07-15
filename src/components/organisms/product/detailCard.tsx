@@ -10,16 +10,20 @@ import ProductDescription from '@/components/molecules/product/productDescriptio
 import ProductInformation from '@/components/molecules/product/productInformation';
 import ProductRelation from '@/components/molecules/product/productRelation';
 import ProductQuestionAnswer from '@/components/molecules/product/productQuestionAnswer';
+import { PromotionsDto } from '@/dtos/Promotions.dto';
+import ProductDealSock from '@/components/molecules/product/productDealSock';
 
 type Props = {
   product: ProductDto;
   relatedProducts: ProductDto[];
   productConfigurations: ProductConfigurationsDto[];
+  promotionsProducts?: PromotionsDto;
 };
 const ProductDetailCard = ({
   product,
   productConfigurations,
   relatedProducts,
+  promotionsProducts,
 }: Props) => {
   const [isOpen, setIsOpen] = useState<{
     display: boolean;
@@ -55,6 +59,7 @@ const ProductDetailCard = ({
           />
         </div>
       )}
+      {promotionsProducts && <ProductDealSock promotion={promotionsProducts} />}
       <div className={'grid grid-cols-1 lg:grid-cols-3 gap-3 my-3'}>
         <div className={'col-span-2'}>
           <ProductDescription product={product} />

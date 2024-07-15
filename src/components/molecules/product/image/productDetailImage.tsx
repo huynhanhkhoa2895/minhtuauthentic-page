@@ -50,7 +50,6 @@ const ProductDetailImage = ({
             />
           );
         }}
-        loop={true}
         slidesPerView={6}
         spaceBetween={10}
         data={images}
@@ -60,12 +59,19 @@ const ProductDetailImage = ({
 
   return (
     <div className={twMerge(containerClassName)}>
-      <ImageMagnifier
+      <ImageWithFallback
         image={imageActive}
+        className={'object-contain cursor-pointer'}
         onClick={(image: ImageDto | null) => {
           setIsOpen && setIsOpen({ display: true, image });
         }}
       />
+      {/*<ImageMagnifier*/}
+      {/*  image={imageActive}*/}
+      {/*  onClick={(image: ImageDto | null) => {*/}
+      {/*    setIsOpen && setIsOpen({ display: true, image });*/}
+      {/*  }}*/}
+      {/*/>*/}
       <div className={'px-3'}>{renderSlideImage}</div>
     </div>
   );

@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import OrderContext from '@/contexts/orderContext';
 import { Button, InputNumber, Table } from 'antd';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
-import { DeleteOutlined, DeleteRowOutlined } from '@ant-design/icons';
+import { DeleteOutlined } from '@ant-design/icons';
 import { formatMoney, generateSlugToHref } from '@/utils';
 import Link from 'next/link';
 import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
@@ -79,10 +79,13 @@ export default function CartSummaryTemplate() {
                   {formatMoney(item.price || 0, 0, '.', '.')}
                 </td>
                 <td className={'border-y border-gray-200 text-center'}>
-                  <Button icon={<DeleteOutlined />} danger onClick={()=>{
-                    orderCtx?.updateCart &&
-                    orderCtx.updateCart(index, 0);
-                  }}></Button>
+                  <Button
+                    icon={<DeleteOutlined />}
+                    danger
+                    onClick={() => {
+                      orderCtx?.updateCart && orderCtx.updateCart(index, 0);
+                    }}
+                  ></Button>
                 </td>
               </tr>
             );
