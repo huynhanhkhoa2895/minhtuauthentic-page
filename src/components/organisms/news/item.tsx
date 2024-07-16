@@ -20,7 +20,7 @@ export default function NewsItem({news}: Props){
           'relative pt-[100%] rounded-[10px] overflow-hidden'
         }
       >
-        <Link key={key} href={generateSlugToHref(news.slugs?.slug)}>
+        <Link href={generateSlugToHref(news.slugs?.slug)}>
           <Image
             src={url}
             alt={imageDetail?.alt || news.name || ''}
@@ -31,7 +31,7 @@ export default function NewsItem({news}: Props){
         </Link>
       </div>
       <div className={'mt-3'}>
-        <div className={'h-[65px]'}>
+        <div className={'h-[65px] overflow-hidden'}>
           <h5 className={'font-semibold text-[16px]'}>
             <NewsClock item={news} />
             <Link
