@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { generateSlugToHref, truncateString } from '@/utils';
 import NewsClock from '@/components/atoms/news/clock';
 import { SettingOptionDto } from '@/dtos/SettingOption.dto';
+import NewsItem from '@/components/organisms/news/item';
 
 type Props = {
   content: {
@@ -25,50 +26,7 @@ export default function HomeNews({ content, setting }: Props) {
       <div className={'mt-3 flex gap-3'}>
         <div className={'grid grid-cols-1 lg:grid-cols-2 gap-3'}>
           {content.featured.map((item: NewsDto, key: number) => {
-            const imageDetail = item?.images?.[0];
-            const image = imageDetail?.image || null;
-            const url = image?.url || noImage;
-            return (
-              <div
-                className={'p-3 rounded-[10px] border border-primary'}
-                key={key}
-              >
-                <div
-                  className={
-                    'relative pt-[100%] rounded-[10px] overflow-hidden'
-                  }
-                >
-                  <Link key={key} href={generateSlugToHref(item.slugs?.slug)}>
-                    <Image
-                      src={url}
-                      alt={imageDetail?.alt || item.name || ''}
-                      fill={true}
-                      className={'object-contain'}
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  </Link>
-                </div>
-                <div className={'mt-3'}>
-                  <div className={'h-[65px]'}>
-                    <h5 className={'font-semibold text-[16px]'}>
-                      <NewsClock item={item} />
-                      <Link
-                        key={key}
-                        href={generateSlugToHref(item.slugs?.slug)}
-                      >
-                        {item.name}
-                      </Link>
-                    </h5>
-                  </div>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html:
-                        truncateString(item?.description || '', 250) || '',
-                    }}
-                  ></div>
-                </div>
-              </div>
-            );
+            return <NewsItem news={item} key={key} />;
           })}
         </div>
         <div className={'shrink-0 basis-[33%] w-[33%] h-[500px] overflow-auto'}>
