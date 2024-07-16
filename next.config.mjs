@@ -7,7 +7,7 @@ const nextConfig = {
     },
   },
   images: {
-    domains: ['s3.ap-southeast-1.amazonaws.com','localhost','admin.mikiperfume.com','minhtuauthentic-be.hak-app.com'],
+    domains: ['s3.ap-southeast-1.amazonaws.com','localhost','admin.mikiperfume.com','minhtuauthentic-be.hak-app.com', 'be.mikiperfume.com'],
   },
   transpilePackages: ['antd', '@ant-design',  "rc-util",
     "@ant-design/icons",

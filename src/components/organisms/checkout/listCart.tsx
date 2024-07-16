@@ -3,6 +3,7 @@ import OrderContext from '@/contexts/orderContext';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 import { formatMoney } from '@/utils';
 import { InputNumber } from 'antd';
+import PriceOnCart from '@/components/atoms/priceOnCart';
 
 export default function ListCart() {
   const order = useContext(OrderContext);
@@ -36,7 +37,7 @@ export default function ListCart() {
               />
             </div>
             <div>
-              <span>{formatMoney((item.price || 0) * (item.qty || 0))}</span>
+              <PriceOnCart item={item} isDisplayTotal={true} />
             </div>
           </div>
         ))}
@@ -47,7 +48,7 @@ export default function ListCart() {
           <span className={'text-primary'}>
             {formatMoney(
               order?.cart?.reduce(
-                (total, item) => total + (item.price || 0) * (item.qty || 0),
+                (total, item) => total + (item.price || 0),
                 0,
               ) || 0,
             )}
@@ -64,7 +65,7 @@ export default function ListCart() {
           <span className={'text-primary'}>
             {formatMoney(
               order?.cart?.reduce(
-                (total, item) => total + (item.price || 0) * (item.qty || 0),
+                (total, item) => total + (item.price || 0),
                 0,
               ) || 0,
             )}

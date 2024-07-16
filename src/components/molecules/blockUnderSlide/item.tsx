@@ -24,6 +24,7 @@ const BlockUnderSlideItem = ({ content }: { content: StaticContentsDto }) => {
             }
             isFill={true}
             alt={imageDetail?.alt || content?.title || ''}
+            priority={false}
           />
         </Link>
       </div>

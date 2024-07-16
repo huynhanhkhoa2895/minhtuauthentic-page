@@ -6,14 +6,23 @@ import ProductCardButtonGroup from '@/components/molecules/product/button-group'
 import Badge from '@/components/atoms/badge';
 import { twMerge } from 'tailwind-merge';
 import { VariantDto } from '@/dtos/Variant.dto';
-import { calculatePricePercent } from '@/utils';
+import {
+  calculatePriceMinus,
+  calculatePricePercent,
+  formatMoney,
+  promotionName,
+} from '@/utils';
+import { Fragment } from 'react';
+import { PromotionsDto } from '@/dtos/Promotions.dto';
 
 const ProductCard = ({
   product,
   variant,
+  promotions,
 }: {
   product: ProductDto;
   variant: VariantDto;
+  promotions?: PromotionsDto[];
 }) => {
   return (
     <div
@@ -28,7 +37,7 @@ const ProductCard = ({
           </Badge>
           <Badge className={'bg-price'}>Trả góp 0%</Badge>
         </div>
-        <ProductCardImage product={product} />
+        <ProductCardImage product={product} priority={false} />
         <h5 className={'font-bold px-2 h-[70px]'}>
           <Link className={'block'} href={`/${product?.slugs?.slug}`}>
             {product.name}
@@ -36,8 +45,32 @@ const ProductCard = ({
         </h5>
         {variant && <ProductPrice className={'px-2'} variant={variant} />}
       </div>
+      <div className={'h-[50px] px-[8px]'}>
+        {promotions?.map((promotion, index) => {
+          return (
+            <Fragment key={'Product-card-' + index}>
+              <p>
+                <span className={'font-semibold mr-3'}>
+                  {promotionName(promotion)}:
+                </span>
+                <span
+                  className={'text-red-600 text-sm text-right cursor-pointer'}
+                >
+                  -
+                  {formatMoney(
+                    calculatePriceMinus(
+                      variant?.regular_price || 0,
+                      promotion?.coupons?.[0],
+                    ),
+                  )}
+                </span>
+              </p>
+            </Fragment>
+          );
+        })}
+      </div>
       <ProductCardButtonGroup
-        className={'mt-[60px] px-2'}
+        className={'mt-[10px] px-2'}
         variant={variant}
         product={product}
       />

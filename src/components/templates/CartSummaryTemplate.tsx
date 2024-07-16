@@ -3,15 +3,17 @@ import { useContext } from 'react';
 import OrderContext from '@/contexts/orderContext';
 import { Button, InputNumber, Table } from 'antd';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
-import { DeleteOutlined, DeleteRowOutlined } from '@ant-design/icons';
+import { DeleteOutlined } from '@ant-design/icons';
 import { formatMoney, generateSlugToHref } from '@/utils';
 import Link from 'next/link';
 import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
+import PriceOnCart from '@/components/atoms/priceOnCart';
+import PriceMinus from '@/components/atoms/PriceMinus';
 
 export default function CartSummaryTemplate() {
   const orderCtx = useContext(OrderContext);
   const total = orderCtx?.cart?.reduce((acc, item) => {
-    return acc + (item.variant_price || 0) * (item.qty || 0);
+    return acc + (item.price || 0);
   }, 0);
   return (
     <div
@@ -25,6 +27,7 @@ export default function CartSummaryTemplate() {
             <th>Hình ảnh</th>
             <th>Sản phẩm</th>
             <th>Giá</th>
+            <th>Khuyến mãi</th>
             <th>Số lượng</th>
             <th>Tổng tiền</th>
             <th>Xóa</th>
@@ -58,6 +61,11 @@ export default function CartSummaryTemplate() {
                   />
                 </td>
                 <td className={'border-y border-gray-200 text-center'}>
+                  <div className={'flex flex-col gap-1'}>
+                    <PriceMinus item={item} />
+                  </div>
+                </td>
+                <td className={'border-y border-gray-200 text-center'}>
                   <InputNumber
                     min={1}
                     value={item.qty}
@@ -68,15 +76,16 @@ export default function CartSummaryTemplate() {
                   />
                 </td>
                 <td className={'border-y border-gray-200 text-center'}>
-                  {formatMoney(
-                    (item.variant_price || 0) * (item.qty || 0) || 0,
-                    0,
-                    '.',
-                    '.',
-                  )}
+                  {formatMoney(item.price || 0, 0, '.', '.')}
                 </td>
                 <td className={'border-y border-gray-200 text-center'}>
-                  <Button icon={<DeleteOutlined />} danger></Button>
+                  <Button
+                    icon={<DeleteOutlined />}
+                    danger
+                    onClick={() => {
+                      orderCtx?.updateCart && orderCtx.updateCart(index, 0);
+                    }}
+                  ></Button>
                 </td>
               </tr>
             );

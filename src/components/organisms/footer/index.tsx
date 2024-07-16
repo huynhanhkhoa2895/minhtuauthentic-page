@@ -51,7 +51,7 @@ const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
   };
 
   return (
-    <footer className={'relative z-[3]'}>
+    <footer className={'relative z-[2]'}>
       <div className={'bg-primaryGrey '}>
         <div className={'container mx-auto '}>
           <div className={'flex justify-between w-full pt-[35px]'}>

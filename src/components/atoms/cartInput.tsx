@@ -9,16 +9,26 @@ type Props = {
   className?: string;
 };
 export default function CartInput({ value, onChange, className }: Props) {
-  const [_value, setValue] = useState(value || 0);
+  const [_value, setValue] = useState(value || 1);
   const [ready, setReady] = useState(false);
+  const [debounce, setDebounce] = useState<number>(1);
   useEffect(() => {
     setReady(true);
   }, []);
   useEffect(() => {
-    if (ready) {
-      onChange && onChange(_value);
-    }
+    if (!ready) return;
+    const timeout = setTimeout(() => {
+      setDebounce(_value);
+    }, 350);
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [_value]);
+
+  useEffect(() => {
+    onChange && onChange(debounce < 1 ? 1 : debounce);
+  }, [debounce]);
+
   return (
     <div
       className={twMerge(
@@ -26,15 +36,28 @@ export default function CartInput({ value, onChange, className }: Props) {
         className,
       )}
     >
-      <button className="text-[16px] font-extrabold block text-[#d3d3d3]">
+      <button
+        className="text-[16px] font-extrabold block text-[#d3d3d3]"
+        onClick={() => {
+          setValue((_value) => (_value - 1 < 0 ? 0 : _value - 1));
+        }}
+      >
         <MinusIcon className={'w-6 h-6 text-[#d3d3d3]'} />
       </button>
       <input
         type="text"
         className="text-[16px] font-semibold w-[35px] text-black text-center"
         value={_value}
+        onChange={(e) => {
+          setValue(parseInt(e.target.value) || 1);
+        }}
       />
-      <button className="text-[16px] font-extrabold block text-[#d3d3d3]">
+      <button
+        className="text-[16px] font-extrabold block text-[#d3d3d3]"
+        onClick={() => {
+          setValue((_value) => _value + 1);
+        }}
+      >
         <PlusIcon className={'w-6 h-6 text-[#d3d3d3]'} />
       </button>
     </div>

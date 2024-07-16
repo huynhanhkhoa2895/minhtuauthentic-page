@@ -9,14 +9,13 @@ import React, {
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 import { VariantDto } from '@/dtos/Variant.dto';
 import { toast } from 'react-toastify';
-import { variantName } from '@/utils';
+import { getPriceWithCoupon, variantName } from '@/utils';
 import { usePathname } from 'next/navigation';
 const OrderContext = createContext<TypeAppState | undefined>(undefined);
 export type TypeAppState = {
   cart: OrderItemsDto[];
-  addCart: (product_name: string, variantDto: VariantDto, qty?: number) => void;
+  addCart: (variantDto: VariantDto) => void;
   updateCart: (index: number, qty?: number) => void;
-  removeCart: (index: number) => void;
   clearCart: () => void;
   isOpenHeaderCart?: boolean;
   setIsOpenHeaderCart?: Dispatch<SetStateAction<boolean>>;
@@ -45,72 +44,55 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     ref.current = pathname;
   }, [pathname]);
 
-  const addCart = async (
-    product_name: string,
-    variant: VariantDto,
-    qty: number = 1,
-  ) => {
-    const detailVariant: { data: VariantDto } = await fetch(
-      `/api/variant/${variant.id}`,
-    ).then((res) => res.json());
-    const newCart = [...cart];
-    const index = newCart.findIndex((item) => item.variant_id === variant.id);
-    const orderItem = newCart[index];
-    if (orderItem) {
-      if (orderItem.qty) {
-        orderItem.qty += qty;
-      } else {
-        orderItem.qty = qty;
-      }
-      newCart[index] = orderItem;
-      setCart(newCart);
-    } else {
-      setCart([
-        ...newCart,
-        new OrderItemsDto({
-          variant_id: variant.id,
-          qty,
-          price: variant.price,
-          variant_name:
-            product_name +
-            variantName(
-              detailVariant?.data?.variant_product_configuration_values,
-            ),
-          variant_price: variant.price,
-          variant_regular_price: variant.regular_price,
-          slug: detailVariant?.data?.product?.slugs?.slug,
-          image: detailVariant?.data?.images?.[0]?.image,
-        }),
-      ]);
-    }
+  const callAddUpdateCart = async (variant_id: number, qty: number) => {
+    return await fetch(`/api/orders/addToCart`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        variant_id: variant_id,
+        current_cart: cart,
+        qty,
+      }),
+    })
+      .then((res) => res.json())
+      .catch(() => {
+        return null;
+      });
   };
 
-  const updateCart = (index: number, qty: number = 1) => {
-    const newCart = [...cart];
-    if (qty < 1) {
-      toast.error('Số lượng phải lớn hơn 0');
+  const addCart = async (variant: VariantDto) => {
+    const currentVariantOnCart = cart.find(
+      (item) => item.variant_id === variant.id,
+    );
+    if (!variant?.id) {
+      toast('Variant không tồn tại', { type: 'error' });
       return;
     }
-    if (index !== -1) {
-      const orderItem = newCart[index];
-      orderItem.qty = qty;
-      newCart[index] = orderItem;
-      setCart(newCart);
+    const newCartResponse = await callAddUpdateCart(
+      variant.id,
+      currentVariantOnCart?.qty ? currentVariantOnCart?.qty + 1 : 1,
+    );
+    if (!newCartResponse?.data) {
+      toast('Không thể thêm vào giỏ hàng', { type: 'error' });
     }
+    setCart(newCartResponse?.data || []);
   };
 
-  const removeCart = (index: number) => {
-    setCart((cart) => {
-      const newCart = [...cart];
-      newCart.splice(index, 1);
-      return newCart;
-    });
+  const updateCart = async (index: number, qty: number = 1) => {
+    const orderItem = cart[index];
+    if (!orderItem?.variant_id) {
+      toast('Variant không tồn tại', { type: 'error' });
+      return;
+    }
+    const newCartResponse = await callAddUpdateCart(orderItem.variant_id, qty);
+    setCart(newCartResponse?.data || []);
   };
 
   const clearCart = () => {
     setCart([]);
-  }
-
+  };
 
   return (
     <OrderContext.Provider
@@ -118,7 +100,6 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
         cart,
         addCart,
         updateCart,
-        removeCart,
         isOpenHeaderCart,
         setIsOpenHeaderCart,
         clearCart,

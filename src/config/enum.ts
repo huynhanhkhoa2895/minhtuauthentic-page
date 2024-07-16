@@ -83,6 +83,10 @@ export const SETTING_KEY = {
     KEY: 'news_section',
     LABEL: 'Vùng tin tức',
   },
+  FLASH_SALE_SECTION: {
+    KEY: 'flash_sale',
+    LABEL: 'Vùng Flash Sale',
+  },
   FEATURE_CATEGORY: {
     KEY: 'feature_category',
     LABEL: 'Danh mục nổi bật',
@@ -115,4 +119,14 @@ export const CATEGORY_FILTER = {
 export enum PROVINCE {
   DISTRICT = 'district',
   WARD = 'ward',
+}
+
+export enum PROMOTION_TYPE {
+  FLASH_SALE = 'flash-sale',
+  DEAL_SOCK = 'deal-sock',
+}
+
+export enum PROMOTION_PRICE_TYPE {
+  PERCENT = 'percent',
+  PRICE = 'price',
 }

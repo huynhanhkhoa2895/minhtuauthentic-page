@@ -3,6 +3,7 @@ import { VariantDto } from '@/dtos/Variant.dto';
 import { OrdersDto } from '@/dtos/Orders.dto';
 import { CouponDetailDto } from '@/dtos/CouponDetail.dto';
 import { ImageDto } from '@/dtos/Image.dto';
+import CouponsDto from '@/dtos/Coupons.dto';
 
 export class OrderItemsDto extends BaseDto {
   type?: string;
@@ -17,7 +18,7 @@ export class OrderItemsDto extends BaseDto {
   qty?: number;
   variant?: VariantDto;
   order?: OrdersDto;
-  coupons?: CouponDetailDto[];
+  coupons?: CouponsDto[];
   image?: ImageDto;
   slug?: string;
   constructor(init?: Partial<OrderItemsDto>) {

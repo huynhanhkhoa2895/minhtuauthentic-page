@@ -23,6 +23,12 @@ export default function ProductInformation({ product }: Props) {
       ),
     },
     {
+      label: 'Nhà pha chế',
+      value: (
+        <span className={'font-bold'}>{product?.product_property?.mixer}</span>
+      ),
+    },
+    {
       label: 'Độ toả hương',
       value: (
         <span className={'font-bold'}>
@@ -64,6 +70,12 @@ export default function ProductInformation({ product }: Props) {
         <span className={'font-bold'}>
           {product?.product_property?.recommend}
         </span>
+      ),
+    },
+    {
+      label: 'Xuất xứ',
+      value: (
+        <span className={'font-bold'}>{product?.product_property?.origin}</span>
       ),
     },
   ];

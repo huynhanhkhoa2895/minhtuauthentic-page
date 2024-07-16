@@ -4,6 +4,8 @@ import { VariantDto } from '@/dtos/Variant.dto';
 import { useContext } from 'react';
 import OrderContext from '@/contexts/orderContext';
 import { ProductDto } from '@/dtos/Product.dto';
+import Link from 'next/link';
+import { generateSlugToHref } from '@/utils';
 
 const ProductCardButtonGroup = ({
   product,
@@ -17,28 +19,25 @@ const ProductCardButtonGroup = ({
   const order = useContext(OrderContext);
   return (
     <div className={twMerge('flex gap-2', className)}>
-      <button
+      <Link
+        href={generateSlugToHref(product?.slugs?.slug)}
         className={
           'block bg-primary rounded-[8px] text-white p-[8px_10px] flex items-center justify-center'
         }
       >
         <EyeOutlined />
-      </button>
+      </Link>
       <button
         type={'button'}
         className={
           'block grow bg-primary text-white rounded-[8px] p-[8px_10px]'
         }
         onClick={() => {
-          order?.addCart && order.addCart(product.name || '', variant);
+          order?.addCart && order.addCart(variant);
         }}
       >
         <ShoppingCartOutlined />
-        <span
-          className={'ml-2'}
-        >
-          Thêm vào giỏ hàng
-        </span>
+        <span className={'ml-2'}>Thêm vào giỏ hàng</span>
       </button>
     </div>
   );

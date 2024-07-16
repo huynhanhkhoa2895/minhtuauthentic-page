@@ -1,10 +1,12 @@
-import { Entity } from '@/config/enum';
+import { Entity, PROMOTION_PRICE_TYPE, PROMOTION_TYPE } from '@/config/enum';
 import { VariantDto } from '@/dtos/Variant.dto';
 import { IVariantProductConfigurationValuesDto } from '@/dtos/iVariantProductConfigurationValues.dto';
+import CouponsDto from '@/dtos/Coupons.dto';
+import { PromotionsDto } from '@/dtos/Promotions.dto';
 
 export function formatMoney(
   amount: number | string,
-  decimalCount = 3,
+  decimalCount = 0,
   decimal = '.',
   thousands = ',',
 ) {
@@ -97,6 +99,30 @@ export function isValidHttpUrl(string: string) {
   return url.protocol === 'http:' || url.protocol === 'https:';
 }
 
+export function getPriceWithCoupon(
+  price: number,
+  coupons: CouponsDto | CouponsDto[],
+) {
+  if (!Array.isArray(coupons)) {
+    coupons = [coupons];
+  }
+  for (const coupon of coupons) {
+    price = price - calculatePriceMinus(price, coupon);
+  }
+  return price;
+}
+
+export function calculatePriceMinus(price: number, coupon?: CouponsDto) {
+  let priceMinus = 0;
+  if (!coupon) return priceMinus;
+  if (coupon.price_minus_type === PROMOTION_PRICE_TYPE.PRICE) {
+    priceMinus = coupon.price_minus_value || 0;
+  } else {
+    priceMinus = (price * (coupon?.price_minus_value || 0)) / 100;
+  }
+  return priceMinus;
+}
+
 export function calculatePricePercent(variant: VariantDto | undefined) {
   if (!variant) return 0;
   return Math.round(
@@ -162,21 +188,39 @@ export function variantName(
   return str.trim();
 }
 
-export function getCookie(name: string, cookie: string, toObject: boolean = false) {
+export function getCookie(
+  name: string,
+  cookie: string,
+  toObject: boolean = false,
+) {
   if (toObject) {
     const rs = cookie.split(';').reduce((cookieObject: any, cookieString) => {
-      let splitCookie: any = cookieString.split('=')
+      let splitCookie: any = cookieString.split('=');
       try {
-        cookieObject[splitCookie[0].trim()] = decodeURIComponent(splitCookie[1])
+        cookieObject[splitCookie[0].trim()] = decodeURIComponent(
+          splitCookie[1],
+        );
       } catch (error) {
-        cookieObject[splitCookie[0].trim()] = splitCookie[1]
+        cookieObject[splitCookie[0].trim()] = splitCookie[1];
       }
-      return cookieObject
-    }, [])
-    return rs ? rs[name] : null
+      return cookieObject;
+    }, []);
+    return rs ? rs[name] : null;
   }
   const value = `; ${cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return (parts.pop() || '').split(';').shift();
 }
 
+export function promotionName(promotion?: PromotionsDto) {
+  if (!promotion) return '';
+  if (promotion.name) {
+    return promotion.name;
+  }
+  switch (promotion.type) {
+    case PROMOTION_TYPE.DEAL_SOCK:
+      return 'Deal Sock';
+    case PROMOTION_TYPE.FLASH_SALE:
+      return 'Flash Sale';
+  }
+}

@@ -63,6 +63,7 @@ export default function FormCheckout({
     control,
     formState: { errors },
     setValue,
+    setError,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -110,6 +111,11 @@ export default function FormCheckout({
   };
 
   const onSubmit = (data: FormData) => {
+    if (!data?.payment_id) {
+      setError('payment_id', {
+        message: 'Vui lòng chọn phương thức thanh toán',
+      });
+    }
     const orderTotalPrice =
       orderCtx?.cart?.reduce(
         (total, item) => total + (item.price || 0) * (item.qty || 0),
@@ -137,9 +143,10 @@ export default function FormCheckout({
         toast.success('Đặt hàng thành công');
         orderCtx?.clearCart && orderCtx?.clearCart();
         router.push('/gio-hang/thanh-cong?orderId=' + _data?.data?.id);
-      }).catch(()=>{
-        toast.error('Đã có lỗi xảy ra')
-    });
+      })
+      .catch(() => {
+        toast.error('Đã có lỗi xảy ra');
+      });
   };
 
   return (
@@ -228,7 +235,7 @@ export default function FormCheckout({
           control={control}
           errors={errors}
           radioOptions={payments.map((item) => ({
-            label: item?.label || '',
+            label: item?.label || item?.name || '',
             value: item?.id ? item?.id.toString() : '',
           }))}
           name={'payment_id'}

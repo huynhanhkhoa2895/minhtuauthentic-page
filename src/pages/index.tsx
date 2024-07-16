@@ -17,6 +17,7 @@ import Footer from '@/components/organisms/footer';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { SettingOptionDto } from '@/dtos/SettingOption.dto';
 import getDefaultSeverSide from '@/utils/getDefaultServerSide';
+import HomeFlashSale from '@/components/organisms/home/homeFlashSale';
 export const getServerSideProps = (async () => {
   // Fetch data from external API
   const res = await fetch(process.env.BE_URL + '/api/pages/home').catch(
@@ -24,7 +25,7 @@ export const getServerSideProps = (async () => {
       return null;
     },
   );
-  const {resMenu, resFooter} = await getDefaultSeverSide()
+  const { resMenu, resFooter } = await getDefaultSeverSide();
 
   const data: { data: ResponseHomePageDto } = res ? await res.json() : null;
   const dataMenu: { data: ResponseMenuDto } = resMenu
@@ -66,7 +67,11 @@ export default function Home({
           className={'mt-[10px] flex w-full gap-2 relative'}
         >
           <MenuWrapper homeMenuCategory={menu.homeMenuCategory} />
-          <Banners className={'flex-1'} banners={homePage?.banners || []} />
+          <Banners
+            className={'flex-1'}
+            banners={homePage?.banners || []}
+            classNameImage={'object-cover w-full h-[350px]'}
+          />
           <div className={'w-[200px] flex flex-col gap-2'}>
             <Banners
               className={'w-full h-full'}
@@ -87,6 +92,14 @@ export default function Home({
             setting={settings[SETTING_KEY.FEATURE_CATEGORY.KEY]}
           />
         )}
+
+        {homePage?.homeFlashSale && (
+          <HomeFlashSale
+            promotion={homePage?.homeFlashSale}
+            setting={settings[SETTING_KEY.FLASH_SALE_SECTION.KEY]}
+          />
+        )}
+
         <HomeCategory
           homeCategory={homePage?.homeCategory || []}
           bannerUnderCategory={homePage?.bannerUnderCategory}
