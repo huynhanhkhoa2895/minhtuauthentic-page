@@ -3,5 +3,6 @@ import { ProductFilterOptionDto } from '@/dtos/ProductFilterSettingOption/Produc
 
 export class ResponseCategoryFilterPageDto {
   products?: ProductDto[];
+  total?: number;
   settings?: ProductFilterOptionDto;
 }

@@ -9,14 +9,16 @@ import FilterBy from '@/components/organisms/categoryFilter/ContentFilter/filter
 import { ProductFilterOptionDto } from '@/dtos/ProductFilterSettingOption/ProductFilterOption.dto';
 import { ProductConfigurationValuesDto } from '@/dtos/productConfigurationValues.dto';
 import { SlugDto } from '@/dtos/Slug.dto';
+import { Pagination, Space, Skeleton } from 'antd';
 
 type Props = {
   settings?: ProductFilterOptionDto;
   products: ProductDto[];
   slugData: SlugDto;
+  total: number;
 };
 
-export default function ContentFilter({ products, settings, slugData }: Props) {
+export default function ContentFilter({ products, settings, slugData, total }: Props) {
   const ctx = useContext(CategoryFilterContext);
   const [_products, setProducts] = useState<ProductDto[]>(products);
   const [isReady, setIsReady] = useState(false);
@@ -132,6 +134,24 @@ export default function ContentFilter({ products, settings, slugData }: Props) {
           </div>
         )}
         {renderProduct}
+        <div className={'flex justify-center mt-3'}>
+          {
+            ctx?.limit && ctx?.limit > -1 && (
+              <Pagination
+                defaultCurrent={1}
+                total={total}
+                showQuickJumper={true}
+                showSizeChanger={false}
+                current={ctx?.page || 1}
+                pageSize={ctx?.limit || 10}
+                onChange={(page: number) => {
+                  ctx?.setPage && ctx.setPage(page);
+                }}
+              />
+            )
+          }
+
+        </div>
       </div>
     </div>
   );

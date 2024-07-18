@@ -20,6 +20,8 @@ export type TypeAppState = {
   setObjFilterByValue:
     | Dispatch<SetStateAction<Record<string, Record<string, string>>>>
     | undefined;
+  page: number;
+  setPage: Dispatch<SetStateAction<number>> | undefined;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>> | undefined;
   dataSlug: SlugDto | null;
@@ -57,6 +59,7 @@ export const CategoryFilterProvider = ({
   );
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
   const [objFilterByValue, setObjFilterByValue] = useState<
     Record<string, Record<string, string>>
   >({});
@@ -71,6 +74,7 @@ export const CategoryFilterProvider = ({
     const params = new URLSearchParams();
     params.append('sort', sortBy);
     params.append('limit', limit.toString());
+    params.append('page', page.toString());
 
     for (const key in filters) {
       for (const [index, value] of (filters[key] as any).entries()) {
@@ -81,7 +85,7 @@ export const CategoryFilterProvider = ({
     refTimerCount.current = setTimeout(() => {
       updateRouter(params.toString());
     }, 500);
-  }, [sortBy, limit, filters]);
+  }, [sortBy, limit, filters, page]);
   useEffect(() => {
     const _filters: Record<string, (string | number)[]> = {};
     if (dataSlug?.model === Entity.CATEGORIES) {
@@ -145,6 +149,8 @@ export const CategoryFilterProvider = ({
         setObjFilterByValue,
         dataSlug,
         setDataSlug,
+        page,
+        setPage
       }}
     >
       {children}
