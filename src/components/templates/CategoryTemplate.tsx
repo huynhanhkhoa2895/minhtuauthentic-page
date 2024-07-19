@@ -18,17 +18,11 @@ export default function CategoryTemplate({ slug }: Props) {
         }
       >
         <SettingFilter settings={data.settings} />
-        <ContentFilter
-          products={data.products || []}
-          settings={data.settings}
-          slugData={
-            new SlugDto({
-              model: slug.model,
-              model_id: slug.model_id,
-              slug: slug.slug,
-            })
-          }
-        />
+        <ContentFilter products={data.products || []} settings={data.settings} total={data?.total || 0} slugData={new SlugDto({
+          model: slug.model,
+          model_id: slug.model_id,
+          slug: slug.slug,
+        })}/>
       </div>
     </CategoryFilterProvider>
   );

@@ -5,6 +5,7 @@ import SectionSwiper from '@/components/organisms/sectionSwiper';
 import CouponsDto from '@/dtos/Coupons.dto';
 import Countdown from '@/components/organisms/home/homeFlashSale/countdown';
 import { getPriceWithCoupon } from '@/utils';
+import Image from 'next/image';
 type Props = {
   promotion?: PromotionsDto;
   setting?: SettingOptionDto;
@@ -21,13 +22,21 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
         >
           <div
             className={
-              'flex justify-end mb-3 items-center h-[150px] w-full object-contain px-3'
+              'flex justify-end mb-3 items-center h-[120px] w-full relative px-3'
             }
-            style={{
-              backgroundImage: `url(${promotion?.images?.[0]?.image?.url})`,
-            }}
           >
-            <Countdown end_date={endDate} />
+            {
+              promotion?.images?.[0]?.image?.url && (
+                <Image
+                  src={promotion?.images?.[0]?.image?.url}
+                  className={'object-cover w-full h-full'}
+                  alt={'Khuyến mãi flash sale'}
+                  fill
+                />
+              )
+            }
+
+            <Countdown className={'relative'} end_date={endDate} />
           </div>
           <SectionSwiper
             isGrid={true}

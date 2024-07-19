@@ -8,7 +8,7 @@ export default async function handler(
   if (req.method === 'POST') {
     const query = req.query;
     const url =
-      `${process.env.BE_URL}/api/orders/create?` +
+      `${process.env.BE_URL}/api/orders/checkout?` +
       new URLSearchParams(query as any).toString();
 
     const rs = await fetch(url, {
