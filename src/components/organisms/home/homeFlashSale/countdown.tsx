@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 type Props = {
   end_date: Date;
+  className?: string;
 };
-export default function Countdown({ end_date }: Props) {
+export default function Countdown({ end_date, className }: Props) {
   const refInterval = useRef<NodeJS.Timeout>();
   const [countdown, setCountdown] = useState<{
     hours: string;
@@ -59,7 +61,7 @@ export default function Countdown({ end_date }: Props) {
     refInterval.current = setInterval(timer, 1000);
   }
   return (
-    <div className={'flex gap-3'}>
+    <div className={twMerge('flex gap-3', className)}>
       <span className={'bg-white p-3 rounded-[10px]'}>{countdown.day}</span>
       <span className={'bg-white p-3 rounded-[10px]'}>{countdown.hours}</span>
       <span className={'bg-white p-3 rounded-[10px]'}>{countdown.minutes}</span>

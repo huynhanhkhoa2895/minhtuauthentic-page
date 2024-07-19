@@ -14,6 +14,12 @@ export class OrdersDto extends BaseDto {
   status?: OrderStatus;
   phone?: string;
   shipping_address?: string;
+  shipping_city?: string;
+  shipping_district?: string;
+  shipping_ward?: string;
+  city?: string;
+  district?: string;
+  ward?: string;
   shipping_price?: number;
   user?: UserDto;
   payment?: PaymentsDto;
