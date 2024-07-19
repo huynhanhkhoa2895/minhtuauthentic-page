@@ -6,7 +6,7 @@ import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage
 import { SlugDto } from '@/dtos/Slug.dto';
 
 type Props = {
-  slug: ResponseSlugPageDto;
+  slug: ResponseSlugPageDto<ResponseCategoryFilterPageDto>;
 };
 export default function CategoryTemplate({ slug }: Props) {
   const data = slug.data as ResponseCategoryFilterPageDto;
@@ -14,15 +14,21 @@ export default function CategoryTemplate({ slug }: Props) {
     <CategoryFilterProvider>
       <div
         className={
-          'rounded-[10px] border-gray-500 bg-white shadow-custom mt-3 grid grid-cols-1 lg:grid-cols-6 gap-3'
+          'rounded-[10px] border-gray-500 bg-white shadow-custom grid grid-cols-1 lg:grid-cols-6 gap-3'
         }
       >
         <SettingFilter settings={data.settings} />
-        <ContentFilter products={data.products || []} settings={data.settings} slugData={new SlugDto({
-          model: slug.model,
-          model_id: slug.model_id,
-          slug: slug.slug,
-        })}/>
+        <ContentFilter
+          products={data.products || []}
+          settings={data.settings}
+          slugData={
+            new SlugDto({
+              model: slug.model,
+              model_id: slug.model_id,
+              slug: slug.slug,
+            })
+          }
+        />
       </div>
     </CategoryFilterProvider>
   );

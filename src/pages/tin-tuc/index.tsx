@@ -17,8 +17,12 @@ export const getServerSideProps = (async (context) => {
   const dataFooter: { data: ResponseFooterDto } = resFooter
     ? await resFooter.json()
     : null;
-  const rsNews: {data: ResponseNewsPageDto} = await fetch(process.env.BE_URL + `/api/pages/news?page=${page || 1}`, {
-  }).then(res => res.json()).catch(err => null);
+  const rsNews: { data: ResponseNewsPageDto } = await fetch(
+    process.env.BE_URL + `/api/pages/news?page=${page || 1}`,
+    {},
+  )
+    .then((res) => res.json())
+    .catch((err) => null);
   return {
     props: {
       menu: dataMenu?.data,
@@ -33,17 +37,21 @@ export const getServerSideProps = (async (context) => {
 }>;
 
 export default function News({
-     menu,
-     footerContent,
-    news,
-   }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  menu,
+  footerContent,
+  news,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Header homeMenuCategory={menu.homeMenuCategory} />
       <div className={'container mx-auto p-3'}>
-        {
-          news && <NewsTemplate news={news?.news || []} categoryNews={news.categoryNews || []} />
-        }
+        {news && (
+          <NewsTemplate
+            news={news?.news || []}
+            categoryNews={news.categoryNews || []}
+            newest={news.newest || []}
+          />
+        )}
       </div>
       <Footer footerContent={footerContent} />
     </>

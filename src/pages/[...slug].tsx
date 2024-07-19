@@ -9,6 +9,8 @@ import { Entity } from '@/config/enum';
 import { ResponseProductDetailPageDto } from '@/dtos/responseProductDetailPage.dto';
 import CategoryTemplate from '@/components/templates/CategoryTemplate';
 import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage.dto';
+import NewsDetailTemplate from '@/components/templates/NewsDetailTemplate';
+import { ResponseNewsDetailPageDto } from '@/dtos/ResponseNewsDetailPage.dto';
 export const getServerSideProps = (async (context) => {
   const { slug } = context.query;
   const res = await fetch(
@@ -30,7 +32,9 @@ export const getServerSideProps = (async (context) => {
       return null;
     },
   );
-  const data: { data: ResponseSlugPageDto } = res ? await res.json() : null;
+  const data: { data: ResponseSlugPageDto<unknown> } = res
+    ? await res.json()
+    : null;
   const dataMenu: { data: ResponseMenuDto } = resMenu
     ? await resMenu.json()
     : null;
@@ -45,7 +49,7 @@ export const getServerSideProps = (async (context) => {
     },
   };
 }) satisfies GetServerSideProps<{
-  slug: ResponseSlugPageDto;
+  slug: ResponseSlugPageDto<unknown>;
   menu: ResponseMenuDto;
   footerContent: ResponseFooterDto;
 }>;
@@ -58,14 +62,24 @@ export default function Page({
       case Entity.PRODUCTS:
         return (
           <ProductTemplate
-            key={slug?.data?.product?.id}
+            key={(slug?.data as ResponseProductDetailPageDto)?.product?.id}
             data={slug?.data as ResponseProductDetailPageDto}
           />
         );
       case Entity.CATEGORIES:
       case Entity.BRANDS:
       case Entity.KEYWORDS:
-        return <CategoryTemplate slug={slug} />;
+        return (
+          <CategoryTemplate
+            slug={slug as ResponseSlugPageDto<ResponseCategoryFilterPageDto>}
+          />
+        );
+      case Entity.NEWS:
+        return (
+          <NewsDetailTemplate
+            slug={slug as ResponseSlugPageDto<ResponseNewsDetailPageDto>}
+          />
+        );
       default:
         return <div>Not Found</div>;
     }
@@ -73,7 +87,7 @@ export default function Page({
   return (
     <>
       <Header />
-      <div className={'container mx-auto'}>{renderTemplate()}</div>
+      <div className={'container mx-auto p-3'}>{renderTemplate()}</div>
       <Footer footerContent={footerContent} />
     </>
   );

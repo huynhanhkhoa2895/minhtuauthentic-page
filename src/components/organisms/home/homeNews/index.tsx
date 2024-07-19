@@ -8,6 +8,7 @@ import { generateSlugToHref, truncateString } from '@/utils';
 import NewsClock from '@/components/atoms/news/clock';
 import { SettingOptionDto } from '@/dtos/SettingOption.dto';
 import NewsItem from '@/components/organisms/news/item';
+import NewsSmallList from '@/components/organisms/news/smallList';
 
 type Props = {
   content: {
@@ -30,44 +31,7 @@ export default function HomeNews({ content, setting }: Props) {
           })}
         </div>
         <div className={'shrink-0 basis-[33%] w-[33%] h-[500px] overflow-auto'}>
-          {content.news.map((item: NewsDto, key: number) => {
-            const imageDetail = item?.images?.[0];
-            const image = imageDetail?.image || null;
-            const url = image?.url || noImage;
-            return (
-              <div key={key} className={'flex gap-3 mb-3 last:mb-0  '}>
-                <div
-                  className={'w-[100px] overflow-hidden basis-[100px] shrink-0'}
-                >
-                  <Link key={key} href={generateSlugToHref(item.slugs?.slug)}>
-                    <Image
-                      src={url}
-                      alt={imageDetail?.alt || item.name || ''}
-                      className={
-                        'object-contain rounded-[10px] w-[100px] h-[100px]'
-                      }
-                      width={image?.width || 0}
-                      height={image?.height || 0}
-                    />
-                  </Link>
-                </div>
-                <div className={'h-[100px]'}>
-                  <NewsClock item={item} />
-                  <h5 className={'font-semibold text-[14px] leading-[1] mb-1'}>
-                    <Link key={key} href={generateSlugToHref(item.slugs?.slug)}>
-                      {truncateString(item.name || '', 60)}
-                    </Link>
-                  </h5>
-                  <div
-                    className={'h-[47px] overflow-hidden'}
-                    dangerouslySetInnerHTML={{
-                      __html: truncateString(item?.description || '', 80) || '',
-                    }}
-                  ></div>
-                </div>
-              </div>
-            );
-          })}
+          <NewsSmallList news={content.news} />
         </div>
       </div>
     </div>
