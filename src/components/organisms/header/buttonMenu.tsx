@@ -32,7 +32,7 @@ const ButtonMenu = (menu: ResponseMenuDto | null) => {
         createPortal(
           <div className={'fixed left-0 top-[180px]'}>
             <Menu
-              data={menu?.homeMenuCategory || []}
+              homeMenu={menu?.homeMenuCategory || []}
               isPopup={true}
               className={twMerge(
                 'absolute left-0 transition-all duration-500',
