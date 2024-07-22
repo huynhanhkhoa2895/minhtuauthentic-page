@@ -12,4 +12,5 @@ export enum POPUP_TYPE {
   CATEGORY = 'category',
   PRODUCT = 'product',
   BRAND = 'brand',
+  NEWS = 'news',
 }

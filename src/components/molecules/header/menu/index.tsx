@@ -40,51 +40,32 @@ const Menu = ({
           type: POPUP_TYPE.PRODUCT,
           data: [],
         },
+        {
+          type: POPUP_TYPE.BRAND,
+          data: [],
+        },
       ],
       ...(homeMenu || []).map((item) => ({
         type: POPUP_TYPE.CATEGORY,
         data: item,
         isHaveChildren:
-          item?.category?.children?.length &&
-          item?.category?.children?.length > 0
-            ? true
-            : false,
+          !!(item?.category?.children?.length &&
+            item?.category?.children?.length > 0),
       })),
+      ...[
+        {
+          type: POPUP_TYPE.NEWS,
+          data: [],
+        }]
     ]);
   }, []);
 
   useEffect(() => {
-    if (!isPopup) {
-      setMenuCategoryChildrenPosition({
-        top: 0,
-        left: 0,
-        height: ref.current?.clientHeight || 0,
-      });
-      localStorage.setItem(
-        'menuPosition',
-        JSON.stringify({
-          height: ref.current?.clientHeight,
-          top: 0,
-          left: ref.current?.getBoundingClientRect().left,
-        }),
-      );
-    } else {
-      const menuPosition = JSON.parse(
-        localStorage.getItem('menuPosition') || '{}',
-      );
-      setMenuCategoryChildrenPosition({
-        top: 0,
-        left: menuPosition.left,
-        height: menuPosition.height,
-      });
-      if (ref.current) {
-        if (menuPosition.height) {
-          ref.current.style.height = `${menuPosition.height}px`;
-          ref.current.style.top = `0px`;
-          ref.current.style.left = `${menuPosition.left}px`;
-        }
-      }
-    }
+    setMenuCategoryChildrenPosition({
+      top: 0,
+      left: 20,
+      height: ref.current?.clientHeight || 0,
+    });
   }, [_data]);
 
   const renderMenuItem = (item: MenuDisplay) => {
@@ -127,6 +108,24 @@ const Menu = ({
           </Link>
         );
       },
+      [POPUP_TYPE.NEWS]: () => {
+        return (
+          <Link className={'capitalize font-bold'} href={'/tin-tuc'}>
+            Tin tức
+          </Link>
+        );
+      },
+      [POPUP_TYPE.BRAND]: () => {
+        return (
+          <div className={'flex justify-between'}>
+            <Link className={'capitalize font-bold'} href={'/thuong-hieu'}>
+              Thương hiệu
+            </Link>
+            <IconCheveronRight className={'w-[20px] h-[20px]'} />
+          </div>
+
+        );
+      },
     };
     return obj[item.type || '']();
   };
@@ -154,7 +153,7 @@ const Menu = ({
       <div
         ref={ref}
         className={twMerge(
-          'w-[180px] rounded-[10px] shadow-custom py-1 shrink-1 z-[1] bg-white overflow-hidden relative',
+          'w-[220px] rounded-[10px] shadow-custom py-1 shrink-1 z-[1] bg-white overflow-hidden relative',
           className,
         )}
       >

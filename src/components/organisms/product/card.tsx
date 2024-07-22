@@ -14,15 +14,20 @@ import {
 } from '@/utils';
 import { Fragment } from 'react';
 import { PromotionsDto } from '@/dtos/Promotions.dto';
+import CouponsDto from '@/dtos/Coupons.dto';
 
 const ProductCard = ({
   product,
   variant,
   promotions,
+  addText,
+  coupon
 }: {
   product: ProductDto;
   variant: VariantDto;
   promotions?: PromotionsDto[];
+  addText?: string;
+  coupon?: CouponsDto;
 }) => {
   return (
     <div
@@ -56,11 +61,21 @@ const ProductCard = ({
                 <span
                   className={'text-red-600 text-sm text-right cursor-pointer'}
                 >
-                  -
+                  {formatMoney(
+                    (variant?.regular_price || 0) - calculatePriceMinus(
+                      variant?.regular_price || 0,
+                      coupon,
+                    ),
+                  )}
+                </span>
+              </p>
+              <p className={'text-sm'}>
+                <span className={'mr-3'}>Tiết kiệm thêm:</span>
+                <span>
                   {formatMoney(
                     calculatePriceMinus(
                       variant?.regular_price || 0,
-                      promotion?.coupons?.[0],
+                      coupon,
                     ),
                   )}
                 </span>
@@ -73,6 +88,7 @@ const ProductCard = ({
         className={'mt-[10px] px-2'}
         variant={variant}
         product={product}
+        addText={addText}
       />
     </div>
   );

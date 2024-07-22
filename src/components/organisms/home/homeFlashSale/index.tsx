@@ -39,10 +39,8 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
             <Countdown className={'relative'} end_date={endDate} />
           </div>
           <SectionSwiper
-            isGrid={true}
             slidesPerView={5}
             spaceBetween={10}
-            isUseHeightWrapper={true}
             renderItem={(item: unknown) => {
               const iCoupon = item as CouponsDto;
               const variant = iCoupon?.coupon_details?.[0].variant;

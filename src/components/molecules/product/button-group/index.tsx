@@ -11,10 +11,12 @@ const ProductCardButtonGroup = ({
   product,
   variant,
   className,
+  addText
 }: {
   product: ProductDto;
   variant: VariantDto;
   className: string;
+  addText?: string;
 }) => {
   const order = useContext(OrderContext);
   return (
@@ -37,7 +39,7 @@ const ProductCardButtonGroup = ({
         }}
       >
         <ShoppingCartOutlined />
-        <span className={'ml-2'}>Thêm vào giỏ hàng</span>
+        <span className={'ml-2'}>{addText  || 'Thêm vào giỏ hàng'}</span>
       </button>
     </div>
   );

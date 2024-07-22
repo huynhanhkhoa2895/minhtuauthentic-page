@@ -72,18 +72,6 @@ export default function Home({
             banners={homePage?.banners || []}
             classNameImage={'object-cover w-full h-[350px]'}
           />
-          <div className={'w-[200px] flex flex-col gap-2'}>
-            <Banners
-              className={'w-full h-full'}
-              classNameImage={'object-cover w-full h-full'}
-              banners={homePage?.banners || []}
-            />
-            <Banners
-              className={'w-full h-full'}
-              classNameImage={'object-cover w-full h-full'}
-              banners={homePage?.banners || []}
-            />
-          </div>
         </div>
         <BlockUnderSlide contents={homePage?.homeBlockUnderSlide || []} />
         {homePage?.homeBlockFeaturedCategory && (

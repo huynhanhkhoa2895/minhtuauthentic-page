@@ -219,7 +219,7 @@ export function promotionName(promotion?: PromotionsDto) {
   }
   switch (promotion.type) {
     case PROMOTION_TYPE.DEAL_SOCK:
-      return 'Deal Sock';
+      return 'Giá mua kèm';
     case PROMOTION_TYPE.FLASH_SALE:
       return 'Flash Sale';
   }

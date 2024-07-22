@@ -36,6 +36,8 @@ export default function ProductDealSock({ promotion }: Props) {
                   ...{ regular_price: newPrice, coupon: iCoupon },
                 }}
                 promotions={promotion && [promotion]}
+                coupon={iCoupon}
+                addText={'Chọn sản phẩm'}
               />
             )
           );
