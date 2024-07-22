@@ -49,7 +49,7 @@ export const InputSearch = () => {
   }, [debouceValue]);
 
   const searchProduct = useCallback(() => {
-    if (debouceValue.length < 3) return;
+    if (debouceValue.length < 1) return;
     setLoading(true);
     fetch(`/api/search/product?search=${debouceValue}`)
       .then((res) => res.json())
