@@ -43,7 +43,7 @@ export default function News({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      <Header homeMenuCategory={menu.homeMenuCategory} />
+      <Header menu={menu} />
       <div className={'container mx-auto p-3'}>
         {news && (
           <NewsTemplate

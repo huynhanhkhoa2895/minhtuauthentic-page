@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import { twMerge } from 'tailwind-merge';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 
-const ButtonMenu = (menu: ResponseMenuDto | null) => {
+const ButtonMenu = ({ menu }: { menu: ResponseMenuDto | null }) => {
   const [displayMenu, setDisplayMenu] = useState<boolean>(false);
   const [isReady, setIsReady] = useState<boolean>(false);
   useEffect(() => {
@@ -31,16 +31,18 @@ const ButtonMenu = (menu: ResponseMenuDto | null) => {
         document.getElementById('header') &&
         createPortal(
           <div className={'fixed left-0 top-[180px]'}>
-            <Menu
-              homeMenu={menu?.homeMenuCategory || []}
-              isPopup={true}
-              className={twMerge(
-                'absolute left-0 transition-all duration-500',
-                displayMenu
-                  ? 'opacity-100 z-[100] visible'
-                  : 'opacity-0 z-[-1] invisible',
-              )}
-            />
+            {menu && (
+              <Menu
+                menu={menu}
+                isPopup={true}
+                className={twMerge(
+                  'absolute left-0 transition-all duration-500',
+                  displayMenu
+                    ? 'opacity-100 z-[100] visible'
+                    : 'opacity-0 z-[-1] invisible',
+                )}
+              />
+            )}
           </div>,
           document.getElementById('header') as HTMLElement,
         )}

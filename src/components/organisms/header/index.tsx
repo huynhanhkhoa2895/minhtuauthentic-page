@@ -20,7 +20,7 @@ import { CloseCircleOutlined } from '@ant-design/icons';
 import OrderContext from '@/contexts/orderContext';
 import { useContext } from 'react';
 
-export const Header = (menu: ResponseMenuDto | null) => {
+export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useUser();
@@ -52,7 +52,7 @@ export const Header = (menu: ResponseMenuDto | null) => {
             />
           </Link>
 
-          <ButtonMenu homeMenuCategory={menu?.homeMenuCategory} />
+          <ButtonMenu menu={menu} />
           <InputSearch />
           <HeaderItem
             className={'w-max'}

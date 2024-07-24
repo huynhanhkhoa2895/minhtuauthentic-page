@@ -29,12 +29,12 @@ export const getServerSideProps = (async () => {
 }>;
 
 export default function OderSuccess({
-                                   menu,
-                                   footerContent,
-                                 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  menu,
+  footerContent,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      <Header homeMenuCategory={menu.homeMenuCategory} />
+      <Header menu={menu} />
       <div className={'container mx-auto p-3'}>
         <OrderSuccessTemplate />
       </div>

@@ -2,6 +2,9 @@ import Link from 'next/link';
 import { POPUP_TYPE, PopupDisplay } from '@/config/type';
 import { CategoryDto } from '@/dtos/Category.dto';
 import { Fragment, ReactNode } from 'react';
+import { chunk } from 'lodash';
+import { BrandDto } from '@/dtos/Brand.dto';
+import MenuBrand from '@/components/molecules/header/menu/menuBrand';
 
 const MenuPopup = ({
   data,
@@ -33,7 +36,7 @@ const MenuPopup = ({
         return <div className={'flex'}></div>;
       },
       [POPUP_TYPE.BRAND]: () => {
-        return <div className={'flex'}></div>;
+        return <MenuBrand brands={(data?.data as BrandDto[]) || []} />;
       },
     };
     return obj[data.type || '']();
@@ -45,7 +48,7 @@ const MenuPopup = ({
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
           className={
-            'absolute h-full w-[500px] bg-white z-[20] top-0 left-[200px] ml-2 p-2'
+            'absolute max-lg:hidden h-full lg:w-[53vw] bg-white z-[20] top-0 left-[200px] ml-2 p-2 overflow-auto'
           }
         >
           {renderItem()}

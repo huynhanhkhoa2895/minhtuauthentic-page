@@ -1,10 +1,12 @@
-import Header from '@/components/organisms/header';
-import Footer from '@/components/organisms/footer';
-import CategoryTemplate from '@/components/templates/CategoryTemplate';
 import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
+import Header from '@/components/organisms/header';
+import CategoryTemplate from '@/components/templates/CategoryTemplate';
+import Footer from '@/components/organisms/footer';
 import { InferGetServerSidePropsType } from 'next';
+import BrandsTemplate from '@/components/templates/BrandsTemplate';
+
 export const getServerSideProps = async () => {
   const { resMenu, resFooter } = await getDefaultSeverSide();
   const dataMenu: { data: ResponseMenuDto } = resMenu
@@ -20,7 +22,7 @@ export const getServerSideProps = async () => {
     },
   };
 };
-export default function ProductPage({
+export default function BrandsPage({
   menu,
   footerContent,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -28,7 +30,7 @@ export default function ProductPage({
     <>
       <Header menu={menu} />
       <div className={'container mx-auto p-3'}>
-        <CategoryTemplate />
+        <BrandsTemplate brands={menu.brands || []} />
       </div>
       <Footer footerContent={footerContent} />
     </>

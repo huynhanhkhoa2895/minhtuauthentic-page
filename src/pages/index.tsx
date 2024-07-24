@@ -60,13 +60,13 @@ export default function Home({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      <Header homeMenuCategory={menu.homeMenuCategory} />
+      <Header menu={menu} />
       <div className={'container mx-auto'}>
         <div
           id={'main-home-page'}
           className={'mt-[10px] flex w-full gap-2 relative'}
         >
-          <MenuWrapper homeMenuCategory={menu.homeMenuCategory} />
+          <MenuWrapper menu={menu} />
           <Banners
             className={'flex-1'}
             banners={homePage?.banners || []}

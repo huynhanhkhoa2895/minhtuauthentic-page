@@ -7,13 +7,14 @@ import { ReactNode, useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { generateSlugToHref } from '@/utils';
 import { MenuDisplay, POPUP_TYPE, PopupDisplay } from '@/config/type';
+import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 
 const Menu = ({
-  homeMenu,
+  menu,
   className,
   isPopup,
 }: {
-  homeMenu?: StaticComponentDto[];
+  menu: ResponseMenuDto;
   className?: string;
   isPopup?: boolean;
 }) => {
@@ -42,21 +43,23 @@ const Menu = ({
         },
         {
           type: POPUP_TYPE.BRAND,
-          data: [],
+          data: menu?.brands || [],
         },
       ],
-      ...(homeMenu || []).map((item) => ({
+      ...(menu?.homeMenuCategory || []).map((item: StaticComponentDto) => ({
         type: POPUP_TYPE.CATEGORY,
         data: item,
-        isHaveChildren:
-          !!(item?.category?.children?.length &&
-            item?.category?.children?.length > 0),
+        isHaveChildren: !!(
+          item?.category?.children?.length &&
+          item?.category?.children?.length > 0
+        ),
       })),
       ...[
         {
           type: POPUP_TYPE.NEWS,
           data: [],
-        }]
+        },
+      ],
     ]);
   }, []);
 
@@ -123,7 +126,6 @@ const Menu = ({
             </Link>
             <IconCheveronRight className={'w-[20px] h-[20px]'} />
           </div>
-
         );
       },
     };
@@ -141,6 +143,13 @@ const Menu = ({
           type: item.type,
           display: _item?.category?.children?.length ? true : false,
           data: _item?.category?.children || [],
+        });
+        break;
+      case POPUP_TYPE.BRAND:
+        setDataDisplayPopup({
+          type: item.type,
+          display: true,
+          data: item.data,
         });
         break;
       default:

@@ -31,7 +31,7 @@ export default function Register({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      <Header homeMenuCategory={menu.homeMenuCategory} />
+      <Header menu={menu} />
       <div className={'container mx-auto p-3'}>
         <RegisterTemplate />
       </div>
