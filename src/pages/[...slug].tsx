@@ -56,6 +56,7 @@ export const getServerSideProps = (async (context) => {
 export default function Page({
   slug,
   footerContent,
+  menu,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const renderTemplate = () => {
     switch (slug?.model) {
@@ -86,7 +87,7 @@ export default function Page({
   };
   return (
     <>
-      <Header />
+      <Header menu={menu} />
       <div className={'container mx-auto p-3'}>{renderTemplate()}</div>
       <Footer footerContent={footerContent} />
     </>
