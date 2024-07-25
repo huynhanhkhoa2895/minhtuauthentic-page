@@ -5,6 +5,7 @@ import { Avatar, List, Skeleton } from 'antd';
 import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import { useRouter } from 'next/router';
 export const InputSearch = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
@@ -13,10 +14,22 @@ export const InputSearch = () => {
   const [data, setData] = useState<ProductDto[]>([]);
   const ref = useRef<HTMLDivElement | null>(null);
   const [ready, setReady] = useState<boolean>(false);
-
+  const [urlSearch, setUrlSearch] = useState<string>('');
   useEffect(() => {
     setReady(true);
   }, []);
+
+  useEffect(() => {
+    const handleEnter = (event: KeyboardEvent) => {
+      if (urlSearch && event.key === 'Enter') {
+        window.location.href = urlSearch;
+      }
+    };
+    document.addEventListener('keydown', handleEnter);
+    return () => {
+      document.removeEventListener('keydown', handleEnter);
+    };
+  }, [urlSearch]);
 
   useEffect(() => {
     function handleClickOutside(event: any) {
@@ -46,6 +59,11 @@ export const InputSearch = () => {
 
   useEffect(() => {
     searchProduct();
+    if (debouceValue) {
+      setUrlSearch(`/san-pham?search=${debouceValue}`);
+    } else {
+      setUrlSearch('');
+    }
   }, [debouceValue]);
 
   const searchProduct = useCallback(() => {
@@ -130,10 +148,22 @@ export const InputSearch = () => {
       {isOpened && (
         <div
           className={
-            'hidden lg:block absolute top-[50px] bg-white w-full rounded-[10px] shadow-custom left-0 p-6 max-h-[50vh] overflow-y-auto'
+            'hidden lg:block absolute top-[50px] bg-white w-full rounded-[10px] shadow-custom left-0  '
           }
         >
-          {renderItemList}
+          <div className={'flex flex-col '}>
+            <div className={'max-h-[50vh] overflow-y-auto p-6'}>
+              {renderItemList}
+            </div>
+            {urlSearch && (
+              <a
+                className={'w-full text-center text-primary font-semibold p-3'}
+                href={urlSearch}
+              >
+                Xem tất cả
+              </a>
+            )}
+          </div>
         </div>
       )}
     </div>

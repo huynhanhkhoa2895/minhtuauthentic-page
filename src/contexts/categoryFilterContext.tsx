@@ -24,6 +24,8 @@ export type TypeAppState = {
   setPage: Dispatch<SetStateAction<number>> | undefined;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>> | undefined;
+  search: string;
+  setSearch: Dispatch<SetStateAction<string>> | undefined;
   dataSlug: SlugDto | null;
   setDataSlug: Dispatch<SetStateAction<SlugDto | null>> | undefined;
   products: ProductDto[];
@@ -55,10 +57,11 @@ export const CategoryFilterProvider = ({
   const [dataSlug, setDataSlug] = useState<SlugDto | null>(null);
 
   const [limit, setLimit] = useState<number>(
-    Number(queryString.get('limit')) || 24,
+    Number(queryString.get('limit')) || 10,
   );
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>(queryString.get('search') || '');
   const [page, setPage] = useState<number>(1);
   const [objFilterByValue, setObjFilterByValue] = useState<
     Record<string, Record<string, string>>
@@ -75,6 +78,7 @@ export const CategoryFilterProvider = ({
     params.append('sort', sortBy);
     params.append('limit', limit.toString());
     params.append('page', page.toString());
+    params.append('search', search.toString());
 
     for (const key in filters) {
       for (const [index, value] of (filters[key] as any).entries()) {
@@ -85,7 +89,7 @@ export const CategoryFilterProvider = ({
     refTimerCount.current = setTimeout(() => {
       updateRouter(params.toString());
     }, 500);
-  }, [sortBy, limit, filters, page]);
+  }, [sortBy, limit, filters, page, search]);
   useEffect(() => {
     const _filters: Record<string, (string | number)[]> = {};
     if (dataSlug?.model === Entity.CATEGORIES) {
@@ -108,7 +112,7 @@ export const CategoryFilterProvider = ({
   };
 
   useEffect(() => {
-    if (count > 1 && router.query?.slug?.length) {
+    if (count > 1) {
       setLoading(true);
       refTimer.current = setTimeout(() => {
         const params = new URLSearchParams(window.location.search);
@@ -150,7 +154,9 @@ export const CategoryFilterProvider = ({
         dataSlug,
         setDataSlug,
         page,
-        setPage
+        setPage,
+        search,
+        setSearch,
       }}
     >
       {children}

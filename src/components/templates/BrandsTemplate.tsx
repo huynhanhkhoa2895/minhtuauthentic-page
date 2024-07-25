@@ -39,10 +39,8 @@ export default function BrandsTemplate({ brands }: Props) {
         } else {
           item.sort = 1;
         }
-        console.log('item', item);
         return item;
       });
-      console.log('listProductDisplay', listProductDisplay);
       setProductDisplay(newBrands);
     }
   }, [letterActive]);

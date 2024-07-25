@@ -18,7 +18,12 @@ type Props = {
   total: number;
 };
 
-export default function ContentFilter({ products, settings, slugData, total }: Props) {
+export default function ContentFilter({
+  products,
+  settings,
+  slugData,
+  total,
+}: Props) {
   const ctx = useContext(CategoryFilterContext);
   const [_products, setProducts] = useState<ProductDto[]>(products);
   const [isReady, setIsReady] = useState(false);
@@ -27,8 +32,8 @@ export default function ContentFilter({ products, settings, slugData, total }: P
       sex: {
         0: 'Nữ',
         1: 'Nam',
-        2: 'Unisex'
-      }
+        2: 'Unisex',
+      },
     };
     if (settings) {
       for (const setting in settings) {
@@ -46,17 +51,16 @@ export default function ContentFilter({ products, settings, slugData, total }: P
               break;
             case 'price_range':
               obj[setting] = value.reduce((acc, item) => {
-                acc[item.min+'_'+item.max] = item.label;
+                acc[item.min + '_' + item.max] = item.label;
                 return acc;
               }, {});
               break;
             case 'product_configurations':
               obj[setting] = {};
-              value.map((item)=>{
-                item.values.map((item2: ProductConfigurationValuesDto)=>{
+              value.map((item) => {
+                item.values.map((item2: ProductConfigurationValuesDto) => {
                   obj[setting][item2.id as any] = item2.value || '';
-                })
-
+                });
               });
               break;
           }
@@ -64,16 +68,19 @@ export default function ContentFilter({ products, settings, slugData, total }: P
       }
     }
     return obj;
-  }
+  };
   useEffect(() => {
     setIsReady(true);
   }, []);
   useEffect(() => {
-    if (ctx?.setObjFilterByValue && Object.keys(ctx?.objFilterByValue).length === 0) {
+    if (
+      ctx?.setObjFilterByValue &&
+      Object.keys(ctx?.objFilterByValue).length === 0
+    ) {
       ctx.setObjFilterByValue(convertSettingToObject());
     }
     if (ctx?.setDataSlug) {
-      ctx.setDataSlug(slugData)
+      ctx.setDataSlug(slugData);
     }
   }, []);
   useEffect(() => {
@@ -110,6 +117,14 @@ export default function ContentFilter({ products, settings, slugData, total }: P
   }, [_products]);
   return (
     <div className={'p-3 w-full lg:col-span-5'}>
+      {ctx?.search && (
+        <p className={'mb-6'}>
+          <span className={'text-3xl text-primary font-semibold'}>
+            Kết quả tìm kiếm cho:{' '}
+          </span>
+          <span className={'text-2xl '}>{ctx?.search}</span>
+        </p>
+      )}
       <div className={'mb-6'}>
         <span className={'font-semibold text-[16px] shrink-0'}>Lọc theo:</span>
         <FilterBy />
@@ -135,22 +150,19 @@ export default function ContentFilter({ products, settings, slugData, total }: P
         )}
         {renderProduct}
         <div className={'flex justify-center mt-3'}>
-          {
-            ctx?.limit && ctx?.limit > -1 && (
-              <Pagination
-                defaultCurrent={1}
-                total={total}
-                showQuickJumper={true}
-                showSizeChanger={false}
-                current={ctx?.page || 1}
-                pageSize={ctx?.limit || 10}
-                onChange={(page: number) => {
-                  ctx?.setPage && ctx.setPage(page);
-                }}
-              />
-            )
-          }
-
+          {ctx?.limit && ctx?.limit > -1 && (
+            <Pagination
+              defaultCurrent={1}
+              total={total}
+              showQuickJumper={true}
+              showSizeChanger={false}
+              current={ctx?.page || 1}
+              pageSize={ctx?.limit || 10}
+              onChange={(page: number) => {
+                ctx?.setPage && ctx.setPage(page);
+              }}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -7,8 +7,13 @@ type Props = {
   filterKey: string;
   entity?: string;
 };
-export default function SettingFilterItem({ title, value, filterKey, entity }: Props) {
-  const [check,setCheck] = useState<Record<string | number, boolean>>({});
+export default function SettingFilterItem({
+  title,
+  value,
+  filterKey,
+  entity,
+}: Props) {
+  const [check, setCheck] = useState<Record<string | number, boolean>>({});
   const ctx = useContext(CategoryFilterContext);
   useEffect(() => {
     const _check: Record<string | number, boolean> = {};
@@ -23,33 +28,30 @@ export default function SettingFilterItem({ title, value, filterKey, entity }: P
     let _filter = { ...ctx?.filters };
     const value = _filter[filterKey] || [];
     const checked = !check[id];
-    const indexValue = value.findIndex((item) => item.toString() === id.toString());
+    const indexValue = value.findIndex(
+      (item) => item.toString() === id.toString(),
+    );
     if (indexValue === -1 && checked && !value.includes(id)) {
       value.push(id);
-    } else if(indexValue > -1 && !checked){
+    } else if (indexValue > -1 && !checked) {
       value.splice(indexValue, 1);
     }
     _filter[filterKey] = value;
     ctx?.setFilters && ctx.setFilters(_filter);
-  }
-
+  };
   const renderValue = () => {
     return (
       <>
         {((value as any[]) || []).map((item: any, index: number) => {
           return (
             <Checkbox
-              key={
-                filterKey +
-                '_' +
-                item.name +
-                '_' +
-                item.id +
-                '_'
-              }
+              key={filterKey + '_' + item.name + '_' + item.id + '_'}
               checked={check[item.id]}
               onClick={() => onClickCheck(item.id)}
-              disabled={ctx?.loading || ctx?.dataSlug?.model === entity}
+              disabled={
+                ctx?.loading ||
+                (ctx?.dataSlug?.model ? ctx?.dataSlug?.model === entity : false)
+              }
             >
               {item.name}
             </Checkbox>
@@ -66,7 +68,6 @@ export default function SettingFilterItem({ title, value, filterKey, entity }: P
       <div className={'max-h-[220px] overflow-auto flex flex-col'}>
         {renderValue()}
       </div>
-
     </div>
   );
 }
