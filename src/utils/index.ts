@@ -114,6 +114,7 @@ export function getPriceWithCoupon(
 
 export function calculatePriceMinus(price: number, coupon?: CouponsDto) {
   let priceMinus = 0;
+
   if (!coupon) return priceMinus;
   if (coupon.price_minus_type === PROMOTION_PRICE_TYPE.PRICE) {
     priceMinus = coupon.price_minus_value || 0;

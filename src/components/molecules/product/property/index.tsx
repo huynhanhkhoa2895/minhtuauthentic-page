@@ -127,7 +127,7 @@ const ProductProperty = ({
       <div className={'mt-3'}>
         <ProductCartCheckout variant={_variantActive} />
       </div>
-      <PromotionDescription className={'mt-3'} />
+      <PromotionDescription variant_id={variantActive.id} className={'mt-3'} />
       <div className={'mt-3'}>
         <span className={'font-semibold'}>Danh mục </span>
         <span className={'text-[12px]'}>

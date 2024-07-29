@@ -14,4 +14,5 @@ export class PromotionsDto extends BaseDto {
   is_system?: boolean;
   coupons?: CouponsDto[];
   images?: ImageDetailDto[];
+  description?: string;
 }

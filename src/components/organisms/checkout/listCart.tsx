@@ -2,8 +2,9 @@ import { useContext } from 'react';
 import OrderContext from '@/contexts/orderContext';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 import { formatMoney } from '@/utils';
-import { InputNumber } from 'antd';
+import { InputNumber, Space, Input, Button } from 'antd';
 import PriceOnCart from '@/components/atoms/priceOnCart';
+import CheckItemCart from '@/components/organisms/checkout/itemCart';
 
 export default function ListCart() {
   const order = useContext(OrderContext);
@@ -15,31 +16,11 @@ export default function ListCart() {
       <h3 className={'text-3xl font-bold'}>Thông tin giỏ hàng</h3>
       <div className={'flex flex-col gap-3 border-b border-gray-200 p-6'}>
         {order?.cart?.map((item, key) => (
-          <div key={item.variant_id} className={'flex gap-3'}>
-            <div
-              className={
-                'w-[100px] h-[100px] shrink-0 boder border-gray-200 rounded-[10px] overflow-hidden'
-              }
-            >
-              <ImageWithFallback
-                image={item.image}
-                className={'w-[100px] h-[100px] object-contain'}
-              />
-            </div>
-            <div>
-              <p className={'text-primary font-semibold'}>
-                {item.variant_name}
-              </p>
-              <InputNumber
-                min={1}
-                value={item.qty}
-                onChange={(value) => onChange(value, key)}
-              />
-            </div>
-            <div>
-              <PriceOnCart item={item} isDisplayTotal={true} />
-            </div>
-          </div>
+          <CheckItemCart
+            key={key}
+            item={item}
+            onChange={(value) => onChange(value, key)}
+          />
         ))}
       </div>
       <div className={'mt-6'}>

@@ -2,11 +2,13 @@ import { twMerge } from 'tailwind-merge';
 import { useContext, useState } from 'react';
 import AppContext from '@/contexts/appContext';
 import { SETTING_KEY } from '@/config/enum';
+import PromotionDescriptionCoupons from '@/components/molecules/product/promotionDescription/coupons';
 
 type Props = {
   className?: string;
+  variant_id?: number;
 };
-export default function PromotionDescription({ className }: Props) {
+export default function PromotionDescription({ className, variant_id }: Props) {
   const contents = ['Ưu đãi thêm', 'Mã giảm giá'];
   const [indexDisplay, setIndexDisplay] = useState(0);
   const ctx = useContext(AppContext);
@@ -53,9 +55,9 @@ export default function PromotionDescription({ className }: Props) {
           />
         );
       case 1:
-        return '';
-      case 2:
-        return '';
+        return (
+          variant_id && <PromotionDescriptionCoupons variant_id={variant_id} />
+        );
       default:
         return '';
     }
@@ -73,20 +75,22 @@ export default function PromotionDescription({ className }: Props) {
           return renderButtonHeader(index, item);
         })}
       </div>
-      {contents.map((item, index) => {
-        const active = index === indexDisplay;
-        return (
-          <div
-            key={index}
-            className={twMerge(
-              'p-3 opacity-0 invisible transition-opacity duration-500',
-              active && 'opacity-100 visible',
-            )}
-          >
-            {renderContent(index)}
-          </div>
-        );
-      })}
+      <div className={'relative w-full h-[500px] overflow-auto'}>
+        {contents.map((item, index) => {
+          const active = index === indexDisplay;
+          return (
+            <div
+              key={index}
+              className={twMerge(
+                'p-3 opacity-0 invisible transition-opacity duration-500 absolute top-0 left-0 w-full h-full',
+                active && 'opacity-100 visible',
+              )}
+            >
+              {renderContent(index)}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

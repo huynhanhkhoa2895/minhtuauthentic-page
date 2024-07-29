@@ -21,7 +21,7 @@ const ProductCard = ({
   variant,
   promotions,
   addText,
-  coupon
+  coupon,
 }: {
   product: ProductDto;
   variant: VariantDto;
@@ -52,6 +52,7 @@ const ProductCard = ({
       </div>
       <div className={'h-[50px] px-[8px]'}>
         {promotions?.map((promotion, index) => {
+          console.log('coupon', coupon, promotion);
           return (
             <Fragment key={'Product-card-' + index}>
               <p>
@@ -62,10 +63,8 @@ const ProductCard = ({
                   className={'text-red-600 text-sm text-right cursor-pointer'}
                 >
                   {formatMoney(
-                    (variant?.regular_price || 0) - calculatePriceMinus(
-                      variant?.regular_price || 0,
-                      coupon,
-                    ),
+                    (variant?.regular_price || 0) -
+                      calculatePriceMinus(variant?.regular_price || 0, coupon),
                   )}
                 </span>
               </p>
@@ -73,10 +72,7 @@ const ProductCard = ({
                 <span className={'mr-3'}>Tiết kiệm thêm:</span>
                 <span>
                   {formatMoney(
-                    calculatePriceMinus(
-                      variant?.regular_price || 0,
-                      coupon,
-                    ),
+                    calculatePriceMinus(variant?.regular_price || 0, coupon),
                   )}
                 </span>
               </p>
