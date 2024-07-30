@@ -16,13 +16,14 @@ export default function PriceMinus({ item }: Props) {
           <Tooltip
             key={index}
             placement="topRight"
-            title={promotionName(coupon.promotion)}
+            title={
+              coupon?.promotion?.name || coupon?.promotion?.is_system
+                ? promotionName(coupon.promotion)
+                : 'Mã giảm giá: ' + coupon.code
+            }
           >
             <span className={'text-red-600 text-sm text-right cursor-pointer'}>
-              -
-              {formatMoney(
-                calculatePriceMinus(item?.variant_regular_price || 0, coupon),
-              )}
+              -{formatMoney(item.price_minus || 0)}
             </span>
           </Tooltip>
         );

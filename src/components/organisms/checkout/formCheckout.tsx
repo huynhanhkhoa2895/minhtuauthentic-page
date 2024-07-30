@@ -139,10 +139,13 @@ export default function FormCheckout({
     })
       .then((rs) => rs.json())
       .then((data) => {
-        const _data = handleDataFetch(data);
-        toast.success('Đặt hàng thành công');
-        orderCtx?.clearCart && orderCtx?.clearCart();
-        router.push('/gio-hang/thanh-cong?orderId=' + _data?.data?.id);
+        if (data?.data) {
+          toast.success('Đặt hàng thành công');
+          orderCtx?.clearCart && orderCtx?.clearCart();
+          router.push('/gio-hang/thanh-cong?orderId=' + data?.data?.id);
+        } else {
+          toast.error(data?.message || 'Đã có lỗi xảy ra');
+        }
       })
       .catch(() => {
         toast.error('Đã có lỗi xảy ra');

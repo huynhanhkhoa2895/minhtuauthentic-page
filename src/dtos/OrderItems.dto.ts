@@ -16,6 +16,7 @@ export class OrderItemsDto extends BaseDto {
   order_id?: number;
   note?: string;
   qty?: number;
+  variant_total_price?: number;
   variant?: VariantDto;
   order?: OrdersDto;
   coupons?: CouponsDto[];

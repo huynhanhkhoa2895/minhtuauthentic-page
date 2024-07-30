@@ -17,6 +17,7 @@ export type TypeAppState = {
   addCart: (variantDto: VariantDto) => void;
   updateCart: (index: number, qty?: number) => void;
   clearCart: () => void;
+  applyCoupon: (couponCode: string, variant_id?: number) => Promise<boolean>;
   isOpenHeaderCart?: boolean;
   setIsOpenHeaderCart?: Dispatch<SetStateAction<boolean>>;
 };
@@ -90,6 +91,41 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     setCart(newCartResponse?.data || []);
   };
 
+  const applyCoupon = async (
+    couponCode: string,
+    variant_id?: number,
+  ): Promise<boolean> => {
+    if (couponCode) {
+      return fetch('/api/coupons/apply', {
+        method: 'POST',
+        body: JSON.stringify({
+          code: couponCode,
+          current_cart: cart || [],
+          variant_id,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((response) => response.json())
+        .then((data: { data: OrderItemsDto[]; message: string }) => {
+          if (data?.data) {
+            setCart(data?.data);
+            return true;
+          } else {
+            if (data?.message) {
+              toast.error(data?.message);
+            }
+          }
+
+          return false;
+        })
+        .catch((error) => {
+          return false;
+        });
+    }
+    return false;
+  };
   const clearCart = () => {
     setCart([]);
   };
@@ -103,6 +139,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
         isOpenHeaderCart,
         setIsOpenHeaderCart,
         clearCart,
+        applyCoupon,
       }}
     >
       {children}

@@ -4,6 +4,7 @@ import PriceOnCart from '@/components/atoms/priceOnCart';
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 import { useContext, useState } from 'react';
 import OrderContext from '@/contexts/orderContext';
+import { toast } from 'react-toastify';
 type Props = {
   item: OrderItemsDto;
   onChange: (value: null | number) => void;
@@ -12,28 +13,17 @@ export default function CheckItemCart({ item, onChange }: Props) {
   const [loading, setLoading] = useState(false);
   const [couponCode, setCouponCode] = useState<string>('');
   const orderCtx = useContext(OrderContext);
-  const applyCoupon = () => {
-    setLoading(true);
+  const applyCoupon = async () => {
     if (couponCode) {
-      fetch('/api/coupons/apply', {
-        method: 'POST',
-        body: JSON.stringify({
-          code: couponCode,
-          current_cart: orderCtx?.cart || [],
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setLoading(false);
-          console.log(data);
-        })
-        .catch((error) => {
-          setLoading(false);
-          console.log(error);
-        });
+      setLoading(true);
+      if (orderCtx?.applyCoupon) {
+        const status = await orderCtx.applyCoupon(couponCode, item.variant_id);
+        if (status) {
+          setCouponCode('');
+          toast.success('Áp dụng mã giảm giá thành công');
+        }
+      }
+      setLoading(false);
     }
   };
 
@@ -50,7 +40,7 @@ export default function CheckItemCart({ item, onChange }: Props) {
         />
       </div>
       <div className={'flex flex-col'}>
-        <div className={'flex'}>
+        <div className={'flex gap-3'}>
           <div>
             <p className={'text-primary font-semibold mb-3'}>
               {item.variant_name}

@@ -119,6 +119,7 @@ export function calculatePriceMinus(price: number, coupon?: CouponsDto) {
   if (coupon.price_minus_type === PROMOTION_PRICE_TYPE.PRICE) {
     priceMinus = coupon.price_minus_value || 0;
   } else {
+    console.log('calculatePriceMinus', price, coupon);
     priceMinus = (price * (coupon?.price_minus_value || 0)) / 100;
   }
   return priceMinus;

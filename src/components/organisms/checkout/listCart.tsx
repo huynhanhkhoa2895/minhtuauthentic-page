@@ -1,13 +1,25 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import OrderContext from '@/contexts/orderContext';
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 import { formatMoney } from '@/utils';
-import { InputNumber, Space, Input, Button } from 'antd';
-import PriceOnCart from '@/components/atoms/priceOnCart';
 import CheckItemCart from '@/components/organisms/checkout/itemCart';
+import CouponsDto from '@/dtos/Coupons.dto';
+import ItemCoupon from '@/components/atoms/coupons';
 
 export default function ListCart() {
   const order = useContext(OrderContext);
+  const [coupons, setCoupons] = useState<CouponsDto[]>([]);
+  useEffect(() => {
+    fetchCoupon().catch();
+  }, []);
+  const fetchCoupon = async () => {
+    return fetch(`/api/coupons`)
+      .then((response) => response.json())
+      .then((data: { data: CouponsDto[] }) => {
+        console.log('fetchCoupon', data);
+        setCoupons(data?.data || []);
+      })
+      .catch((error) => {});
+  };
   const onChange = (value: null | number, index: number) => {
     order?.updateCart && order.updateCart(index, value || 0);
   };
@@ -23,7 +35,18 @@ export default function ListCart() {
           />
         ))}
       </div>
-      <div className={'mt-6'}>
+      {coupons && coupons.length > 0 && (
+        <div
+          className={
+            'w-full shadow-custom rounded-[10px] border-t border-gray-200 my-3'
+          }
+        >
+          {coupons?.map((coupon, index) => {
+            return <ItemCoupon coupon={coupon} key={index} />;
+          })}
+        </div>
+      )}
+      <div className={'mt-3 border-t border-gray-200 pt-3'}>
         <div className={'font-semibold flex justify-between items-center'}>
           <span>Tạm tính:</span>
           <span className={'text-primary'}>

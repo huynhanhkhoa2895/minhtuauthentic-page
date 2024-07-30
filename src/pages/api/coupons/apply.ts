@@ -9,14 +9,14 @@ export default async function handler(
     const url = `${process.env.BE_URL}/api/coupons/apply`;
     fetch(url, {
       method: 'POST',
-      body: req.body,
+      body: JSON.stringify(req.body),
       headers: {
         'Content-Type': 'application/json',
       },
     })
       .then((response) => response.json())
       .then((data) => {
-        const _data = handleDataFetch(data);
+        const _data = handleDataFetch(data, res);
         res.status(200).json(_data);
       })
       .catch((error) => {
