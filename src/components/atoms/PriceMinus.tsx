@@ -1,7 +1,10 @@
 import { calculatePriceMinus, formatMoney, promotionName } from '@/utils';
-import { Tooltip } from 'antd';
+import { Button, Tooltip } from 'antd';
 import CouponsDto from '@/dtos/Coupons.dto';
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';
+import { CloseCircleOutlined } from '@ant-design/icons';
+import { useContext } from 'react';
+import OrderContext from '@/contexts/orderContext';
 
 type Props = {
   item: OrderItemsDto;
@@ -9,6 +12,7 @@ type Props = {
 };
 
 export default function PriceMinus({ item }: Props) {
+  const orderCtx = useContext(OrderContext);
   return (
     <>
       {(item?.coupons || []).map((coupon: CouponsDto, index: number) => {
@@ -22,9 +26,26 @@ export default function PriceMinus({ item }: Props) {
                 : 'Mã giảm giá: ' + coupon.code
             }
           >
-            <span className={'text-red-600 text-sm text-right cursor-pointer'}>
-              -{formatMoney(item.price_minus || 0)}
-            </span>
+            <div className={'flex items-center gap-1 justify-end'}>
+              <span
+                className={'text-red-600 text-sm text-right cursor-pointer'}
+              >
+                -{formatMoney(item.price_minus || 0)}
+              </span>
+              {!coupon.promotion?.is_system && coupon.code && (
+                <Button
+                  size="small"
+                  onClick={() => {
+                    orderCtx?.removeCoupon &&
+                      orderCtx.removeCoupon(
+                        coupon.code || '',
+                        item.variant_id || 0,
+                      );
+                  }}
+                  icon={<CloseCircleOutlined />}
+                />
+              )}
+            </div>
           </Tooltip>
         );
       })}

@@ -52,7 +52,6 @@ const ProductCard = ({
       </div>
       <div className={'h-[50px] px-[8px]'}>
         {promotions?.map((promotion, index) => {
-          console.log('coupon', coupon, promotion);
           return (
             <Fragment key={'Product-card-' + index}>
               <p>

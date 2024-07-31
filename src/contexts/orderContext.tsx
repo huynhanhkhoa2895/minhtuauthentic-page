@@ -18,6 +18,7 @@ export type TypeAppState = {
   updateCart: (index: number, qty?: number) => void;
   clearCart: () => void;
   applyCoupon: (couponCode: string, variant_id?: number) => Promise<boolean>;
+  removeCoupon: (couponCode: string, variant_id: number) => Promise<boolean>;
   isOpenHeaderCart?: boolean;
   setIsOpenHeaderCart?: Dispatch<SetStateAction<boolean>>;
 };
@@ -126,6 +127,39 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     }
     return false;
   };
+
+  const removeCoupon = async (couponCode: string, variant_id: number) => {
+    if (couponCode) {
+      return fetch('/api/coupons/remove', {
+        method: 'POST',
+        body: JSON.stringify({
+          code: couponCode,
+          current_cart: cart || [],
+          variant_id,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((response) => response.json())
+        .then((data: { data: OrderItemsDto[]; message: string }) => {
+          if (data?.data) {
+            setCart(data?.data);
+            return true;
+          } else {
+            if (data?.message) {
+              toast.error(data?.message);
+            }
+          }
+
+          return false;
+        })
+        .catch((error) => {
+          return false;
+        });
+    }
+    return false;
+  };
   const clearCart = () => {
     setCart([]);
   };
@@ -140,6 +174,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
         setIsOpenHeaderCart,
         clearCart,
         applyCoupon,
+        removeCoupon,
       }}
     >
       {children}

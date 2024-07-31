@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { handleDataFetch } from '@/utils/api';
 
 export default async function handler(
@@ -6,18 +6,13 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   if (req.method === 'POST') {
-    const query = req.query;
-    const url =
-      `${process.env.BE_URL}/api/orders/checkout?` +
-      new URLSearchParams(query as any).toString();
-
-    const rs = await fetch(url, {
+    const url = `${process.env.BE_URL}/api/coupons/remove`;
+    fetch(url, {
       method: 'POST',
+      body: JSON.stringify(req.body),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + req.cookies['token'] || '',
       },
-      body: req.body,
     })
       .then((response) => response.json())
       .then((data) => {
@@ -29,7 +24,6 @@ export default async function handler(
           .status(error?.response?.statusCode || error?.status || 500)
           .json(error);
       });
-    res.status(200).json(rs);
   } else {
     res.status(400).json({ error: 'Only POST requests are allowed' });
   }
