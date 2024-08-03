@@ -14,6 +14,7 @@ import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { handleDataFetch } from '@/utils/api';
+import CartDto from '@/dtos/Cart.dto';
 const fetcher = () =>
   fetch(`/api/orders/province`, {
     method: 'GET',
@@ -116,22 +117,16 @@ export default function FormCheckout({
         message: 'Vui lòng chọn phương thức thanh toán',
       });
     }
-    const orderTotalPrice =
-      orderCtx?.cart?.reduce(
-        (total, item) => total + (item.price || 0) * (item.qty || 0),
-        0,
-      ) || 0;
+    if (!orderCtx?.cart) {
+      return;
+    }
     const order: FormData & {
-      total_price: number;
       user_id: number;
-      shipping_price: number;
-      order_items: OrderItemsDto[];
+      cart: CartDto;
     } = {
       ...data,
-      total_price: orderTotalPrice,
       user_id: user?.id || 0,
-      shipping_price: 0,
-      order_items: orderCtx?.cart || [],
+      cart: orderCtx?.cart,
     };
     fetch('/api/orders/create', {
       method: 'POST',

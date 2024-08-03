@@ -11,9 +11,11 @@ import { VariantDto } from '@/dtos/Variant.dto';
 import { toast } from 'react-toastify';
 import { getPriceWithCoupon, variantName } from '@/utils';
 import { usePathname } from 'next/navigation';
+import CartDto from '@/dtos/Cart.dto';
+import CouponsDto from '@/dtos/Coupons.dto';
 const OrderContext = createContext<TypeAppState | undefined>(undefined);
 export type TypeAppState = {
-  cart: OrderItemsDto[];
+  cart: CartDto | null;
   addCart: (variantDto: VariantDto) => void;
   updateCart: (index: number, qty?: number) => void;
   clearCart: () => void;
@@ -25,14 +27,27 @@ export type TypeAppState = {
 export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const ref = useRef(pathname);
-  const [cart, setCart] = useState<OrderItemsDto[]>([]);
+  const [cart, setCart] = useState<CartDto | null>(null);
   const [ready, setReady] = useState(false);
   const [isOpenHeaderCart, setIsOpenHeaderCart] = useState(false);
   useEffect(() => {
     const cart = localStorage.getItem('cart');
-    if (cart) {
-      setCart(JSON.parse(cart));
+    const timeExpire = localStorage.getItem('cart_expired');
+    const time = new Date().getTime();
+    if (!timeExpire || time > parseInt(timeExpire)) {
+      localStorage.removeItem('cart');
+      localStorage.removeItem('cart_expired');
+      setCart(null);
+    } else {
+      if (cart) {
+        setCart(JSON.parse(cart));
+        localStorage.setItem(
+          'cart_expired',
+          (time + 1000 * 60 * 60 * 24).toString(),
+        );
+      }
     }
+
     setReady(true);
   }, []);
   useEffect(() => {
@@ -65,9 +80,9 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const addCart = async (variant: VariantDto) => {
-    const currentVariantOnCart = cart.find(
-      (item) => item.variant_id === variant.id,
-    );
+    const currentVariantOnCart = cart?.items
+      ? cart?.items.find((item) => item.variant_id === variant.id)
+      : null;
     if (!variant?.id) {
       toast('Variant không tồn tại', { type: 'error' });
       return;
@@ -83,7 +98,10 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const updateCart = async (index: number, qty: number = 1) => {
-    const orderItem = cart[index];
+    if (!cart?.items?.length) {
+      return;
+    }
+    const orderItem = cart?.items?.[index];
     if (!orderItem?.variant_id) {
       toast('Variant không tồn tại', { type: 'error' });
       return;
@@ -109,7 +127,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
         },
       })
         .then((response) => response.json())
-        .then((data: { data: OrderItemsDto[]; message: string }) => {
+        .then((data: { data: CartDto; message: string }) => {
           if (data?.data) {
             setCart(data?.data);
             return true;
@@ -142,7 +160,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
         },
       })
         .then((response) => response.json())
-        .then((data: { data: OrderItemsDto[]; message: string }) => {
+        .then((data: { data: CartDto; message: string }) => {
           if (data?.data) {
             setCart(data?.data);
             return true;
@@ -161,7 +179,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     return false;
   };
   const clearCart = () => {
-    setCart([]);
+    setCart(null);
   };
 
   return (

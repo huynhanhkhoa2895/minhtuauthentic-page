@@ -55,23 +55,6 @@ export default function CheckItemCart({ item, onChange }: Props) {
             <PriceOnCart item={item} isDisplayTotal={true} />
           </div>
         </div>
-        <Space.Compact className={'w-full mt-3'}>
-          <Input
-            placeholder="Nhập mã Coupon"
-            value={couponCode}
-            onChange={(e) => {
-              setCouponCode(e.target.value);
-            }}
-          />
-          <Button
-            type="primary"
-            htmlType={'button'}
-            disabled={loading}
-            onClick={() => applyCoupon()}
-          >
-            Áp dụng
-          </Button>
-        </Space.Compact>
       </div>
     </div>
   );

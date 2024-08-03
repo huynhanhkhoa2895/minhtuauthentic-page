@@ -27,6 +27,9 @@ export default function ContentFilter({
   const ctx = useContext(CategoryFilterContext);
   const [_products, setProducts] = useState<ProductDto[]>(products);
   const [isReady, setIsReady] = useState(false);
+  useEffect(() => {
+    ctx?.setTotal && ctx.setTotal(total);
+  }, []);
   const convertSettingToObject = () => {
     let obj: Record<string, Record<string, string>> = {
       sex: {
@@ -150,10 +153,10 @@ export default function ContentFilter({
         )}
         {renderProduct}
         <div className={'flex justify-center mt-3'}>
-          {ctx?.limit && ctx?.limit > -1 && (
+          {ctx?.limit && ctx?.limit > -1 && ctx?.total > 0 && (
             <Pagination
               defaultCurrent={1}
-              total={total}
+              total={ctx?.total}
               showQuickJumper={true}
               showSizeChanger={false}
               current={ctx?.page || 1}

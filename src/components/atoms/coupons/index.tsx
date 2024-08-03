@@ -5,8 +5,9 @@ import { Button } from 'antd';
 
 type Props = {
   coupon: CouponsDto;
+  onClick?: () => void;
 };
-export default function ItemCoupon({ coupon }: Props) {
+export default function ItemCoupon({ coupon, onClick }: Props) {
   return (
     <div className={'p-3 rounded-[10px] border border-gray-200 w-full'}>
       <p className={'font-bold text-xl text-primary'}>
@@ -29,10 +30,12 @@ export default function ItemCoupon({ coupon }: Props) {
         <Button
           type="primary"
           onClick={() => {
-            navigator.clipboard.writeText(coupon.code || '');
+            onClick
+              ? onClick()
+              : navigator.clipboard.writeText(coupon.code || '');
           }}
         >
-          Sao chép
+          {onClick ? 'Áp dụng' : 'Sao chép'}
         </Button>
       </div>
     </div>

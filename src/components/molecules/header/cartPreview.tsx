@@ -28,13 +28,13 @@ export default function CartPreview() {
   }, [ref]);
   return (
     <div className={'flex flex-col gap-3'} ref={ref}>
-      {order?.cart?.length === 0 ? (
+      {order?.cart?.items?.length === 0 ? (
         <div className={'text-center text-lg font-semibold'}>
           Giỏ hàng trống
         </div>
       ) : (
         <>
-          {order?.cart?.map((item: OrderItemsDto, key: number) => {
+          {order?.cart?.items?.map((item: OrderItemsDto, key: number) => {
             return (
               <div
                 className={'flex gap-2 w-[350px] border-b border-gray-200 pb-3'}

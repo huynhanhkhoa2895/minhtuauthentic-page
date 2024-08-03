@@ -11,7 +11,9 @@ const HeaderCart = ({ className }: { className?: string }) => {
           'absolute w-full h-full top-0 left-0 flex items-center justify-center'
         }
       >
-        <span className={'text-[14px] pt-3'}>{cart?.cart?.length || 0}</span>
+        <span className={'text-[14px] pt-3'}>
+          {cart?.cart?.items?.length || 0}
+        </span>
       </div>
       <svg
         xmlns="http://www.w3.org/2000/svg"

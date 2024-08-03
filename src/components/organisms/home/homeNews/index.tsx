@@ -24,13 +24,13 @@ export default function HomeNews({ content, setting }: Props) {
       style={{ backgroundColor: setting?.backgroundColor || '#fff' }}
     >
       <h4 className={'text-[24px] font-bold'}>Tin tức nổi bật </h4>
-      <div className={'mt-3 flex gap-3'}>
-        <div className={'grid grid-cols-1 lg:grid-cols-2 gap-3'}>
+      <div className={'mt-3 grid gap-3 grid-col-1 lg:grid-cols-3'}>
+        <div className={'grid grid-cols-1 lg:grid-cols-2 gap-3 lg:col-span-2'}>
           {content.featured.map((item: NewsDto, key: number) => {
             return <NewsItem news={item} key={key} />;
           })}
         </div>
-        <div className={'shrink-0 basis-[33%] w-[33%] h-[500px] overflow-auto'}>
+        <div className={'shrink-0 h-[500px] overflow-auto'}>
           <NewsSmallList news={content.news} />
         </div>
       </div>

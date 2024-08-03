@@ -22,6 +22,8 @@ export type TypeAppState = {
     | undefined;
   page: number;
   setPage: Dispatch<SetStateAction<number>> | undefined;
+  total: number;
+  setTotal: Dispatch<SetStateAction<number>> | undefined;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>> | undefined;
   search: string;
@@ -63,6 +65,7 @@ export const CategoryFilterProvider = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [search, setSearch] = useState<string>(queryString.get('search') || '');
   const [page, setPage] = useState<number>(1);
+  const [total, setTotal] = useState<number>(0);
   const [objFilterByValue, setObjFilterByValue] = useState<
     Record<string, Record<string, string>>
   >({});
@@ -124,6 +127,7 @@ export const CategoryFilterProvider = ({
           .then((res: { data: { data: ResponseCategoryFilterPageDto } }) => {
             setProducts(res?.data?.data?.products || []);
             setLoading(false);
+            setTotal(res?.data?.data?.total || 0);
           })
           .catch((err) => {
             setLoading(false);
@@ -139,6 +143,8 @@ export const CategoryFilterProvider = ({
   return (
     <CategoryFilterContext.Provider
       value={{
+        total,
+        setTotal,
         sortBy,
         setSortBy,
         limit,

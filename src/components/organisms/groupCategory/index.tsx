@@ -50,7 +50,9 @@ const GroupCategory = ({
           style={{ color: staticComponent?.properties?.textColor }}
           className={'text-[24px] uppercase font-bold w-max shrink-0'}
         >
-          <Link href={generateSlugToHref(staticComponent?.properties?.slug)}>
+          <Link
+            href={generateSlugToHref(staticComponent?.category?.slugs?.slug)}
+          >
             {staticComponent?.title || staticComponent?.category?.name}
           </Link>
         </h3>

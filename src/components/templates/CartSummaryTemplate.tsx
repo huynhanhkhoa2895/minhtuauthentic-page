@@ -12,9 +12,6 @@ import PriceMinus from '@/components/atoms/PriceMinus';
 
 export default function CartSummaryTemplate() {
   const orderCtx = useContext(OrderContext);
-  const total = orderCtx?.cart?.reduce((acc, item) => {
-    return acc + (item.price || 0);
-  }, 0);
   return (
     <div
       className={twMerge(
@@ -34,7 +31,7 @@ export default function CartSummaryTemplate() {
           </tr>
         </thead>
         <tbody>
-          {orderCtx?.cart?.map((item, index) => {
+          {orderCtx?.cart?.items?.map((item, index) => {
             return (
               <tr key={item.variant_id + '_' + index}>
                 <td className={'border-y border-gray-200 p-3 text-center'}>
@@ -105,16 +102,28 @@ export default function CartSummaryTemplate() {
                   'text-right text-primary font-semibold p-3 border-b border-gray-200'
                 }
               >
-                {formatMoney(total || 0, 0, '.', '.')}
+                {formatMoney(orderCtx?.cart?.total_price || 0, 0, '.', '.')}
               </td>
             </tr>
+            {orderCtx?.cart?.price_minus && (
+              <tr>
+                <td className={'p-3 border-b border-gray-200'}>Mã giảm giá</td>
+                <td
+                  className={
+                    'text-right text-primary font-semibold p-3 border-b border-gray-200'
+                  }
+                >
+                  {formatMoney(orderCtx?.cart?.price_minus || 0, 0, '.', '.')}
+                </td>
+              </tr>
+            )}
             <tr>
               <td className={'p-3'}>
                 <p>Tổng tiền</p>
                 <p className={'text-sm italic'}>(Miễn phí vận chuyển)</p>
               </td>
               <td className={'text-right text-primary font-semibold p-3'}>
-                {formatMoney(total || 0, 0, '.', '.')}
+                {formatMoney(orderCtx?.cart?.total_price || 0, 0, '.', '.')}
               </td>
             </tr>
           </tbody>
