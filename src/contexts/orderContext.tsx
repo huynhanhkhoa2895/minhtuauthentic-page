@@ -152,7 +152,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     return false;
   };
 
-  const removeCoupon = async (couponCode: string, variant_id: number) => {
+  const removeCoupon = async (couponCode: string, variant_id?: number) => {
     if (couponCode) {
       return fetch('/api/coupons/remove', {
         method: 'POST',
