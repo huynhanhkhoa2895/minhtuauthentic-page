@@ -33,7 +33,7 @@ export default function ProductDealSock({ promotion }: Props) {
                 product={variant.product}
                 variant={{
                   ...variant,
-                  ...{ regular_price: newPrice, coupon: iCoupon },
+                  ...{ coupon: iCoupon },
                 }}
                 promotions={promotion && [promotion]}
                 coupon={iCoupon}

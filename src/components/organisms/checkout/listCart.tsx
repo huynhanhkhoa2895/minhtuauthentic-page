@@ -45,17 +45,35 @@ export default function ListCart() {
           onChange={(e) => setCouponInput(e.target.value)}
           placeholder={'Nhập mã giảm giá'}
         />
-        <Button htmlType={'button'} type={'primary'} onClick={()=>applyCoupon(couponInput)}>Áp dụng</Button>
-        <div className={'flex gap-3'}>
-          {
-            order?.cart?.coupons?.map((coupon, key) => (
-              <Tag key={key} closable onClose={() => order?.removeCoupon && coupon.code && order.removeCoupon(coupon.code)}>
-                {coupon.code?.toUpperCase()}
-              </Tag>
-            ))
-          }
-        </div>
+        <Button
+          htmlType={'button'}
+          type={'primary'}
+          onClick={() => {
+            applyCoupon(couponInput);
+            setCouponInput('');
+          }}
+        >
+          Áp dụng
+        </Button>
       </div>
+      {order?.cart?.coupons && order?.cart?.coupons?.length > 0 && (
+        <div className={'flex gap-3 border-b border-gray-200 py-6'}>
+          {order?.cart?.coupons?.map((coupon, key) => (
+            <Tag
+              key={key}
+              closable
+              onClose={() =>
+                order?.removeCoupon &&
+                coupon.code &&
+                order.removeCoupon(coupon.code)
+              }
+            >
+              {coupon?.code?.toUpperCase()}
+            </Tag>
+          ))}
+        </div>
+      )}
+
       <div className={'mt-3 border-b border-gray-200 py-3 flex flex-col gap-3'}>
         <div className={'font-semibold flex justify-between items-center'}>
           <span>Tạm tính:</span>
@@ -106,7 +124,7 @@ export default function ListCart() {
                 <ItemCoupon
                   coupon={coupon}
                   onClick={() => {
-                    coupon.code && applyCoupon(coupon.code || '');
+                    coupon?.code && applyCoupon(coupon.code || '');
                   }}
                 />
               </div>
