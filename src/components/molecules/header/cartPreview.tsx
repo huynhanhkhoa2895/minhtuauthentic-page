@@ -5,7 +5,7 @@ import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 import { InputNumber } from 'antd';
 import { Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import { generateSlugToHref } from '@/utils';
+import { formatMoney, generateSlugToHref } from '@/utils';
 import Link from 'next/link';
 import PriceOnCart from '@/components/atoms/priceOnCart';
 
@@ -47,12 +47,23 @@ export default function CartPreview() {
                   />
                 </div>
                 <div className={'flex flex-col gap-2 '}>
-                  <Link
+                  <p>
+                    <Link
                     href={generateSlugToHref(item?.slug)}
                     className={'text-primary text-[12px] text-left'}
                   >
                     {item?.variant_name}
                   </Link>
+                  </p>
+                  {
+                    (item.variant_configurations || [])?.map((config, index) => {
+                      return (
+                        <p key={index} className={'text-[12px] text-left'}>
+                          ({config.name}: {config.value})
+                        </p>
+                      );
+                    })
+                  }
                   <div className={'flex justify-between items-center'}>
                     <InputNumber
                       min={1}
@@ -75,6 +86,12 @@ export default function CartPreview() {
               </div>
             );
           })}
+          <p>
+            <span className={'text- xl'}>Tổng cộng: </span>
+            <span className={'font-semibold text-primary'}>
+              {formatMoney(order?.cart?.total_price || 0)}
+            </span>
+          </p>
           <Link
             className={
               'block w-full p-2 text-lg font-semibold bg-primary text-white text-center rounded-[10px] shadow-custom cursor-pointer'

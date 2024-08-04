@@ -105,18 +105,6 @@ export default function CartSummaryTemplate() {
                 {formatMoney(orderCtx?.cart?.total_price || 0, 0, '.', '.')}
               </td>
             </tr>
-            {orderCtx?.cart?.price_minus && (
-              <tr>
-                <td className={'p-3 border-b border-gray-200'}>Mã giảm giá</td>
-                <td
-                  className={
-                    'text-right text-primary font-semibold p-3 border-b border-gray-200'
-                  }
-                >
-                  {formatMoney(orderCtx?.cart?.price_minus || 0, 0, '.', '.')}
-                </td>
-              </tr>
-            )}
             <tr>
               <td className={'p-3'}>
                 <p>Tổng tiền</p>

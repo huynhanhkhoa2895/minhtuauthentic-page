@@ -42,18 +42,26 @@ export default function CheckItemCart({ item, onChange }: Props) {
       <div className={'flex flex-col'}>
         <div className={'flex gap-3'}>
           <div>
-            <p className={'text-primary font-semibold mb-3'}>
+            <p className={'text-primary font-semibold'}>
               {item.variant_name}
             </p>
+            {
+              item?.variant_configurations?.map((config, index) => {
+                return (
+                  <p key={index} className={'text-sm'}>
+                    ({config.name}: {config.value})
+                  </p>
+                )
+              })
+            }
             <InputNumber
+              className={'mt-3'}
               min={1}
               value={item.qty}
               onChange={(value) => onChange(value)}
             />
           </div>
-          <div>
-            <PriceOnCart item={item} isDisplayTotal={true} />
-          </div>
+          <PriceOnCart item={item} isDisplayTotal={true} />
         </div>
       </div>
     </div>

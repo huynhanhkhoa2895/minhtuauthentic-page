@@ -4,9 +4,11 @@ import { formatMoney } from '@/utils';
 import CheckItemCart from '@/components/organisms/checkout/itemCart';
 import CouponsDto from '@/dtos/Coupons.dto';
 import ItemCoupon from '@/components/atoms/coupons';
+import { Button, Input, Tag } from 'antd';
 
 export default function ListCart() {
   const order = useContext(OrderContext);
+  const [couponInput, setCouponInput] = useState<string>('');
   const [coupons, setCoupons] = useState<CouponsDto[]>([]);
   useEffect(() => {
     fetchCoupon().catch();
@@ -19,8 +21,8 @@ export default function ListCart() {
       })
       .catch((error) => {});
   };
-  const applyCoupon = (coupon: CouponsDto) => {
-    order?.applyCoupon && coupon.code && order.applyCoupon(coupon.code);
+  const applyCoupon = (code: string) => {
+    order?.applyCoupon && order.applyCoupon(code);
   };
   const onChange = (value: null | number, index: number) => {
     order?.updateCart && order.updateCart(index, value || 0);
@@ -37,7 +39,24 @@ export default function ListCart() {
           />
         ))}
       </div>
-      <div className={'mt-3 border-b border-gray-200 py-3'}>
+      <div className={'flex py-6 gap-3 border-b border-gray-200'}>
+        <Input
+          value={couponInput}
+          onChange={(e) => setCouponInput(e.target.value)}
+          placeholder={'Nhập mã giảm giá'}
+        />
+        <Button htmlType={'button'} type={'primary'} onClick={()=>applyCoupon(couponInput)}>Áp dụng</Button>
+        <div className={'flex gap-3'}>
+          {
+            order?.cart?.coupons?.map((coupon, key) => (
+              <Tag key={key} closable onClose={() => order?.removeCoupon && coupon.code && order.removeCoupon(coupon.code)}>
+                {coupon.code?.toUpperCase()}
+              </Tag>
+            ))
+          }
+        </div>
+      </div>
+      <div className={'mt-3 border-b border-gray-200 py-3 flex flex-col gap-3'}>
         <div className={'font-semibold flex justify-between items-center'}>
           <span>Tạm tính:</span>
           <span className={'text-primary'}>
@@ -87,7 +106,7 @@ export default function ListCart() {
                 <ItemCoupon
                   coupon={coupon}
                   onClick={() => {
-                    applyCoupon(coupon);
+                    coupon.code && applyCoupon(coupon.code || '');
                   }}
                 />
               </div>

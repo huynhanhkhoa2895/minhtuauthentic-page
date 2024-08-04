@@ -22,6 +22,7 @@ export class OrderItemsDto extends BaseDto {
   coupons?: CouponsDto[];
   image?: ImageDto;
   slug?: string;
+  variant_configurations?: Record<string, string>[]
   constructor(init?: Partial<OrderItemsDto>) {
     super();
     Object.assign(this, init);

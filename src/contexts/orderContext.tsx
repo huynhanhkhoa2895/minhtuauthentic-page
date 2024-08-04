@@ -20,7 +20,7 @@ export type TypeAppState = {
   updateCart: (index: number, qty?: number) => void;
   clearCart: () => void;
   applyCoupon: (couponCode: string, variant_id?: number) => Promise<boolean>;
-  removeCoupon: (couponCode: string, variant_id: number) => Promise<boolean>;
+  removeCoupon: (couponCode: string, variant_id?: number) => Promise<boolean>;
   isOpenHeaderCart?: boolean;
   setIsOpenHeaderCart?: Dispatch<SetStateAction<boolean>>;
 };
@@ -80,6 +80,12 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const addCart = async (variant: VariantDto) => {
+    const timeExpire = localStorage.getItem('cart_expired');
+    console.log('variant add',variant)
+    const time = new Date().getTime();
+    if (!timeExpire) {
+      localStorage.setItem('cart_expired', (time + 1000 * 60 * 60 * 24).toString());
+    }
     const currentVariantOnCart = cart?.items
       ? cart?.items.find((item) => item.variant_id === variant.id)
       : null;
