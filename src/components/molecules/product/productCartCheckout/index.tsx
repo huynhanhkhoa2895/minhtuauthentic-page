@@ -13,7 +13,7 @@ export default function ProductCartCheckout({ variant }: Props) {
   const [qty, setQty] = useState(1);
   const [indexCart, setIndexCart] = useState<number | null>(null);
   useEffect(() => {
-    const index = orderCtx?.cart?.findIndex(
+    const index = (orderCtx?.cart?.items || [])?.findIndex(
       (item) => item.variant_id === variant.id,
     );
     index && setIndexCart(index);
