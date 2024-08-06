@@ -43,11 +43,21 @@ const ProductCard = ({
           <Badge className={'bg-price'}>Trả góp 0%</Badge>
         </div>
         <ProductCardImage product={product} priority={false} />
-        <h5 className={'font-bold px-2 h-[70px]'}>
-          <Link className={'block'} href={`/${product?.slugs?.slug}`}>
-            {product.name}
-          </Link>
-        </h5>
+        <div className={'px-2 min-h-[70px]'}>
+          <h6 className={'font-bold'}>
+            <Link className={'block'} href={`/${product?.slugs?.slug}`}>
+              {product.name}
+            </Link>
+          </h6>
+          {variant?.variant_product_configuration_values?.map((item, index) => {
+            return (
+              <p key={index} className={'text-sm'}>
+                {item.product_configuration_value?.product_configuration?.name}:{' '}
+                {item.product_configuration_value?.value}
+              </p>
+            );
+          })}
+        </div>
         {variant && <ProductPrice className={'px-2'} variant={variant} />}
       </div>
       <div className={'h-[50px] px-[8px]'}>

@@ -81,10 +81,12 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
 
   const addCart = async (variant: VariantDto) => {
     const timeExpire = localStorage.getItem('cart_expired');
-    console.log('variant add',variant)
     const time = new Date().getTime();
     if (!timeExpire) {
-      localStorage.setItem('cart_expired', (time + 1000 * 60 * 60 * 24).toString());
+      localStorage.setItem(
+        'cart_expired',
+        (time + 1000 * 60 * 60 * 24).toString(),
+      );
     }
     const currentVariantOnCart = cart?.items
       ? cart?.items.find((item) => item.variant_id === variant.id)

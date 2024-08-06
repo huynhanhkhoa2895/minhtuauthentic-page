@@ -12,6 +12,7 @@ import ProductRelation from '@/components/molecules/product/productRelation';
 import ProductQuestionAnswer from '@/components/molecules/product/productQuestionAnswer';
 import { PromotionsDto } from '@/dtos/Promotions.dto';
 import ProductDealSock from '@/components/molecules/product/productDealSock';
+import { TagsOutlined } from '@ant-design/icons/lib/icons';
 
 type Props = {
   product: ProductDto;
@@ -63,6 +64,12 @@ const ProductDetailCard = ({
       <div className={'grid grid-cols-1 lg:grid-cols-3 gap-3 my-3'}>
         <div className={'col-span-2'}>
           <ProductDescription product={product} />
+          <div className={'mt-3'}>
+            <TagsOutlined />
+            <p>
+              <span className={'font-bold'}>Từ khóa:</span>
+            </p>
+          </div>
           <ProductQuestionAnswer questions={product?.question_answers || []} />
         </div>
 

@@ -5,6 +5,7 @@ import { SettingsDto } from '@/dtos/Settings.dto';
 import AppContext from '@/contexts/appContext';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import { generateSlugToHref } from '@/utils';
+import { TagsOutlined } from '@ant-design/icons/lib/icons';
 
 type Props = {
   data: ResponseProductDetailPageDto;
@@ -30,7 +31,10 @@ const ProductTemplate = ({ data }: Props) => {
       <BreadcrumbComponent
         label={'Sản phẩm'}
         link={'/san-pham'}
-        current={{ label: data?.product?.name || '', link: generateSlugToHref(data?.product?.slugs?.slug) }}
+        current={{
+          label: data?.product?.name || '',
+          link: generateSlugToHref(data?.product?.slugs?.slug),
+        }}
       />
       {data?.product && (
         <ProductDetailCard
