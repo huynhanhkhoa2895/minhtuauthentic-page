@@ -15,6 +15,8 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { handleDataFetch } from '@/utils/api';
 import CartDto from '@/dtos/Cart.dto';
+import Link from 'next/link';
+import { ArrowLeftOutlined } from '@ant-design/icons/lib/icons';
 const fetcher = () =>
   fetch(`/api/orders/province`, {
     method: 'GET',
@@ -253,9 +255,16 @@ export default function FormCheckout({
           className={'col-span-2'}
         />
       </div>
-      <Button htmlType={'submit'} className={'mt-6'} type={'primary'}>
-        Thanh toán
-      </Button>
+      <div className={'flex justify-between items-center mt-6'}>
+        <div className={'flex text-primary gap-1'}>
+          <ArrowLeftOutlined />
+          <Link className={'font-semibold'} href={'/gio-hang/tom-tat'}>Quay lại giỏ hàng</Link>
+        </div>
+        <Button htmlType={'submit'} type={'primary'}>
+          Thanh toán
+        </Button>
+      </div>
+
     </form>
   );
 }

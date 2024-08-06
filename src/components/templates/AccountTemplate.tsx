@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
+import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 
 export default function AccountTemplate({children}: {children: ReactNode}){
   return (

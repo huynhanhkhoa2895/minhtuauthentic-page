@@ -5,6 +5,7 @@ import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import LoginTemplate from '@/components/templates/LoginTemplate';
+import Layout from '@/components/templates/Layout';
 
 export const getServerSideProps = (async () => {
   const { resMenu, resFooter } = await getDefaultSeverSide();
@@ -32,9 +33,9 @@ export default function LoginPage({
   return (
     <>
       <Header menu={menu} />
-      <div className={'container mx-auto p-3'}>
+      <Layout menu={menu}>
         <LoginTemplate />
-      </div>
+      </Layout>
       <Footer footerContent={footerContent} />
     </>
   );

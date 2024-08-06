@@ -6,6 +6,8 @@ import CategoryTemplate from '@/components/templates/CategoryTemplate';
 import Footer from '@/components/organisms/footer';
 import { InferGetServerSidePropsType } from 'next';
 import BrandsTemplate from '@/components/templates/BrandsTemplate';
+import BreadcrumbComponent from '@/components/molecules/breakcrumb';
+import Layout from '@/components/templates/Layout';
 
 export const getServerSideProps = async () => {
   const { resMenu, resFooter } = await getDefaultSeverSide();
@@ -29,9 +31,13 @@ export default function BrandsPage({
   return (
     <>
       <Header menu={menu} />
-      <div className={'container mx-auto p-3'}>
+      <Layout menu={menu}>
+        <BreadcrumbComponent
+          label={'Thương hiệu'}
+          link={'/thuong-hieu'}
+        />
         <BrandsTemplate brands={menu.brands || []} />
-      </div>
+      </Layout>
       <Footer footerContent={footerContent} />
     </>
   );

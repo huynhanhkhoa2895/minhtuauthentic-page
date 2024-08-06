@@ -1,6 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import CheckoutTemplate from '@/components/templates/CheckoutTemplate';
 import { PaymentsDto } from '@/dtos/Payments.dto';
+import Layout from '@/components/templates/Layout';
 
 export const getServerSideProps = (async () => {
   const payments: { data: { list: PaymentsDto[] } } = await fetch(
@@ -19,10 +20,8 @@ export default function Checkout({
   payments,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <>
-      <div className={'container mx-auto p-3'}>
+    <Layout menu={menu}>
         <CheckoutTemplate payments={payments} />
-      </div>
-    </>
+    </Layout>
   );
 }

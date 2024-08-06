@@ -3,6 +3,8 @@ import ProductDetailCard from '@/components/organisms/product/detailCard';
 import { Suspense, useContext, useEffect, useState } from 'react';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import AppContext from '@/contexts/appContext';
+import BreadcrumbComponent from '@/components/molecules/breakcrumb';
+import { generateSlugToHref } from '@/utils';
 
 type Props = {
   data: ResponseProductDetailPageDto;
@@ -25,6 +27,11 @@ const ProductTemplate = ({ data }: Props) => {
   }, []);
   return (
     <>
+      <BreadcrumbComponent
+        label={'Sản phẩm'}
+        link={'/san-pham'}
+        current={{ label: data?.product?.name || '', link: generateSlugToHref(data?.product?.slugs?.slug) }}
+      />
       {data?.product && (
         <ProductDetailCard
           product={data.product}

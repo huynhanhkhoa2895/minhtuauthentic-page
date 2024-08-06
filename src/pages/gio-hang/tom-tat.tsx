@@ -6,6 +6,7 @@ import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import CartSummaryTemplate from '@/components/templates/CartSummaryTemplate';
 import { useEffect } from 'react';
+import Layout from '@/components/templates/Layout';
 
 export const getServerSideProps = (async () => {
   const { resMenu, resFooter } = await getDefaultSeverSide();
@@ -33,9 +34,9 @@ export default function Register({
   return (
     <>
       <Header menu={menu} />
-      <div className={'container mx-auto p-3'}>
+      <Layout menu={menu}>
         <CartSummaryTemplate />
-      </div>
+      </Layout>
       <Footer footerContent={footerContent} />
     </>
   );

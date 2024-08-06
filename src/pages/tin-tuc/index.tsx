@@ -4,9 +4,10 @@ import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import RegisterTemplate from '@/components/templates/RegisterTemplate';
 import NewsTemplate from '@/components/templates/NewsTemplate';
 import { ResponseNewsPageDto } from '@/dtos/ResponseNewsPage.dto';
+import BreadcrumbComponent from '@/components/molecules/breakcrumb';
+import Layout from '@/components/templates/Layout';
 
 export const getServerSideProps = (async (context) => {
   const page = context.query.page;
@@ -44,7 +45,11 @@ export default function News({
   return (
     <>
       <Header menu={menu} />
-      <div className={'container mx-auto p-3'}>
+      <Layout menu={menu}>
+        <BreadcrumbComponent
+          label={'Tin tức'}
+          link={'/tin-tuc'}
+        />
         {news && (
           <NewsTemplate
             news={news?.news || []}
@@ -52,7 +57,7 @@ export default function News({
             newest={news.newest || []}
           />
         )}
-      </div>
+      </Layout>
       <Footer footerContent={footerContent} />
     </>
   );

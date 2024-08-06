@@ -7,6 +7,8 @@ import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { ResponseSlugPageDto } from '@/dtos/responseSlugPage.dto';
 import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage.dto';
+import BreadcrumbComponent from '@/components/molecules/breakcrumb';
+import Layout from '@/components/templates/Layout';
 export const getServerSideProps = (async (context) => {
   const { resMenu, resFooter } = await getDefaultSeverSide();
   const dataMenu: { data: ResponseMenuDto } = resMenu
@@ -46,11 +48,15 @@ export default function ProductPage({
   return (
     <>
       <Header menu={menu} />
-      <div className={'container mx-auto p-3'}>
+      <Layout menu={menu}>
+        <BreadcrumbComponent
+          label={'Sản phẩm'}
+          link={'/san-pham'}
+        />
         <CategoryTemplate
           slug={slug as ResponseSlugPageDto<ResponseCategoryFilterPageDto>}
         />
-      </div>
+      </Layout>
       <Footer footerContent={footerContent} />
     </>
   );

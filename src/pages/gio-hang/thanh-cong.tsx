@@ -1,13 +1,11 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import CheckoutTemplate from '@/components/templates/CheckoutTemplate';
-import { PaymentsDto } from '@/dtos/Payments.dto';
 import OrderSuccessTemplate from '@/components/templates/OrderSuccessTemplate';
 import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import Header from '@/components/organisms/header';
-import CartSummaryTemplate from '@/components/templates/CartSummaryTemplate';
 import Footer from '@/components/organisms/footer';
+import Layout from '@/components/templates/Layout';
 
 export const getServerSideProps = (async () => {
   const { resMenu, resFooter } = await getDefaultSeverSide();
@@ -35,9 +33,9 @@ export default function OderSuccess({
   return (
     <>
       <Header menu={menu} />
-      <div className={'container mx-auto p-3'}>
+      <Layout menu={menu}>
         <OrderSuccessTemplate />
-      </div>
+      </Layout>
       <Footer footerContent={footerContent} />
     </>
   );

@@ -9,17 +9,23 @@ import Link from 'next/link';
 import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
 import PriceOnCart from '@/components/atoms/priceOnCart';
 import PriceMinus from '@/components/atoms/PriceMinus';
+import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 
 export default function CartSummaryTemplate() {
   const orderCtx = useContext(OrderContext);
   return (
-    <div
-      className={twMerge(
-        'w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3',
-      )}
-    >
-      <table className={'border border-gray-200 w-full'}>
-        <thead>
+    <>
+      <BreadcrumbComponent
+        label={'Giỏ hàng'}
+        link={'/tom-tat'}
+      />
+      <div
+        className={twMerge(
+          'w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3',
+        )}
+      >
+        <table className={'border border-gray-200 w-full'}>
+          <thead>
           <tr>
             <th>Hình ảnh</th>
             <th>Sản phẩm</th>
@@ -29,8 +35,8 @@ export default function CartSummaryTemplate() {
             <th>Tổng tiền</th>
             <th>Xóa</th>
           </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
           {orderCtx?.cart?.items?.map((item, index) => {
             return (
               <tr key={item.variant_id + '_' + index}>
@@ -68,7 +74,7 @@ export default function CartSummaryTemplate() {
                     value={item.qty}
                     onChange={(value) => {
                       orderCtx?.updateCart &&
-                        orderCtx.updateCart(index, value || 1);
+                      orderCtx.updateCart(index, value || 1);
                     }}
                   />
                 </td>
@@ -87,14 +93,14 @@ export default function CartSummaryTemplate() {
               </tr>
             );
           })}
-        </tbody>
-      </table>
-      <div className={'w-full lg:w-[40%] lg:ml-auto max-w-full mt-6'}>
-        <h4 className={'text-2xl text-primary font-bold mb-3'}>
-          Tổng giỏ hàng
-        </h4>
-        <table className={'w-full border border-gray-200'}>
-          <tbody>
+          </tbody>
+        </table>
+        <div className={'w-full lg:w-[40%] lg:ml-auto max-w-full mt-6'}>
+          <h4 className={'text-2xl text-primary font-bold mb-3'}>
+            Tổng giỏ hàng
+          </h4>
+          <table className={'w-full border border-gray-200'}>
+            <tbody>
             <tr>
               <td className={'p-3 border-b border-gray-200'}>Tạm tính</td>
               <td
@@ -114,17 +120,19 @@ export default function CartSummaryTemplate() {
                 {formatMoney(orderCtx?.cart?.total_price || 0, 0, '.', '.')}
               </td>
             </tr>
-          </tbody>
-        </table>
-        <Link
-          href={'/gio-hang/thanh-toan'}
-          className={
-            'block w-full p-3 text-xl font-semibold bg-primary text-white text-center rounded-[10px] shadow-custom cursor-pointer mt-3'
-          }
-        >
-          Tiến hành thanh toán
-        </Link>
+            </tbody>
+          </table>
+          <Link
+            href={'/gio-hang/thanh-toan'}
+            className={
+              'block w-full p-3 text-xl font-semibold bg-primary text-white text-center rounded-[10px] shadow-custom cursor-pointer mt-3'
+            }
+          >
+            Tiến hành thanh toán
+          </Link>
+        </div>
       </div>
-    </div>
+    </>
+
   );
 }

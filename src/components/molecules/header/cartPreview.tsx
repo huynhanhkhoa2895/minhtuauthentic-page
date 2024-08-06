@@ -86,8 +86,8 @@ export default function CartPreview() {
               </div>
             );
           })}
-          <p>
-            <span className={'text- xl'}>Tổng cộng: </span>
+          <p className={'flex justify-between items-center'}>
+            <span className={'text-xl uppercase font-semibold'}>Tổng cộng: </span>
             <span className={'font-semibold text-primary'}>
               {formatMoney(order?.cart?.total_price || 0)}
             </span>

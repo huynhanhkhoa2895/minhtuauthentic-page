@@ -158,7 +158,7 @@ const Menu = ({
   };
 
   return (
-    <div className={'relative'}>
+    <>
       <div
         ref={ref}
         className={twMerge(
@@ -224,7 +224,7 @@ const Menu = ({
           )}
         </div>
       )}
-    </div>
+    </>
   );
 };
 export default Menu;

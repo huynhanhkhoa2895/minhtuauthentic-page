@@ -9,6 +9,8 @@ import { OrdersDto } from '@/dtos/Orders.dto';
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 import OrderDetailTemplate from '@/components/templates/OrderDetailTemplate';
 import AccountTemplate from '@/components/templates/AccountTemplate';
+import BreadcrumbComponent from '@/components/molecules/breakcrumb';
+import Layout from '@/components/templates/Layout';
 
 export const getServerSideProps = (async (context) => {
   const { resMenu, resFooter } = await getDefaultSeverSide();
@@ -62,14 +64,23 @@ export default function UserHistoryDetail({
   return (
     <>
       <Header menu={menu} />
-      <div className={'container mx-auto p-3'}>
+      <Layout menu={menu}>
+        <BreadcrumbComponent
+          label={'Thông tin khách hàng'}
+          link={'/tai-khoan/lich-su'}
+          current={{
+            label: 'Chi tiết đơn hàng '+data?.order?.id,
+            link: '/tai-khoan/lich-su/' + data?.order?.id,
+
+          }}
+        />
         <AccountTemplate>
           <OrderDetailTemplate
             order={data?.order}
             order_items={data?.order_items}
           />
         </AccountTemplate>
-      </div>
+      </Layout>
       <Footer footerContent={footerContent} />
     </>
   );

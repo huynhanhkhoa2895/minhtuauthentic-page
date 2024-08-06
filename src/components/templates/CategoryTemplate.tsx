@@ -4,14 +4,26 @@ import { CategoryFilterProvider } from '@/contexts/categoryFilterContext';
 import { ResponseSlugPageDto } from '@/dtos/responseSlugPage.dto';
 import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage.dto';
 import { SlugDto } from '@/dtos/Slug.dto';
+import { generateSlugToHref } from '@/utils';
+import BreadcrumbComponent from '@/components/molecules/breakcrumb';
+import { Entity } from '@/config/enum';
 
 type Props = {
   slug?: ResponseSlugPageDto<ResponseCategoryFilterPageDto>;
 };
 export default function CategoryTemplate({ slug }: Props) {
   const data = slug?.data as ResponseCategoryFilterPageDto;
+  const renderLabelBreadcrumb: Record<string, string> =  {
+    [Entity.CATEGORIES]: 'Danh mục',
+    [Entity.BRANDS]: 'Nhãn hieệu',
+    [Entity.KEYWORDS]: 'Từ khóa',
+  }
   return (
     <CategoryFilterProvider>
+      <BreadcrumbComponent
+        label={renderLabelBreadcrumb[slug?.model || ''] || ''}
+        link={generateSlugToHref(slug?.slug)}
+      />
       <div
         className={
           'rounded-[10px] border-gray-500 bg-white shadow-custom grid grid-cols-1 lg:grid-cols-6 gap-3'

@@ -61,7 +61,7 @@ export default function Home({
   return (
     <>
       <Header menu={menu} />
-      <div className={'container mx-auto'}>
+      <div id={'main-body'} className={'container mx-auto'}>
         <div
           id={'main-home-page'}
           className={'mt-[10px] flex w-full gap-2 relative'}

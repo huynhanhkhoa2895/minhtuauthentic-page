@@ -11,6 +11,8 @@ import CategoryTemplate from '@/components/templates/CategoryTemplate';
 import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage.dto';
 import NewsDetailTemplate from '@/components/templates/NewsDetailTemplate';
 import { ResponseNewsDetailPageDto } from '@/dtos/ResponseNewsDetailPage.dto';
+import Layout from '@/components/templates/Layout';
+
 export const getServerSideProps = (async (context) => {
   const { slug } = context.query;
   const res = await fetch(
@@ -88,7 +90,7 @@ export default function Page({
   return (
     <>
       <Header menu={menu} />
-      <div className={'container mx-auto p-3'}>{renderTemplate()}</div>
+      <Layout menu={menu}>{renderTemplate()}</Layout>
       <Footer footerContent={footerContent} />
     </>
   );

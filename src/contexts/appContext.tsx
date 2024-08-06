@@ -5,8 +5,8 @@ import React, {
   useState,
 } from 'react';
 export type TypeAppState = {
-  carts: unknown[];
-  setCart: Dispatch<SetStateAction<never[]>> | undefined;
+  isOpenMenu: boolean;
+  setIsOpenMenu: Dispatch<SetStateAction<boolean>> | undefined;
   settings?: Record<string, string>;
   setSettings?: Dispatch<SetStateAction<Record<string, string>>> | undefined;
 };
@@ -14,10 +14,10 @@ export type TypeAppState = {
 const AppContext = createContext<TypeAppState | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  const [carts, setCart] = useState([]);
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [settings, setSettings] = useState({});
   return (
-    <AppContext.Provider value={{ carts, setCart, settings, setSettings }}>
+    <AppContext.Provider value={{ isOpenMenu, setIsOpenMenu, settings, setSettings }}>
       {children}
     </AppContext.Provider>
   );
