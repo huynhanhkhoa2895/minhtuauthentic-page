@@ -16,15 +16,17 @@ import useUser from '@/hooks/useUser';
 import { useRouter } from 'next/router';
 import HeaderCart from '@/components/icons/header-cart';
 import CartPreview from '@/components/molecules/header/cartPreview';
-import { CloseCircleOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, BarsOutlined } from '@ant-design/icons';
 import OrderContext from '@/contexts/orderContext';
 import { useContext } from 'react';
+import AppContext from '@/contexts/appContext';
 
 export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useUser();
   const orderCtx = useContext(OrderContext);
+  const appCtx = useContext(AppContext);
   return (
     <>
       <div className={'bg-primaryGrey relative z-[3]'}>
@@ -32,11 +34,33 @@ export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
       </div>
       <header
         id={'header'}
-        className={'bg-primary py-[10px] sticky top-0 left-0 z-[3] relative'}
+        className={'bg-primary py-[10px] sticky top-0 left-0 z-[100] relative'}
       >
+        <div className={'lg:hidden '}>
+          <div className={'flex justify-between items-center'}>
+            <Link className={'shrink-0'} href={'/'}>
+              <Image
+                src={Logo}
+                priority={true}
+                height={30}
+                width={161}
+                className={'object-contain w-auto h-auto '}
+                alt={
+                  'Minh Tu Authentic, Nước hoa chính hãng Tphcm, Quận Tân Phú, Mỹ phẩm'
+                }
+              />
+            </Link>
+            <button className={'bg-primary text-white border-0 pr-3'} type={'button'} onClick={()=>{
+              appCtx?.setIsOpenNavMenu && appCtx.setIsOpenNavMenu(!appCtx.isOpenNavMenu)
+            }}>
+              <BarsOutlined className={'w-[20px] h-[20px]'} />
+            </button>
+          </div>
+          <InputSearch classname={'p-6'} />
+        </div>
         <div
           className={
-            'container mx-auto flex justify-between items-center gap-[10px]'
+            'max-lg:hidden container mx-auto flex justify-between items-center gap-[10px]'
           }
         >
           <Link className={'shrink-0'} href={'/'}>

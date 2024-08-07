@@ -6,7 +6,11 @@ import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 import { useRouter } from 'next/router';
-export const InputSearch = () => {
+import { twMerge } from 'tailwind-merge';
+type Props = {
+  classname?: string
+}
+export const InputSearch = ({classname}: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
   const [debouceValue, setDebouceValue] = useState<string>('');
@@ -133,7 +137,7 @@ export const InputSearch = () => {
   }, [data, loading]);
 
   return (
-    <div className={'w-full relative z-[3]'} ref={ref}>
+    <div className={twMerge('w-full relative z-[3]', classname)} ref={ref}>
       <input
         className={
           'h-[40px] rounded-[10px] border-0 p-[5px_45px_5px_25px] focus-visible:outline-none focus-visible:border-0 w-full'

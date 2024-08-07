@@ -54,12 +54,12 @@ const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
     <footer className={'relative z-[2]'}>
       <div className={'bg-primaryGrey '}>
         <div className={'container mx-auto '}>
-          <div className={'flex justify-between w-full pt-[35px]'}>
+          <div className={'flex max-lg:flex-col justify-between w-full pt-[35px]'}>
             {orderBy(footerContent?.footer || [], 'sort').map((item, index) => {
               return renderFooter(item, index);
             })}
           </div>
-          <div className={'grid grid-cols-3 mt-3'}>
+          <div className={'grid grid-cols-1 lg:grid-cols-3 mt-3'}>
             <Image
               src={Logo}
               priority={true}
@@ -74,7 +74,7 @@ const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
               <p className={'uppercase font-bold mb-[10px]'}>
                 Kết nối với chúng tôi
               </p>
-              <div className={'grid grid-cols-4 w-max gap-3'}>
+              <div className={'grid grid-cols-1 lg:grid-cols-4 w-max gap-3'}>
                 {footerContent &&
                   footerContent[STATIC_CONTENT_TYPE.FOOTER_LOGO_SOCIAL]?.map(
                     (item: StaticContentsDto, index: number) => {

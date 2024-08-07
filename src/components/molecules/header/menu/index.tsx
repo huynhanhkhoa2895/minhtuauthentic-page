@@ -12,11 +12,9 @@ import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 const Menu = ({
   menu,
   className,
-  isPopup,
 }: {
   menu: ResponseMenuDto;
   className?: string;
-  isPopup?: boolean;
 }) => {
   const [dataDisplayPopup, setDataDisplayPopup] = useState<PopupDisplay>({
     display: false,
