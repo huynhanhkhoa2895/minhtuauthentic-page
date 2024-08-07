@@ -20,7 +20,7 @@ export default function Checkout({
   payments,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <Layout menu={menu}>
+    <Layout>
         <CheckoutTemplate payments={payments} />
     </Layout>
   );
