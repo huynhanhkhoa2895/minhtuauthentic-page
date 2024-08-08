@@ -38,6 +38,7 @@ export default function ProductDealSock({ promotion }: Props) {
                 promotions={promotion && [promotion]}
                 coupon={iCoupon}
                 addText={'Chọn sản phẩm'}
+                isShowConfiguration
               />
             )
           );

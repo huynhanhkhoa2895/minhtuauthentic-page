@@ -22,12 +22,14 @@ const ProductCard = ({
   promotions,
   addText,
   coupon,
+  isShowConfiguration,
 }: {
   product: ProductDto;
   variant: VariantDto;
   promotions?: PromotionsDto[];
   addText?: string;
   coupon?: CouponsDto;
+  isShowConfiguration?: boolean;
 }) => {
   return (
     <div
@@ -43,22 +45,30 @@ const ProductCard = ({
           <Badge className={'bg-price'}>Trả góp 0%</Badge>
         </div>
         <ProductCardImage product={product} priority={false} />
-        <div className={'px-2 min-h-[70px]'}>
+        <div className={'px-2 min-h-[63px]'}>
           <h6 className={'font-bold'}>
             <Link className={'block'} href={`/${product?.slugs?.slug}`}>
               {product.name}
             </Link>
           </h6>
-          {variant?.variant_product_configuration_values?.map((item, index) => {
-            return (
-              <p key={index} className={'text-sm'}>
-                {item.product_configuration_value?.product_configuration?.name}:{' '}
-                {item.product_configuration_value?.value}
-              </p>
-            );
-          })}
         </div>
-        {variant && <ProductPrice className={'px-2'} variant={variant} />}
+        <div className={'h-[50px]'}>
+          {isShowConfiguration &&
+            variant?.variant_product_configuration_values?.map(
+              (item, index) => {
+                return (
+                  <p key={index} className={'text-sm px-2'}>
+                    {
+                      item.product_configuration_value?.product_configuration
+                        ?.name
+                    }
+                    : {item.product_configuration_value?.value}
+                  </p>
+                );
+              },
+            )}
+          {variant && <ProductPrice className={'px-2'} variant={variant} />}
+        </div>
       </div>
       <div className={'h-[50px] px-[8px]'}>
         {promotions?.map((promotion, index) => {

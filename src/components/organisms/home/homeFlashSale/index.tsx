@@ -60,6 +60,7 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
                     }}
                     promotions={promotion && [promotion]}
                     coupon={iCoupon}
+                    isShowConfiguration
                   />
                 )
               );
