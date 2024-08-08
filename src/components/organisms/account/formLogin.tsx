@@ -33,6 +33,13 @@ export default function FormLogin() {
   });
   const { setCookieUser } = useUser();
 
+  const handleLoginWithGmail = () => {
+    window.open(
+      `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=http://demo.mikiperfume.com&response_type=token&scope=https://www.googleapis.com/auth/drive.metadata.readonly&include_granted_scopes=true`,
+      '_blank',
+    );
+  };
+
   const [errorSubmit, setErrorSubmit] = useState<string | null>(null);
   return (
     <form
@@ -108,7 +115,10 @@ export default function FormLogin() {
               'rounded-[100%] cursor-pointer p-2 border border-gray-200'
             }
           >
-            <GmailIcon className={'w-[20px] h-[20px] '} />
+            <GmailIcon
+              className={'w-[20px] h-[20px] '}
+              onClick={handleLoginWithGmail}
+            />
           </div>
         </div>
       </div>
