@@ -7,7 +7,7 @@ import GmailIcon from '@/components/icons/gmail';
 import FormControl from '@/components/molecules/form/FormControl';
 import { UserDto } from '@/dtos/User.dto';
 import useUser from '@/hooks/useUser';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { handleDataFetch } from '@/utils/api';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
@@ -32,12 +32,40 @@ export default function FormLogin() {
     },
   });
   const { setCookieUser } = useUser();
+  useEffect(() => {
+    const handler = async (event: MessageEvent) => {
+      const data = event?.data;
+      if (data?.token) {
+        afterLoginSuccess(data);
+      }
+    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('message', handler);
+    }
 
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('message', handler);
+      }
+    };
+  }, []);
   const handleLoginWithGmail = () => {
     window.open(
-      `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=http://demo.mikiperfume.com&response_type=token&scope=https://www.googleapis.com/auth/drive.metadata.readonly&include_granted_scopes=true`,
-      '_blank',
+      `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT}&scope=https://www.googleapis.com/auth/userinfo.email&include_granted_scopes=true&response_type=token`,
+      '_elfinder_',
+      'top=250;left=550;scrollbars=yes,resizable=yes,width=800,height=400',
     );
+  };
+
+  const afterLoginSuccess = (data: UserDto) => {
+    toast.success('Đăng nhập thành công');
+    setCookieUser(data);
+    const redirect = router.query.redirectUrl;
+    if (redirect) {
+      router.push(redirect as string);
+    } else {
+      router.push('/');
+    }
   };
 
   const [errorSubmit, setErrorSubmit] = useState<string | null>(null);
@@ -56,14 +84,7 @@ export default function FormLogin() {
             return null;
           });
         if (rs?.data?.token) {
-          toast.success('Đăng nhập thành công');
-          setCookieUser(rs.data);
-          const redirect = router.query.redirectUrl;
-          if (redirect) {
-            router.push(redirect as string);
-          } else {
-            router.push('/');
-          }
+          afterLoginSuccess(rs.data);
         }
       })}
       onError={(errors) => {

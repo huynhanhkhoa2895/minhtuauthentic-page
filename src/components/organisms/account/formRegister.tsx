@@ -44,27 +44,30 @@ const schema = yup
           return rsPromise;
         },
       } as any),
-    phone: yup.string().test({
-      message: () => 'Phone này đã tồn tại',
-      test: async (values: string) => {
-        if (!values) return true;
-        if (timeoutPhone) clearTimeout(timeoutPhone);
-        const rsPromise = await new Promise((resolve) => {
-          timeoutPhone = setTimeout(async () => {
-            const result = await fetch(
-              `/api/userCheck/?type=phone&value=${values}`,
-            )
-              .then((res) => res.json())
-              .catch((e) => {
-                console.log(e);
-                return null;
-              });
-            resolve(!result?.data?.id);
+    phone: yup
+      .string()
+      .required('Số điện thoại không được để trống')
+      .test({
+        message: () => 'Phone này đã tồn tại',
+        test: async (values: string) => {
+          if (!values) return true;
+          if (timeoutPhone) clearTimeout(timeoutPhone);
+          const rsPromise = await new Promise((resolve) => {
+            timeoutPhone = setTimeout(async () => {
+              const result = await fetch(
+                `/api/userCheck/?type=phone&value=${values}`,
+              )
+                .then((res) => res.json())
+                .catch((e) => {
+                  console.log(e);
+                  return null;
+                });
+              resolve(!result?.data?.id);
+            });
           });
-        });
-        return rsPromise;
-      },
-    } as any),
+          return rsPromise;
+        },
+      } as any),
     name: yup.string(),
     password: yup
       .string()
@@ -172,11 +175,11 @@ export default function FormRegister() {
           prefix={<LockOutlined />}
         />
         <div className={'flex justify-between'}>
-          <Button type="primary" htmlType={'submit'}>
-            Đăng ký
-          </Button>
           <Button type={'link'} className={'text-primary hover:!text-primary'}>
             <Link href={'/tai-khoan/dang-nhap'}>Đăng nhập</Link>
+          </Button>
+          <Button type="primary" htmlType={'submit'}>
+            Đăng ký
           </Button>
         </div>
       </div>
