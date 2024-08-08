@@ -55,6 +55,7 @@ export enum STATIC_CONTENT_TYPE {
   BLOCK_UNDER_SLIDE = 'home-block-under-slide',
   BLOCK_UNDER_CATEGORY = 'banner-under-category',
   FEATURE_CATEGORY = 'home-feature-category',
+  FOOTER_PRIVACY_POLICY = 'footer-privacy-policy',
 }
 
 export enum PRODUCT_CONFIGURATIONS {
