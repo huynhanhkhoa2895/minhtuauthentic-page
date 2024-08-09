@@ -11,16 +11,13 @@ export const handleDataFetch = (data: any, res?: NextApiResponse) => {
   return data;
 };
 
-export const handleHeader = ({
-  token,
-}: {
-  token?: string;
-}) => {
+export const handleHeader = (token?: string) => {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   };
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
   }
+  console.log('headers', headers, token);
   return headers;
-}
+};

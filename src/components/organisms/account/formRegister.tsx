@@ -34,7 +34,7 @@ const schema = yup
           const rsPromise = await new Promise((resolve) => {
             timeoutEmail = setTimeout(async () => {
               const result = await fetch(
-                `/api/userCheck/?type=email&value=${values}`,
+                `/api/user/userCheck/?type=email&value=${values}`,
               )
                 .then((res) => res.json())
                 .catch((e) => null);
@@ -55,7 +55,7 @@ const schema = yup
           const rsPromise = await new Promise((resolve) => {
             timeoutPhone = setTimeout(async () => {
               const result = await fetch(
-                `/api/userCheck/?type=phone&value=${values}`,
+                `/api/user/userCheck/?type=phone&value=${values}`,
               )
                 .then((res) => res.json())
                 .catch((e) => {

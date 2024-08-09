@@ -27,6 +27,7 @@ export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
   const { user, logout } = useUser();
   const orderCtx = useContext(OrderContext);
   const appCtx = useContext(AppContext);
+  console.log('Header user', user);
   return (
     <>
       <div className={'bg-primaryGrey relative z-[3]'}>
@@ -50,9 +51,14 @@ export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
                 }
               />
             </Link>
-            <button className={'bg-primary text-white border-0 pr-3'} type={'button'} onClick={()=>{
-              appCtx?.setIsOpenNavMenu && appCtx.setIsOpenNavMenu(!appCtx.isOpenNavMenu)
-            }}>
+            <button
+              className={'bg-primary text-white border-0 pr-3'}
+              type={'button'}
+              onClick={() => {
+                appCtx?.setIsOpenNavMenu &&
+                  appCtx.setIsOpenNavMenu(!appCtx.isOpenNavMenu);
+              }}
+            >
               <BarsOutlined className={'w-[20px] h-[20px]'} />
             </button>
           </div>
