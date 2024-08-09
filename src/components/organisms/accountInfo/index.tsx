@@ -15,8 +15,5 @@ const items: TabsProps['items'] = [
   },
 ];
 export default function AccountInfo(){
-  const onChange = (key: string) => {
-    console.log(key);
-  };
-  return <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+  return <Tabs defaultActiveKey="1" items={items} />
 }
