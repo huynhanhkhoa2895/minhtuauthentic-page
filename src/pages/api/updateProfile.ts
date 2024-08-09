@@ -7,7 +7,7 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   if (req.method === 'PUT') {
-    const url = `${process.env.BE_URL}/api/users/profile`;
+    const url = `${process.env.BE_URL}/api/users/update-profile`;
     const user = JSON.parse(
       getCookie('user', req.headers.cookie || '', true),
     );

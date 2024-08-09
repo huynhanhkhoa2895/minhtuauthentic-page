@@ -2,8 +2,12 @@ import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import FormControl from '@/components/molecules/form/FormControl';
-import { LockOutlined, MailOutlined, PhoneOutlined, UsergroupAddOutlined } from '@ant-design/icons';
+import { MailOutlined, PhoneOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
+import { toast } from 'react-toastify';
+import { useState } from 'react';
+import { UserDto } from '@/dtos/User.dto';
+import useUser from '@/hooks/useUser';
 
 type DefaultFormProps = {
   email: string;
@@ -65,6 +69,8 @@ const schema = yup
   })
   .required();
 export default function AccountInfoUpdate() {
+  const [loading, setLoading] = useState(false);
+  const {setCookieUser} = useUser()
   const {
     handleSubmit,
     control,
@@ -78,19 +84,31 @@ export default function AccountInfoUpdate() {
     },
   });
 
-  const onSubmit = (data: DefaultFormProps) => {
-
+  const onSubmit = async (data: DefaultFormProps) => {
+    setLoading(true);
+    const result = await fetch('/api/updateProfile', {
+      body: JSON.stringify(data),
+    }).then(res => res.json()).then((data: {data: UserDto})=>{
+      if (data?.data) {
+        toast.success('Cập nhật thành công')
+        setCookieUser(data.data)
+      }
+    }).catch(()=>{
+      toast.error('Có lỗi xảy ra')
+    }).finally(()=>{
+      setLoading(false)
+    })
   }
 
   return (
-    <>
+    <div className={'p-4'}>
       <h1 className={'text-2xl font-bold mb-3 text-primary'}>Thông tin tài khoản</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
         onError={(errors) => {
           console.log(errors);
         }}
-        className={'p-4'}
+
       >
         <div className={'flex flex-col gap-3'}>
           <FormControl
@@ -121,12 +139,13 @@ export default function AccountInfoUpdate() {
             <Button
               type="primary"
               htmlType={'submit'}
+              loading={loading}
             >
               Cập nhật
             </Button>
           </div>
         </div>
       </form>
-    </>
+    </div>
 )
 }
