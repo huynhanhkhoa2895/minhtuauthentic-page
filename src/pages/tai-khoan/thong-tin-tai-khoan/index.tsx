@@ -10,6 +10,7 @@ import { getCookie } from '@/utils';
 import { OrdersDto } from '@/dtos/Orders.dto';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import Layout from '@/components/templates/Layout';
+import AccountInfo from '@/components/organisms/accountInfo';
 
 export const getServerSideProps = (async (context) => {
   const { resMenu, resFooter } = await getDefaultSeverSide();
@@ -50,20 +51,20 @@ export const getServerSideProps = (async (context) => {
 }>;
 
 export default function UserHistory({
-  menu,
-  footerContent,
-  data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+                                      menu,
+                                      footerContent,
+                                      data,
+                                    }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Header menu={menu} />
       <Layout menu={menu}>
         <BreadcrumbComponent
-          label={'Lich sử'}
+          label={'Thông tin tài khoản'}
           link={'/tai-khoan/lich-su'}
         />
         <AccountTemplate>
-          <HistoryList orders={data} />
+          <AccountInfo />
         </AccountTemplate>
       </Layout>
       <Footer footerContent={footerContent} />
