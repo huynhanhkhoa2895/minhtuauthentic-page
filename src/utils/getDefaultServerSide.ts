@@ -2,22 +2,37 @@ import { handleHeader } from '@/utils/api';
 import { UserDto } from '@/dtos/User.dto';
 import { getCookie } from '@/utils/index';
 import { NextApiRequestCookies } from 'next/dist/server/api-utils';
+import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
+import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
+import { SettingsDto } from '@/dtos/Settings.dto';
 
-export default async function getDefaultSeverSide(): Promise<{
-  resMenu: Response | null;
-  resFooter: Response | null;
-}> {
-  const resMenu = await fetch(process.env.BE_URL + '/api/pages/menu').catch(
-    (error) => {
+export default async function getDefaultSeverSide() {
+  const resMenu: { data: ResponseMenuDto } = await fetch(
+    process.env.BE_URL + '/api/pages/menu',
+  )
+    .then((res) => res.json())
+    .catch((error) => {
       return null;
-    },
-  );
-  const resFooter = await fetch(process.env.BE_URL + '/api/pages/footer').catch(
-    (error) => {
+    });
+  const resFooter: { data: ResponseFooterDto } = await fetch(
+    process.env.BE_URL + '/api/pages/footer',
+  )
+    .then((res) => res.json())
+    .catch((error) => {
       return null;
-    },
-  );
-  return { resMenu, resFooter };
+    });
+  const resSetting: { data: SettingsDto[] } = await fetch(
+    process.env.BE_URL + '/api/pages/settings',
+  )
+    .then((res) => res.json())
+    .catch((error) => {
+      return null;
+    });
+  return {
+    menu: resMenu?.data || null,
+    footerContent: resFooter?.data || null,
+    settings: resSetting?.data || null,
+  };
 }
 
 export async function getProfile(

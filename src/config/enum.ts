@@ -68,12 +68,17 @@ export enum BLOCK_UNDER_CATEGORY_POSITION {
 }
 export enum SETTING_TYPE {
   HOME = 'home',
+  GENERAL = 'general',
 }
 export const SETTING_KEY = {
   GENERAL: {
     PRIMARY_COLOR: {
       KEY: 'primary_color',
       LABEL: 'Màu chủ đạo',
+    },
+    PAGE_INFORMATION: {
+      KEY: 'page_information',
+      LABEL: 'Thông tin trang',
     },
   },
   BRAND_SECTION: {

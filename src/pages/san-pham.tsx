@@ -9,14 +9,9 @@ import { ResponseSlugPageDto } from '@/dtos/responseSlugPage.dto';
 import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage.dto';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import Layout from '@/components/templates/Layout';
+import { ServerSideProps } from '@/config/type';
 export const getServerSideProps = (async (context) => {
-  const { resMenu, resFooter } = await getDefaultSeverSide();
-  const dataMenu: { data: ResponseMenuDto } = resMenu
-    ? await resMenu.json()
-    : null;
-  const dataFooter: { data: ResponseFooterDto } = resFooter
-    ? await resFooter.json()
-    : null;
+  const resDefault = await getDefaultSeverSide();
   const res = await fetch(
     process.env.BE_URL +
       '/api/pages/products/' +
@@ -30,29 +25,26 @@ export const getServerSideProps = (async (context) => {
     : null;
   return {
     props: {
-      menu: dataMenu?.data,
-      footerContent: dataFooter?.data,
+      ...resDefault,
       slug: data,
     },
   };
-}) satisfies GetServerSideProps<{
-  slug: ResponseSlugPageDto<unknown>;
-  menu: ResponseMenuDto;
-  footerContent: ResponseFooterDto;
-}>;
+}) satisfies GetServerSideProps<
+  ServerSideProps & {
+    footerContent: ResponseFooterDto;
+  }
+>;
 export default function ProductPage({
   menu,
   footerContent,
   slug,
+  settings,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Header menu={menu} />
-      <Layout menu={menu}>
-        <BreadcrumbComponent
-          label={'Sản phẩm'}
-          link={'/san-pham'}
-        />
+      <Layout settings={settings} menu={menu}>
+        <BreadcrumbComponent label={'Sản phẩm'} link={'/san-pham'} />
         <CategoryTemplate
           slug={slug as ResponseSlugPageDto<ResponseCategoryFilterPageDto>}
         />

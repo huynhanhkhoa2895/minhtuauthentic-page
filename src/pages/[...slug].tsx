@@ -12,9 +12,12 @@ import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage
 import NewsDetailTemplate from '@/components/templates/NewsDetailTemplate';
 import { ResponseNewsDetailPageDto } from '@/dtos/ResponseNewsDetailPage.dto';
 import Layout from '@/components/templates/Layout';
+import getDefaultSeverSide from '@/utils/getDefaultServerSide';
+import { ServerSideProps } from '@/config/type';
 
 export const getServerSideProps = (async (context) => {
   const { slug } = context.query;
+  const resDefault = await getDefaultSeverSide();
   const res = await fetch(
     process.env.BE_URL +
       '/api/pages/slug/' +
@@ -24,24 +27,8 @@ export const getServerSideProps = (async (context) => {
   ).catch((error) => {
     return null;
   });
-  const resMenu = await fetch(process.env.BE_URL + '/api/pages/menu').catch(
-    (error) => {
-      return null;
-    },
-  );
-  const resFooter = await fetch(
-    process.env.BfE_URL + '/api/pages/footer',
-  ).catch((error) => {
-    return null;
-  });
   const data: { data: ResponseSlugPageDto<unknown> } = res
     ? await res.json()
-    : null;
-  const dataMenu: { data: ResponseMenuDto } = resMenu
-    ? await resMenu.json()
-    : null;
-  const dataFooter: { data: ResponseFooterDto } = resFooter
-    ? await resFooter.json()
     : null;
   if (data?.data?.model === Entity.PRODUCTS) {
     context.res.setHeader(
@@ -52,19 +39,19 @@ export const getServerSideProps = (async (context) => {
   return {
     props: {
       slug: data?.data,
-      menu: dataMenu?.data,
-      footerContent: dataFooter?.data,
+      ...resDefault,
     },
   };
-}) satisfies GetServerSideProps<{
-  slug: ResponseSlugPageDto<unknown>;
-  menu: ResponseMenuDto;
-  footerContent: ResponseFooterDto;
-}>;
+}) satisfies GetServerSideProps<
+  ServerSideProps & {
+    slug: ResponseSlugPageDto<unknown>;
+  }
+>;
 export default function Page({
   slug,
   footerContent,
   menu,
+  settings,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const renderTemplate = () => {
     switch (slug?.model) {
@@ -96,7 +83,9 @@ export default function Page({
   return (
     <>
       <Header menu={menu} />
-      <Layout menu={menu}>{renderTemplate()}</Layout>
+      <Layout settings={settings} menu={menu}>
+        {renderTemplate()}
+      </Layout>
       <Footer footerContent={footerContent} />
     </>
   );

@@ -11,9 +11,10 @@ import OrderDetailTemplate from '@/components/templates/OrderDetailTemplate';
 import AccountTemplate from '@/components/templates/AccountTemplate';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import Layout from '@/components/templates/Layout';
+import { ServerSideProps } from '@/config/type';
 
 export const getServerSideProps = (async (context) => {
-  const { resMenu, resFooter } = await getDefaultSeverSide();
+  const resDefault = await getDefaultSeverSide();
   const order = context.query.id;
   const user = JSON.parse(
     getCookie('user', context.req.headers.cookie || '', true),
@@ -34,44 +35,37 @@ export const getServerSideProps = (async (context) => {
       order_items: OrderItemsDto[];
     };
   } = rsOrderItems ? rsOrderItems : null;
-  const dataMenu: { data: ResponseMenuDto } = resMenu
-    ? await resMenu.json()
-    : null;
-  const dataFooter: { data: ResponseFooterDto } = resFooter
-    ? await resFooter.json()
-    : null;
   return {
     props: {
-      menu: dataMenu?.data,
-      footerContent: dataFooter?.data,
       data: dataOrderItems?.data,
+      ...resDefault,
     },
   };
-}) satisfies GetServerSideProps<{
-  menu: ResponseMenuDto;
-  footerContent: ResponseFooterDto;
-  data: {
-    order: OrdersDto;
-    order_items: OrderItemsDto[];
-  };
-}>;
+}) satisfies GetServerSideProps<
+  {
+    data: {
+      order: OrdersDto;
+      order_items: OrderItemsDto[];
+    };
+  } & ServerSideProps
+>;
 
 export default function UserHistoryDetail({
   menu,
   footerContent,
   data,
+  settings,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Header menu={menu} />
-      <Layout menu={menu}>
+      <Layout settings={settings} menu={menu}>
         <BreadcrumbComponent
           label={'Thông tin khách hàng'}
           link={'/tai-khoan/lich-su'}
           current={{
-            label: 'Chi tiết đơn hàng '+data?.order?.id,
+            label: 'Chi tiết đơn hàng ' + data?.order?.id,
             link: '/tai-khoan/lich-su/' + data?.order?.id,
-
           }}
         />
         <AccountTemplate>

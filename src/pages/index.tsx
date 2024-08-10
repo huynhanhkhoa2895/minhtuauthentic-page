@@ -18,6 +18,8 @@ import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { SettingOptionDto } from '@/dtos/SettingOption.dto';
 import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import HomeFlashSale from '@/components/organisms/home/homeFlashSale';
+import { ServerSideProps } from '@/config/type';
+import DefaultSeo from '@/components/molecules/seo';
 export const getServerSideProps = (async () => {
   // Fetch data from external API
   const res = await fetch(process.env.BE_URL + '/api/pages/home').catch(
@@ -25,41 +27,36 @@ export const getServerSideProps = (async () => {
       return null;
     },
   );
-  const { resMenu, resFooter } = await getDefaultSeverSide();
+  const resDefault = await getDefaultSeverSide();
 
   const data: { data: ResponseHomePageDto } = res ? await res.json() : null;
-  const dataMenu: { data: ResponseMenuDto } = resMenu
-    ? await resMenu.json()
-    : null;
-  const dataFooter: { data: ResponseFooterDto } = resFooter
-    ? await resFooter.json()
-    : null;
-  const settings: Record<string, SettingOptionDto | undefined> = {};
+  const settingsHome: Record<string, SettingOptionDto | undefined> = {};
   data?.data?.settings?.map((item) => {
-    settings[item?.key || ''] = item?.value;
+    settingsHome[item?.key || ''] = item?.value;
   });
   return {
     props: {
       homePage: data?.data,
-      menu: dataMenu?.data,
-      settings,
-      footerContent: dataFooter?.data,
+      settingsHome,
+      ...resDefault,
     },
   };
-}) satisfies GetServerSideProps<{
-  homePage: ResponseHomePageDto;
-  menu: ResponseMenuDto;
-  settings: Record<string, SettingOptionDto | undefined>;
-  footerContent: ResponseFooterDto;
-}>;
+}) satisfies GetServerSideProps<
+  {
+    homePage: ResponseHomePageDto;
+    settingsHome: Record<string, SettingOptionDto | undefined>;
+  } & ServerSideProps
+>;
 export default function Home({
   homePage,
   menu,
   settings,
   footerContent,
+  settingsHome,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
+      <DefaultSeo settings={settings} />
       <Header menu={menu} />
       <div id={'main-body'} className={'container mx-auto'}>
         <div
@@ -77,14 +74,14 @@ export default function Home({
         {homePage?.homeBlockFeaturedCategory && (
           <HomeFeatureCategory
             contents={homePage?.homeBlockFeaturedCategory || []}
-            setting={settings[SETTING_KEY.FEATURE_CATEGORY.KEY]}
+            setting={settingsHome[SETTING_KEY.FEATURE_CATEGORY.KEY]}
           />
         )}
 
         {homePage?.homeFlashSale && (
           <HomeFlashSale
             promotion={homePage?.homeFlashSale}
-            setting={settings[SETTING_KEY.FLASH_SALE_SECTION.KEY]}
+            setting={settingsHome[SETTING_KEY.FLASH_SALE_SECTION.KEY]}
           />
         )}
 
@@ -95,13 +92,13 @@ export default function Home({
         {homePage?.homeNews && (
           <HomeNews
             content={homePage?.homeNews}
-            setting={settings[SETTING_KEY.NEWS_SECTION.KEY]}
+            setting={settingsHome[SETTING_KEY.NEWS_SECTION.KEY]}
           />
         )}
         {homePage?.homeBrand && (
           <HomeBrand
             contents={homePage?.homeBrand}
-            setting={settings[SETTING_KEY.BRAND_SECTION.KEY]}
+            setting={settingsHome[SETTING_KEY.BRAND_SECTION.KEY]}
           />
         )}
         <HomeSupport />

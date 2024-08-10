@@ -1,8 +1,6 @@
 import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
 import getDefaultSeverSide from '@/utils/getDefaultServerSide';
-import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
-import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import AccountTemplate from '@/components/templates/AccountTemplate';
 import HistoryList from '@/components/organisms/history/list';
@@ -10,9 +8,10 @@ import { getCookie } from '@/utils';
 import { OrdersDto } from '@/dtos/Orders.dto';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import Layout from '@/components/templates/Layout';
+import { ServerSideProps } from '@/config/type';
 
 export const getServerSideProps = (async (context) => {
-  const { resMenu, resFooter } = await getDefaultSeverSide();
+  const resDefault = await getDefaultSeverSide();
   const user = JSON.parse(
     getCookie('user', context.req.headers.cookie || '', true),
   );
@@ -30,38 +29,29 @@ export const getServerSideProps = (async (context) => {
   const dataHistory: { data: { orders: OrdersDto[] } } = rsHistory
     ? rsHistory
     : null;
-  const dataMenu: { data: ResponseMenuDto } = resMenu
-    ? await resMenu.json()
-    : null;
-  const dataFooter: { data: ResponseFooterDto } = resFooter
-    ? await resFooter.json()
-    : null;
   return {
     props: {
-      menu: dataMenu?.data,
-      footerContent: dataFooter?.data,
       data: dataHistory?.data?.orders || [],
+      ...resDefault,
     },
   };
-}) satisfies GetServerSideProps<{
-  menu: ResponseMenuDto;
-  footerContent: ResponseFooterDto;
-  data: OrdersDto[];
-}>;
+}) satisfies GetServerSideProps<
+  {
+    data: OrdersDto[];
+  } & ServerSideProps
+>;
 
 export default function UserHistory({
   menu,
   footerContent,
   data,
+  settings,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Header menu={menu} />
-      <Layout menu={menu}>
-        <BreadcrumbComponent
-          label={'Lich sử'}
-          link={'/tai-khoan/lich-su'}
-        />
+      <Layout settings={settings} menu={menu}>
+        <BreadcrumbComponent label={'Lich sử'} link={'/tai-khoan/lich-su'} />
         <AccountTemplate>
           <HistoryList orders={data} />
         </AccountTemplate>

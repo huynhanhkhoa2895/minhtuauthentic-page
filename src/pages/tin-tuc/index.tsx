@@ -8,16 +8,11 @@ import NewsTemplate from '@/components/templates/NewsTemplate';
 import { ResponseNewsPageDto } from '@/dtos/ResponseNewsPage.dto';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import Layout from '@/components/templates/Layout';
+import { ServerSideProps } from '@/config/type';
 
 export const getServerSideProps = (async (context) => {
   const page = context.query.page;
-  const { resMenu, resFooter } = await getDefaultSeverSide();
-  const dataMenu: { data: ResponseMenuDto } = resMenu
-    ? await resMenu.json()
-    : null;
-  const dataFooter: { data: ResponseFooterDto } = resFooter
-    ? await resFooter.json()
-    : null;
+  const resDefault = await getDefaultSeverSide();
   const rsNews: { data: ResponseNewsPageDto } = await fetch(
     process.env.BE_URL + `/api/pages/news?page=${page || 1}`,
     {},
@@ -26,30 +21,27 @@ export const getServerSideProps = (async (context) => {
     .catch((err) => null);
   return {
     props: {
-      menu: dataMenu?.data,
-      footerContent: dataFooter?.data,
       news: rsNews?.data,
+      ...resDefault,
     },
   };
-}) satisfies GetServerSideProps<{
-  menu: ResponseMenuDto;
-  footerContent: ResponseFooterDto;
-  news: ResponseNewsPageDto;
-}>;
+}) satisfies GetServerSideProps<
+  {
+    news: ResponseNewsPageDto;
+  } & ServerSideProps
+>;
 
 export default function News({
   menu,
   footerContent,
   news,
+  settings,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Header menu={menu} />
-      <Layout menu={menu}>
-        <BreadcrumbComponent
-          label={'Tin tức'}
-          link={'/tin-tuc'}
-        />
+      <Layout settings={settings} menu={menu}>
+        <BreadcrumbComponent label={'Tin tức'} link={'/tin-tuc'} />
         {news && (
           <NewsTemplate
             news={news?.news || []}

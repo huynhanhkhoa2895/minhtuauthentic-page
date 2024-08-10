@@ -3,17 +3,31 @@ import { twMerge } from 'tailwind-merge';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import Menu from '@/components/molecules/header/menu';
 import appContext from '@/contexts/appContext';
+import { SettingsDto } from '@/dtos/Settings.dto';
+import DefaultSeo from '@/components/molecules/seo';
 
 type Props = {
   className?: string;
   children: ReactNode;
-  menu?: ResponseMenuDto
-}
-export default function Layout({ children, className, menu }: Props) {
-  const appCtx = useContext(appContext)
-  const ref=useRef<HTMLDivElement | null>(null)
-  const refMenuContain=useRef<HTMLDivElement | null>(null)
-  const [position, setPosition] = useState<{ top: number; left: number; } | null>(null);
+  menu?: ResponseMenuDto;
+  settings: SettingsDto[];
+  canonical?: string;
+};
+export default function Layout({
+  children,
+  className,
+  menu,
+  settings,
+  canonical,
+}: Props) {
+  const appCtx = useContext(appContext);
+  const ref = useRef<HTMLDivElement | null>(null);
+  const refMenuContain = useRef<HTMLDivElement | null>(null);
+
+  const [position, setPosition] = useState<{
+    top: number;
+    left: number;
+  } | null>(null);
 
   useEffect(() => {
     if (ref.current) {
@@ -22,7 +36,7 @@ export default function Layout({ children, className, menu }: Props) {
     }
 
     const handleScroll = () => {
-      if(refMenuContain.current && refMenuContain.current?.style) {
+      if (refMenuContain.current && refMenuContain.current?.style) {
         if (window.scrollY > 25) {
           refMenuContain.current.style.position = 'fixed';
           refMenuContain.current.style.top = 108 + 'px';
@@ -31,41 +45,55 @@ export default function Layout({ children, className, menu }: Props) {
           refMenuContain.current.style.top = 12 + 'px';
         }
       }
-    }
+    };
 
     window.addEventListener('scroll', handleScroll);
 
     return () => {
       window.addEventListener('scroll', handleScroll);
-    }
+    };
   }, []);
 
-  return <div className={twMerge('relative ', className)}>
-    <div ref={ref} id={'main-body'} className={'container mx-auto p-3'}>
-      {children}
-    </div>
-    {
-      menu &&
-      <div className={twMerge('absolute top-0 left-0 w-full h-full bg-[rgba(0,0,0,.53)] transition-all duration-500',
-        appCtx?.isOpenMenu ? 'opacity-100 visible z-50' : 'opacity-0 invisible z-0'
-      )}>
-        <div className={'relative'}>
-          <div ref={refMenuContain} className={'absolute'} style={{
-            top: 12,
-            left: position?.left || 0,
-            zIndex: 1
-          }}>
-            <Menu
-              menu={menu}
-              className={twMerge(
-                'transition-all duration-500',
-                appCtx?.isOpenMenu ? 'opacity-100 visible z-50' : 'opacity-0 invisible z-0'
-              )}
-            />
-          </div>
+  return (
+    <>
+      <DefaultSeo settings={settings} canonical={canonical} />
+      <div className={twMerge('relative ', className)}>
+        <div ref={ref} id={'main-body'} className={'container mx-auto p-3'}>
+          {children}
         </div>
-
+        {menu && (
+          <div
+            className={twMerge(
+              'absolute top-0 left-0 w-full h-full bg-[rgba(0,0,0,.53)] transition-all duration-500',
+              appCtx?.isOpenMenu
+                ? 'opacity-100 visible z-50'
+                : 'opacity-0 invisible z-0',
+            )}
+          >
+            <div className={'relative'}>
+              <div
+                ref={refMenuContain}
+                className={'absolute'}
+                style={{
+                  top: 12,
+                  left: position?.left || 0,
+                  zIndex: 1,
+                }}
+              >
+                <Menu
+                  menu={menu}
+                  className={twMerge(
+                    'transition-all duration-500',
+                    appCtx?.isOpenMenu
+                      ? 'opacity-100 visible z-50'
+                      : 'opacity-0 invisible z-0',
+                  )}
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-    }
-  </div>
+    </>
+  );
 }
