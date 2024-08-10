@@ -3,6 +3,7 @@ import { getCookie, setCookie, deleteCookie } from 'cookies-next';
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import AppContext from '@/contexts/appContext';
+import user from '@/components/icons/user';
 
 export default function useUser() {
   const appContext = useContext(AppContext);
@@ -28,7 +29,7 @@ export default function useUser() {
     if (pathnameNeedLogin.includes(router.pathname)) {
       router.push('/tai-khoan/dang-nhap?redirectUrl=' + router.pathname);
     }
-  }, [router.pathname]);
+  }, [router.pathname, appContext?.user]);
 
   const setCookieUser = (user: UserDto) => {
     appContext?.setUser && appContext.setUser(user);
