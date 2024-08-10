@@ -29,11 +29,11 @@ export const getServerSideProps = (async (context) => {
       return null;
     },
   );
-  const resFooter = await fetch(process.env.BE_URL + '/api/pages/footer').catch(
-    (error) => {
-      return null;
-    },
-  );
+  const resFooter = await fetch(
+    process.env.BfE_URL + '/api/pages/footer',
+  ).catch((error) => {
+    return null;
+  });
   const data: { data: ResponseSlugPageDto<unknown> } = res
     ? await res.json()
     : null;
@@ -43,6 +43,12 @@ export const getServerSideProps = (async (context) => {
   const dataFooter: { data: ResponseFooterDto } = resFooter
     ? await resFooter.json()
     : null;
+  if (data?.data?.model === Entity.PRODUCTS) {
+    context.res.setHeader(
+      'Cache-Control',
+      'public, s-maxage=10, stale-while-revalidate=59',
+    );
+  }
   return {
     props: {
       slug: data?.data,

@@ -11,6 +11,9 @@ export default function useUser() {
     '/gio-hang/thanh-toan',
     '/gio-hang/thanh-cong',
     '/tai-khoan/lich-su/[id]',
+    '/tai-khoan/thong-tin-tai-khoan',
+    '/gio-hang/thanh-cong',
+    '/gio-hang/thanh-toan',
   ];
 
   useEffect(() => {
@@ -18,12 +21,15 @@ export default function useUser() {
     if (user) {
       const obj = JSON.parse(user);
       appContext?.setUser && appContext.setUser(obj);
-    } else {
-      if (pathnameNeedLogin.includes(router.pathname)) {
-        router.push('/tai-khoan/dang-nhap?redirectUrl=' + router.pathname);
-      }
     }
   }, []);
+
+  useEffect(() => {
+    if (pathnameNeedLogin.includes(router.pathname)) {
+      router.push('/tai-khoan/dang-nhap?redirectUrl=' + router.pathname);
+    }
+  }, [router.pathname]);
+
   const setCookieUser = (user: UserDto) => {
     appContext?.setUser && appContext.setUser(user);
     setCookie('user', JSON.stringify(user), {
