@@ -26,7 +26,7 @@ export default function useUser() {
   }, []);
 
   useEffect(() => {
-    if (pathnameNeedLogin.includes(router.pathname)) {
+    if (!appContext?.user && pathnameNeedLogin.includes(router.pathname)) {
       router.push('/tai-khoan/dang-nhap?redirectUrl=' + router.pathname);
     }
   }, [router.pathname, appContext?.user]);
