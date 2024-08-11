@@ -1,7 +1,5 @@
 import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
-import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
-import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import ProductTemplate from '@/components/templates/ProductTemplate';
 import { ResponseSlugPageDto } from '@/dtos/responseSlugPage.dto';
@@ -53,7 +51,6 @@ export const getServerSideProps = (async (context) => {
         image = product?.data?.product?.feature_image_detail?.image?.url;
         width = product?.data?.product?.feature_image_detail?.image?.width;
         height = product?.data?.product?.feature_image_detail?.image?.height;
-        console.log('test title', title);
         break;
       case Entity.NEWS:
         let news = data?.data as ResponseSlugPageDto<ResponseNewsDetailPageDto>;
@@ -68,16 +65,6 @@ export const getServerSideProps = (async (context) => {
       'public, s-maxage=10, stale-while-revalidate=59',
     );
   }
-
-  console.log('test ne', {
-    slug: data?.data,
-    title: title || null,
-    description: description || null,
-    width,
-    height,
-    image,
-    ...resDefault,
-  });
 
   return {
     props: {
@@ -110,13 +97,19 @@ export default function Page({
   image,
   width,
   height,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}:  {
+  slug: ResponseSlugPageDto<unknown>;
+  title?: string | null;
+  description?: string | null;
+  image?: string;
+  width?: number;
+  height?: number;
+} & ServerSideProps) {
   const renderTemplate = () => {
     switch (slug?.model) {
       case Entity.PRODUCTS:
         return (
           <ProductTemplate
-            key={(slug?.data as ResponseProductDetailPageDto)?.product?.id}
             data={slug?.data as ResponseProductDetailPageDto}
           />
         );
