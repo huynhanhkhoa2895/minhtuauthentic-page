@@ -1,4 +1,5 @@
 export class SlugDto {
+  id?: number;
   slug?: string;
   model?: string;
   model_id?: number;

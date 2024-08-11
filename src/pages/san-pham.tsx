@@ -14,7 +14,7 @@ export const getServerSideProps = (async (context) => {
   const resDefault = await getDefaultSeverSide();
   const res = await fetch(
     process.env.BE_URL +
-      '/api/pages/products/' +
+      '/api/pages/products/filter' +
       '?' +
       new URLSearchParams(context.query as any).toString(),
   ).catch((error) => {
