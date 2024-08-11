@@ -29,4 +29,7 @@ export type SEOProps = {
   title?: string;
   description?: string;
   canonical?: string;
+  image?: string;
+  width?: number;
+  height?: number;
 };

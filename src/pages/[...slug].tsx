@@ -17,8 +17,11 @@ import { ServerSideProps } from '@/config/type';
 
 export const getServerSideProps = (async (context) => {
   const { slug } = context.query;
-  let title = undefined;
-  let description = undefined;
+  let title = undefined,
+    description = undefined,
+    image = undefined,
+    width = undefined,
+    height = undefined;
   const resDefault = await getDefaultSeverSide();
   const res = await fetch(
     process.env.BE_URL +
@@ -38,17 +41,20 @@ export const getServerSideProps = (async (context) => {
   ) {
     switch (data?.data?.model) {
       case Entity.PRODUCTS:
-        title = (
-          data?.data as ResponseSlugPageDto<ResponseProductDetailPageDto>
-        )?.data?.product?.name;
+        let product =
+          data?.data as ResponseSlugPageDto<ResponseProductDetailPageDto>;
+        title = product?.data?.product?.name;
+        image = product?.data?.product?.feature_image_detail?.image?.url;
+        width = product?.data?.product?.feature_image_detail?.image?.width;
+        height = product?.data?.product?.feature_image_detail?.image?.height;
         break;
       case Entity.NEWS:
-        title = (data?.data as ResponseSlugPageDto<ResponseNewsDetailPageDto>)
-          ?.data?.news?.name;
-        description = (
-          data?.data as ResponseSlugPageDto<ResponseNewsDetailPageDto>
-        )?.data?.news?.description;
-        break;
+        let news = data?.data as ResponseSlugPageDto<ResponseNewsDetailPageDto>;
+        title = news?.data?.news?.name;
+        description = news?.data?.news?.description;
+        image = news?.data?.news?.images?.[0]?.image?.url;
+        width = news?.data?.news?.images?.[0]?.image?.width;
+        height = news?.data?.news?.images?.[0]?.image?.height;
     }
     context.res.setHeader(
       'Cache-Control',
@@ -60,6 +66,9 @@ export const getServerSideProps = (async (context) => {
       slug: data?.data,
       title,
       description,
+      width,
+      height,
+      image,
       ...resDefault,
     },
   };
@@ -68,6 +77,9 @@ export const getServerSideProps = (async (context) => {
     slug: ResponseSlugPageDto<unknown>;
     title?: string;
     description?: string;
+    image?: string;
+    width?: number;
+    height?: number;
   }
 >;
 export default function Page({
@@ -77,6 +89,9 @@ export default function Page({
   settings,
   title,
   description,
+  image,
+  width,
+  height,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const renderTemplate = () => {
     switch (slug?.model) {
@@ -114,6 +129,9 @@ export default function Page({
         seo={{
           title,
           description,
+          image,
+          width,
+          height,
         }}
       >
         {renderTemplate()}

@@ -14,10 +14,6 @@ export default function DefaultSeo({ settings, seo }: Props) {
     (item) => item.key === SETTING_KEY.GENERAL.PAGE_INFORMATION.KEY,
   );
 
-  useEffect(() => {
-    console.log('routerrrrrrrrrrrrrrrrrrrr', router);
-  }, []);
-
   return (
     <NextSeo
       title={seo?.title || setting?.value?.page_title || 'Minh tu Authentic'}
@@ -38,9 +34,11 @@ export default function DefaultSeo({ settings, seo }: Props) {
           'Minh tu Authentic',
         images: [
           {
-            url: 'https://demo.mikiperfume.com/_next/static/media/logo.fc400164.png',
-            width: 253,
-            height: 83,
+            url:
+              seo?.image ||
+              'https://demo.mikiperfume.com/_next/static/media/logo.fc400164.png',
+            width: seo?.width || 253,
+            height: seo?.height || 83,
             alt: 'Minh tu Authentic',
           },
         ],
