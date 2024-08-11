@@ -1,17 +1,26 @@
 import { NextSeo } from 'next-seo';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import { SETTING_KEY } from '@/config/enum';
+import { SEOProps } from '@/config/type';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 type Props = {
   settings: SettingsDto[];
-  canonical?: string;
+  seo?: SEOProps;
 };
-export default function DefaultSeo({ settings, canonical }: Props) {
-  const setting = settings.find(
+export default function DefaultSeo({ settings, seo }: Props) {
+  const router = useRouter();
+  const setting = (settings || []).find(
     (item) => item.key === SETTING_KEY.GENERAL.PAGE_INFORMATION.KEY,
   );
+
+  useEffect(() => {
+    console.log('routerrrrrrrrrrrrrrrrrrrr', router);
+  }, []);
+
   return (
     <NextSeo
-      title={setting?.value?.page_title || 'Minh tu Authentic'}
+      title={seo?.title || setting?.value?.page_title || 'Minh tu Authentic'}
       description={setting?.value?.page_description || 'Minh tu Authentic'}
       additionalMetaTags={[
         {
@@ -22,8 +31,11 @@ export default function DefaultSeo({ settings, canonical }: Props) {
         },
       ]}
       openGraph={{
-        title: setting?.value?.page_title || 'Minh tu Authentic',
-        description: setting?.value?.page_description || 'Minh tu Authentic',
+        title: seo?.title || setting?.value?.page_title || 'Minh tu Authentic',
+        description:
+          seo?.description ||
+          setting?.value?.page_description ||
+          'Minh tu Authentic',
         images: [
           {
             url: 'https://demo.mikiperfume.com/_next/static/media/logo.fc400164.png',
@@ -34,7 +46,7 @@ export default function DefaultSeo({ settings, canonical }: Props) {
         ],
         url: 'https://demo.mikiperfume.com',
       }}
-      canonical={canonical}
+      canonical={seo?.canonical || router?.asPath.split('?')[0]}
     />
   );
 }

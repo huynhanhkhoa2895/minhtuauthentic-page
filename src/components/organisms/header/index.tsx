@@ -27,7 +27,6 @@ export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
   const { user, logout } = useUser();
   const orderCtx = useContext(OrderContext);
   const appCtx = useContext(AppContext);
-  console.log('Header user', user);
   return (
     <>
       <div className={'bg-primaryGrey relative z-[3]'}>

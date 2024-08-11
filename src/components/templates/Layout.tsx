@@ -5,20 +5,21 @@ import Menu from '@/components/molecules/header/menu';
 import appContext from '@/contexts/appContext';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import DefaultSeo from '@/components/molecules/seo';
+import { SEOProps } from '@/config/type';
 
 type Props = {
   className?: string;
   children: ReactNode;
   menu?: ResponseMenuDto;
   settings: SettingsDto[];
-  canonical?: string;
+  seo?: SEOProps;
 };
 export default function Layout({
   children,
   className,
   menu,
   settings,
-  canonical,
+  seo,
 }: Props) {
   const appCtx = useContext(appContext);
   const ref = useRef<HTMLDivElement | null>(null);
@@ -56,7 +57,7 @@ export default function Layout({
 
   return (
     <>
-      <DefaultSeo settings={settings} canonical={canonical} />
+      <DefaultSeo settings={settings} seo={seo} />
       <div className={twMerge('relative ', className)}>
         <div ref={ref} id={'main-body'} className={'container mx-auto p-3'}>
           {children}

@@ -17,6 +17,8 @@ import { ServerSideProps } from '@/config/type';
 
 export const getServerSideProps = (async (context) => {
   const { slug } = context.query;
+  let title = undefined;
+  let description = undefined;
   const resDefault = await getDefaultSeverSide();
   const res = await fetch(
     process.env.BE_URL +
@@ -30,7 +32,24 @@ export const getServerSideProps = (async (context) => {
   const data: { data: ResponseSlugPageDto<unknown> } = res
     ? await res.json()
     : null;
-  if (data?.data?.model === Entity.PRODUCTS) {
+  if (
+    data?.data?.model === Entity.PRODUCTS ||
+    data?.data?.model === Entity.NEWS
+  ) {
+    switch (data?.data?.model) {
+      case Entity.PRODUCTS:
+        title = (
+          data?.data as ResponseSlugPageDto<ResponseProductDetailPageDto>
+        )?.data?.product?.name;
+        break;
+      case Entity.NEWS:
+        title = (data?.data as ResponseSlugPageDto<ResponseNewsDetailPageDto>)
+          ?.data?.news?.name;
+        description = (
+          data?.data as ResponseSlugPageDto<ResponseNewsDetailPageDto>
+        )?.data?.news?.description;
+        break;
+    }
     context.res.setHeader(
       'Cache-Control',
       'public, s-maxage=10, stale-while-revalidate=59',
@@ -39,12 +58,16 @@ export const getServerSideProps = (async (context) => {
   return {
     props: {
       slug: data?.data,
+      title,
+      description,
       ...resDefault,
     },
   };
 }) satisfies GetServerSideProps<
   ServerSideProps & {
     slug: ResponseSlugPageDto<unknown>;
+    title?: string;
+    description?: string;
   }
 >;
 export default function Page({
@@ -52,6 +75,8 @@ export default function Page({
   footerContent,
   menu,
   settings,
+  title,
+  description,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const renderTemplate = () => {
     switch (slug?.model) {
@@ -83,7 +108,14 @@ export default function Page({
   return (
     <>
       <Header menu={menu} />
-      <Layout settings={settings} menu={menu}>
+      <Layout
+        settings={settings}
+        menu={menu}
+        seo={{
+          title,
+          description,
+        }}
+      >
         {renderTemplate()}
       </Layout>
       <Footer footerContent={footerContent} />

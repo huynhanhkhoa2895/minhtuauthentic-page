@@ -24,3 +24,9 @@ export type ServerSideProps = {
   footerContent: ResponseFooterDto;
   settings: SettingsDto[];
 };
+
+export type SEOProps = {
+  title?: string;
+  description?: string;
+  canonical?: string;
+};
