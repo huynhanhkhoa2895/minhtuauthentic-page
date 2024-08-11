@@ -14,6 +14,7 @@ import { ResponseNewsDetailPageDto } from '@/dtos/ResponseNewsDetailPage.dto';
 import Layout from '@/components/templates/Layout';
 import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import { ServerSideProps } from '@/config/type';
+import { redirect } from 'next/navigation';
 
 export const getServerSideProps = (async (context) => {
   const { slug } = context.query;
@@ -30,11 +31,16 @@ export const getServerSideProps = (async (context) => {
       '?' +
       new URLSearchParams(context.query as any).toString(),
   ).catch((error) => {
-    return null;
+    console.error('Error:', error);
   });
+
   const data: { data: ResponseSlugPageDto<unknown> } = res
     ? await res.json()
     : null;
+  if (!data) {
+    redirect('not-found');
+  }
+
   if (
     data?.data?.model === Entity.PRODUCTS ||
     data?.data?.model === Entity.NEWS
@@ -47,6 +53,7 @@ export const getServerSideProps = (async (context) => {
         image = product?.data?.product?.feature_image_detail?.image?.url;
         width = product?.data?.product?.feature_image_detail?.image?.width;
         height = product?.data?.product?.feature_image_detail?.image?.height;
+        console.log('test title', title);
         break;
       case Entity.NEWS:
         let news = data?.data as ResponseSlugPageDto<ResponseNewsDetailPageDto>;
@@ -61,11 +68,22 @@ export const getServerSideProps = (async (context) => {
       'public, s-maxage=10, stale-while-revalidate=59',
     );
   }
+
+  console.log('test ne', {
+    slug: data?.data,
+    title: title || null,
+    description: description || null,
+    width,
+    height,
+    image,
+    ...resDefault,
+  });
+
   return {
     props: {
       slug: data?.data,
-      title,
-      description,
+      title: title || null,
+      description: description || null,
       width,
       height,
       image,
@@ -75,8 +93,8 @@ export const getServerSideProps = (async (context) => {
 }) satisfies GetServerSideProps<
   ServerSideProps & {
     slug: ResponseSlugPageDto<unknown>;
-    title?: string;
-    description?: string;
+    title?: string | null;
+    description?: string | null;
     image?: string;
     width?: number;
     height?: number;

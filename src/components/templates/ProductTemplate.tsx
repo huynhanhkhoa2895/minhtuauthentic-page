@@ -5,7 +5,6 @@ import { SettingsDto } from '@/dtos/Settings.dto';
 import AppContext from '@/contexts/appContext';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import { generateSlugToHref } from '@/utils';
-import { TagsOutlined } from '@ant-design/icons/lib/icons';
 
 type Props = {
   data: ResponseProductDetailPageDto;
@@ -41,7 +40,6 @@ const ProductTemplate = ({ data }: Props) => {
           product={data.product}
           relatedProducts={data?.relatedProducts || []}
           productConfigurations={data?.productConfigurations || []}
-          promotionsProducts={data?.promotionsProducts}
         />
       )}
     </>

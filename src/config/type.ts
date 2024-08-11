@@ -26,8 +26,8 @@ export type ServerSideProps = {
 };
 
 export type SEOProps = {
-  title?: string;
-  description?: string;
+  title?: string | null;
+  description?: string | null;
   canonical?: string;
   image?: string;
   width?: number;
