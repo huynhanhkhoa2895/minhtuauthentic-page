@@ -11,6 +11,7 @@ import { SeoDto } from '@/dtos/Seo.dto';
 import { ConcentrationGradientDto } from '@/dtos/ConcentrationGradient.dto';
 import { FragranceRetentionDto } from '@/dtos/FragranceRetention.dto';
 import { QuestionAnswerDto } from '@/dtos/QuestionAnswer.dto';
+import KeywordDetailDto from '@/dtos/KeywordDetail.dto';
 
 export class ProductDto extends BaseDto {
   name?: string;
@@ -31,4 +32,5 @@ export class ProductDto extends BaseDto {
   slugs?: SlugDto;
   seo?: SeoDto;
   question_answers?: QuestionAnswerDto[];
+  keywords?: KeywordDetailDto[];
 }

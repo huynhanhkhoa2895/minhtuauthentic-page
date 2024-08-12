@@ -13,6 +13,8 @@ import ProductQuestionAnswer from '@/components/molecules/product/productQuestio
 import { PromotionsDto } from '@/dtos/Promotions.dto';
 import ProductDealSock from '@/components/molecules/product/productDealSock';
 import { TagsOutlined } from '@ant-design/icons/lib/icons';
+import Link from 'next/link';
+import { generateSlugToHref } from '@/utils';
 
 type Props = {
   product: ProductDto;
@@ -64,9 +66,19 @@ const ProductDetailCard = ({
           <ProductDescription product={product} />
           <div className={'mt-3'}>
             <TagsOutlined />
-            <p>
+            <div className={'flex flex-wrap'}>
               <span className={'font-bold'}>Từ khóa:</span>
-            </p>
+              {product?.keywords?.map((item) => {
+                return (
+                  <Link
+                    key={item?.id}
+                    href={generateSlugToHref(item?.keyword?.slugs?.slug)}
+                  >
+                    {item.keyword?.value}
+                  </Link>
+                );
+              })}
+            </div>
           </div>
           <ProductQuestionAnswer questions={product?.question_answers || []} />
         </div>

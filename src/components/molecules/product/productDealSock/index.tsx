@@ -22,7 +22,7 @@ export default function ProductDealSock() {
     setPromotion(data?.data);
   }, [data]);
   return (
-    <Suspense>
+    <>
       {promotion && (
         <div className={'w-full shadow-custom bg-white my-3 p-3'}>
           <h3 className={'text-2xl font-bold text-primary mb-3'}>
@@ -62,6 +62,6 @@ export default function ProductDealSock() {
           />
         </div>
       )}
-    </Suspense>
+    </>
   );
 }
