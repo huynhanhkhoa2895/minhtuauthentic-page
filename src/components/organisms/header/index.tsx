@@ -187,7 +187,9 @@ export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
             <Button
               icon={<IconUser className={'w-[30px] h-[30px]'} />}
               type={'link'}
-              className={'!text-white items-center flex hover:!text-white'}
+              className={
+                '!text-white items-center flex hover:!text-white w-max'
+              }
             >
               {user ? user.name || user.email : 'Tài Khoản'}
             </Button>

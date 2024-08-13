@@ -162,6 +162,7 @@ const Menu = ({
         className={twMerge(
           'w-[220px] rounded-[10px] shadow-custom py-1 shrink-1 z-[1] bg-white overflow-hidden relative',
           className,
+          isReady ? 'h-[343px]' : 'h-auto',
         )}
       >
         <div className={'container mx-auto '}>

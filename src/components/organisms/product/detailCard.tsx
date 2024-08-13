@@ -15,6 +15,7 @@ import ProductDealSock from '@/components/molecules/product/productDealSock';
 import { TagsOutlined } from '@ant-design/icons/lib/icons';
 import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
+import ListKeyword from '@/components/organisms/product/listKeyword';
 
 type Props = {
   product: ProductDto;
@@ -33,6 +34,7 @@ const ProductDetailCard = ({
     display: false,
     image: null,
   });
+
   const [variantActive, setVariantActive] = useState<VariantDto | undefined>(
     product?.variants?.find((item: VariantDto) => item.is_default) ||
       product?.variants?.[0],
@@ -64,22 +66,7 @@ const ProductDetailCard = ({
       <div className={'grid grid-cols-1 lg:grid-cols-3 gap-3 my-3'}>
         <div className={'col-span-2'}>
           <ProductDescription product={product} />
-          <div className={'mt-3'}>
-            <TagsOutlined />
-            <div className={'flex flex-wrap'}>
-              <span className={'font-bold'}>Từ khóa:</span>
-              {product?.keywords?.map((item) => {
-                return (
-                  <Link
-                    key={item?.id}
-                    href={generateSlugToHref(item?.keyword?.slugs?.slug)}
-                  >
-                    {item.keyword?.value}
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
+          <ListKeyword product={product} />
           <ProductQuestionAnswer questions={product?.question_answers || []} />
         </div>
 
