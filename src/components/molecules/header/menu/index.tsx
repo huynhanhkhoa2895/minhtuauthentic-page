@@ -203,6 +203,7 @@ const Menu = ({
           {isReady && (
             <>
               <MenuPopup
+                menu={menu}
                 data={dataDisplayPopup}
                 onMouseEnter={() => {
                   if (refTimeout.current) {

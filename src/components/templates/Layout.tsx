@@ -62,6 +62,7 @@ export default function Layout({
         <div ref={ref} id={'main-body'} className={'container mx-auto p-3'}>
           {children}
         </div>
+
         {menu && (
           <div
             className={twMerge(

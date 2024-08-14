@@ -10,19 +10,27 @@ import { Entity } from '@/config/enum';
 
 type Props = {
   slug?: ResponseSlugPageDto<ResponseCategoryFilterPageDto>;
+  breadcrumb?: {
+    label: string;
+    link: string;
+  };
 };
-export default function CategoryTemplate({ slug }: Props) {
+export default function CategoryTemplate({ slug, breadcrumb }: Props) {
   const data = slug?.data as ResponseCategoryFilterPageDto;
-  const renderLabelBreadcrumb: Record<string, string> =  {
+  const renderLabelBreadcrumb: Record<string, string> = {
     [Entity.CATEGORIES]: 'Danh mục',
     [Entity.BRANDS]: 'Nhãn hieệu',
     [Entity.KEYWORDS]: 'Từ khóa',
-  }
+  };
   return (
     <CategoryFilterProvider>
       <BreadcrumbComponent
-        label={renderLabelBreadcrumb[slug?.model || ''] || ''}
-        link={generateSlugToHref(slug?.slug)}
+        label={
+          breadcrumb
+            ? breadcrumb?.label
+            : renderLabelBreadcrumb[slug?.model || ''] || ''
+        }
+        link={generateSlugToHref(breadcrumb?.link || slug?.slug)}
       />
       <div
         className={

@@ -5,31 +5,40 @@ import { Fragment, ReactNode } from 'react';
 import { chunk } from 'lodash';
 import { BrandDto } from '@/dtos/Brand.dto';
 import MenuBrand from '@/components/molecules/header/menu/menuBrand';
+import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
+import MenuPopupCategory from '@/components/molecules/header/menu/menuPopupCategory';
 
 const MenuPopup = ({
   data,
   onMouseEnter,
   onMouseLeave,
+  menu,
 }: {
   data: PopupDisplay;
+  menu: ResponseMenuDto;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }) => {
   const renderItem = () => {
     const obj: Record<string, () => ReactNode> = {
       [POPUP_TYPE.CATEGORY]: () => {
+        console.log('test category', menu?.filterSetting);
         return (
-          <ul>
-            {Array.isArray(data?.data) &&
-              (data?.data || []).map((item: unknown, index: number) => {
-                const _item = item as CategoryDto;
-                return (
-                  <li key={'MenuPopup-' + index}>
-                    <Link href={_item?.slugs?.slug || ''}>{_item.name}</Link>
-                  </li>
-                );
-              })}
-          </ul>
+          <MenuPopupCategory
+            filterSetting={menu?.filterSetting}
+            categories={Array.isArray(data?.data) ? data?.data : [data?.data]}
+          />
+          // <ul>
+          //   {Array.isArray(data?.data) &&
+          //     (data?.data || []).map((item: unknown, index: number) => {
+          //       const _item = item as CategoryDto;
+          //       return (
+          //         <li key={'MenuPopup-' + index}>
+          //           <Link href={_item?.slugs?.slug || ''}>{_item.name}</Link>
+          //         </li>
+          //       );
+          //     })}
+          // </ul>
         );
       },
       [POPUP_TYPE.PRODUCT]: () => {
