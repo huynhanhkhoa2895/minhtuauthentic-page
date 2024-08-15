@@ -52,9 +52,11 @@ const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
 
   return (
     <footer className={'relative z-[2]'}>
-      <div className={'bg-primaryGrey '}>
+      <div className={'bg-primaryGrey px-3'}>
         <div className={'container mx-auto '}>
-          <div className={'flex max-lg:flex-col justify-between w-full pt-[35px]'}>
+          <div
+            className={'flex max-lg:flex-col justify-between w-full pt-[35px]'}
+          >
             {orderBy(footerContent?.footer || [], 'sort').map((item, index) => {
               return renderFooter(item, index);
             })}

@@ -11,7 +11,7 @@ const ProductCardButtonGroup = ({
   product,
   variant,
   className,
-  addText
+  addText,
 }: {
   product: ProductDto;
   variant: VariantDto;
@@ -32,14 +32,14 @@ const ProductCardButtonGroup = ({
       <button
         type={'button'}
         className={
-          'block grow bg-primary text-white rounded-[8px] p-[8px_10px]'
+          'block grow bg-primary text-white rounded-[8px] p-[4px_5px] lg:p-[8px_10px] max-lg:text-sm'
         }
         onClick={() => {
           order?.addCart && order.addCart(variant);
         }}
       >
         <ShoppingCartOutlined />
-        <span className={'ml-2'}>{addText  || 'Thêm vào giỏ hàng'}</span>
+        <span className={'ml-2'}>{addText || 'Thêm vào giỏ hàng'}</span>
       </button>
     </div>
   );

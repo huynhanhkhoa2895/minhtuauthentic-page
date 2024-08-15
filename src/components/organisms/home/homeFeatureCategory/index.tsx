@@ -14,7 +14,11 @@ export default function HomeFeatureCategory({ contents, setting }: Props) {
       style={{ backgroundColor: setting?.backgroundColor || '#fff' }}
     >
       <div className={'flex justify-between mb-3'}>
-        <h3 className={'text-[24px] uppercase font-bold w-max shrink-0'}>
+        <h3
+          className={
+            'text-[18px] lg:text-[24px] uppercase font-bold w-max shrink-0'
+          }
+        >
           Danh mục nổi bật
         </h3>
       </div>

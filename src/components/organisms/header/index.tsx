@@ -30,7 +30,9 @@ export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
   return (
     <>
       <div className={'bg-primaryGrey relative z-[3]'}>
-        <div className={'py-4 container mx-auto text-center'}>Nhiều ưu đãi</div>
+        <div className={'hidden lg:block py-4 container mx-auto text-center'}>
+          Nhiều ưu đãi
+        </div>
       </div>
       <header
         id={'header'}

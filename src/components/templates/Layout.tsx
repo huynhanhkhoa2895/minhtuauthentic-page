@@ -6,6 +6,8 @@ import appContext from '@/contexts/appContext';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import DefaultSeo from '@/components/molecules/seo';
 import { SEOProps } from '@/config/type';
+import { createPortal } from 'react-dom';
+import MenuFooter from '@/components/organisms/MobileMenu/menuFooter';
 
 type Props = {
   className?: string;

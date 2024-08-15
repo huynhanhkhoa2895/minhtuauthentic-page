@@ -52,7 +52,9 @@ const SectionSwiper = ({
         }}
         className={twMerge(
           'absolute z-[2] w-[32px] h-[32px] rounded-full border border-[#dad4d4] cursor-pointer top-[calc(50%-16px)] bg-white flex justify-center items-center',
-          variant === 'next' ? 'right-[-16px]' : 'left-[-16px]',
+          variant === 'next'
+            ? 'right-[-10px] lg:right-[-16px]'
+            : 'left-[-10px] lg:left-[-16px]',
         )}
       >
         {variant === 'next' ? (
@@ -72,8 +74,6 @@ const SectionSwiper = ({
     <div className={twMerge('relative', classNameContainer)}>
       <Swiper
         effect={'fade'}
-        spaceBetween={spaceBetween || undefined}
-        slidesPerView={slidesPerView || undefined}
         grid={isGrid ? { rows } : {}}
         style={{ height: heightWrapper || '100%' }}
         modules={isGrid ? [Grid] : [Pagination]}
@@ -82,6 +82,20 @@ const SectionSwiper = ({
         wrapperClass={'mx-auto'}
         onSwiper={(swiper) => setSwiper(swiper)}
         centeredSlides={isCenter}
+        breakpoints={{
+          425: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+          },
+          1024: {
+            slidesPerView: slidesPerView,
+            spaceBetween: spaceBetween,
+          },
+        }}
         onSlideChange={() => {
           onSlideChange && onSlideChange(swiper?.activeIndex || 0);
         }}

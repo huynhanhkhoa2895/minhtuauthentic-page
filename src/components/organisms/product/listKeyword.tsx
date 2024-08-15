@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
 import { useState } from 'react';
 import { ProductDto } from '@/dtos/Product.dto';
+import { twMerge } from 'tailwind-merge';
 type Props = {
   product: ProductDto;
 };
@@ -15,23 +16,28 @@ export default function ListKeyword({ product }: Props) {
           setDisplayTags(!displayTags);
         }}
       />
-      {displayTags && (
-        <div className={'flex flex-wrap gap-1 items-center'}>
-          <span className={'font-bold'}>Từ khóa:</span>
-          {product?.keywords?.map((item) => {
-            return (
-              <Link
-                key={item?.id}
-                href={generateSlugToHref(item?.keyword?.slugs?.slug)}
-                className={'text-sm text-gray-500 hover:text-primary'}
-              >
-                {item.keyword?.value}
-                {', '}
-              </Link>
-            );
-          })}
-        </div>
-      )}
+      <div
+        className={twMerge(
+          'flex flex-wrap gap-1 items-center overflow-hidden',
+          displayTags
+            ? 'visible opacity-100 h-auto'
+            : 'invisible opacity-0 h-0',
+        )}
+      >
+        <span className={'font-bold'}>Từ khóa:</span>
+        {product?.keywords?.map((item) => {
+          return (
+            <Link
+              key={item?.id}
+              href={generateSlugToHref(item?.keyword?.slugs?.slug)}
+              className={'text-sm text-gray-500 hover:text-primary'}
+            >
+              {item.keyword?.value}
+              {', '}
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }

@@ -10,23 +10,23 @@ export default function MenuPopupCategory({
   filterSetting,
   categories,
 }: Props) {
-  console.log('filterSetting', filterSetting);
   const renderItem = () => {
     const listDisplay: Record<
       string,
       { label: string; data: { slug: string; name: string }[] }
-    > = {
-      categories_child: {
-        label: 'Danh mục con',
+    > = {};
+    if (categories?.length > 0) {
+      listDisplay.categories_child = {
+        label: 'Danh mục',
         data: [],
-      },
-    };
-    categories.forEach((category) => {
-      listDisplay?.categories_child?.data.push({
-        slug: category?.slugs?.slug || '',
-        name: category.name || '',
+      };
+      categories.forEach((category) => {
+        listDisplay?.categories_child?.data.push({
+          slug: category?.slugs?.slug || '',
+          name: category.name || '',
+        });
       });
-    });
+    }
 
     for (const setting in filterSetting) {
       switch (setting) {
@@ -102,19 +102,6 @@ export default function MenuPopupCategory({
             </div>
           );
         })}
-        {/*{data?.map((item, index) => {*/}
-        {/*  <ul>*/}
-        {/*    {Array.isArray(data?.data) &&*/}
-        {/*      (data?.data || []).map((item: unknown, index: number) => {*/}
-        {/*        const _item = item as CategoryDto;*/}
-        {/*        return (*/}
-        {/*          <li key={'MenuPopup-' + index}>*/}
-        {/*            <Link href={_item?.slugs?.slug || ''}>{_item.name}</Link>*/}
-        {/*          </li>*/}
-        {/*        );*/}
-        {/*      })}*/}
-        {/*  </ul>;*/}
-        {/*})}*/}
       </>
     );
   };

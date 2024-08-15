@@ -45,10 +45,12 @@ const GroupCategory = ({
       className={'mt-3 mx-auto p-3 rounded-[10px]'}
       style={{ backgroundColor: staticComponent?.properties?.backgroundColor }}
     >
-      <div className={'flex justify-between mb-3'}>
+      <div className={'flex flex-col lg:flex-row justify-between mb-3 gap-2'}>
         <h3
           style={{ color: staticComponent?.properties?.textColor }}
-          className={'text-[24px] uppercase font-bold w-max shrink-0'}
+          className={
+            'text-[18px] lg:text-[24px] uppercase font-bold w-max shrink-0'
+          }
         >
           <Link
             href={generateSlugToHref(staticComponent?.category?.slugs?.slug)}
@@ -56,7 +58,10 @@ const GroupCategory = ({
             {staticComponent?.title || staticComponent?.category?.name}
           </Link>
         </h3>
-        <div ref={ref} className={'basis-[60%] w-[70%] overflow-x-auto '}>
+        <div
+          ref={ref}
+          className={'w-full lg:basis-[60%] lg:w-[70%] overflow-x-auto '}
+        >
           <div
             ref={refContainer}
             className={'flex gap-3 pb-2 justify-end w-max min-w-full'}
