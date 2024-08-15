@@ -6,6 +6,7 @@ import UserIconFooter from '@/components/icons/menuFooter/User';
 import useUser from '@/hooks/useUser';
 import PhoneIconFooter from '@/components/icons/menuFooter/Phone';
 import { useRouter } from 'next/router';
+import MapIconFooter from '@/components/icons/menuFooter/Map';
 
 export default function MenuFooter() {
   const user = useUser();
@@ -31,6 +32,11 @@ export default function MenuFooter() {
       onClick: () => {
         router.push('tel:0961693869');
       },
+    },
+    {
+      icon: <MapIconFooter className={'text-center w-6'} />,
+      label: 'Tìm cửa hàng',
+      onClick: () => {},
     },
     {
       icon: <UserIconFooter className={'text-center w-6'} />,
