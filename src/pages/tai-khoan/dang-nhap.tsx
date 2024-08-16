@@ -21,7 +21,6 @@ export default function LoginPage({
   footerContent,
   settings,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log('LoginPage settings', settings);
   return (
     <>
       <Header menu={menu} />

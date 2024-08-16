@@ -92,11 +92,7 @@ const Menu = ({
                 </span>
               </div>
               <div>
-                {_item?.category?.children?.length ? (
-                  <IconCheveronRight className={'w-[20px] h-[20px]'} />
-                ) : (
-                  ''
-                )}
+                <IconCheveronRight className={'w-[20px] h-[20px]'} />
               </div>
             </div>
           </Link>
@@ -139,7 +135,7 @@ const Menu = ({
         const _item = item?.data as StaticComponentDto;
         setDataDisplayPopup({
           type: item.type,
-          display: _item?.category?.children?.length ? true : false,
+          display: true,
           data: _item?.category?.children || [],
         });
         break;
@@ -160,7 +156,7 @@ const Menu = ({
       <div
         ref={ref}
         className={twMerge(
-          'w-[220px] rounded-[10px] shadow-custom py-1 shrink-1 z-[1] bg-white overflow-hidden relative',
+          'hidden lg:block w-[220px] rounded-[10px] shadow-custom py-1 shrink-1 z-[1] bg-white overflow-hidden relative',
           className,
           isReady ? 'h-[350px]' : 'h-auto',
         )}
@@ -203,6 +199,7 @@ const Menu = ({
           {isReady && (
             <>
               <MenuPopup
+                menu={menu}
                 data={dataDisplayPopup}
                 onMouseEnter={() => {
                   if (refTimeout.current) {

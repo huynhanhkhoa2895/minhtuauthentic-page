@@ -48,6 +48,7 @@ export default function SettingFilterItem({
               key={filterKey + '_' + item.name + '_' + item.id + '_'}
               checked={check[item.id]}
               onClick={() => onClickCheck(item.id)}
+              className={'filter-checkbox'}
               disabled={
                 ctx?.loading ||
                 (ctx?.dataSlug?.model ? ctx?.dataSlug?.model === entity : false)

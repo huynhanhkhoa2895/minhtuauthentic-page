@@ -44,3 +44,6 @@ html, body {
   @apply mb-[14px] mt-[20px] relative z-[1] after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-[12px] after:h-[1px] after:border-t after:border-[#cdcdcd] after:z-[-1] after:w-full
 }
 
+.filter-checkbox .ant-checkbox{
+  @apply self-start mt-[4px];
+}

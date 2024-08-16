@@ -18,9 +18,9 @@ export const getServerSideProps = (async (context) => {
   const { slug } = context.query;
   let title = undefined,
     description = undefined,
-    image = undefined,
-    width = undefined,
-    height = undefined;
+    image = null,
+    width = 0,
+    height = 0;
   const resDefault = await getDefaultSeverSide();
   const res = await fetch(
     process.env.BE_URL +
@@ -48,17 +48,19 @@ export const getServerSideProps = (async (context) => {
         let product =
           data?.data as ResponseSlugPageDto<ResponseProductDetailPageDto>;
         title = product?.data?.product?.name;
-        image = product?.data?.product?.feature_image_detail?.image?.url;
-        width = product?.data?.product?.feature_image_detail?.image?.width;
-        height = product?.data?.product?.feature_image_detail?.image?.height;
+        image =
+          product?.data?.product?.feature_image_detail?.image?.url || null;
+        width = product?.data?.product?.feature_image_detail?.image?.width || 0;
+        height =
+          product?.data?.product?.feature_image_detail?.image?.height || 0;
         break;
       case Entity.NEWS:
         let news = data?.data as ResponseSlugPageDto<ResponseNewsDetailPageDto>;
         title = news?.data?.news?.name;
         description = news?.data?.news?.description;
-        image = news?.data?.news?.images?.[0]?.image?.url;
-        width = news?.data?.news?.images?.[0]?.image?.width;
-        height = news?.data?.news?.images?.[0]?.image?.height;
+        image = news?.data?.news?.images?.[0]?.image?.url || null;
+        width = news?.data?.news?.images?.[0]?.image?.width || 0;
+        height = news?.data?.news?.images?.[0]?.image?.height || 0;
     }
     context.res.setHeader(
       'Cache-Control',
@@ -82,7 +84,7 @@ export const getServerSideProps = (async (context) => {
     slug: ResponseSlugPageDto<unknown>;
     title?: string | null;
     description?: string | null;
-    image?: string;
+    image?: string | null;
     width?: number;
     height?: number;
   }
@@ -97,7 +99,7 @@ export default function Page({
   image,
   width,
   height,
-}:  {
+}: {
   slug: ResponseSlugPageDto<unknown>;
   title?: string | null;
   description?: string | null;
@@ -109,9 +111,7 @@ export default function Page({
     switch (slug?.model) {
       case Entity.PRODUCTS:
         return (
-          <ProductTemplate
-            data={slug?.data as ResponseProductDetailPageDto}
-          />
+          <ProductTemplate data={slug?.data as ResponseProductDetailPageDto} />
         );
       case Entity.CATEGORIES:
       case Entity.BRANDS:

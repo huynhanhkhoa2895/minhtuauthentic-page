@@ -44,9 +44,12 @@ export default function ProductPage({
     <>
       <Header menu={menu} />
       <Layout settings={settings} menu={menu}>
-        <BreadcrumbComponent label={'Sản phẩm'} link={'/san-pham'} />
         <CategoryTemplate
           slug={slug as ResponseSlugPageDto<ResponseCategoryFilterPageDto>}
+          breadcrumb={{
+            label: 'Sản phẩm',
+            link: '/san-pham',
+          }}
         />
       </Layout>
       <Footer footerContent={footerContent} />

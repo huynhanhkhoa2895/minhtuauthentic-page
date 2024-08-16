@@ -67,7 +67,9 @@ export default function Home({
           <Banners
             className={'flex-1'}
             banners={homePage?.banners || []}
-            classNameImage={'object-cover w-full h-[350px]'}
+            classNameImage={
+              'object-contain lg:object-cover w-full lg:h-[350px]'
+            }
           />
         </div>
         <BlockUnderSlide contents={homePage?.homeBlockUnderSlide || []} />
