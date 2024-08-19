@@ -13,6 +13,7 @@ import Layout from '@/components/templates/Layout';
 import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import { ServerSideProps } from '@/config/type';
 import { redirect } from 'next/navigation';
+import { Fragment } from 'react';
 
 export const getServerSideProps = (async (context) => {
   const { slug } = context.query;
@@ -132,7 +133,7 @@ export default function Page({
     }
   };
   return (
-    <>
+    <Fragment key={'Slug_'+slug?.slug}>
       <Header menu={menu} />
       <Layout
         settings={settings}
@@ -148,6 +149,6 @@ export default function Page({
         {renderTemplate()}
       </Layout>
       <Footer footerContent={footerContent} />
-    </>
+    </Fragment>
   );
 }

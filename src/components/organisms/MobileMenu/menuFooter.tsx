@@ -21,7 +21,10 @@ export default function MenuFooter() {
     {
       icon: <HomeIconFooter className={'text-center w-6'} />,
       label: 'Trang chủ',
-      onClick: () => {},
+      onClick: () => {
+        appCtx?.setIsOpenNavMenu && appCtx.setIsOpenNavMenu(false);
+        router.push('/');
+      },
     },
     {
       icon: <CategoryIcon className={'text-center w-6'} />,
@@ -40,14 +43,22 @@ export default function MenuFooter() {
     {
       icon: <MapIconFooter className={'text-center w-6'} />,
       label: 'Cửa hàng',
-      onClick: () => {},
+      onClick: () => {
+        window.open('https://www.google.com/maps/dir/?api=1&origin=&destination=278%20H%C3%B2a%20b%C3%ACnh,%20Hi%E1%BB%87p%20t%C3%A2n,%20Q%20T%C3%A2n%20ph%C3%BA,%20TpHCM', '_blank');
+      },
     },
     {
       icon: <UserIconFooter className={'text-center w-6'} />,
       label: user?.user
         ? user?.user?.name || user?.user?.email || ''
         : 'Đăng nhập',
-      onClick: () => {},
+      onClick: () => {
+        if (user?.user) {
+          router.push('/tai-khoan/lich-su');
+        } else {
+          router.push('/tai-khoan/dang-nhap');
+        }
+      },
     },
   ];
 

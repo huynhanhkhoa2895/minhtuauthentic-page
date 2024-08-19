@@ -40,7 +40,7 @@ export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
         id={'header'}
         className={'bg-primary lg:py-[10px] sticky top-0 left-0 z-[100] relative'}
       >
-        <NavMenuHeader className={'lg:hidden text-white'} />
+        <NavMenuHeader className={'lg:hidden'} />
         <div
           className={
             'max-lg:hidden container mx-auto flex justify-between items-center gap-[10px]'

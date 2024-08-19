@@ -152,7 +152,7 @@ const Menu = ({
                         display: false,
                         data: [],
                       });
-                    }, 500);
+                    }, 50);
                   }}
                 >
                   {renderMenuItem(item)}
@@ -189,7 +189,7 @@ const Menu = ({
                       display: false,
                       data: [],
                     });
-                  }, 500);
+                  }, 50);
                 }}
               />
             </>

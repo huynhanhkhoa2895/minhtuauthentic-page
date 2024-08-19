@@ -19,8 +19,8 @@ export default function CategoryTemplate({ slug, breadcrumb }: Props) {
   const data = slug?.data as ResponseCategoryFilterPageDto;
   const renderLabelBreadcrumb: Record<string, string> = {
     [Entity.CATEGORIES]: 'Danh mục',
-    [Entity.BRANDS]: 'Nhãn hieệu',
-    [Entity.KEYWORDS]: 'Từ khóa',
+    [Entity.BRANDS]: 'Nhãn hiệu',
+    [Entity.KEYWORDS]: slug?.keyword?.value || 'Từ khóa',
   };
   return (
     <CategoryFilterProvider>

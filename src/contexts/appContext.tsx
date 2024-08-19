@@ -1,11 +1,12 @@
 import React, {
   createContext,
   Dispatch,
-  SetStateAction,
+  SetStateAction, useEffect,
   useState,
 } from 'react';
 import { UserDto } from '@/dtos/User.dto';
 import { MenuDisplay } from '@/config/type';
+import { useRouter } from 'next/router';
 export type TypeAppState = {
   isOpenMenu: boolean;
   setIsOpenMenu: Dispatch<SetStateAction<boolean>> | undefined;
@@ -24,6 +25,11 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserDto | undefined>();
   const [isOpenNavMenu, setIsOpenNavMenu] = useState(false);
   const [settings, setSettings] = useState({});
+  const router = useRouter()
+  useEffect(() => {
+    setIsOpenNavMenu(false)
+    setIsOpenMenu(false)
+  }, [router.pathname]);
 
   return (
     <AppContext.Provider

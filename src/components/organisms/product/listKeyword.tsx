@@ -31,6 +31,7 @@ export default function ListKeyword({ product }: Props) {
               key={item?.id}
               href={generateSlugToHref(item?.keyword?.slugs?.slug)}
               className={'text-sm text-gray-500 hover:text-primary'}
+              rel={'tag'}
             >
               {item.keyword?.value}
               {', '}

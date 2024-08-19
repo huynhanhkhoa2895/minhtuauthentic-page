@@ -5,6 +5,7 @@ type Props = {
   className?: string;
 };
 export default function Countdown({ end_date, className }: Props) {
+  const commonClass = 'bg-white p-3 rounded-[10px] border border-gray-200'
   const refInterval = useRef<NodeJS.Timeout>();
   const [countdown, setCountdown] = useState<{
     hours: string;
@@ -62,10 +63,10 @@ export default function Countdown({ end_date, className }: Props) {
   }
   return (
     <div className={twMerge('flex gap-3', className)}>
-      <span className={'bg-white p-3 rounded-[10px]'}>{countdown.day}</span>
-      <span className={'bg-white p-3 rounded-[10px]'}>{countdown.hours}</span>
-      <span className={'bg-white p-3 rounded-[10px]'}>{countdown.minutes}</span>
-      <span className={'bg-white p-3 rounded-[10px]'}>{countdown.seconds}</span>
+      <span className={commonClass}>{countdown.day}</span>
+      <span className={commonClass}>{countdown.hours}</span>
+      <span className={commonClass}>{countdown.minutes}</span>
+      <span className={commonClass}>{countdown.seconds}</span>
     </div>
   );
 }

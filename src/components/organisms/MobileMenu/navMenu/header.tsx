@@ -11,7 +11,7 @@ export default function NavMenuHeader({className}: Props) {
     <div className={twMerge('flex p-3 gap-2 items-center', className)}>
       <Image src={Logo} width={161} height={30} className={'shrink-0 object-contain h-auto w-auto'} alt={'Minhtuauhentic'} />
       <InputSearch />
-      <HeaderCart className={'w-[40px] h-[40px] shrink-0'} />
+      <HeaderCart className={'w-[40px] h-[40px] shrink-0'} classNumber={'text-white'} />
     </div>
   )
 }
