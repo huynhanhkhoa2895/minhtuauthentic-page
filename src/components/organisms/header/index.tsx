@@ -20,6 +20,8 @@ import { CloseCircleOutlined, BarsOutlined } from '@ant-design/icons';
 import OrderContext from '@/contexts/orderContext';
 import { useContext } from 'react';
 import AppContext from '@/contexts/appContext';
+import NavMenu from '@/components/organisms/MobileMenu/navMenu';
+import NavMenuHeader from '@/components/organisms/MobileMenu/navMenu/header';
 
 export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
   const pathname = usePathname();
@@ -36,35 +38,9 @@ export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
       </div>
       <header
         id={'header'}
-        className={'bg-primary py-[10px] sticky top-0 left-0 z-[100] relative'}
+        className={'bg-primary lg:py-[10px] sticky top-0 left-0 z-[100] relative'}
       >
-        <div className={'lg:hidden '}>
-          <div className={'flex justify-between items-center'}>
-            <Link className={'shrink-0'} href={'/'}>
-              <Image
-                src={Logo}
-                priority={true}
-                height={30}
-                width={161}
-                className={'object-contain w-auto h-auto '}
-                alt={
-                  'Minh Tu Authentic, Nước hoa chính hãng Tphcm, Quận Tân Phú, Mỹ phẩm'
-                }
-              />
-            </Link>
-            <button
-              className={'bg-primary text-white border-0 pr-3'}
-              type={'button'}
-              onClick={() => {
-                appCtx?.setIsOpenNavMenu &&
-                  appCtx.setIsOpenNavMenu(!appCtx.isOpenNavMenu);
-              }}
-            >
-              <BarsOutlined className={'w-[20px] h-[20px]'} />
-            </button>
-          </div>
-          <InputSearch classname={'p-6'} />
-        </div>
+        <NavMenuHeader className={'lg:hidden text-white'} />
         <div
           className={
             'max-lg:hidden container mx-auto flex justify-between items-center gap-[10px]'
@@ -200,7 +176,7 @@ export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
       </header>
       <div
         className={twMerge(
-          `relative`,
+          `relative max-lg:hidden`,
           pathname === '/'
             ? "before:block before:content-[''] before:bg-primary before:rounded-[0_0_50%_50%] before:h-[125px] before:absolute before:left-[50%] before:-translate-x-[50%] before:w-full"
             : '',

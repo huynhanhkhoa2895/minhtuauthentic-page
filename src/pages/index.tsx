@@ -63,7 +63,7 @@ export default function Home({
       <div id={'main-body'} className={'container mx-auto'}>
         <div
           id={'main-home-page'}
-          className={'mt-[10px] flex w-full gap-2 relative'}
+          className={'lg:mt-[10px] flex w-full gap-2 relative'}
         >
           <MenuWrapper menu={menu} />
           <Banners

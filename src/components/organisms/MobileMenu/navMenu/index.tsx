@@ -12,18 +12,17 @@ import IconCheveronRight from '@/components/icons/cheveron-right';
 import NavMenuHeader from '@/components/organisms/MobileMenu/navMenu/header';
 type Props = {
   menu: ResponseMenuDto;
+  className?: string
 }
-export default function NavMenu({menu}: Props){
+export default function NavMenu({menu, className}: Props){
   const appCtx = useContext(appContext);
   const { menuDisplay } = useMenu(menu);
   const ref = useRef<HTMLDivElement | null>(null)
   // const [valueDisplay, setIndexDisplay] = useState<number>(0)
 
-  console.log('appCtx?.isOpenNavMenu', appCtx?.isOpenNavMenu)
-
   return (
     <div ref={ref} className={twMerge('fixed inset-0 z-[1000] w-screen bg-primary text-white h-screen transition-all duration-300',
-        appCtx?.isOpenNavMenu ? 'opacity-100 visible translate-x-0' : 'opacity-0 invisible -translate-x-full'
+        appCtx?.isOpenNavMenu ? 'opacity-100 visible translate-x-0' : 'opacity-0 invisible -translate-x-full', className
       )}>
       <NavMenuHeader />
       <div className={'grid grid-cols-3 w-full h-full'}>
