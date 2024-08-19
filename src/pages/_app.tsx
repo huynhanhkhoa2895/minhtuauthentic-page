@@ -5,7 +5,7 @@ import { AppProvider } from '@/contexts/appContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { OrderProvider } from '@/contexts/orderContext';
-import NavMenu from '@/components/organisms/navMenu';
+import NavMenu from '../components/organisms/MobileMenu/navMenu';
 import MenuFooter from '@/components/organisms/MobileMenu/menuFooter';
 const roboto = Roboto({
   subsets: ['latin'],
@@ -21,7 +21,6 @@ export default function App({ Component, pageProps }: AppProps) {
           <ToastContainer />
         </main>
         <MenuFooter />
-        <NavMenu />
       </OrderProvider>
     </AppProvider>
   );

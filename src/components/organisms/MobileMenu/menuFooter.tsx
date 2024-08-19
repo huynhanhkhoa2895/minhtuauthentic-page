@@ -1,4 +1,4 @@
-import { Fragment, ReactNode } from 'react';
+import { Fragment, ReactNode, useContext } from 'react';
 import { HomeOutlined } from '@ant-design/icons/lib/icons';
 import HomeIconFooter from '@/components/icons/menuFooter/Home';
 import CategoryIcon from '@/components/icons/menuFooter/Category';
@@ -7,9 +7,11 @@ import useUser from '@/hooks/useUser';
 import PhoneIconFooter from '@/components/icons/menuFooter/Phone';
 import { useRouter } from 'next/router';
 import MapIconFooter from '@/components/icons/menuFooter/Map';
+import AppContext from '@/contexts/appContext';
 
 export default function MenuFooter() {
   const user = useUser();
+  const appCtx = useContext(AppContext)
   const router = useRouter();
   const elementFooter: {
     icon: ReactNode;
@@ -24,18 +26,20 @@ export default function MenuFooter() {
     {
       icon: <CategoryIcon className={'text-center w-6'} />,
       label: 'Danh mục',
-      onClick: () => {},
+      onClick: () => {
+        appCtx?.setIsOpenNavMenu && appCtx.setIsOpenNavMenu(!appCtx?.isOpenNavMenu);
+      },
     },
     {
       icon: <PhoneIconFooter className={'text-center w-6'} />,
-      label: 'Gọi điện thoại',
+      label: 'Điện thoại',
       onClick: () => {
         router.push('tel:0961693869');
       },
     },
     {
       icon: <MapIconFooter className={'text-center w-6'} />,
-      label: 'Tìm cửa hàng',
+      label: 'Cửa hàng',
       onClick: () => {},
     },
     {
@@ -66,7 +70,7 @@ export default function MenuFooter() {
   return (
     <div
       className={
-        'lg:hidden fixed bottom-0 left-0 z-10 bg-white w-full shadow-custom rounded-tr-2xl rounded-tl-2xl'
+        'lg:hidden fixed bottom-0 left-0 z-10 bg-white w-full shadow-custom rounded-tr-2xl rounded-tl-2xl z-[1001]'
       }
     >
       <div className={'p-3 flex items-center justify-center'}>

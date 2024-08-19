@@ -2,7 +2,7 @@ import { twMerge } from 'tailwind-merge';
 import { useContext } from 'react';
 import OrderContext from '@/contexts/orderContext';
 
-const HeaderCart = ({ className }: { className?: string }) => {
+const HeaderCart = ({ className, classNumber }: { className?: string, classNumber?: string }) => {
   const cart = useContext(OrderContext);
   return (
     <div className={twMerge(className, 'relative')}>
@@ -11,7 +11,7 @@ const HeaderCart = ({ className }: { className?: string }) => {
           'absolute w-full h-full top-0 left-0 flex items-center justify-center'
         }
       >
-        <span className={'text-[14px] pt-3'}>
+        <span className={twMerge('text-[14px] pt-3', classNumber)}>
           {cart?.cart?.items?.length || 0}
         </span>
       </div>

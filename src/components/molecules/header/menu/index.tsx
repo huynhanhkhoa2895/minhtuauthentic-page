@@ -8,6 +8,7 @@ import { twMerge } from 'tailwind-merge';
 import { generateSlugToHref } from '@/utils';
 import { MenuDisplay, POPUP_TYPE, PopupDisplay } from '@/config/type';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
+import useMenu from '@/hooks/useMenu';
 
 const Menu = ({
   menu,
@@ -26,39 +27,14 @@ const Menu = ({
       left: 0,
       height: 0,
     });
-  const [_data, setData] = useState<MenuDisplay[]>([]);
+  const { menuDisplay } = useMenu(menu);
   const refTimeout = useRef<any>(null);
   const ref = useRef<HTMLDivElement | null>(null);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     setIsReady(true);
-    setData([
-      ...[
-        {
-          type: POPUP_TYPE.PRODUCT,
-          data: [],
-        },
-        {
-          type: POPUP_TYPE.BRAND,
-          data: menu?.brands || [],
-        },
-      ],
-      ...(menu?.homeMenuCategory || []).map((item: StaticComponentDto) => ({
-        type: POPUP_TYPE.CATEGORY,
-        data: item,
-        isHaveChildren: !!(
-          item?.category?.children?.length &&
-          item?.category?.children?.length > 0
-        ),
-      })),
-      ...[
-        {
-          type: POPUP_TYPE.NEWS,
-          data: [],
-        },
-      ],
-    ]);
+
   }, []);
 
   useEffect(() => {
@@ -67,7 +43,7 @@ const Menu = ({
       left: 20,
       height: ref.current?.clientHeight || 0,
     });
-  }, [_data]);
+  }, []);
 
   const renderMenuItem = (item: MenuDisplay) => {
     const obj: Record<string, () => ReactNode> = {
@@ -163,7 +139,7 @@ const Menu = ({
       >
         <div className={'container mx-auto '}>
           <ul className={'flex flex-col '}>
-            {_data?.map((item, index) => {
+            {menuDisplay?.map((item, index) => {
               return (
                 <li
                   key={index}

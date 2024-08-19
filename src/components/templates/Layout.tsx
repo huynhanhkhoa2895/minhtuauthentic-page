@@ -8,6 +8,7 @@ import DefaultSeo from '@/components/molecules/seo';
 import { SEOProps } from '@/config/type';
 import { createPortal } from 'react-dom';
 import MenuFooter from '@/components/organisms/MobileMenu/menuFooter';
+import NavMenu from '@/components/organisms/MobileMenu/navMenu';
 
 type Props = {
   className?: string;
@@ -26,7 +27,6 @@ export default function Layout({
   const appCtx = useContext(appContext);
   const ref = useRef<HTMLDivElement | null>(null);
   const refMenuContain = useRef<HTMLDivElement | null>(null);
-
   const [position, setPosition] = useState<{
     top: number;
     left: number;
@@ -57,6 +57,8 @@ export default function Layout({
     };
   }, []);
 
+
+
   return (
     <>
       <DefaultSeo settings={settings} seo={seo} />
@@ -64,7 +66,6 @@ export default function Layout({
         <div ref={ref} id={'main-body'} className={'container mx-auto p-3'}>
           {children}
         </div>
-
         {menu && (
           <div
             className={twMerge(
@@ -98,6 +99,9 @@ export default function Layout({
           </div>
         )}
       </div>
+      {
+        menu && <NavMenu menu={menu} />
+      }
     </>
   );
 }

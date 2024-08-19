@@ -5,6 +5,7 @@ import React, {
   useState,
 } from 'react';
 import { UserDto } from '@/dtos/User.dto';
+import { MenuDisplay } from '@/config/type';
 export type TypeAppState = {
   isOpenMenu: boolean;
   setIsOpenMenu: Dispatch<SetStateAction<boolean>> | undefined;

@@ -20,6 +20,8 @@ import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import HomeFlashSale from '@/components/organisms/home/homeFlashSale';
 import { ServerSideProps } from '@/config/type';
 import DefaultSeo from '@/components/molecules/seo';
+import { createPortal } from 'react-dom';
+import NavMenu from '@/components/organisms/MobileMenu/navMenu';
 export const getServerSideProps = (async () => {
   // Fetch data from external API
   const res = await fetch(process.env.BE_URL + '/api/pages/home').catch(
@@ -106,6 +108,7 @@ export default function Home({
         <HomeSupport />
       </div>
       <Footer footerContent={footerContent} />
+      <NavMenu menu={menu} />
     </>
   );
 }
