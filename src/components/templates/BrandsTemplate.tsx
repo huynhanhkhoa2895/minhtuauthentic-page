@@ -6,6 +6,7 @@ import { orderBy } from 'lodash';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
+import BrandWithImage from '@/components/atoms/brands/brandWithImage';
 
 type Props = {
   brands: BrandDto[];
@@ -92,22 +93,7 @@ export default function BrandsTemplate({ brands }: Props) {
                 </h4>
                 <div className={'grid grid-cols-5 gap-3'}>
                   {item.data.map((brand, index) => {
-                    return (
-                      <div
-                        key={'itemBrand' + index}
-                        className={
-                          'p-[10px_20px] overflow-hidden rounded-[10px] border border-gray-200'
-                        }
-                      >
-                        <Link
-                          href={generateSlugToHref(brand?.slugs?.slug || '')}
-                        >
-                          <ImageWithFallback
-                            image={brand?.images?.[0]?.image}
-                          />
-                        </Link>
-                      </div>
-                    );
+                    return <BrandWithImage brand={brand} key={index} />;
                   })}
                 </div>
               </div>

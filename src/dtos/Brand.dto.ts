@@ -12,4 +12,9 @@ export class BrandDto extends BaseDto {
   slugs?: SlugDto;
   images?: ImageDetailDto[];
   seo?: SeoDto;
+
+  constructor(init?: Partial<BrandDto>) {
+    super();
+    Object.assign(this, init);
+  }
 }

@@ -56,6 +56,7 @@ export default function Home({
   footerContent,
   settingsHome,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  console.log('test menu', menu);
   return (
     <>
       <DefaultSeo settings={settings} />
