@@ -32,6 +32,7 @@ const ProductDetailImage = ({
     return (
       <SectionSwiper
         classNameContainer={'mt-3'}
+        slidesPerViewMobile={4}
         classNameItems={
           'p-1 hover:shadow-md transition-shadow duration-300 hover:border-primary border border-transparent'
         }
@@ -66,12 +67,6 @@ const ProductDetailImage = ({
           setIsOpen && setIsOpen({ display: true, image });
         }}
       />
-      {/*<ImageMagnifier*/}
-      {/*  image={imageActive}*/}
-      {/*  onClick={(image: ImageDto | null) => {*/}
-      {/*    setIsOpen && setIsOpen({ display: true, image });*/}
-      {/*  }}*/}
-      {/*/>*/}
       <div className={'px-3'}>{renderSlideImage}</div>
     </div>
   );
