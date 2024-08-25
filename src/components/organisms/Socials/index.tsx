@@ -22,7 +22,6 @@ export default function Socials() {
   useEffect(() => {
     if (data) {
       const socials = data?.data as StaticContentsDto[];
-      console.log('test socials', socials);
       const left = (socials || []).filter(
         (social) =>
           social.properties?.direction === BLOCK_UNDER_CATEGORY_POSITION.LEFT,
