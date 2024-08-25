@@ -43,6 +43,7 @@ export enum Entity {
 export enum STATIC_COMPONENT_TYPE {
   CATEGORY = 'home-category',
   MENU_CATEGORY = 'home-menu-category',
+  SOCIALS = 'home-socials',
 }
 
 export enum STATIC_CONTENT_TYPE {
@@ -65,6 +66,10 @@ export enum PRODUCT_CONFIGURATIONS {
 export enum BLOCK_UNDER_CATEGORY_POSITION {
   LEFT = 'trái',
   RIGHT = 'phải',
+}
+export enum POSITION {
+  LEFT = 'left',
+  RIGHT = 'right',
 }
 export enum SETTING_TYPE {
   HOME = 'home',
