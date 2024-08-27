@@ -9,8 +9,9 @@ import { useRouter } from 'next/router';
 import { twMerge } from 'tailwind-merge';
 type Props = {
   classname?: string
+  isMobile?: boolean
 }
-export const InputSearch = ({classname}: Props) => {
+export const InputSearch = ({classname, isMobile}: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
   const [debouceValue, setDebouceValue] = useState<string>('');
@@ -140,7 +141,7 @@ export const InputSearch = ({classname}: Props) => {
     <div className={twMerge('w-full relative z-[3]', classname)} ref={ref}>
       <input
         className={
-          'h-[40px] rounded-[10px] border-0 p-[5px_45px_5px_25px] focus-visible:outline-none focus-visible:border-0 w-full'
+          'h-[40px] text-black rounded-[10px] border-0 p-[5px_45px_5px_25px] focus-visible:outline-none focus-visible:border-0 w-full'
         }
         type="text"
         placeholder="Tìm kiếm sản phẩm"
@@ -152,7 +153,7 @@ export const InputSearch = ({classname}: Props) => {
       {isOpened && (
         <div
           className={
-            'hidden lg:block absolute top-[50px] bg-white w-full rounded-[10px] shadow-custom left-0  '
+            // twMerge('absolute text-blackqa-test-3.self-point.com top-[50px] bg-white w-full rounded-[10px] shadow-custom left-0', isMobile && 'fixed w-[95vw] left-3 top-[60px]')
           }
         >
           <div className={'flex flex-col '}>

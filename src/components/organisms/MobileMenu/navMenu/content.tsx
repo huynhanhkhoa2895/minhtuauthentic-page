@@ -36,6 +36,7 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
   };
 
   const generateValue = (name: string, items: unknown[]): DataValue[] => {
+    console.log('generateValue', name, items);
     const obj: Record<string, () => any> = {
       brands: () => {
         return brands.slice(0, 20).map((item) => {
@@ -52,6 +53,15 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
           return {
             label: SexName(item) as string,
             value: item.toString(),
+          };
+        });
+      },
+      price_range: () => {
+        const priceRange = items as {label: string, min: number, max: number}[];
+        return priceRange.map((item) => {
+          return {
+            label: item.label,
+            value: item.min + '_' + item.max,
           };
         });
       },
@@ -79,7 +89,7 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
           />
         );
       default:
-        return <Link href={url}>{item.label}</Link>;
+        return <Link href={url} className={'border border-gray-200 p-2 rounded-[10px] block'}>{item.label}</Link>;
     }
   };
 
