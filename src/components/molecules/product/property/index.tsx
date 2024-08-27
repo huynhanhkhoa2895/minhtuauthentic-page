@@ -29,7 +29,7 @@ const ProductProperty = ({
   useEffect(() => {
     setIsReady(true);
   }, []);
-
+  console.log('product', product, productConfigurations);
   useEffect(() => {
     onChange && onChange(_variantActive);
   }, [_variantActive]);
@@ -38,6 +38,7 @@ const ProductProperty = ({
     value: { configurationId: number; valueId: number }[],
   ) => {
     let variant: VariantDto[] = product?.variants || [];
+
     value.forEach((item) => {
       variant?.forEach((variantItem) => {
         variantItem.variant_product_configuration_values?.forEach(

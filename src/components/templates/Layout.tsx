@@ -6,10 +6,8 @@ import appContext from '@/contexts/appContext';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import DefaultSeo from '@/components/molecules/seo';
 import { SEOProps } from '@/config/type';
-import { createPortal } from 'react-dom';
-import MenuFooter from '@/components/organisms/MobileMenu/menuFooter';
 import NavMenu from '@/components/organisms/MobileMenu/navMenu';
-
+import Socials from '@/components/organisms/Socials';
 type Props = {
   className?: string;
   children: ReactNode;
@@ -17,6 +15,7 @@ type Props = {
   settings: SettingsDto[];
   seo?: SEOProps;
 };
+
 export default function Layout({
   children,
   className,
@@ -56,8 +55,6 @@ export default function Layout({
       window.addEventListener('scroll', handleScroll);
     };
   }, []);
-
-
 
   return (
     <>
@@ -99,9 +96,8 @@ export default function Layout({
           </div>
         )}
       </div>
-      {
-        menu && <NavMenu menu={menu} />
-      }
+      {menu && <NavMenu menu={menu} />}
+      <Socials />
     </>
   );
 }

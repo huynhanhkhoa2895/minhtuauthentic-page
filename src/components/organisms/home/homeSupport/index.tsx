@@ -53,7 +53,7 @@ export default function HomeSupport() {
   return (
     <div
       className={
-        'grid grid-cols-4 my-20 border border-primary p-10 rounded-[10px] bg-white'
+        'grid grid-cols-2 lg:grid-cols-4 my-20 border border-primary p-10 rounded-[10px] bg-white'
       }
     >
       {data.map((item, index) => {

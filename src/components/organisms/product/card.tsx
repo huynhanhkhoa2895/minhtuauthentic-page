@@ -45,7 +45,7 @@ const ProductCard = ({
           <Badge className={'bg-price'}>Trả góp 0%</Badge>
         </div>
         <ProductCardImage product={product} priority={false} />
-        <div className={'px-2 min-h-[63px]'}>
+        <div className={'px-2 min-h-[84px] lg:min-h-[63px]'}>
           <h6 className={'font-bold'}>
             <Link className={'block'} href={`/${product?.slugs?.slug}`}>
               {product.name}

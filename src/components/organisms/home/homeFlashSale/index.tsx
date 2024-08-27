@@ -22,7 +22,7 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
         >
           <div
             className={
-              'flex justify-end mb-3 items-center h-[120px] w-full relative px-3'
+              'flex justify-end mb-3 items-center lg:h-[120px] w-full relative px-3'
             }
           >
             {promotion?.images?.[0]?.image?.url && (

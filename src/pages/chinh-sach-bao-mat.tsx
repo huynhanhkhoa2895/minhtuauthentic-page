@@ -23,11 +23,11 @@ export const getServerSideProps = (async () => {
     return null;
   });
   const resDefault = await getDefaultSeverSide();
-  const data: { data: StaticContentsDto } = res ? await res.json() : null;
+  const data: { data: StaticContentsDto[] } = res ? await res.json() : null;
   return {
     props: {
       ...resDefault,
-      data: data?.data || null,
+      data: data?.data?.[0] || null,
     },
   };
 }) satisfies GetServerSideProps<

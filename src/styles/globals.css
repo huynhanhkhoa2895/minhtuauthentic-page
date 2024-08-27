@@ -47,3 +47,6 @@ html, body {
 .filter-checkbox .ant-checkbox{
   @apply self-start mt-[4px];
 }
+iframe {
+  @apply w-full;
+}

@@ -25,20 +25,7 @@ const GroupCategory = ({
     setIsReady(true);
   }, []);
 
-  useEffect(() => {
-    if (isReady) {
-      setTagLinks((tagLinks: TagLinkDto[]) => {
-        return [
-          ...tagLinks,
-          new TagLinkDto({
-            id: 0,
-            name: 'Xem tất cả',
-            slug: generateSlugToHref(staticComponent?.properties?.slug) || '/',
-          }),
-        ];
-      });
-    }
-  }, [isReady]);
+  useEffect(() => {}, [isReady]);
 
   return (
     <div
@@ -49,7 +36,7 @@ const GroupCategory = ({
         <h3
           style={{ color: staticComponent?.properties?.textColor }}
           className={
-            'text-[18px] lg:text-[24px] uppercase font-bold w-max shrink-0'
+            'text-[18px] lg:text-[24px] uppercase font-bold w-max shrink-0 max-lg:items-center max-lg:flex max-lg:justify-between max-lg:w-full'
           }
         >
           <Link
@@ -57,6 +44,18 @@ const GroupCategory = ({
           >
             {staticComponent?.title || staticComponent?.category?.name}
           </Link>
+          <TagLink
+            tagLinks={
+              new TagLinkDto({
+                id: 0,
+                name: 'Xem tất cả',
+                slug: generateSlugToHref(
+                  staticComponent?.category?.slugs?.slug,
+                ),
+              })
+            }
+            className={'last:mr-0 whitespace-nowrap'}
+          />
         </h3>
         <div
           ref={ref}
