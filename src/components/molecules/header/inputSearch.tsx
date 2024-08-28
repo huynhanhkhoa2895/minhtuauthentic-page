@@ -153,7 +153,7 @@ export const InputSearch = ({classname, isMobile}: Props) => {
       {isOpened && (
         <div
           className={
-            // twMerge('absolute text-blackqa-test-3.self-point.com top-[50px] bg-white w-full rounded-[10px] shadow-custom left-0', isMobile && 'fixed w-[95vw] left-3 top-[60px]')
+            twMerge('absolute text-blackqa-test-3.self-point.com top-[50px] bg-white w-full rounded-[10px] shadow-custom left-0', isMobile && 'fixed w-[95vw] left-3 top-[60px]')
           }
         >
           <div className={'flex flex-col '}>

@@ -8,6 +8,8 @@ import { BrandDto } from '@/dtos/Brand.dto';
 import BrandWithImage from '@/components/atoms/brands/brandWithImage';
 import { ImageDetailDto } from '@/dtos/ImageDetail.dto';
 import { SlugDto } from '@/dtos/Slug.dto';
+import { ProductConfigurationsDto } from '@/dtos/productConfigurations.dto';
+import { ProductConfigurationValuesDto } from '@/dtos/productConfigurationValues.dto';
 type Props = {
   setting: ProductFilterOptionDto;
   menu: MenuDisplay;
@@ -31,12 +33,12 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
       concentration_gradients: 'Nồng độ',
       fragrance_retention: 'Độ giữ mùi',
       sex: 'Giới tính',
+      product_configurations:'Biến thể'
     };
     return obj[label];
   };
 
   const generateValue = (name: string, items: unknown[]): DataValue[] => {
-    console.log('generateValue', name, items);
     const obj: Record<string, () => any> = {
       brands: () => {
         return brands.slice(0, 20).map((item) => {
@@ -65,6 +67,35 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
           };
         });
       },
+      product_configurations: () => {
+        const _configurations = items as {configuration: ProductConfigurationsDto, values: ProductConfigurationValuesDto[]}[];
+        const _itemConfigurations:{label: string, value: number}[] = [];
+        _configurations.forEach((item) => {
+          item.values.forEach((value) => {
+            _itemConfigurations.push({
+              label: item.configuration.name+': '+value.value,
+              value: value.id || 0,
+            });
+          })
+        });
+        return _itemConfigurations;
+      },
+      fragrance_retention: () => {
+        return items.map((item: any)=> {
+          return {
+            label: item.name as string,
+            value: item.id as number
+          }
+        })
+      },
+      concentration_gradients: () => {
+        return items.map((item: any)=> {
+          return {
+            label: item.name as string,
+            value: item.id as number
+          }
+        })
+      }
     };
     let data: any = [];
     if (obj[name]) {
@@ -105,7 +136,6 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
       // value: setting[key],
     };
   });
-  console.log('filtersSetting', filtersSetting);
   return (
     <>
       <div className={'flex items-center justify-between p-3'}>

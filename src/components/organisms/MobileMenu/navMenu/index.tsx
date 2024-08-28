@@ -27,7 +27,11 @@ export default function NavMenu({ menu, className }: Props) {
   const { menuDisplay } = useMenu(menu);
   const ref = useRef<HTMLDivElement | null>(null);
   const [itemMenu, setItemMenu] = useState<MenuDisplay | null>(null);
-  // const [valueDisplay, setIndexDisplay] = useState<number>(0)
+  useEffect(() => {
+    if (menuDisplay.length > 0 && !itemMenu) {
+      setItemMenu(menuDisplay[0]);
+    }
+  }, [menuDisplay, itemMenu]);
   return (
     <div
       ref={ref}
