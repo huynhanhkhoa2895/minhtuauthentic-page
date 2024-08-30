@@ -10,7 +10,7 @@ export default function PageLimit() {
     { value: -1, label: 'All' },
   ];
   return (
-    <div className="flex items-center">
+    <div className="flex lg:items-center">
       <Select
         className={'w-20'}
         defaultValue={ctx?.limit || 10}

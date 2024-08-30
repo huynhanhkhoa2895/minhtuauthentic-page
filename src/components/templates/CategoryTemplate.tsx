@@ -7,15 +7,18 @@ import { SlugDto } from '@/dtos/Slug.dto';
 import { generateSlugToHref } from '@/utils';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import { Entity } from '@/config/enum';
+import NavFilterMobile from '@/components/organisms/MobileMenu/navFilterMobile';
+import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 
 type Props = {
   slug?: ResponseSlugPageDto<ResponseCategoryFilterPageDto>;
+  menu: ResponseMenuDto;
   breadcrumb?: {
     label: string;
     link: string;
   };
 };
-export default function CategoryTemplate({ slug, breadcrumb }: Props) {
+export default function CategoryTemplate({ slug, breadcrumb, menu }: Props) {
   const data = slug?.data as ResponseCategoryFilterPageDto;
   const renderLabelBreadcrumb: Record<string, string> = {
     [Entity.CATEGORIES]: 'Danh mục',
@@ -51,6 +54,7 @@ export default function CategoryTemplate({ slug, breadcrumb }: Props) {
           }
         />
       </div>
+      <NavFilterMobile menu={menu} />
     </CategoryFilterProvider>
   );
 }

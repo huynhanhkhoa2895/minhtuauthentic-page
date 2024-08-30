@@ -24,7 +24,7 @@ const ProductCardButtonGroup = ({
       <Link
         href={generateSlugToHref(product?.slugs?.slug)}
         className={
-          'block bg-primary rounded-[8px] text-white p-[8px_10px] flex items-center justify-center'
+          'block bg-primary rounded-[8px] text-white p-[6px_5px] lg:p-[8px_10px] flex items-center justify-center'
         }
       >
         <EyeOutlined />
@@ -32,14 +32,14 @@ const ProductCardButtonGroup = ({
       <button
         type={'button'}
         className={
-          'block grow bg-primary text-white rounded-[8px] p-[4px_5px] lg:p-[8px_10px] max-lg:text-sm'
+          'block grow bg-primary text-white rounded-[8px] p-[6px_5px] lg:p-[8px_10px] max-lg:text-sm'
         }
         onClick={() => {
           order?.addCart && order.addCart(variant);
         }}
       >
         <ShoppingCartOutlined />
-        <span className={'ml-2'}>{addText || 'Thêm vào giỏ hàng'}</span>
+        <span className={'ml-2'}>{addText || 'Thêm giỏ hàng'}</span>
       </button>
     </div>
   );

@@ -120,6 +120,7 @@ export default function Page({
         return (
           <CategoryTemplate
             slug={slug as ResponseSlugPageDto<ResponseCategoryFilterPageDto>}
+            menu={menu}
           />
         );
       case Entity.NEWS:

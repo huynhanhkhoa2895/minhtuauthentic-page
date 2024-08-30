@@ -10,6 +10,7 @@ import { ProductFilterOptionDto } from '@/dtos/ProductFilterSettingOption/Produc
 import { ProductConfigurationValuesDto } from '@/dtos/productConfigurationValues.dto';
 import { SlugDto } from '@/dtos/Slug.dto';
 import { Pagination, Space, Skeleton } from 'antd';
+import Filter from '@/components/icons/filter';
 
 type Props = {
   settings?: ProductFilterOptionDto;
@@ -96,7 +97,7 @@ export default function ContentFilter({
       <>
         {_products?.length ? (
           <div
-            className={'grid grid-cols-1 lg:grid-cols-4 w-full gap-3 relative'}
+            className={'grid grid-cols-2 lg:grid-cols-4 w-full gap-1 lg:gap-3 relative'}
           >
             {_products.map((product, index) => {
               const variant = product?.variants?.find(
@@ -128,6 +129,12 @@ export default function ContentFilter({
           <span className={'text-2xl '}>{ctx?.search}</span>
         </p>
       )}
+      <div className={'mb-6 lg:hidden flex gap-1'}>
+        <Filter className={'w-6 h-6'} />
+        <span className={'font-semibold text-[16px] shrink-0'}>
+          Bộ lọc
+        </span>
+      </div>
       <div className={'mb-6'}>
         <span className={'font-semibold text-[16px] shrink-0'}>Lọc theo:</span>
         <FilterBy />
@@ -136,7 +143,7 @@ export default function ContentFilter({
         <span className={'font-semibold text-[16px] w-full mb-3'}>
           Sắp xếp theo
         </span>
-        <div className={'flex max-lg:flex-col lg:justify-between items-center'}>
+        <div className={'flex max-lg:flex-col lg:justify-between lg:items-center gap-3'}>
           <SortBy />
           <PageLimit />
         </div>

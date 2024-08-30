@@ -42,6 +42,8 @@ export type TypeAppState = {
   setFilters?:
     | Dispatch<SetStateAction<Record<string, (number | string)[]>>>
     | undefined;
+  isOpenFilter?: boolean;
+  setIsOpenFilter?: Dispatch<SetStateAction<boolean>> | undefined;
 };
 
 export const CategoryFilterProvider = ({
@@ -61,6 +63,7 @@ export const CategoryFilterProvider = ({
   const [limit, setLimit] = useState<number>(
     Number(queryString.get('limit')) || 10,
   );
+  const [isOpenFilter, setIsOpenFilter] = useState<boolean>(false);
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [search, setSearch] = useState<string>(queryString.get('search') || '');
@@ -163,6 +166,8 @@ export const CategoryFilterProvider = ({
         setPage,
         search,
         setSearch,
+        isOpenFilter,
+        setIsOpenFilter,
       }}
     >
       {children}

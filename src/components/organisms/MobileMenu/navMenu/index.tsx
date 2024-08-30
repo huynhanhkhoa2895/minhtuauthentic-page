@@ -29,9 +29,10 @@ export default function NavMenu({ menu, className }: Props) {
   const [itemMenu, setItemMenu] = useState<MenuDisplay | null>(null);
   useEffect(() => {
     if (menuDisplay.length > 0 && !itemMenu) {
-      setItemMenu(menuDisplay[0]);
+      setItemMenu(menuDisplay.filter(item => item.type === POPUP_TYPE.CATEGORY)[0]);
     }
   }, [menuDisplay, itemMenu]);
+
   return (
     <div
       ref={ref}

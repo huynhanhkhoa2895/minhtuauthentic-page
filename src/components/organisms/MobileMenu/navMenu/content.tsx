@@ -136,13 +136,14 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
       // value: setting[key],
     };
   });
+  console.log('menu', menu)
   return (
     <>
       <div className={'flex items-center justify-between p-3'}>
         <span className={'text-xl font-bold'}>{_menu.category?.name}</span>
         <Link
           className={'text-sm'}
-          href={generateSlugToHref(_menu?.slugs?.slug)}
+          href={generateSlugToHref(_menu?.category?.slugs?.slug)}
         >
           Xem tất cả
         </Link>

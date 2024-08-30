@@ -2,12 +2,11 @@ import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
 import CategoryTemplate from '@/components/templates/CategoryTemplate';
 import getDefaultSeverSide from '@/utils/getDefaultServerSide';
-import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { ResponseSlugPageDto } from '@/dtos/responseSlugPage.dto';
 import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage.dto';
-import BreadcrumbComponent from '@/components/molecules/breakcrumb';
+
 import Layout from '@/components/templates/Layout';
 import { ServerSideProps } from '@/config/type';
 export const getServerSideProps = (async (context) => {
@@ -45,6 +44,7 @@ export default function ProductPage({
       <Header menu={menu} />
       <Layout settings={settings} menu={menu}>
         <CategoryTemplate
+          menu={menu}
           slug={slug as ResponseSlugPageDto<ResponseCategoryFilterPageDto>}
           breadcrumb={{
             label: 'Sản phẩm',

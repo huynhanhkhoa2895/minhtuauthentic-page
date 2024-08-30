@@ -38,7 +38,7 @@ export default function SortBy() {
     },
   ];
   return (
-    <div className={'flex gap-3'}>
+    <div className={'flex gap-3 flex-wrap'}>
       {sortBy.map((sort, index) => {
         return (
           <button
