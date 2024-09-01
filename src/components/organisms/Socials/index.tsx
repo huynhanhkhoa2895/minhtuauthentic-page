@@ -72,7 +72,7 @@ export default function Socials() {
                       className={
                         'w-[50px] h-[50px] object-contain rounded-full'
                       }
-                      image={social?.images?.[0]}
+                      image={social?.images?.[0]?.image}
                     />
                   </div>
                 </div>
