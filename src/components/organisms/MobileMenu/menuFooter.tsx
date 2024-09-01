@@ -44,7 +44,7 @@ export default function MenuFooter() {
       icon: <MapIconFooter className={'text-center w-6'} />,
       label: 'Cửa hàng',
       onClick: () => {
-        window.open('https://www.google.com/maps/dir/?api=1&origin=&destination=278%20H%C3%B2a%20b%C3%ACnh,%20Hi%E1%BB%87p%20t%C3%A2n,%20Q%20T%C3%A2n%20ph%C3%BA,%20TpHCM', '_blank');
+        window.open('https://www.google.com/maps/dir/?api=1&origin=&destination=278%20H%C3%B2a%20b%C3%ACnh,%20Hi%E1%BB%87p%20t%C3%A2n,%20Q%20T%C3%A2n%20ph%C3%BA,%20TpHCM');
       },
     },
     {
