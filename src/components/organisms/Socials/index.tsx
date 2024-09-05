@@ -61,8 +61,8 @@ export default function Socials() {
                     className={twMerge(
                       'py-2 bg-primary text-white rounded-full  relative transition-all duration-300 visible opacity-0 group-hover:visible group-hover:opacity-100',
                       index === 0
-                        ? 'pl-[25px] pr-3  -translate-x-5 group-hover:-translate-x-5'
-                        : 'pr-[25px] pl-3  translate-x-5 group-hover:translate-x-5',
+                        ? 'pl-[25px] pr-3  -translate-x-5 group-hover:-translate-x-6'
+                        : 'pr-[25px] pl-3  translate-x-5 group-hover:translate-x-6',
                     )}
                   >
                     {social?.title || 'Follow us'}
@@ -70,7 +70,7 @@ export default function Socials() {
                   <div className={'z-[2] '}>
                     <ImageWithFallback
                       className={
-                        'w-[50px] h-[50px] object-contain rounded-full'
+                        'w-[60px] h-[60px] object-contain rounded-full'
                       }
                       image={social?.images?.[0]?.image}
                     />
