@@ -36,10 +36,11 @@ const GroupCategory = ({
         <h3
           style={{ color: staticComponent?.properties?.textColor }}
           className={
-            'text-[18px] lg:text-[24px] uppercase font-bold w-max shrink-0 max-lg:items-center max-lg:flex max-lg:justify-between max-lg:w-full'
+            'w-max shrink-0 max-lg:items-center max-lg:flex max-lg:justify-between max-lg:w-full'
           }
         >
           <Link
+            className={'text-[18px] lg:text-[24px] uppercase font-bold '}
             href={generateSlugToHref(staticComponent?.category?.slugs?.slug)}
           >
             {staticComponent?.title || staticComponent?.category?.name}
@@ -54,27 +55,42 @@ const GroupCategory = ({
                 ),
               })
             }
-            className={'last:mr-0 whitespace-nowrap'}
+            className={'lg:hidden last:mr-0 whitespace-nowrap'}
           />
         </h3>
         <div
-          ref={ref}
-          className={'w-full lg:basis-[60%] lg:w-[70%] overflow-x-auto '}
+          className={'flex justify-end gap-3 w-full lg:basis-[60%] lg:w-[70%] '}
         >
-          <div
-            ref={refContainer}
-            className={'flex gap-3 pb-2 justify-end w-max min-w-full'}
-          >
-            {tagLinks.map((tagLink, key: number) => {
-              return (
-                <TagLink
-                  key={key}
-                  tagLinks={tagLink}
-                  className={'last:mr-0 whitespace-nowrap'}
-                />
-              );
-            })}
-          </div>
+          {tagLinks.length > 0 && (
+            <div ref={ref} className={'w-full overflow-x-scroll '}>
+              <div
+                ref={refContainer}
+                className={'flex gap-3 pb-2 justify-end w-max min-w-full'}
+              >
+                {tagLinks.map((tagLink, key: number) => {
+                  return (
+                    <TagLink
+                      key={key}
+                      tagLinks={tagLink}
+                      className={'last:mr-0 whitespace-nowrap'}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          <TagLink
+            className={'w-max max-lg:hidden shrink-0 h-[30px]'}
+            tagLinks={
+              new TagLinkDto({
+                id: 0,
+                name: 'Xem tất cả',
+                slug: generateSlugToHref(
+                  staticComponent?.category?.slugs?.slug,
+                ),
+              })
+            }
+          />
         </div>
       </div>
       <SectionSwiper
