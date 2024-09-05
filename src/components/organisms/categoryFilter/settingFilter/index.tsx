@@ -11,64 +11,71 @@ import { orderBy } from 'lodash';
 import { BrandDto } from '@/dtos/Brand.dto';
 import { CategoryDto } from '@/dtos/Category.dto';
 import { Entity } from '@/config/enum';
+import { twMerge } from 'tailwind-merge';
+import { className } from 'postcss-selector-parser';
 
 type Props = {
   settings?: ProductFilterOptionDto;
+  className?: string;
+  isNav?: boolean;
 };
-export default function SettingFilter({ settings }: Props) {
-  const renderTree = () : ReactNode[] => {
-    let xhtml: { sort: number, data: ReactNode }[] = [];
+export default function SettingFilter({ settings, className, isNav }: Props) {
+  const renderTree = (): ReactNode[] => {
+    let xhtml: { sort: number; data: ReactNode }[] = [];
     for (const key in settings) {
       switch (key) {
         case 'categories':
           (settings[key] as CategoryDto[]).length > 0 &&
-          xhtml.push(
-            {
+            xhtml.push({
               sort: 0,
-              data: <SettingFilterItem
-                key={key}
-                filterKey={key}
-                title={'Danh mục'}
-                value={settings[key] || []}
-                entity={Entity.CATEGORIES}
-              />,
-            }
-          );
+              data: (
+                <SettingFilterItem
+                  key={key}
+                  filterKey={key}
+                  title={'Danh mục'}
+                  value={settings[key] || []}
+                  entity={Entity.CATEGORIES}
+                  isNav={isNav}
+                />
+              ),
+            });
           break;
         case 'concentration_gradients':
           (settings[key] as ConcentrationGradientDto[]).length > 0 &&
-            xhtml.push(
-              {
-                sort: 4,
-                data: <SettingFilterItem
+            xhtml.push({
+              sort: 4,
+              data: (
+                <SettingFilterItem
                   key={key}
                   filterKey={key}
                   title={'Nồng độ'}
                   value={settings[key] || []}
-                />,
-              }
-            );
+                  isNav={isNav}
+                />
+              ),
+            });
           break;
         case 'fragrance_retention':
           (settings[key] as FragranceRetentionDto[]).length > 0 &&
-            xhtml.push(
-              {
-                sort: 5,
-                data: <SettingFilterItem
+            xhtml.push({
+              sort: 5,
+              data: (
+                <SettingFilterItem
                   key={key}
                   filterKey={key}
                   title={'Lưu hương'}
                   value={settings[key] || []}
-                />,
-              }
-            );
+                  isNav={isNav}
+                />
+              ),
+            });
           break;
         case 'sex':
           (settings[key] as number[]).length > 0 &&
-            xhtml.push(
-              {
-                sort: 3,
-                data: <SettingFilterItem
+            xhtml.push({
+              sort: 3,
+              data: (
+                <SettingFilterItem
                   key={key}
                   filterKey={key}
                   title={'Giới tính'}
@@ -76,16 +83,17 @@ export default function SettingFilter({ settings }: Props) {
                     id: item,
                     name: SexName(item),
                   }))}
+                  isNav={isNav}
                 />
-              }
-            );
+              ),
+            });
           break;
         case 'price_range':
           (settings[key] as ProductFilterPriceRangeDto[]).length > 0 &&
-            xhtml.push(
-              {
-                sort: 1,
-                data: <SettingFilterItem
+            xhtml.push({
+              sort: 1,
+              data: (
+                <SettingFilterItem
                   key={key}
                   filterKey={key}
                   title={'Phạm Vi Giá'}
@@ -97,9 +105,10 @@ export default function SettingFilter({ settings }: Props) {
                       };
                     },
                   )}
-                />,
-              }
-            );
+                  isNav={isNav}
+                />
+              ),
+            });
           break;
         case 'product_configurations':
           (
@@ -115,44 +124,46 @@ export default function SettingFilter({ settings }: Props) {
               }) => {
                 xhtml.push({
                   sort: 2,
-                  data: <SettingFilterItem
-                    key={key}
-                    filterKey={key}
-                    title={item.configuration.name || ''}
-                    value={item.values.map((value) => ({
-                      id: value.id,
-                      name: value.value,
-                    }))}
-                  />,
+                  data: (
+                    <SettingFilterItem
+                      key={key}
+                      filterKey={key}
+                      title={item.configuration.name || ''}
+                      value={item.values.map((value) => ({
+                        id: value.id,
+                        name: value.value,
+                      }))}
+                      isNav={isNav}
+                    />
+                  ),
                 });
               },
             );
           break;
         case 'brands':
           (settings[key] as BrandDto[]).length > 0 &&
-          xhtml.push(
-            {
+            xhtml.push({
               sort: 6,
-              data: <SettingFilterItem
-                key={key}
-                filterKey={key}
-                title={'Nhãn hiệu'}
-                entity={Entity.BRANDS}
-                value={(settings[key] || []).map(
-                  (item: BrandDto) => {
+              data: (
+                <SettingFilterItem
+                  key={key}
+                  filterKey={key}
+                  title={'Nhãn hiệu'}
+                  entity={Entity.BRANDS}
+                  value={(settings[key] || []).map((item: BrandDto) => {
                     return {
                       id: item.id,
                       name: item.name,
                     };
-                  },
-                )}
-              />,
-            }
-          );
-          break
+                  })}
+                  isNav={isNav}
+                />
+              ),
+            });
+          break;
       }
     }
     return orderBy(xhtml, ['sort'], ['asc']).map((item) => item.data);
   };
-  return <div className={'hidden lg:block p-3'}>{renderTree()}</div>;
+  return <div className={twMerge('p-3', className)}>{renderTree()}</div>;
 }

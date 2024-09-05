@@ -7,8 +7,15 @@ import { SlugDto } from '@/dtos/Slug.dto';
 import { generateSlugToHref } from '@/utils';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import { Entity } from '@/config/enum';
-import NavFilterMobile from '@/components/organisms/MobileMenu/navFilterMobile';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
+import dynamic from 'next/dynamic';
+
+const NavFilterMobile = dynamic(
+  () => import('@/components/organisms/MobileMenu/navFilterMobile'),
+  {
+    ssr: false,
+  },
+);
 
 type Props = {
   slug?: ResponseSlugPageDto<ResponseCategoryFilterPageDto>;
@@ -40,7 +47,12 @@ export default function CategoryTemplate({ slug, breadcrumb, menu }: Props) {
           'rounded-[10px] border-gray-500 bg-white shadow-custom grid grid-cols-1 lg:grid-cols-6 gap-3'
         }
       >
-        {data.settings && <SettingFilter settings={data.settings} />}
+        {data.settings && (
+          <SettingFilter
+            className={'hidden lg:block'}
+            settings={data.settings}
+          />
+        )}
         <ContentFilter
           products={data.products || []}
           settings={data.settings}
@@ -54,7 +66,7 @@ export default function CategoryTemplate({ slug, breadcrumb, menu }: Props) {
           }
         />
       </div>
-      <NavFilterMobile menu={menu} />
+      <NavFilterMobile key={'CategoryTemplate'} settings={data.settings} />
     </CategoryFilterProvider>
   );
 }

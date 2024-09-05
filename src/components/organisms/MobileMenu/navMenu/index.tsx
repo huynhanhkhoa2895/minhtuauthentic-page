@@ -12,12 +12,10 @@ import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import useMenu from '@/hooks/useMenu';
 import { MenuDisplay, POPUP_TYPE } from '@/config/type';
 import { StaticComponentDto } from '@/dtos/StaticComponent.dto';
-import Link from 'next/link';
-import { generateSlugToHref } from '@/utils';
 import Image from 'next/image';
-import IconCheveronRight from '@/components/icons/cheveron-right';
 import NavMenuHeader from '@/components/organisms/MobileMenu/navMenu/header';
 import NavMenuContent from '@/components/organisms/MobileMenu/navMenu/content';
+import Loading from '@/components/atoms/loading';
 type Props = {
   menu: ResponseMenuDto;
   className?: string;
@@ -26,12 +24,29 @@ export default function NavMenu({ menu, className }: Props) {
   const appCtx = useContext(appContext);
   const { menuDisplay } = useMenu(menu);
   const ref = useRef<HTMLDivElement | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [itemDebounceMenu, setItemDebounceMenu] = useState<MenuDisplay | null>(
+    null,
+  );
   const [itemMenu, setItemMenu] = useState<MenuDisplay | null>(null);
   useEffect(() => {
     if (menuDisplay.length > 0 && !itemMenu) {
-      setItemMenu(menuDisplay.filter(item => item.type === POPUP_TYPE.CATEGORY)[0]);
+      const _item = menuDisplay.filter(
+        (item) => item.type === POPUP_TYPE.CATEGORY,
+      )[0];
+      setItemDebounceMenu(_item);
     }
   }, [menuDisplay, itemMenu]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setLoading(false);
+      setItemMenu(itemDebounceMenu);
+    }, 500);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [itemDebounceMenu]);
 
   return (
     <div
@@ -58,7 +73,8 @@ export default function NavMenu({ menu, className }: Props) {
                   'flex flex-col gap-1 p-2 border-b border-b-white items-center text-center'
                 }
                 onClick={() => {
-                  setItemMenu(item);
+                  setLoading(true);
+                  setItemDebounceMenu(item);
                 }}
               >
                 {image?.url && (
@@ -79,12 +95,20 @@ export default function NavMenu({ menu, className }: Props) {
             'pb-[calc(100%-63px-61px)] overflow-auto bg-white text-black w-full col-span-2'
           }
         >
-          {itemMenu && menu?.filterSetting && (
-            <NavMenuContent
-              menu={itemMenu}
-              brands={menu?.brands || []}
-              setting={menu?.filterSetting}
-            />
+          {loading ? (
+            <div className={'flex items-center justify-center w-full h-full'}>
+              <Loading />
+            </div>
+          ) : (
+            <>
+              {itemMenu && menu?.filterSetting && (
+                <NavMenuContent
+                  menu={itemMenu}
+                  brands={menu?.brands || []}
+                  setting={menu?.filterSetting}
+                />
+              )}
+            </>
           )}
         </div>
       </div>

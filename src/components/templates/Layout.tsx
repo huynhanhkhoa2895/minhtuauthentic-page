@@ -6,8 +6,7 @@ import appContext from '@/contexts/appContext';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import DefaultSeo from '@/components/molecules/seo';
 import { SEOProps } from '@/config/type';
-import NavMenu from '@/components/organisms/MobileMenu/navMenu';
-import Socials from '@/components/organisms/Socials';
+import dynamic from 'next/dynamic';
 type Props = {
   className?: string;
   children: ReactNode;
@@ -15,6 +14,17 @@ type Props = {
   settings: SettingsDto[];
   seo?: SEOProps;
 };
+
+const NavMenu = dynamic(
+  () => import('@/components/organisms/MobileMenu/navMenu'),
+  {
+    ssr: false,
+  },
+);
+
+const Socials = dynamic(() => import('@/components/organisms/Socials'), {
+  ssr: false,
+});
 
 export default function Layout({
   children,

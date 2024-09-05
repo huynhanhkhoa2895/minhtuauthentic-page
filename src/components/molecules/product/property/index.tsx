@@ -29,7 +29,6 @@ const ProductProperty = ({
   useEffect(() => {
     setIsReady(true);
   }, []);
-  console.log('product', product, productConfigurations);
   useEffect(() => {
     onChange && onChange(_variantActive);
   }, [_variantActive]);
