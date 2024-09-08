@@ -16,6 +16,7 @@ import { TagsOutlined } from '@ant-design/icons/lib/icons';
 import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
 import ListKeyword from '@/components/organisms/product/listKeyword';
+import ProductRating from '@/components/molecules/product/productRating';
 
 type Props = {
   product: ProductDto;
@@ -68,6 +69,12 @@ const ProductDetailCard = ({
           <ProductDescription product={product} />
           <ListKeyword product={product} />
           <ProductQuestionAnswer questions={product?.question_answers || []} />
+          {product.id && (
+            <ProductRating
+              product_id={product.id}
+              ratings={product?.ratings || []}
+            />
+          )}
         </div>
 
         <div>

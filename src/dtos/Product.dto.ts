@@ -12,6 +12,7 @@ import { ConcentrationGradientDto } from '@/dtos/ConcentrationGradient.dto';
 import { FragranceRetentionDto } from '@/dtos/FragranceRetention.dto';
 import { QuestionAnswerDto } from '@/dtos/QuestionAnswer.dto';
 import KeywordDetailDto from '@/dtos/KeywordDetail.dto';
+import RatingDto from '@/dtos/Rating.dto';
 
 export class ProductDto extends BaseDto {
   name?: string;
@@ -33,4 +34,5 @@ export class ProductDto extends BaseDto {
   seo?: SeoDto;
   question_answers?: QuestionAnswerDto[];
   keywords?: KeywordDetailDto[];
+  ratings?: RatingDto[];
 }
