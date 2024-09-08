@@ -33,7 +33,7 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
       concentration_gradients: 'Nồng độ',
       fragrance_retention: 'Độ giữ mùi',
       sex: 'Giới tính',
-      product_configurations:'Biến thể'
+      product_configurations: 'Biến thể',
     };
     return obj[label];
   };
@@ -59,7 +59,11 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
         });
       },
       price_range: () => {
-        const priceRange = items as {label: string, min: number, max: number}[];
+        const priceRange = items as {
+          label: string;
+          min: number;
+          max: number;
+        }[];
         return priceRange.map((item) => {
           return {
             label: item.label,
@@ -68,34 +72,37 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
         });
       },
       product_configurations: () => {
-        const _configurations = items as {configuration: ProductConfigurationsDto, values: ProductConfigurationValuesDto[]}[];
-        const _itemConfigurations:{label: string, value: number}[] = [];
+        const _configurations = items as {
+          configuration: ProductConfigurationsDto;
+          values: ProductConfigurationValuesDto[];
+        }[];
+        const _itemConfigurations: { label: string; value: number }[] = [];
         _configurations.forEach((item) => {
           item.values.forEach((value) => {
             _itemConfigurations.push({
-              label: item.configuration.name+': '+value.value,
+              label: item.configuration.name + ': ' + value.value,
               value: value.id || 0,
             });
-          })
+          });
         });
         return _itemConfigurations;
       },
       fragrance_retention: () => {
-        return items.map((item: any)=> {
+        return items.map((item: any) => {
           return {
             label: item.name as string,
-            value: item.id as number
-          }
-        })
+            value: item.id as number,
+          };
+        });
       },
       concentration_gradients: () => {
-        return items.map((item: any)=> {
+        return items.map((item: any) => {
           return {
             label: item.name as string,
-            value: item.id as number
-          }
-        })
-      }
+            value: item.id as number,
+          };
+        });
+      },
     };
     let data: any = [];
     if (obj[name]) {
@@ -120,7 +127,14 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
           />
         );
       default:
-        return <Link href={url} className={'border border-gray-200 p-2 rounded-[10px] block'}>{item.label}</Link>;
+        return (
+          <Link
+            href={url}
+            className={'border border-gray-200 p-2 rounded-[10px] block'}
+          >
+            {item.label}
+          </Link>
+        );
     }
   };
 
@@ -136,7 +150,6 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
       // value: setting[key],
     };
   });
-  console.log('menu', menu)
   return (
     <>
       <div className={'flex items-center justify-between p-3'}>

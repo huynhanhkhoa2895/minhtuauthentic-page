@@ -8,13 +8,13 @@ import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/pagination';
 import SectionSwiperSlide from '@/components/organisms/sectionSwiper/slide';
-import { ImageDto } from '@/dtos/Image.dto';
 type Props = {
   classNameContainer?: string;
   classNameItems?: string;
   renderItem: (content: unknown) => ReactNode;
   data: unknown[];
   loop?: boolean;
+  heightItem?: number;
   slidesPerView?: number;
   slidesPerViewMobile?: number;
   spaceBetween?: number;
@@ -23,7 +23,9 @@ type Props = {
   isCenter?: boolean;
   onSlideChange?: (activeIndex: number) => void;
   isNotDisplayNavigation?: boolean;
+  debug?: boolean;
 };
+import { Skeleton } from 'antd';
 const SectionSwiper = ({
   classNameContainer,
   renderItem,
@@ -38,6 +40,8 @@ const SectionSwiper = ({
   onSlideChange,
   slidesPerViewMobile,
   isNotDisplayNavigation,
+  heightItem,
+  debug,
 }: Props) => {
   const rows = 2;
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
@@ -47,6 +51,9 @@ const SectionSwiper = ({
   useEffect(() => {
     setReady(true);
     if (typeof window !== 'undefined') {
+      if (heightItem) {
+        handlerHeightWrapper(heightItem);
+      }
       if (window.innerWidth <= 768) {
         setCurrentSlide(slidesPerViewMobile || 0);
       } else {
@@ -88,7 +95,7 @@ const SectionSwiper = ({
 
   return (
     <>
-      {ready && (
+      {ready ? (
         <div className={twMerge('relative', classNameContainer)}>
           <Swiper
             effect={'fade'}
@@ -124,7 +131,7 @@ const SectionSwiper = ({
                   <SwiperSlide key={index}>
                     <SectionSwiperSlide
                       setHeightItem={(height: number) => {
-                        if (index === 0 && isUseHeightWrapper) {
+                        if (index === 0 && isUseHeightWrapper && !heightItem) {
                           handlerHeightWrapper(height);
                         }
                       }}
@@ -144,6 +151,21 @@ const SectionSwiper = ({
                 {renderNavigatorButton('next')}
               </>
             )}
+        </div>
+      ) : (
+        <div className={'flex gap-3 p-3 bg-white my-3'}>
+          <Skeleton.Image
+            active={true}
+            style={{ width: '100px', height: '100px' }}
+          />
+          <Skeleton.Image
+            active={true}
+            style={{ width: '100px', height: '100px' }}
+          />
+          <Skeleton.Image
+            active={true}
+            style={{ width: '100px', height: '100px' }}
+          />
         </div>
       )}
     </>

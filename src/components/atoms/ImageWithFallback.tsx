@@ -14,6 +14,7 @@ type Props = {
   loading?: 'lazy' | 'eager';
   priority?: boolean;
   unoptimized?: boolean;
+  quality?: number;
 };
 const ImageWithFallback = ({
   image,
@@ -25,6 +26,7 @@ const ImageWithFallback = ({
   loading,
   priority,
   unoptimized,
+  quality,
 }: Props) => {
   const [imgActiveSrc, setImageActiveSrc] = useState<string | StaticImageData>(
     image?.url || noImage,
@@ -52,6 +54,7 @@ const ImageWithFallback = ({
             }}
             priority={priority}
             loading={loading}
+            quality={quality || 100}
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPs7u2tBwAFdgImpqLKKAAAAABJRU5ErkJggg=="
           />
         ) : (
@@ -69,6 +72,7 @@ const ImageWithFallback = ({
             unoptimized={unoptimized}
             priority={priority}
             className={className}
+            quality={quality || 100}
             onError={() => {
               setImageActiveSrc(noImage);
             }}

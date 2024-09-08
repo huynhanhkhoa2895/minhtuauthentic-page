@@ -109,11 +109,14 @@ export default function PopupImage({
                   >
                     {images.map((image, index) => (
                       <SwiperSlide key={image.url + '_' + index}>
-                        <div className={'w-screen lg:w-[600px] lg:h-[600px]  m-auto'}>
-                          <ImageWithFallback
-                            className={'object-contain'}
-                            image={image}
-                          />
+                        <div className={'pl-full relative lg:h-full  m-auto'}>
+                          <div className={'absolute inset-0'}>
+                            <ImageWithFallback
+                              className={'object-contain h-full w-auto m-auto'}
+                              image={image}
+                              alt={product.name}
+                            />
+                          </div>
                         </div>
                       </SwiperSlide>
                     ))}

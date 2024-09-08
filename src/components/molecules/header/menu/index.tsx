@@ -34,7 +34,6 @@ const Menu = ({
 
   useEffect(() => {
     setIsReady(true);
-
   }, []);
 
   useEffect(() => {
