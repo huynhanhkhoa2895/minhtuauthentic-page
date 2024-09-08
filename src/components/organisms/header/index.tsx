@@ -22,6 +22,7 @@ import { useContext } from 'react';
 import AppContext from '@/contexts/appContext';
 import NavMenu from '@/components/organisms/MobileMenu/navMenu';
 import NavMenuHeader from '@/components/organisms/MobileMenu/navMenu/header';
+import IconWifi from '@/components/icons/wifi';
 
 export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
   const pathname = usePathname();
@@ -32,7 +33,7 @@ export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
   return (
     <>
       <div className={'bg-primaryGrey relative z-[3]'}>
-        <div className={'hidden lg:block py-4 container mx-auto text-center'}>
+        <div className={'hidden lg:block py-2 container mx-auto text-center'}>
           Nhiều ưu đãi
         </div>
       </div>
@@ -52,7 +53,7 @@ export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
               priority={true}
               height={54}
               width={227}
-              className={'object-contain w-auto h-auto '}
+              className={'object-contain w-[230px]] h-[60px] '}
               alt={
                 'Minh Tu Authentic, Nước hoa chính hãng Tphcm, Quận Tân Phú, Mỹ phẩm'
               }
@@ -65,8 +66,19 @@ export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
             className={'w-max'}
             icon={<IconPhone className={'w-[24px] h-[24px]'} />}
           >
-            <p className={'block'}>Gọi Ngay</p>
-            <p>09555555</p>
+            <p className={'block'}>Gọi mua hàng</p>
+            <p>0961693869</p>
+          </HeaderItem>
+          <HeaderItem
+            className={'w-max text-left'}
+            icon={<IconWifi className={'w-[30px] h-[30px]'} />}
+            isButton
+            onClick={() => {
+              window.open('https://www.google.com/maps/dir/?api=1&origin=&destination=278%20H%C3%B2a%20b%C3%ACnh,%20Hi%E1%BB%87p%20t%C3%A2n,%20Q%20T%C3%A2n%20ph%C3%BA,%20TpHCM');
+            }}
+          >
+            <p>Cửa hàng</p>
+            <p>gần bạn</p>
           </HeaderItem>
           <HeaderItem
             className={'w-max'}
@@ -77,7 +89,7 @@ export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
           </HeaderItem>
           <div className={'relative'}>
             <HeaderItem
-              className={'w-max'}
+              className={'w-max text-left'}
               icon={<HeaderCart className={'w-[40px] h-[40px]'} />}
               isButton
               onClick={() =>
@@ -85,7 +97,8 @@ export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
                 orderCtx?.setIsOpenHeaderCart(!orderCtx?.isOpenHeaderCart)
               }
             >
-              Giỏ hàng
+              <p>Giỏ</p>
+              <p>hàng</p>
             </HeaderItem>
             <div
               className={twMerge(
@@ -169,7 +182,10 @@ export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
                 '!text-white items-center flex hover:!text-white w-max'
               }
             >
-              {user ? user.name || user.email : 'Tài Khoản'}
+              {user ?<span className={'capitalize'}>{user.name || user.email}</span> : <>
+                <p>Tài</p>
+                <p>khoản</p>
+              </>}
             </Button>
           </Dropdown>
         </div>

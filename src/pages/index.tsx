@@ -23,6 +23,7 @@ export const getServerSideProps = (async () => {
       return null;
     },
   );
+  console.log('test', process.env.BE_URL + '/api/pages/home')
   const resDefault = await getDefaultSeverSide();
 
   const data: { data: ResponseHomePageDto } = res ? await res.json() : null;
@@ -60,10 +61,10 @@ export default function Home({
         >
           <MenuWrapper menu={menu} />
           <Banners
-            className={'flex-1'}
+            className={'flex-1 rounded-3xl lg:h-[380px]'}
             banners={homePage?.banners || []}
             classNameImage={
-              'object-contain lg:object-cover w-full lg:h-[350px]'
+              'object-contain lg:object-cover w-full  '
             }
           />
         </div>

@@ -132,9 +132,9 @@ const Menu = ({
       <div
         ref={ref}
         className={twMerge(
-          'hidden lg:block w-[220px] rounded-[10px] shadow-custom py-1 shrink-1 z-[1] bg-white overflow-hidden relative',
+          'hidden lg:block w-[220px] rounded-[10px] shadow-custom py-1 shrink-1 z-[1] bg-white overflow-auto relative',
           className,
-          isReady ? 'h-[350px]' : 'h-auto',
+          isReady ? 'h-[380px]' : 'h-auto',
         )}
       >
         <div className={'container mx-auto '}>
