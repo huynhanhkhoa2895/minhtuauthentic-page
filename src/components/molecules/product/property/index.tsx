@@ -72,7 +72,13 @@ const ProductProperty = ({
 
   return (
     <div>
-      <h1 className={'font-bold text-[24px] leading-[1.2]'}>{product.name}</h1>
+      {product?.title ? (
+        <div dangerouslySetInnerHTML={{ __html: product?.title || '' }} />
+      ) : (
+        <h1 className={'font-bold text-[24px] leading-[1.2]'}>
+          {product.name}
+        </h1>
+      )}
       <div className={'mt-3 grid grid-cols-2'}>
         <div>
           <span>Thương hiệu: </span>

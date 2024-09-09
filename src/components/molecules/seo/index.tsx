@@ -36,15 +36,15 @@ export default function DefaultSeo({ settings, seo }: Props) {
           {
             url:
               seo?.image ||
-              'https://demo.mikiperfume.com/_next/static/media/logo.fc400164.png',
+              process.env.API_URL + '/_next/static/media/logo.fc400164.png',
             width: seo?.width || 253,
             height: seo?.height || 83,
             alt: 'Minh tu Authentic',
           },
         ],
-        url: 'https://demo.mikiperfume.com',
+        url: process.env.API_URL,
       }}
-      canonical={seo?.canonical || router?.asPath.split('?')[0]}
+      canonical={seo?.canonical || process.env.API_URL}
     />
   );
 }

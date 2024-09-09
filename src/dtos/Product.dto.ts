@@ -35,4 +35,5 @@ export class ProductDto extends BaseDto {
   question_answers?: QuestionAnswerDto[];
   keywords?: KeywordDetailDto[];
   ratings?: RatingDto[];
+  title?: string;
 }

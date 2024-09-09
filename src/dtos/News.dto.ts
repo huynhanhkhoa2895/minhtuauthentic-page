@@ -6,6 +6,7 @@ import { INewsCategoriesDto } from '@/dtos/INewsCategories.dto';
 
 export class NewsDto extends BaseDto {
   name?: string;
+  title?: string;
   description?: string;
   content?: string;
   is_feature?: boolean;

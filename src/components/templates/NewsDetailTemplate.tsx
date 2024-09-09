@@ -20,16 +20,24 @@ const NewsDetailTemplate = ({ slug }: Props) => {
       <BreadcrumbComponent
         label={'Tin tức'}
         link={'/tin-tuc'}
-        current={{ label: data?.news?.name || '', link: generateSlugToHref(slug.slug) }}
+        current={{
+          label: data?.news?.name || '',
+          link: generateSlugToHref(slug.slug),
+        }}
       />
       <div
         className={twMerge(
           'w-full max-rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto rounded-[10px] p-3',
         )}
       >
-        <h1 className={'text-primary font-bold text-2xl mb-3'}>
-          {data?.news?.name}
-        </h1>
+        {data?.news?.title ? (
+          <div dangerouslySetInnerHTML={{ __html: data?.news?.title }} />
+        ) : (
+          <h1 className={'text-primary font-bold text-2xl mb-3'}>
+            {data?.news?.name}
+          </h1>
+        )}
+
         {data?.news && <NewsClock item={data?.news} />}
         {image && (
           <div className={'w-full lg:w-[650px] p-3 mx-auto'}>
@@ -69,7 +77,6 @@ const NewsDetailTemplate = ({ slug }: Props) => {
         )}
       </div>
     </>
-
   );
 };
 export default NewsDetailTemplate;
