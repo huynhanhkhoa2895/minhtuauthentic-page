@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html lang="vi">
       <Head>
+        <meta name="robots" content="noindex,nofollow" />
         <script
           data-partytown-config
           type="application/ld+json"
