@@ -23,7 +23,7 @@ export default function BrandsPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      <Header menu={menu} />
+      <Header settings={settings} menu={menu} />
       <Layout settings={settings} menu={menu}>
         <BreadcrumbComponent label={'Thương hiệu'} link={'/thuong-hieu'} />
         <BrandsTemplate brands={menu.brands || []} />

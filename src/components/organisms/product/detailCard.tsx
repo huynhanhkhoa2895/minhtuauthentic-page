@@ -10,14 +10,15 @@ import ProductDescription from '@/components/molecules/product/productDescriptio
 import ProductInformation from '@/components/molecules/product/productInformation';
 import ProductRelation from '@/components/molecules/product/productRelation';
 import ProductQuestionAnswer from '@/components/molecules/product/productQuestionAnswer';
-import { PromotionsDto } from '@/dtos/Promotions.dto';
 import ProductDealSock from '@/components/molecules/product/productDealSock';
-import { TagsOutlined } from '@ant-design/icons/lib/icons';
-import Link from 'next/link';
-import { generateSlugToHref } from '@/utils';
 import ListKeyword from '@/components/organisms/product/listKeyword';
-import ProductRating from '@/components/molecules/product/productRating';
-
+import dynamic from 'next/dynamic';
+const ProductRating = dynamic(
+  () => import('@/components/molecules/product/productRating'),
+  {
+    ssr: false,
+  },
+);
 type Props = {
   product: ProductDto;
   relatedProducts: ProductDto[];
@@ -69,12 +70,7 @@ const ProductDetailCard = ({
           <ProductDescription product={product} />
           <ListKeyword product={product} />
           <ProductQuestionAnswer questions={product?.question_answers || []} />
-          {product.id && (
-            <ProductRating
-              product_id={product.id}
-              ratings={product?.ratings || []}
-            />
-          )}
+          {product.id && <ProductRating product_id={product.id} />}
         </div>
 
         <div>

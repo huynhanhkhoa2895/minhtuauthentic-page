@@ -39,7 +39,7 @@ export default function News({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      <Header menu={menu} />
+      <Header settings={settings} menu={menu} />
       <Layout settings={settings} menu={menu}>
         <BreadcrumbComponent label={'Tin tức'} link={'/tin-tuc'} />
         {news && (

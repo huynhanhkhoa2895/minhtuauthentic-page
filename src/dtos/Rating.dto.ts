@@ -11,4 +11,6 @@ export default class RatingDto {
   children?: RatingDto[];
   product_id?: number;
   product?: ProductDto;
+  created_at?: Date;
+  updated_at?: Date;
 }

@@ -41,7 +41,7 @@ export default function ProductPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      <Header menu={menu} />
+      <Header settings={settings} menu={menu} />
       <Layout settings={settings} menu={menu}>
         <CategoryTemplate
           menu={menu}

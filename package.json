@@ -13,6 +13,7 @@
     "@hookform/resolvers": "^3.6.0",
     "antd": "^5.17.0",
     "cookies-next": "^4.2.1",
+    "dayjs": "^1.11.13",
     "lodash": "^4.17.21",
     "next": "14.2.3",
     "next-seo": "^6.5.0",

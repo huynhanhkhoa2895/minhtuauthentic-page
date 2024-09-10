@@ -1,7 +1,6 @@
 import * as yup from 'yup';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import StartRating from '@/components/atoms/product/startRating';
 import { Button, Input } from 'antd';
 import StartRatingInput from '@/components/atoms/product/startRatingInput';
 
@@ -15,13 +14,15 @@ const schema = yup.object({
 
 type Props = {
   product_id: number;
+  refreshData: () => void;
 };
 
-export default function FormProductRating({ product_id }: Props) {
+export default function FormProductRating({ product_id, refreshData }: Props) {
   const {
     handleSubmit,
     control,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -35,7 +36,15 @@ export default function FormProductRating({ product_id }: Props) {
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
-        console.log(data);
+        const rs = await fetch('/api/product/rate/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }).then((res) => res.json());
+        reset();
+        refreshData();
       })}
     >
       <h3 className={'text-primary font-semibold text-xl mb-6'}>
@@ -108,9 +117,11 @@ export default function FormProductRating({ product_id }: Props) {
           )}
         </div>
       </div>
-      <Button type="primary" htmlType="submit" className={'bg-primary mt-6'}>
-        Gửi nhận xét
-      </Button>
+      <div className={'mt-6 ml-auto text-right'}>
+        <Button type="primary" htmlType="submit" className={'bg-primary'}>
+          Gửi nhận xét
+        </Button>
+      </div>
     </form>
   );
 }

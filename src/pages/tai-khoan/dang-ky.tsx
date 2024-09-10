@@ -20,7 +20,7 @@ export default function Register({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      <Header menu={menu} />
+      <Header settings={settings} menu={menu} />
       <Layout settings={settings} menu={menu}>
         <RegisterTemplate />
       </Layout>

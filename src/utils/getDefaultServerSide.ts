@@ -31,7 +31,7 @@ export default async function getDefaultSeverSide() {
   return {
     menu: resMenu?.data || null,
     footerContent: resFooter?.data || null,
-    settings: resSetting?.data || null,
+    settings: (resSetting?.data as SettingsDto[]) || null,
   };
 }
 

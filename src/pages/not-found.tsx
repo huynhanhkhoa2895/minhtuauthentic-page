@@ -1,10 +1,8 @@
-import Header from '@/components/organisms/header';
-import Footer from '@/components/organisms/footer';
 import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import CartSummaryTemplate from '@/components/templates/CartSummaryTemplate';
-import Layout from '@/components/templates/Layout';
 import { ServerSideProps } from '@/config/type';
+import Header from '@/components/organisms/header';
+import Layout from '@/components/templates/Layout';
 
 export const getServerSideProps = (async () => {
   const resDefault = await getDefaultSeverSide();
@@ -12,8 +10,7 @@ export const getServerSideProps = (async () => {
     props: resDefault,
   };
 }) satisfies GetServerSideProps<ServerSideProps>;
-
-export default function Register({
+export default function BrandsPage({
   menu,
   footerContent,
   settings,
@@ -22,9 +19,8 @@ export default function Register({
     <>
       <Header settings={settings} menu={menu} />
       <Layout settings={settings} menu={menu}>
-        <CartSummaryTemplate />
+        <h3>Not Found</h3>
       </Layout>
-      <Footer footerContent={footerContent} />
     </>
   );
 }

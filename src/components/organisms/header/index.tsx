@@ -4,7 +4,6 @@ import HeaderItem from '@/components/molecules/header/item';
 import InputSearch from '@/components/molecules/header/inputSearch';
 import { IconPhone } from '@/components/icons/phone';
 import IconTruck from '@/components/icons/truck';
-import IconCart from '@/components/icons/cart';
 import IconUser from '@/components/icons/user';
 import ButtonMenu from '@/components/organisms/header/buttonMenu';
 import { twMerge } from 'tailwind-merge';
@@ -19,27 +18,53 @@ import CartPreview from '@/components/molecules/header/cartPreview';
 import { CloseCircleOutlined, BarsOutlined } from '@ant-design/icons';
 import OrderContext from '@/contexts/orderContext';
 import { useContext } from 'react';
-import AppContext from '@/contexts/appContext';
-import NavMenu from '@/components/organisms/MobileMenu/navMenu';
 import NavMenuHeader from '@/components/organisms/MobileMenu/navMenu/header';
 import IconWifi from '@/components/icons/wifi';
-
-export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
+import { SettingsDto } from '@/dtos/Settings.dto';
+import { SETTING_KEY } from '@/config/enum';
+type Props = { menu: ResponseMenuDto | null; settings: SettingsDto[] };
+export const Header = ({ menu, settings }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useUser();
   const orderCtx = useContext(OrderContext);
-  const appCtx = useContext(AppContext);
+  const pageHeader = settings.find(
+    (item) => item?.key && item?.key === SETTING_KEY.GENERAL.PAGE_HEADER.KEY,
+  );
+
   return (
     <>
-      <div className={'bg-primaryGrey relative z-[3]'}>
-        <div className={'hidden lg:block py-2 container mx-auto text-center'}>
-          Nhiều ưu đãi
+      {pageHeader?.value && (
+        <div
+          className={
+            ' hidden lg:grid  bg-primaryGrey relative z-[3] grid-cols-3 items-center p-3'
+          }
+        >
+          <div
+            dangerouslySetInnerHTML={{
+              __html: pageHeader?.value?.page_title_left || '',
+            }}
+          />
+          <div
+            className={'text-center'}
+            dangerouslySetInnerHTML={{
+              __html: pageHeader?.value?.page_title_center || '',
+            }}
+          />
+          <div
+            className={'text-right'}
+            dangerouslySetInnerHTML={{
+              __html: pageHeader?.value?.page_title_right || '',
+            }}
+          />
         </div>
-      </div>
+      )}
+
       <header
         id={'header'}
-        className={'bg-primary lg:py-[10px] sticky top-0 left-0 z-[100] relative'}
+        className={
+          'bg-primary lg:py-[10px] sticky top-0 left-0 z-[100] relative'
+        }
       >
         <NavMenuHeader className={'lg:hidden'} />
         <div
@@ -74,7 +99,9 @@ export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
             icon={<IconWifi className={'w-[30px] h-[30px]'} />}
             isButton
             onClick={() => {
-              window.open('https://www.google.com/maps/dir/?api=1&origin=&destination=278%20H%C3%B2a%20b%C3%ACnh,%20Hi%E1%BB%87p%20t%C3%A2n,%20Q%20T%C3%A2n%20ph%C3%BA,%20TpHCM');
+              window.open(
+                'https://www.google.com/maps/dir/?api=1&origin=&destination=278%20H%C3%B2a%20b%C3%ACnh,%20Hi%E1%BB%87p%20t%C3%A2n,%20Q%20T%C3%A2n%20ph%C3%BA,%20TpHCM',
+              );
             }}
           >
             <p>Cửa hàng</p>
@@ -182,10 +209,14 @@ export const Header = ({ menu }: { menu: ResponseMenuDto | null }) => {
                 '!text-white items-center flex hover:!text-white w-max'
               }
             >
-              {user ?<span className={'capitalize'}>{user.name || user.email}</span> : <>
-                <p>Tài</p>
-                <p>khoản</p>
-              </>}
+              {user ? (
+                <span className={'capitalize'}>{user.name || user.email}</span>
+              ) : (
+                <>
+                  <p>Tài</p>
+                  <p>khoản</p>
+                </>
+              )}
             </Button>
           </Dropdown>
         </div>

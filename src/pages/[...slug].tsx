@@ -48,7 +48,8 @@ export const getServerSideProps = (async (context) => {
       case Entity.PRODUCTS:
         let product =
           data?.data as ResponseSlugPageDto<ResponseProductDetailPageDto>;
-        title = product?.data?.product?.name;
+        title =
+          product?.data?.product?.seo?.title || product?.data?.product?.name;
         image =
           product?.data?.product?.feature_image_detail?.image?.url || null;
         width = product?.data?.product?.feature_image_detail?.image?.width || 0;
@@ -57,7 +58,7 @@ export const getServerSideProps = (async (context) => {
         break;
       case Entity.NEWS:
         let news = data?.data as ResponseSlugPageDto<ResponseNewsDetailPageDto>;
-        title = news?.data?.news?.name;
+        title = news?.data?.news?.seo?.title || news?.data?.news?.name;
         description = news?.data?.news?.description;
         image = news?.data?.news?.images?.[0]?.image?.url || null;
         width = news?.data?.news?.images?.[0]?.image?.width || 0;
@@ -133,9 +134,10 @@ export default function Page({
         return <div>Not Found</div>;
     }
   };
+
   return (
-    <Fragment key={'Slug_'+slug?.slug}>
-      <Header menu={menu} />
+    <Fragment key={'Slug_' + slug?.slug}>
+      <Header settings={settings} menu={menu} />
       <Layout
         settings={settings}
         menu={menu}

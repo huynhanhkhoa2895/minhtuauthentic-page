@@ -48,7 +48,7 @@ const ProductCard = ({
         <div className={'px-2 min-h-[84px] lg:min-h-[63px]'}>
           <h6 className={'font-bold'}>
             <Link className={'block'} href={`/${product?.slugs?.slug}`}>
-              {product.name}
+              {product.title || product.name}
             </Link>
           </h6>
         </div>

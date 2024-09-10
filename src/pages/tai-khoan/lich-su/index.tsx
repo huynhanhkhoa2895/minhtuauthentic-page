@@ -49,7 +49,7 @@ export default function UserHistory({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      <Header menu={menu} />
+      <Header settings={settings} menu={menu} />
       <Layout settings={settings} menu={menu}>
         <BreadcrumbComponent label={'Lich sử'} link={'/tai-khoan/lich-su'} />
         <AccountTemplate>

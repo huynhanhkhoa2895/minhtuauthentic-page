@@ -23,7 +23,6 @@ export const getServerSideProps = (async () => {
       return null;
     },
   );
-  console.log('test', process.env.BE_URL + '/api/pages/home')
   const resDefault = await getDefaultSeverSide();
 
   const data: { data: ResponseHomePageDto } = res ? await res.json() : null;
@@ -53,7 +52,7 @@ export default function Home({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      <Header menu={menu} />
+      <Header settings={settings} menu={menu} />
       <Layout settings={settings} menu={menu}>
         <div
           id={'main-home-page'}
@@ -63,9 +62,7 @@ export default function Home({
           <Banners
             className={'flex-1 rounded-3xl lg:h-[380px]'}
             banners={homePage?.banners || []}
-            classNameImage={
-              'object-contain lg:object-cover w-full  '
-            }
+            classNameImage={'object-contain lg:object-cover w-full  '}
           />
         </div>
         <BlockUnderSlide contents={homePage?.homeBlockUnderSlide || []} />

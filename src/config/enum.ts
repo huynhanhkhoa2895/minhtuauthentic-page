@@ -85,6 +85,13 @@ export const SETTING_KEY = {
       KEY: 'page_information',
       LABEL: 'Thông tin trang',
     },
+    PAGE_HEADER: {
+      KEY: 'page_header',
+      LABEL: 'Header Page',
+      PAGE_TITLE_LEFT: 'page_title_left',
+      PAGE_TITLE_RIGHT: 'page_title_right',
+      PAGE_TITLE_CENTER: 'page_title_center',
+    },
   },
   BRAND_SECTION: {
     KEY: 'brand_section',
