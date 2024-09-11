@@ -8,10 +8,10 @@ import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 import { useRouter } from 'next/router';
 import { twMerge } from 'tailwind-merge';
 type Props = {
-  classname?: string
-  isMobile?: boolean
-}
-export const InputSearch = ({classname, isMobile}: Props) => {
+  classname?: string;
+  isMobile?: boolean;
+};
+export const InputSearch = ({ classname, isMobile }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
   const [debouceValue, setDebouceValue] = useState<string>('');
@@ -152,9 +152,10 @@ export const InputSearch = ({classname, isMobile}: Props) => {
       />
       {isOpened && (
         <div
-          className={
-            twMerge('absolute text-blackqa-test-3.self-point.com top-[50px] bg-white w-full rounded-[10px] shadow-custom left-0', isMobile && 'fixed w-[95vw] left-3 top-[60px]')
-          }
+          className={twMerge(
+            'absolute text-black top-[50px] bg-white w-[550px] rounded-[10px] shadow-custom left-0',
+            isMobile && 'fixed w-[95vw] left-3 top-[60px]',
+          )}
         >
           <div className={'flex flex-col '}>
             <div className={'max-h-[50vh] overflow-y-auto p-6'}>

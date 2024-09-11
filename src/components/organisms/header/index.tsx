@@ -110,6 +110,7 @@ export const Header = ({ menu, settings }: Props) => {
           <HeaderItem
             className={'w-max'}
             icon={<IconTruck className={'w-[40px] h-[40px]'} />}
+            href={'/kiem-tra-don-hang'}
           >
             <p className={'w-max'}>Tra cứu</p>
             <p className={'w-max'}>đơn hàng</p>

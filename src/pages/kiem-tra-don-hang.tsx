@@ -1,8 +1,10 @@
 import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { ServerSideProps } from '@/config/type';
-import Header from '@/components/organisms/header';
 import Layout from '@/components/templates/Layout';
+import Header from '@/components/organisms/header';
+import Footer from '@/components/organisms/footer';
+import CheckOrderTemplate from '@/components/templates/CheckOrderTemplate';
 
 export const getServerSideProps = (async () => {
   const resDefault = await getDefaultSeverSide();
@@ -10,7 +12,7 @@ export const getServerSideProps = (async () => {
     props: resDefault,
   };
 }) satisfies GetServerSideProps<ServerSideProps>;
-export default function NotFoundPage({
+export default function CheckOrderPage({
   menu,
   footerContent,
   settings,
@@ -19,8 +21,9 @@ export default function NotFoundPage({
     <>
       <Header settings={settings} menu={menu} />
       <Layout settings={settings} menu={menu}>
-        <h3>Not Found</h3>
+        <CheckOrderTemplate />
       </Layout>
+      <Footer footerContent={footerContent} />
     </>
   );
 }

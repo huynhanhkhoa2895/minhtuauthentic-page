@@ -2,7 +2,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import Image from 'next/image';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { EffectFade, Pagination, Autoplay } from 'swiper/modules';
+import {
+  EffectFade,
+  Pagination,
+  Autoplay,
+  EffectCreative,
+} from 'swiper/modules';
 import 'swiper/css/effect-fade';
 import { StaticContentsDto } from '@/dtos/StaticContents.dto';
 export const Banners = ({
@@ -21,7 +26,7 @@ export const Banners = ({
       spaceBetween={50}
       slidesPerView={1}
       pagination={true}
-      modules={[Pagination, EffectFade, Autoplay]}
+      modules={[Pagination, EffectCreative, Autoplay]}
       autoplay={true}
       loop={true}
     >

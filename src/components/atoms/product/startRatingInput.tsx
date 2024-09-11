@@ -1,4 +1,3 @@
-import { Star } from '@/components/icons/star';
 import { ReactNode, useEffect, useState } from 'react';
 import { Rate } from 'antd';
 const desc = ['Kinh khủng', 'tệ', 'Bình thường', 'Tốt', 'Xuất sắc'];

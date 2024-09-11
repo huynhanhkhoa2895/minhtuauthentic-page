@@ -13,16 +13,22 @@ const HomeCategory = ({
   return (
     <>
       {(homeCategory || []).map((item: StaticComponentDto, key: number) => {
+        const isActive = key === 0 || (key + 1) % 3 === 0;
         return (
           <Fragment key={'GroupCategory_' + key}>
             <GroupCategory staticComponent={item} />
-            {(key + 1) % 3 === 0 && (
-              <BannerUnderCategory
-                key={key + 'banner-under-category'}
-                contents={bannerUnderCategory || []}
-                position={(key + 1) / 3}
-              />
-            )}
+            <BannerUnderCategory
+              key={key + 'banner-under-category'}
+              contents={bannerUnderCategory || []}
+              position={key === 0 ? 0 : (key + 1) / 3}
+            />
+            {/*{isActive && (*/}
+            {/*  <BannerUnderCategory*/}
+            {/*    key={key + 'banner-under-category'}*/}
+            {/*    contents={bannerUnderCategory || []}*/}
+            {/*    position={key === 0 ? 0 : (key + 1) / 3}*/}
+            {/*  />*/}
+            {/*)}*/}
           </Fragment>
         );
       })}

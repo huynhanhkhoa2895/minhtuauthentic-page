@@ -69,10 +69,7 @@ export default function UserHistoryDetail({
           }}
         />
         <AccountTemplate>
-          <OrderDetailTemplate
-            order={data?.order}
-            order_items={data?.order_items}
-          />
+          <OrderDetailTemplate order={data?.order} />
         </AccountTemplate>
       </Layout>
       <Footer footerContent={footerContent} />

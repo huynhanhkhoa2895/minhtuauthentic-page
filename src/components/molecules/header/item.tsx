@@ -8,12 +8,14 @@ const HeaderItem = ({
   className,
   isButton,
   onClick,
+  href,
 }: {
   icon: React.ReactNode;
   children: React.ReactNode;
   className?: string;
   isButton?: boolean;
   onClick?: () => void;
+  href?: string;
 }) => {
   const renderItem = () => {
     return (
@@ -31,7 +33,7 @@ const HeaderItem = ({
         </button>
       ) : (
         <Link
-          href={'/'}
+          href={href || '/'}
           className={
             'block rounded-[10px] hover:bg-linkHover transition-colors duration-300 p-2'
           }

@@ -15,12 +15,12 @@ export default function BannerUnderCategory({
 }) {
   const contentLeft = contents.find(
     (content, index) =>
-      (content?.sort || 0) === position &&
+      (content?.position_index || 0) === position &&
       content.properties?.direction === BLOCK_UNDER_CATEGORY_POSITION.LEFT,
   );
   const contentRight = contents.find(
     (content, index) =>
-      (content?.sort || 0) === position &&
+      (content?.position_index || 0) === position &&
       content.properties?.direction === BLOCK_UNDER_CATEGORY_POSITION.RIGHT,
   );
   const refContainer = useRef<HTMLDivElement>(null);

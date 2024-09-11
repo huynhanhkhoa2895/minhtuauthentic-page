@@ -8,9 +8,8 @@ import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 
 type Props = {
   order: OrdersDto;
-  order_items: OrderItemsDto[];
 };
-export default function OrderDetailTemplate({ order_items, order }: Props) {
+export default function OrderDetailTemplate({ order }: Props) {
   const [orderField, setOrderField] = useState<
     {
       label: string;
@@ -26,7 +25,7 @@ export default function OrderDetailTemplate({ order_items, order }: Props) {
       render: (_: unknown, item: OrderItemsDto) => (
         <div className={'flex gap-3'}>
           <ImageWithFallback
-            image={item?.image}
+            image={item?.variant?.images?.[0]?.image}
             className={'w-[50px] h-[50px] object-contain'}
           />
           <span>{item.variant_name}</span>
@@ -131,7 +130,7 @@ export default function OrderDetailTemplate({ order_items, order }: Props) {
           <div className={'mt-3'}>
             <h2 className={'text-xl text-primary font-bold mb-3'}>Sản phẩm</h2>
             <Table
-              dataSource={order_items}
+              dataSource={order?.order_items || []}
               columns={columns}
               pagination={false}
             />
