@@ -16,6 +16,11 @@ export default function useUser() {
     '/gio-hang/thanh-cong',
     '/gio-hang/thanh-toan',
   ];
+  const pathnameDontNeedLogin = [
+    '/tai-khoan/dang-nhap',
+    '/tai-khoan/dang-ky',
+    '/tai-khoan/quen-mat-khau',
+  ];
 
   useEffect(() => {
     const user = getCookie('user');
@@ -26,10 +31,14 @@ export default function useUser() {
   }, []);
 
   useEffect(() => {
-    if (!appContext?.user && pathnameNeedLogin.includes(router.pathname)) {
-      router.push('/tai-khoan/dang-nhap?redirectUrl=' + router.pathname);
+    const user = getCookie('user');
+    if (user && pathnameDontNeedLogin.includes(router.pathname)) {
+      const redirectUrl = router?.query?.redirectUrl;
+      router.push('/' + (redirectUrl as string || ''));
+    } else if (pathnameNeedLogin.includes(router.pathname) && !user) {
+      router.push('/tai-khoan/dang-nhap?redirectUrl=' + router.asPath);
     }
-  }, [router.pathname, appContext?.user]);
+  }, [router.pathname]);
 
   const setCookieUser = (user: UserDto) => {
     appContext?.setUser && appContext.setUser(user);
