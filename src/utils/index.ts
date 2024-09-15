@@ -3,7 +3,8 @@ import { VariantDto } from '@/dtos/Variant.dto';
 import { IVariantProductConfigurationValuesDto } from '@/dtos/iVariantProductConfigurationValues.dto';
 import CouponsDto from '@/dtos/Coupons.dto';
 import { PromotionsDto } from '@/dtos/Promotions.dto';
-
+import dayjs from 'dayjs';
+import crypto from 'crypto';
 export function formatMoney(
   amount: number | string,
   decimalCount = 0,
@@ -77,7 +78,12 @@ export const getModelEntity = (model: string) => {
 
 export const generateSlugToHref = (slug?: string) => {
   if (!slug || slug === '/') return '/';
-  if (slug.charAt(0) !== '/') return `/${slug}`;
+  if (slug.charAt(0) !== '/') {
+    if (slug.startsWith('http') || slug.startsWith('https')) {
+      return slug;
+    }
+    return `/${slug}`;
+  };
   return slug;
 };
 
@@ -224,4 +230,29 @@ export function promotionName(promotion?: PromotionsDto) {
     case PROMOTION_TYPE.FLASH_SALE:
       return 'Flash Sale';
   }
+}
+
+export function createVNPayUrl(price: number){
+  const url = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
+  const hmac = crypto.createHmac("sha512", 'LJMH2I0INPF1CZLENWLTXMC3PN8ZWBSV');
+  // const signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
+  const signData = [];
+  const params = new URLSearchParams();
+  params.append('vnp_Version', '2.1.0');
+  params.append('vnp_Command', 'pay');
+  params.append('vnp_TmnCode', 'MTAUTEST');
+  params.append('vnp_Locale', 'vn');
+  params.append('vnp_CurrCode', 'VND');
+  params.append('vnp_Amount', (price * 100).toString());
+  params.append('vnp_CreateDate', dayjs().format('YYYYMMDDHHmmss'));
+  params.append('vnp_BankCode', 'NCB');
+  params.append('vnp_IpAddr', '')
+  params.append('vnp_OrderInfo', 'Thanh toán đơn hàng');
+  params.append('vnp_ReturnUrl', 'http://localhost:3000');
+  params.append('vnp_TxnRef', '123456');
+  params.append('vnp_SecureHash', '');
+  params.forEach((value, key) => {
+    signData.push(`${key}=${value}`);
+  });
+
 }

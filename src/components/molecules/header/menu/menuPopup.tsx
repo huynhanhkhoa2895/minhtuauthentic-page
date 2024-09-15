@@ -21,10 +21,19 @@ const MenuPopup = ({
 }) => {
   const wMenu = 220;
   const gapWMenuAnd = 8;
+  const [widthContainer, setWidthContainer] = useState(0);
   const [bgWH, setBgWH] = useState<{ width: number; height: number }>({
     width: 0,
     height: 0,
   });
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    if (document && document.getElementById('main-body')) {
+      const width = document?.getElementById('main-body')?.getBoundingClientRect()?.width || 0;
+      setWidthContainer(width - wMenu);
+    }
+  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -64,7 +73,7 @@ const MenuPopup = ({
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
           style={{
-            width: bgWH.width,
+            width: bgWH.width || widthContainer,
           }}
           className={
             'absolute max-lg:hidden h-full lg:w-[53vw] bg-white z-[20] top-0 left-[200px] ml-2 p-2 overflow-auto'

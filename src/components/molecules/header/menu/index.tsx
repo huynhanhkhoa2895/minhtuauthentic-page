@@ -42,7 +42,7 @@ const Menu = ({
       left: 20,
       height: ref.current?.clientHeight || 0,
     });
-  }, []);
+  }, [isReady]);
 
   const renderMenuItem = (item: MenuDisplay) => {
     const obj: Record<string, () => ReactNode> = {

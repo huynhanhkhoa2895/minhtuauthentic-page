@@ -22,7 +22,7 @@ export default function RadioForm({ value, onChange, radioOptions }: Props) {
   };
 
   return (
-    <Radio.Group onChange={handleChange} value={_val.toString()}>
+    <Radio.Group onChange={handleChange} value={_val.toString()} className={'flex flex-col gap-3'}>
       {radioOptions.map((option) => (
         <Radio key={option.value} value={option.value}>
           {option.label}
