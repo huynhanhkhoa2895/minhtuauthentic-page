@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import FormControl from '@/components/molecules/form/FormControl';
 import { ProvinceDto } from '@/dtos/Province.dto';
-import { PROVINCE } from '@/config/enum';
+import { ORDER_STATUS, PAYMENT_TYPE, PROVINCE } from '@/config/enum';
 import { Button, Radio } from 'antd';
 import { UserDto } from '@/dtos/User.dto';
 import { PaymentsDto } from '@/dtos/Payments.dto';
@@ -47,6 +47,7 @@ type FormData = {
   address: string;
   payment_id: number;
   note?: string;
+  status: string;
 };
 export default function FormCheckout({
   user,
@@ -79,6 +80,7 @@ export default function FormCheckout({
       payment_id: payments[0]?.id || 0,
       note: '',
       phone: user?.phone || '',
+      status: ORDER_STATUS.NEW,
     },
   });
   useEffect(() => {
@@ -113,18 +115,29 @@ export default function FormCheckout({
     return rs;
   };
 
+  const paymentType = (payment_id?: number) => {
+    const payment = payments.find((item) => item?.id === payment_id);
+    return payment?.name?.toLowerCase();
+  };
+
   const onSubmit = (data: FormData) => {
     if (!data?.payment_id) {
       setError('payment_id', {
         message: 'Vui lòng chọn phương thức thanh toán',
       });
+      return;
     }
     if (!orderCtx?.cart) {
       return;
     }
+
+    if (paymentType(data?.payment_id) === PAYMENT_TYPE.COD) {
+      data.status = ORDER_STATUS.DONE;
+    }
+
     const order: FormData & {
       user_id: number;
-      cart: CartDto;
+      cart: CartDto | undefined;
     } = {
       ...data,
       user_id: user?.id || 0,
@@ -136,12 +149,10 @@ export default function FormCheckout({
     })
       .then((rs) => rs.json())
       .then((data) => {
-        if (data?.data) {
+        if (data?.data?.status === ORDER_STATUS.DONE) {
           toast.success('Đặt hàng thành công');
           orderCtx?.clearCart && orderCtx?.clearCart();
           router.push('/gio-hang/thanh-cong?orderId=' + data?.data?.id);
-        } else {
-          toast.error(data?.message || 'Đã có lỗi xảy ra');
         }
       })
       .catch(() => {
@@ -258,13 +269,14 @@ export default function FormCheckout({
       <div className={'flex justify-between items-center mt-6'}>
         <div className={'flex text-primary gap-1'}>
           <ArrowLeftOutlined />
-          <Link className={'font-semibold'} href={'/gio-hang/tom-tat'}>Quay lại giỏ hàng</Link>
+          <Link className={'font-semibold'} href={'/gio-hang/tom-tat'}>
+            Quay lại giỏ hàng
+          </Link>
         </div>
         <Button htmlType={'submit'} type={'primary'}>
           Thanh toán
         </Button>
       </div>
-
     </form>
   );
 }

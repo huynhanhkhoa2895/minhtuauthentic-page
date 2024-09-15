@@ -148,3 +148,17 @@ export enum PROMOTION_PRICE_TYPE {
   PERCENT = 'percent',
   PRICE = 'price',
 }
+
+export const ORDER_STATUS = {
+  PROCESSING: 'processing',
+  PENDING: 'pending',
+  DONE: 'done',
+  NEW: 'new',
+  CLOSE: 'close',
+};
+
+export const PAYMENT_TYPE = {
+  COD: 'cod',
+  MOMO: 'momo',
+  VN_PAY: 'vnpay',
+};

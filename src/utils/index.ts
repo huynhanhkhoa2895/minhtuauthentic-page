@@ -5,6 +5,8 @@ import CouponsDto from '@/dtos/Coupons.dto';
 import { PromotionsDto } from '@/dtos/Promotions.dto';
 import dayjs from 'dayjs';
 import crypto from 'crypto';
+import { OrdersDto } from '@/dtos/Orders.dto';
+import querystring from 'qs';
 export function formatMoney(
   amount: number | string,
   decimalCount = 0,
@@ -83,7 +85,7 @@ export const generateSlugToHref = (slug?: string) => {
       return slug;
     }
     return `/${slug}`;
-  };
+  }
   return slug;
 };
 
@@ -232,27 +234,41 @@ export function promotionName(promotion?: PromotionsDto) {
   }
 }
 
-export function createVNPayUrl(price: number){
-  const url = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
-  const hmac = crypto.createHmac("sha512", 'LJMH2I0INPF1CZLENWLTXMC3PN8ZWBSV');
-  // const signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
-  const signData = [];
+export function createVNPayUrl({
+  order,
+  ip,
+}: {
+  order: OrdersDto;
+  ip: string;
+}) {
+  let vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
+  const hmac = crypto.createHmac('sha512', 'LJMH2I0INPF1CZLENWLTXMC3PN8ZWBSV');
+  const signDataArray = [];
   const params = new URLSearchParams();
   params.append('vnp_Version', '2.1.0');
   params.append('vnp_Command', 'pay');
   params.append('vnp_TmnCode', 'MTAUTEST');
   params.append('vnp_Locale', 'vn');
   params.append('vnp_CurrCode', 'VND');
-  params.append('vnp_Amount', (price * 100).toString());
+  params.append('vnp_Amount', ((order.total_price || 0) * 100).toString());
   params.append('vnp_CreateDate', dayjs().format('YYYYMMDDHHmmss'));
-  params.append('vnp_BankCode', 'NCB');
-  params.append('vnp_IpAddr', '')
-  params.append('vnp_OrderInfo', 'Thanh toán đơn hàng');
-  params.append('vnp_ReturnUrl', 'http://localhost:3000');
-  params.append('vnp_TxnRef', '123456');
-  params.append('vnp_SecureHash', '');
+  params.append('vnp_IpAddr', ip);
+  params.append(
+    'vnp_OrderInfo',
+    `Thanh toan don hang cua user ${order.user_id} voi gia tri ${order.total_price}`,
+  );
+  params.append('vnp_OrderType', 'other');
+  params.append(
+    'vnp_ReturnUrl',
+    process.env.NEXT_PUBLIC_RETURN_URL_VNPAY || '',
+  );
+  params.append('vnp_TxnRef', (order?.id || Math.random()).toString());
   params.forEach((value, key) => {
-    signData.push(`${key}=${value}`);
+    signDataArray.push(`${key}=${value}`);
   });
-
+  const signData = querystring.stringify(signDataArray, { encode: false });
+  const signed = hmac.update(new Buffer(signData, 'utf-8')).digest('hex');
+  params.append('vnp_SecureHash', signed);
+  vnpUrl += '?' + querystring.stringify(params, { encode: false });
+  return vnpUrl;
 }
