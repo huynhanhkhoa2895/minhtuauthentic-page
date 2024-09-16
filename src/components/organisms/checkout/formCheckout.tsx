@@ -48,7 +48,7 @@ type FormData = {
   address: string;
   payment_id: number;
   note?: string;
-  status: string;
+  status?: string;
 };
 export default function FormCheckout({
   user,
@@ -83,7 +83,7 @@ export default function FormCheckout({
       payment_id: payments[0]?.id || 0,
       note: '',
       phone: user?.phone || '',
-      status: ORDER_STATUS.NEW,
+      status: ORDER_STATUS.NEW as string,
     },
   });
   useEffect(() => {

@@ -28,7 +28,7 @@ export default function CartPreview() {
   }, [ref]);
   return (
     <div className={'flex flex-col gap-3'} ref={ref}>
-      {order?.cart?.items?.length === 0 ? (
+      {order?.cart?.items?.length && order?.cart?.items?.length === 0 ? (
         <div className={'text-center text-lg font-semibold'}>
           Giỏ hàng trống
         </div>
@@ -92,7 +92,7 @@ export default function CartPreview() {
               </>
             );
           })}
-          {order?.cart?.items?.length > 0 && (
+          {order?.cart?.items?.length && order?.cart?.items?.length > 0 && (
             <>
               <p className={'flex justify-between items-center'}>
                 <span className={'text-xl uppercase font-semibold'}>
