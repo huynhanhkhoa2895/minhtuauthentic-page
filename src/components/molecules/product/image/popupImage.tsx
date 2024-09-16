@@ -7,10 +7,11 @@ import { ImageDto } from '@/dtos/Image.dto';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 import Close from '@/components/icons/close';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectFade, Pagination, Autoplay } from 'swiper/modules';
+import { EffectFade, Pagination, Navigation } from 'swiper/modules';
 import { Swiper as SwiperClass } from 'swiper/types';
 import { VariantDto } from '@/dtos/Variant.dto';
 import PopupImageItem from '@/components/molecules/product/image/popupImageItem';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons/lib/icons';
 type Props = {
   open: boolean;
   product: ProductDto;
@@ -30,8 +31,7 @@ export default function PopupImage({
     product,
     variant: variantActive,
   });
-  const swiperRef = useRef<SwiperClass | null>(null);
-
+  const [swiper, setSwiper] = useState<SwiperClass | null>(null);
   useEffect(() => {
     if (image) {
       setImageActive(image);
@@ -39,10 +39,8 @@ export default function PopupImage({
   }, [image]);
 
   useEffect(() => {
-    if (swiperRef.current) {
-      swiperRef.current.slideTo(
-        images.findIndex((item) => item.url === imageActive?.url),
-      );
+    if (swiper) {
+      swiper.slideTo(images.findIndex((item) => item.url === imageActive?.url));
     }
   }, [imageActive]);
 
@@ -65,80 +63,107 @@ export default function PopupImage({
     );
   }, [images, imageActive]);
 
+  const renderNavigatorButton = (variant: string) => {
+    return (
+      <div
+        onClick={() => {
+          if (swiper) {
+            const currentSlide = swiper.activeIndex;
+            const indexMax = images?.length - 1;
+            if (variant === 'next') {
+              swiper.slideTo(currentSlide === indexMax ? 0 : currentSlide + 1);
+            } else {
+              swiper.slideTo(currentSlide === 0 ? indexMax : currentSlide - 1);
+            }
+          }
+        }}
+        className={twMerge(
+          'absolute z-[2] w-[32px] h-[32px] rounded-full border border-[#dad4d4] cursor-pointer top-[calc(50%-22px)] lg:top-[calc(50%-16px)] bg-white flex justify-center items-center',
+          variant === 'next' ? 'right-[20px]' : 'left-[20px]',
+        )}
+      >
+        {variant === 'next' ? (
+          <RightOutlined className={'text-[#dad4d4] text-center '} />
+        ) : (
+          <LeftOutlined className={'text-[#dad4d4] text-center '} />
+        )}
+      </div>
+    );
+  };
+
   return (
     <>
-      {isReady &&
-        createPortal(
+      <div
+        style={{
+          backgroundImage: `url("${imageActive?.url}")`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+        }}
+        className={twMerge(
+          'fixed inset-0 transition-all duration-300 ',
+          open ? 'visible opacity-100 z-[100]' : 'invisible opacity-0 z-[-1]',
+        )}
+      >
+        <div className={'backdrop-blur-3xl bg-black/30 h-full relative'}>
           <div
-            style={{
-              backgroundImage: `url("${imageActive?.url}")`,
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'center',
-            }}
-            className={twMerge(
-              'fixed inset-0 transition-all duration-300 ',
-              open
-                ? 'visible opacity-100 z-[100]'
-                : 'invisible opacity-0 z-[-1]',
-            )}
+            className={
+              'h-[calc(100%-220px)] lg:h-[calc(100%-140px)] pb-0 pt-[40px] w-full box-content'
+            }
           >
-            <div className={'backdrop-blur-3xl bg-black/30 h-full relative'}>
-              <div
-                className={
-                  'h-[calc(100%-220px)] lg:h-[calc(100%-140px)] pb-0 pt-[40px] w-full box-content'
-                }
-              >
-                <div className={'relative h-full max-lg:px-3'}>
-                  <Swiper
-                    className={'h-full'}
-                    modules={[Pagination, EffectFade, Autoplay]}
-                    effect={'fade'}
-                    loop={true}
-                    speed={1000}
-                    fadeEffect={{
-                      crossFade: true,
-                    }}
-                    onSwiper={(swiper) => {
-                      swiperRef.current = swiper;
-                    }}
-                    onSlideChange={(swiper) => {
-                      const activeIndex = swiper.activeIndex;
-                      setImageActive(images[activeIndex]);
-                    }}
-                  >
-                    {images.map((image, index) => (
-                      <SwiperSlide key={image.url + '_' + index}>
-                        <div className={'pl-full relative lg:h-full  m-auto'}>
-                          <div className={'absolute inset-0'}>
-                            <ImageWithFallback
-                              className={'object-contain h-full w-auto m-auto'}
-                              image={image}
-                              alt={product.name}
-                            />
-                          </div>
-                        </div>
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
-                </div>
-              </div>
-              <div className={'h-[120px] w-full overflow-auto'}>
-                {renderImage}
-              </div>
-              <button
-                type="button"
-                className={'w-6 h-6 absolute top-3 right-3 cursor-pointer'}
-                onClick={() => {
-                  setIsOpen && setIsOpen({ display: false, image: null });
+            <div className={'relative h-full max-lg:px-3'}>
+              <Swiper
+                className={'h-full'}
+                modules={[Pagination, EffectFade, Navigation]}
+                effect={'fade'}
+                loop={true}
+                slidesPerView={1}
+                fadeEffect={{
+                  crossFade: true,
+                }}
+                key={'popup-image'}
+                onSwiper={(swiper) => {
+                  setSwiper(swiper);
+                }}
+                onSlideChange={(swiper) => {
+                  const activeIndex = swiper.activeIndex;
+                  setImageActive(images[activeIndex]);
                 }}
               >
-                <Close className={' cursor-pointer w-6 h-6 block'} />
-              </button>
+                {images.map((image, index) => (
+                  <SwiperSlide key={image.url + '_' + index}>
+                    <div className={'pl-full relative h-full  m-auto'}>
+                      <div className={'absolute inset-0'}>
+                        <ImageWithFallback
+                          className={'object-contain h-full w-auto m-auto'}
+                          image={image}
+                          alt={product.title || product.name}
+                        />
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              {images.length > 0 && (
+                <>
+                  {renderNavigatorButton('prev')}
+                  {renderNavigatorButton('next')}
+                </>
+              )}
             </div>
-          </div>,
-          document.body,
-        )}
+          </div>
+          <div className={'h-[120px] w-full overflow-auto'}>{renderImage}</div>
+          <button
+            type="button"
+            className={'w-6 h-6 absolute top-3 right-3 cursor-pointer'}
+            onClick={() => {
+              setIsOpen && setIsOpen({ display: false, image: null });
+            }}
+          >
+            <Close className={' cursor-pointer w-6 h-6 block'} />
+          </button>
+        </div>
+      </div>
     </>
   );
 }

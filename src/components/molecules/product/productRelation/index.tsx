@@ -45,7 +45,7 @@ export default function ProductRelation({ products }: Props) {
                   <div>
                     <h5 className={'font-semibold'}>
                       <Link href={generateSlugToHref(product?.slugs?.slug)}>
-                        {product.name}
+                        {product.title || product.name}
                       </Link>
                     </h5>
                     <ProductPrice

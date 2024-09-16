@@ -1,7 +1,6 @@
 import { ProductDto } from '@/dtos/Product.dto';
 import ProductDetailImage from '@/components/molecules/product/image/productDetailImage';
 import ProductProperty from '@/components/molecules/product/property';
-import PopupImage from '@/components/molecules/product/image/popupImage';
 import { useState } from 'react';
 import { ImageDto } from '@/dtos/Image.dto';
 import { ProductConfigurationsDto } from '@/dtos/productConfigurations.dto';
@@ -15,6 +14,13 @@ import ListKeyword from '@/components/organisms/product/listKeyword';
 import dynamic from 'next/dynamic';
 const ProductRating = dynamic(
   () => import('@/components/molecules/product/productRating'),
+  {
+    ssr: false,
+  },
+);
+
+const PopupImage = dynamic(
+  () => import('@/components/molecules/product/image/popupImage'),
   {
     ssr: false,
   },

@@ -1,6 +1,6 @@
 import { ImageDto } from '@/dtos/Image.dto';
 import Image, { StaticImageData } from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import noImage from '@/static/images/no-image.png';
 
@@ -31,6 +31,8 @@ const ImageWithFallback = ({
   const [imgActiveSrc, setImageActiveSrc] = useState<string | StaticImageData>(
     image?.url || noImage,
   );
+  const ref = useRef<HTMLImageElement | null>(null);
+
   useEffect(() => {
     setImageActiveSrc(image?.url || noImage);
   }, [image]);
@@ -39,6 +41,7 @@ const ImageWithFallback = ({
       <>
         {isFill ? (
           <Image
+            ref={ref}
             onClick={() => {
               onClick && image && onClick(image);
             }}
@@ -59,6 +62,7 @@ const ImageWithFallback = ({
           />
         ) : (
           <Image
+            ref={ref}
             onClick={() => {
               onClick && image && onClick(image);
             }}

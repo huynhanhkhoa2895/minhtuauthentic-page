@@ -50,3 +50,8 @@ html, body {
 iframe {
   @apply w-full;
 }
+.container-html {
+  img {
+    @apply max-lg:w-full max-lg:h-auto m-auto !important;
+  }
+}

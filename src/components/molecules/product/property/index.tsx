@@ -109,7 +109,7 @@ const ProductProperty = ({
         </div>
       </div>
       <hr className={'mt-3'} />
-      <div className={'mt-3'}>
+      <div className={'mt-3 overflow-hidden'}>
         <ProductPrice
           prefix={'Giá'}
           variant={_variantActive}

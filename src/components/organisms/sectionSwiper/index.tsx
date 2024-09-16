@@ -108,11 +108,7 @@ const SectionSwiper = ({
             onSwiper={(swiper) => setSwiper(swiper)}
             centeredSlides={isCenter}
             breakpoints={{
-              425: {
-                slidesPerView: currentSlide || 2,
-                spaceBetween: 10,
-              },
-              768: {
+              320: {
                 slidesPerView: currentSlide || 2,
                 spaceBetween: 10,
               },
@@ -144,13 +140,12 @@ const SectionSwiper = ({
                 );
               })}
           </Swiper>
-          {data.length > (currentSlide || 0) * rows &&
-            !isNotDisplayNavigation && (
-              <>
-                {renderNavigatorButton('prev')}
-                {renderNavigatorButton('next')}
-              </>
-            )}
+          {data.length > 0 && !isNotDisplayNavigation && (
+            <>
+              {renderNavigatorButton('prev')}
+              {renderNavigatorButton('next')}
+            </>
+          )}
         </div>
       ) : (
         <div className={'flex gap-3 p-3 bg-white my-3'}>

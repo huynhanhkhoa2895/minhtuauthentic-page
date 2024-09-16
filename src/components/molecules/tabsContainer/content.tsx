@@ -36,6 +36,7 @@ export default function TabContent({
     >
       <div
         ref={ref}
+        className={'container-html'}
         dangerouslySetInnerHTML={{
           __html: item,
         }}
