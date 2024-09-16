@@ -36,78 +36,90 @@ export default function CartPreview() {
         <>
           {order?.cart?.items?.map((item: OrderItemsDto, key: number) => {
             return (
-              <div
-                className={'flex gap-2 w-[350px] border-b border-gray-200 pb-3'}
-                key={key + '_' + item.variant_id}
-              >
-                <div className={'w-[80px] h-[80px] shrink-0'}>
-                  <ImageWithFallback
-                    className={'w-[80px] h-[80px]'}
-                    image={item?.image}
-                  />
-                </div>
-                <div className={'flex flex-col gap-2 '}>
-                  <p>
-                    <Link
-                    href={generateSlugToHref(item?.slug)}
-                    className={'text-primary text-[12px] text-left'}
-                  >
-                    {item?.variant_name}
-                  </Link>
-                  </p>
-                  {
-                    (item.variant_configurations || [])?.map((config, index) => {
-                      return (
-                        <p key={index} className={'text-[12px] text-left'}>
-                          ({config.name}: {config.value})
-                        </p>
-                      );
-                    })
+              <>
+                <div
+                  className={
+                    'flex gap-2 w-[350px] border-b border-gray-200 pb-3'
                   }
-                  <div className={'flex justify-between items-center'}>
-                    <InputNumber
-                      min={1}
-                      value={item.qty}
-                      onChange={(value) => onChange(value, key)}
+                  key={key + '_' + item.variant_id}
+                >
+                  <div className={'w-[80px] h-[80px] shrink-0'}>
+                    <ImageWithFallback
+                      className={'w-[80px] h-[80px]'}
+                      image={item?.image}
                     />
-                    <PriceOnCart item={item} isDisplayTotal={true} />
+                  </div>
+                  <div className={'flex flex-col gap-2 '}>
+                    <p>
+                      <Link
+                        href={generateSlugToHref(item?.slug)}
+                        className={
+                          'text-primary text-[12px] text-left font-bold'
+                        }
+                      >
+                        {item?.variant_name}
+                      </Link>
+                    </p>
+                    {(item.variant_configurations || [])?.map(
+                      (config, index) => {
+                        return (
+                          <p key={index} className={'text-[12px] text-left'}>
+                            ({config.name}: {config.value})
+                          </p>
+                        );
+                      },
+                    )}
+                    <div className={'flex justify-between items-center'}>
+                      <InputNumber
+                        min={1}
+                        value={item.qty}
+                        onChange={(value) => onChange(value, key)}
+                      />
+                      <PriceOnCart item={item} isDisplayTotal={true} />
+                    </div>
+                  </div>
+                  <div>
+                    <Button
+                      icon={<DeleteOutlined />}
+                      danger
+                      type={'link'}
+                      onClick={() =>
+                        order?.updateCart && order.updateCart(key, 0)
+                      }
+                    ></Button>
                   </div>
                 </div>
-                <div>
-                  <Button
-                    icon={<DeleteOutlined />}
-                    danger
-                    type={'link'}
-                    onClick={() =>
-                      order?.updateCart && order.updateCart(key, 0)
-                    }
-                  ></Button>
-                </div>
-              </div>
+              </>
             );
           })}
-          <p className={'flex justify-between items-center'}>
-            <span className={'text-xl uppercase font-semibold'}>Tổng cộng: </span>
-            <span className={'font-semibold text-primary'}>
-              {formatMoney(order?.cart?.total_price || 0)}
-            </span>
-          </p>
-          <Link
-            className={
-              'block w-full p-2 text-lg font-semibold bg-primary text-white text-center rounded-[10px] shadow-custom cursor-pointer'
-            }
-            href={'/gio-hang/tom-tat'}
-          >
-            Xem giỏ hàng
-          </Link>
-          <Link
-            className={
-              'block w-full p-2 text-lg font-semibold bg-primary text-white text-center rounded-[10px] shadow-custom cursor-pointer'
-            }
-            href={'/gio-hang/thanh-toan'}
-          >
-            Thanh toán
-          </Link>
+          {order?.cart?.items?.length > 0 && (
+            <>
+              <p className={'flex justify-between items-center'}>
+                <span className={'text-xl uppercase font-semibold'}>
+                  Tổng cộng:{' '}
+                </span>
+                <span className={'font-semibold text-primary'}>
+                  {formatMoney(order?.cart?.total_price || 0)}
+                </span>
+              </p>
+              <Link
+                className={
+                  'block w-full p-2 text-lg font-semibold bg-primary text-white text-center rounded-[10px] shadow-custom cursor-pointer'
+                }
+                href={'/gio-hang/tom-tat'}
+              >
+                Xem giỏ hàng
+              </Link>
+              <Link
+                className={
+                  'block w-full p-2 text-lg font-semibold bg-primary text-white text-center rounded-[10px] shadow-custom cursor-pointer'
+                }
+                href={'/gio-hang/thanh-toan'}
+              >
+                Thanh toán
+              </Link>
+            </>
+          )}
         </>
       )}
     </div>

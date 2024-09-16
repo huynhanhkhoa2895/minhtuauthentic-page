@@ -9,16 +9,15 @@ import Link from 'next/link';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 export default function CheckoutTemplate({
   payments,
+  ip,
 }: {
   payments: PaymentsDto[];
+  ip: string;
 }) {
   const { user } = useUser();
   return (
     <>
-      <BreadcrumbComponent
-        label={'Giỏ hàng'}
-        link={'/thanh-toan'}
-      />
+      <BreadcrumbComponent label={'Giỏ hàng'} link={'/thanh-toan'} />
       <div
         className={twMerge(
           'w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3 ',
@@ -26,11 +25,11 @@ export default function CheckoutTemplate({
       >
         <div className={'py-6 border-b border-gray-200 mb-6'}>
           <Link href={'/'}>
-            <Image src={Logo} alt={"minhtuauthentic"} width={253} height={60} />
+            <Image src={Logo} alt={'minhtuauthentic'} width={253} height={60} />
           </Link>
         </div>
         <div className={'grid grid-cols-1 lg:grid-cols-2 gap-3'}>
-          {user && <FormCheckout payments={payments} user={user} />}
+          {user && <FormCheckout payments={payments} user={user} ip={ip} />}
 
           <ListCart />
         </div>

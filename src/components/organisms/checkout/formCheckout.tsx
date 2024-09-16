@@ -17,6 +17,7 @@ import { handleDataFetch } from '@/utils/api';
 import CartDto from '@/dtos/Cart.dto';
 import Link from 'next/link';
 import { ArrowLeftOutlined } from '@ant-design/icons/lib/icons';
+import { createVNPayUrl } from '@/utils';
 const fetcher = () =>
   fetch(`/api/orders/province`, {
     method: 'GET',
@@ -52,9 +53,11 @@ type FormData = {
 export default function FormCheckout({
   user,
   payments,
+  ip,
 }: {
   user?: UserDto;
   payments: PaymentsDto[];
+  ip: string;
 }) {
   const router = useRouter();
   const { data, error } = useSWR('/api/orders/province', fetcher);
@@ -153,9 +156,20 @@ export default function FormCheckout({
           toast.success('Đặt hàng thành công');
           orderCtx?.clearCart && orderCtx?.clearCart();
           router.push('/gio-hang/thanh-cong?orderId=' + data?.data?.id);
+        } else if (
+          data?.data?.status === ORDER_STATUS.NEW ||
+          paymentType(data?.data?.payment_id) === PAYMENT_TYPE.VN_PAY
+        ) {
+          const urlVnPay = createVNPayUrl({
+            order: data?.data,
+            ip,
+          });
+          console.log('urlVnPay', urlVnPay);
+          window.open(urlVnPay, '_blank');
         }
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log('e', e);
         toast.error('Đã có lỗi xảy ra');
       });
   };

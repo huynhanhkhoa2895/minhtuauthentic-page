@@ -241,9 +241,10 @@ export function createVNPayUrl({
   order: OrdersDto;
   ip: string;
 }) {
+  console.log('order createVNPayUrl', order);
   let vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
   const hmac = crypto.createHmac('sha512', 'LJMH2I0INPF1CZLENWLTXMC3PN8ZWBSV');
-  const signDataArray = [];
+  const signDataObject: Record<string, string> = {};
   const params = new URLSearchParams();
   params.append('vnp_Version', '2.1.0');
   params.append('vnp_Command', 'pay');
@@ -252,6 +253,7 @@ export function createVNPayUrl({
   params.append('vnp_CurrCode', 'VND');
   params.append('vnp_Amount', ((order.total_price || 0) * 100).toString());
   params.append('vnp_CreateDate', dayjs().format('YYYYMMDDHHmmss'));
+  params.append('vnp_SecureHashType', 'HmacSHA512');
   params.append('vnp_IpAddr', ip);
   params.append(
     'vnp_OrderInfo',
@@ -264,11 +266,13 @@ export function createVNPayUrl({
   );
   params.append('vnp_TxnRef', (order?.id || Math.random()).toString());
   params.forEach((value, key) => {
-    signDataArray.push(`${key}=${value}`);
+    signDataObject[key] = value;
   });
-  const signData = querystring.stringify(signDataArray, { encode: false });
+  const signData = querystring.stringify(signDataObject, { encode: false });
+  console.log('order signData', signDataObject, signData);
   const signed = hmac.update(new Buffer(signData, 'utf-8')).digest('hex');
   params.append('vnp_SecureHash', signed);
-  vnpUrl += '?' + querystring.stringify(params, { encode: false });
+  vnpUrl += '?' + params.toString();
+  console.log('order vnpUrl', vnpUrl);
   return vnpUrl;
 }
