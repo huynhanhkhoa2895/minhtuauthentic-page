@@ -3,10 +3,7 @@ import { VariantDto } from '@/dtos/Variant.dto';
 import { IVariantProductConfigurationValuesDto } from '@/dtos/iVariantProductConfigurationValues.dto';
 import CouponsDto from '@/dtos/Coupons.dto';
 import { PromotionsDto } from '@/dtos/Promotions.dto';
-import dayjs from 'dayjs';
-import crypto from 'crypto';
-import { OrdersDto } from '@/dtos/Orders.dto';
-import querystring from 'qs';
+
 export function formatMoney(
   amount: number | string,
   decimalCount = 0,
@@ -232,64 +229,4 @@ export function promotionName(promotion?: PromotionsDto) {
     case PROMOTION_TYPE.FLASH_SALE:
       return 'Flash Sale';
   }
-}
-
-function sortObject(obj: Record<string, string>) {
-  let sorted: Record<string, string> = {};
-  let str = [];
-  let key;
-  for (let key in obj){
-    if (obj.hasOwnProperty(key)) {
-      str.push(encodeURIComponent(key));
-    }
-  }
-  str.sort();
-  for (let key = 0; key < str.length; key++) {
-    sorted[str[key]] = encodeURIComponent(obj[str[key]]).replace(/%20/g, "+");
-  }
-  return sorted;
-}
-
-export function createVNPayUrl({
-  order,
-  ip,
-}: {
-  order: OrdersDto;
-  ip: string;
-}) {
-  console.log('order createVNPayUrl', order);
-  let vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
-  const hmac = crypto.createHmac('sha512', 'LJMH2I0INPF1CZLENWLTXMC3PN8ZWBSV');
-  let signDataObject: Record<string, string> = {};
-  const params = new URLSearchParams();
-  params.append('vnp_Amount', ((order.total_price || 0) * 100).toString());
-  params.append('vnp_Command', 'pay');
-  params.append('vnp_CreateDate', dayjs().format('YYYYMMDDHHmmss'));
-  params.append('vnp_CurrCode', 'VND');
-  params.append('vnp_IpAddr', ip);
-  params.append('vnp_Locale', 'vn');
-  params.append(
-    'vnp_OrderInfo',
-    `Thanh toan don hang cua user ${order.user_id} voi gia tri ${order.total_price}`,
-  );
-  params.append('vnp_OrderType', 'other');
-  params.append(
-    'vnp_ReturnUrl',
-    process.env.NEXT_PUBLIC_RETURN_URL_VNPAY || '',
-  );
-  params.append('vnp_TmnCode', 'MTAUTEST');
-  params.append('vnp_TxnRef', (order?.id || Math.random()).toString());
-  params.append('vnp_Version', '2.1.0');
-
-  params.forEach((value, key) => {
-    signDataObject[key] = value;
-  });
-  signDataObject = sortObject(signDataObject);
-  const signData = querystring.stringify(signDataObject, { encode: false });
-  console.log('order signData', signDataObject, signData);
-  const signed = hmac.update(new Buffer(signData, 'utf-8')).digest('hex');
-  params.append('vnp_SecureHash', signed);
-  vnpUrl += '?' + params.toString();
-  console.log('order vnpUrl', vnpUrl);
-  return vnpUrl;
 }

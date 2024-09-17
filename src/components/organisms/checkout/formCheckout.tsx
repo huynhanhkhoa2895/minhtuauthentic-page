@@ -17,7 +17,7 @@ import { handleDataFetch } from '@/utils/api';
 import CartDto from '@/dtos/Cart.dto';
 import Link from 'next/link';
 import { ArrowLeftOutlined } from '@ant-design/icons/lib/icons';
-import { createVNPayUrl } from '@/utils';
+import { createVNPayUrl } from '@/utils/vnpay';
 const fetcher = () =>
   fetch(`/api/orders/province`, {
     method: 'GET',

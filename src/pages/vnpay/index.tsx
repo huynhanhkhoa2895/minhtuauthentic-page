@@ -1,5 +1,4 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import OrderSuccessTemplate from '@/components/templates/OrderSuccessTemplate';
 import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
@@ -13,7 +12,7 @@ export const getServerSideProps = (async () => {
   };
 }) satisfies GetServerSideProps<ServerSideProps>;
 
-export default function OderSuccess({
+export default function VnPaySuccess({
   menu,
   footerContent,
   settings,
@@ -22,7 +21,7 @@ export default function OderSuccess({
     <>
       <Header settings={settings} menu={menu} />
       <Layout settings={settings} menu={menu}>
-        <OrderSuccessTemplate />
+        <h1>VNPAY SUCCESS</h1>
       </Layout>
       <Footer footerContent={footerContent} />
     </>
