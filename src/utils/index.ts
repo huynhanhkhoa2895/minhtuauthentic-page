@@ -246,15 +246,12 @@ export function createVNPayUrl({
   const hmac = crypto.createHmac('sha512', 'LJMH2I0INPF1CZLENWLTXMC3PN8ZWBSV');
   const signDataObject: Record<string, string> = {};
   const params = new URLSearchParams();
-  params.append('vnp_Version', '2.1.0');
-  params.append('vnp_Command', 'pay');
-  params.append('vnp_TmnCode', 'MTAUTEST');
-  params.append('vnp_Locale', 'vn');
-  params.append('vnp_CurrCode', 'VND');
   params.append('vnp_Amount', ((order.total_price || 0) * 100).toString());
+  params.append('vnp_Command', 'pay');
   params.append('vnp_CreateDate', dayjs().format('YYYYMMDDHHmmss'));
-  params.append('vnp_SecureHashType', 'HmacSHA512');
+  params.append('vnp_CurrCode', 'VND');
   params.append('vnp_IpAddr', ip);
+  params.append('vnp_Locale', 'vn');
   params.append(
     'vnp_OrderInfo',
     `Thanh toan don hang cua user ${order.user_id} voi gia tri ${order.total_price}`,
@@ -264,7 +261,10 @@ export function createVNPayUrl({
     'vnp_ReturnUrl',
     process.env.NEXT_PUBLIC_RETURN_URL_VNPAY || '',
   );
+  params.append('vnp_TmnCode', 'MTAUTEST');
   params.append('vnp_TxnRef', (order?.id || Math.random()).toString());
+  params.append('vnp_Version', '2.1.0');
+
   params.forEach((value, key) => {
     signDataObject[key] = value;
   });
