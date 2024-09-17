@@ -18,7 +18,7 @@ export const getServerSideProps = async ({ query }: any) => {
     delete vnp_Params['vnp_SecureHash'];
   }
   const signed = hashVNPAY(vnp_Params);
-  if (secureHash === signed) {
+  if (secureHash === signed && vnp_Params['vnp_TransactionStatus'] === '00') {
     is_success = true;
     const order_id = vnp_Params['vnp_TxnRef'];
     await fetch(`${process.env.BE_URL}/api/orders/${order_id}`, {
