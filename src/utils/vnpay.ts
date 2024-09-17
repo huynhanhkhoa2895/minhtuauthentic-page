@@ -24,7 +24,7 @@ export function hashVNPAY(data: Record<string, string>): string {
     'sha512',
     process.env.NEXT_PUBLIC_VNPAY_SECRECT_KEY || '',
   );
-  const signData = querystring.stringify(data, { encode: false });
+  const signData = querystring.stringify(sortObject(data), { encode: false });
   const signed = hmac.update(new Buffer(signData, 'utf-8')).digest('hex');
   return signed;
 }
@@ -62,7 +62,6 @@ export function createVNPayUrl({
   params.forEach((value, key) => {
     signDataObject[key] = value;
   });
-  signDataObject = sortObject(signDataObject);
   console.log(
     'order signDataObject',
     signDataObject,

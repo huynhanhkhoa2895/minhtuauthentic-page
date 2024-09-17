@@ -3,7 +3,6 @@ import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
 import Layout from '@/components/templates/Layout';
-import { ServerSideProps } from '@/config/type';
 import { hashVNPAY } from '@/utils/vnpay';
 import { ORDER_STATUS } from '@/config/enum';
 
@@ -19,7 +18,6 @@ export const getServerSideProps = async ({ query }: any) => {
     delete vnp_Params['vnp_SecureHash'];
   }
   const signed = hashVNPAY(vnp_Params);
-
   if (secureHash === signed) {
     is_success = true;
     const order_id = vnp_Params['vnp_TxnRef'];
@@ -36,7 +34,12 @@ export const getServerSideProps = async ({ query }: any) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log('Success Payment ', res);
+        return {
+          redirect: {
+            destination: '/gio-hang/thanh-cong',
+            permanent: true,
+          },
+        };
       })
       .catch((err) => {});
   }
@@ -59,7 +62,7 @@ export default function VnPaySuccess({
     <>
       <Header settings={settings} menu={menu} />
       <Layout settings={settings} menu={menu}>
-        {is_success ? <h1>VNPAY SUCCESS</h1> : <h1>VNPAY FAIL</h1>}
+        {is_success ? <h1>VNPAY SUCCESS</h1> : <h1>Thanh toán thất bại</h1>}
       </Layout>
       <Footer footerContent={footerContent} />
     </>
