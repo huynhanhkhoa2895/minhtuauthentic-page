@@ -20,7 +20,10 @@ function sortObject(obj: Record<string, string>) {
 }
 
 export function hashVNPAY(data: Record<string, string>): string {
-  const hmac = crypto.createHmac('sha512', process.env.VNPAY_SECRECT_KEY || '');
+  const hmac = crypto.createHmac(
+    'sha512',
+    process.env.NEXT_PUBLIC_VNPAY_SECRECT_KEY || '',
+  );
   const signData = querystring.stringify(data, { encode: false });
   const signed = hmac.update(new Buffer(signData, 'utf-8')).digest('hex');
   return signed;
@@ -60,7 +63,11 @@ export function createVNPayUrl({
     signDataObject[key] = value;
   });
   signDataObject = sortObject(signDataObject);
-  console.log('order signDataObject', signDataObject);
+  console.log(
+    'order signDataObject',
+    signDataObject,
+    process.env.NEXT_PUBLIC_VNPAY_SECRECT_KEY,
+  );
   const signed = hashVNPAY(signDataObject);
   params.append('vnp_SecureHash', signed);
   vnpUrl += '?' + params.toString();
