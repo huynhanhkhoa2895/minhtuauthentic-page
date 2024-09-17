@@ -21,7 +21,7 @@ export const getServerSideProps = async ({ query }: any) => {
   if (secureHash === signed && vnp_Params['vnp_TransactionStatus'] === '00') {
     is_success = true;
     const order_id = vnp_Params['vnp_TxnRef'];
-    await fetch(`${process.env.BE_URL}/api/orders/${order_id}`, {
+    const res = await fetch(`${process.env.BE_URL}/api/orders/${order_id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -34,14 +34,19 @@ export const getServerSideProps = async ({ query }: any) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        return {
-          redirect: {
-            destination: '/gio-hang/thanh-cong',
-            permanent: true,
-          },
-        };
+        return res;
       })
-      .catch((err) => {});
+      .catch((err) => {
+        return null;
+      });
+    if (res) {
+      return {
+        redirect: {
+          destination: '/gio-hang/thanh-cong',
+          permanent: false,
+        },
+      };
+    }
   }
 
   return {

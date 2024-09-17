@@ -86,6 +86,14 @@ export default function FormCheckout({
       status: ORDER_STATUS.NEW as string,
     },
   });
+
+  useEffect(() => {
+    if (!orderCtx?.cart) {
+      toast('Giỏ hàng trống', { type: 'error' });
+      window.location.href = '/';
+    }
+  }, []);
+
   useEffect(() => {
     if (watch('shipping_city')) {
       fetchDataProvince(PROVINCE.DISTRICT, watch('shipping_city')).then(
@@ -154,7 +162,6 @@ export default function FormCheckout({
       .then((data) => {
         if (data?.data?.status === ORDER_STATUS.DONE) {
           toast.success('Đặt hàng thành công');
-          orderCtx?.clearCart && orderCtx?.clearCart();
           router.push('/gio-hang/thanh-cong?orderId=' + data?.data?.id);
         } else if (
           data?.data?.status === ORDER_STATUS.NEW ||
@@ -164,8 +171,8 @@ export default function FormCheckout({
             order: data?.data,
             ip,
           });
-          console.log('urlVnPay', urlVnPay);
-          window.open(urlVnPay, '_blank');
+          orderCtx?.clearCart && orderCtx?.clearCart();
+          window.location.href = urlVnPay;
         }
       })
       .catch((e) => {

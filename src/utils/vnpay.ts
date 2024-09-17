@@ -36,7 +36,6 @@ export function createVNPayUrl({
   order: OrdersDto;
   ip: string;
 }) {
-  console.log('order createVNPayUrl', order);
   let vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
   let signDataObject: Record<string, string> = {};
   const params = new URLSearchParams();
@@ -62,11 +61,6 @@ export function createVNPayUrl({
   params.forEach((value, key) => {
     signDataObject[key] = value;
   });
-  console.log(
-    'order signDataObject',
-    signDataObject,
-    process.env.NEXT_PUBLIC_VNPAY_SECRECT_KEY,
-  );
   const signed = hashVNPAY(signDataObject);
   params.append('vnp_SecureHash', signed);
   vnpUrl += '?' + params.toString();

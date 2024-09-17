@@ -5,5 +5,6 @@ export class PaymentsDto extends BaseDto {
   name?: string;
   label?: string;
   type?: number;
+  description?: string;
   orders?: OrdersDto[];
 }
