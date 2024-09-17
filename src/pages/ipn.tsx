@@ -1,7 +1,7 @@
 import { hashVNPAY } from '@/utils/vnpay';
 
-export const getServerSideProps = async ({ req, res, resolvedUrl, query }) => {
-  const vnp_Params = query;
+export const getServerSideProps = async ({ res, query }: any) => {
+  const vnp_Params = query as Record<string, string>;
   const secureHash = vnp_Params['vnp_SecureHash'];
   if (vnp_Params?.vnp_SecureHashType) {
     delete vnp_Params['vnp_SecureHashType'];
