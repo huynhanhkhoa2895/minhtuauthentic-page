@@ -268,7 +268,7 @@ export function createVNPayUrl({
   params.forEach((value, key) => {
     signDataObject[key] = value;
   });
-  const signData = querystring.stringify(signDataObject, { encode: false });
+  const signData = querystring.stringify(signDataObject, { encode: true });
   console.log('order signData', signDataObject, signData);
   const signed = hmac.update(new Buffer(signData, 'utf-8')).digest('hex');
   params.append('vnp_SecureHash', signed);
