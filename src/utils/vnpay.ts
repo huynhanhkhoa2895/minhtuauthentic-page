@@ -60,6 +60,7 @@ export function createVNPayUrl({
     signDataObject[key] = value;
   });
   signDataObject = sortObject(signDataObject);
+  console.log('order signDataObject', signDataObject);
   const signed = hashVNPAY(signDataObject);
   params.append('vnp_SecureHash', signed);
   vnpUrl += '?' + params.toString();
