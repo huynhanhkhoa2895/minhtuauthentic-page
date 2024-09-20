@@ -18,7 +18,7 @@ type Props = {
     value: string;
     code_name?: string;
   }[];
-  radioOptions?: { label: string; value: string }[];
+  radioOptions?: { label: string | ReactNode; value: string }[];
 };
 type RenderFieldProps = Omit<Props, 'control' | 'errors' | 'name'> & {
   onChange: (value: string) => void;

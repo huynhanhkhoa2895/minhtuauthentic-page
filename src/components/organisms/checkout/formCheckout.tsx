@@ -18,6 +18,7 @@ import CartDto from '@/dtos/Cart.dto';
 import Link from 'next/link';
 import { ArrowLeftOutlined } from '@ant-design/icons/lib/icons';
 import { createVNPayUrl } from '@/utils/vnpay';
+import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 const fetcher = () =>
   fetch(`/api/orders/province`, {
     method: 'GET',
@@ -267,8 +268,10 @@ export default function FormCheckout({
           control={control}
           errors={errors}
           radioOptions={payments.map((item) => ({
-            label: item?.label || item?.name || '',
-            value: item?.id ? item?.id.toString() : '',
+            label: <div className={'flex'}>
+              <ImageWithFallback image={item?.}
+            </div>,
+            value: item?.id ? (item?.id || '').toString() : '',
           }))}
           name={'payment_id'}
           type={'radio'}
