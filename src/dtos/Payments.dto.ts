@@ -1,5 +1,6 @@
 import { OrdersDto } from '@/dtos/Orders.dto';
 import { BaseDto } from '@/dtos/Base.dto';
+import { ImageDetailDto } from '@/dtos/ImageDetail.dto';
 
 export class PaymentsDto extends BaseDto {
   name?: string;
@@ -7,4 +8,5 @@ export class PaymentsDto extends BaseDto {
   type?: number;
   description?: string;
   orders?: OrdersDto[];
+  images?: ImageDetailDto[];
 }

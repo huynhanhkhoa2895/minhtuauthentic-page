@@ -161,4 +161,6 @@ export const PAYMENT_TYPE = {
   COD: 'cod',
   MOMO: 'momo',
   VN_PAY: 'vnpay',
+  BAO_KIM: 'baokim',
+  CK: 'ck',
 };

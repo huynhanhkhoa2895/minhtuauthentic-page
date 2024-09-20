@@ -42,7 +42,7 @@ export const getServerSideProps = async ({ query }: any) => {
     if (res) {
       return {
         redirect: {
-          destination: '/gio-hang/thanh-cong',
+          destination: '/gio-hang/thanh-cong?orderId=' + order_id,
           permanent: false,
         },
       };

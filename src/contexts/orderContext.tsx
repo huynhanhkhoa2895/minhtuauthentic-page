@@ -101,8 +101,10 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     );
     if (!newCartResponse?.data) {
       toast('Không thể thêm vào giỏ hàng', { type: 'error' });
+      return;
     }
     setCart(newCartResponse?.data || []);
+    toast('Đã thêm vào giỏ hàng', { type: 'success' });
   };
 
   const updateCart = async (index: number, qty: number = 1) => {
@@ -116,6 +118,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     }
     const newCartResponse = await callAddUpdateCart(orderItem.variant_id, qty);
     setCart(newCartResponse?.data || []);
+    toast('Đã cập nhật giỏ hàng', { type: 'success' });
   };
 
   const applyCoupon = async (

@@ -19,6 +19,7 @@ import Link from 'next/link';
 import { ArrowLeftOutlined } from '@ant-design/icons/lib/icons';
 import { createVNPayUrl } from '@/utils/vnpay';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import SendTransactionBaoKimDto from '@/dtos/BaoKim/sendTransaction.dto';
 const fetcher = () =>
   fetch(`/api/orders/province`, {
     method: 'GET',
@@ -164,16 +165,33 @@ export default function FormCheckout({
         if (data?.data?.status === ORDER_STATUS.DONE) {
           toast.success('Đặt hàng thành công');
           router.push('/gio-hang/thanh-cong?orderId=' + data?.data?.id);
-        } else if (
-          data?.data?.status === ORDER_STATUS.NEW ||
-          paymentType(data?.data?.payment_id) === PAYMENT_TYPE.VN_PAY
-        ) {
-          const urlVnPay = createVNPayUrl({
-            order: data?.data,
-            ip,
-          });
-          orderCtx?.clearCart && orderCtx?.clearCart();
-          window.location.href = urlVnPay;
+        } else if (data?.data?.status === ORDER_STATUS.NEW) {
+          if (paymentType(data?.data?.payment_id) === PAYMENT_TYPE.VN_PAY) {
+            const urlVnPay = createVNPayUrl({
+              order: data?.data,
+              ip,
+            });
+            orderCtx?.clearCart && orderCtx?.clearCart();
+            window.location.href = urlVnPay;
+          } else if (
+            paymentType(data?.data?.payment_id) === PAYMENT_TYPE.BAO_KIM
+          ) {
+            fetch('/api/baokim/send', {
+              method: 'POST',
+              body: JSON.stringify(
+                new SendTransactionBaoKimDto({
+                  mrc_order_id: data?.data?.id,
+                  total_amount: data?.data?.total_price,
+                  description:
+                    'Thanh toan don hang cua user ' +
+                    data?.data?.user_id +
+                    ' voi gia tri ' +
+                    data?.data?.total_price,
+                  url_success: '/gio-hang/thanh-cong?orderId=' + data?.data?.id,
+                }),
+              ),
+            });
+          }
         }
       })
       .catch((e) => {
@@ -268,9 +286,26 @@ export default function FormCheckout({
           control={control}
           errors={errors}
           radioOptions={payments.map((item) => ({
-            label: <div className={'flex'}>
-              <ImageWithFallback image={item?.}
-            </div>,
+            label: (
+              <div className={'flex gap-2'}>
+                <ImageWithFallback
+                  image={item?.images?.[0]?.image}
+                  alt={item?.name}
+                  className={'w-[60px] h-[60px]'}
+                />
+                <div className={'flex flex-col gap-1'}>
+                  <span className={'text-xl font-semibold'}>
+                    {item.label || item.name}
+                  </span>
+                  {item.description && (
+                    <div
+                      className={'text-sm text-gray-500'}
+                      dangerouslySetInnerHTML={{ __html: item.description }}
+                    />
+                  )}
+                </div>
+              </div>
+            ),
             value: item?.id ? (item?.id || '').toString() : '',
           }))}
           name={'payment_id'}
