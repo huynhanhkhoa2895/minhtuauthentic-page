@@ -13,7 +13,7 @@ export default async function handler(
       iss: process.env.NEXT_PUBLIC_BAO_KIM_API,
       aud: process.env.NEXT_PUBLIC_BAO_KIM_SECRET,
     };
-    const auth = await jwt.sign(sign, process.env.NEXT_PUBLIC_BAO_KIM_SECRET);
+    const auth = jwt.sign(sign, process.env.NEXT_PUBLIC_BAO_KIM_SECRET || '');
     console.log(
       'url baokim',
       process.env.NEXT_PUBLIC_BAO_KIM_API,
