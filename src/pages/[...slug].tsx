@@ -58,7 +58,7 @@ export const getServerSideProps = (async (context) => {
         break;
       case Entity.NEWS:
         let news = data?.data as ResponseSlugPageDto<ResponseNewsDetailPageDto>;
-        title = news?.data?.news?.seo?.title || news?.data?.news?.name;
+        title = news?.data?.news?.name;
         description = news?.data?.news?.description;
         image = news?.data?.news?.images?.[0]?.image?.url || null;
         width = news?.data?.news?.images?.[0]?.image?.width || 0;

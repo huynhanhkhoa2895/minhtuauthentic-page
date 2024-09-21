@@ -32,7 +32,6 @@ export default async function handler(
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('data', data);
         const _data = handleDataFetch(data);
         res.status(200).json(_data);
       })
