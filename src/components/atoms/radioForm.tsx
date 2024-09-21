@@ -1,10 +1,10 @@
 import { Radio, RadioChangeEvent } from 'antd';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, ReactNode, useEffect, useState } from 'react';
 
 type Props = {
   value: string;
   onChange: (value: string) => void;
-  radioOptions: { label: string; value: string }[];
+  radioOptions: { label: ReactNode; value: string }[];
 };
 export default function RadioForm({ value, onChange, radioOptions }: Props) {
   const [_val, setVal] = useState(value);
@@ -22,7 +22,11 @@ export default function RadioForm({ value, onChange, radioOptions }: Props) {
   };
 
   return (
-    <Radio.Group onChange={handleChange} value={_val.toString()} className={'flex flex-col gap-3'}>
+    <Radio.Group
+      onChange={handleChange}
+      value={_val.toString()}
+      className={'flex flex-col gap-3'}
+    >
       {radioOptions.map((option) => (
         <Radio key={option.value} value={option.value}>
           {option.label}
