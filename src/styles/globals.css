@@ -7,9 +7,9 @@ html, body {
   margin: 0;
   min-height: 100vh;
   width: 100%;
-  font-size: 14px;
   background-color: #F8F9FA;
   font-family: "Open Sans", sans-serif;
+  font-size: 13px;
 }
 .ant-input-number-handler-wrap {
   opacity: 1 !important;
