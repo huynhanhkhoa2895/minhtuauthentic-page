@@ -44,7 +44,7 @@ export default function MenuFooter() {
       icon: <MapIconFooter className={'text-center w-6'} />,
       label: 'Cửa hàng',
       onClick: () => {
-        window.open('https://www.google.com/maps/dir/?api=1&origin=&destination=278%20H%C3%B2a%20b%C3%ACnh,%20Hi%E1%BB%87p%20t%C3%A2n,%20Q%20T%C3%A2n%20ph%C3%BA,%20TpHCM');
+        window.open('https://www.google.com/maps/place/N%C6%B0%E1%BB%9Bc+Hoa+Ch%C3%ADnh+H%C3%A3ng+-+Minh+T%C3%BA+Authentic/@10.7726,106.62672,15z/data=!4m6!3m5!1s0x31752df3970ab413:0x908ad6fe074c5688!8m2!3d10.7726003!4d106.6267201!16s%2Fg%2F11j_8xbgmd?entry=ttu&g_ep=EgoyMDI0MDkxOC4xIKXMDSoASAFQAw%3D%3D');
       },
     },
     {

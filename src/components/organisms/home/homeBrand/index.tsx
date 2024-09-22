@@ -14,13 +14,13 @@ export default function HomeBrand({ contents, setting }: Props) {
       className={'p-3 mt-3 rounded-[10px]'}
       style={{ backgroundColor: setting?.backgroundColor || '#fff' }}
     >
-      <h3
+      <h2
         className={
           'text-[24px] font-semibold text-primary mb-3 text-center uppercase'
         }
       >
         Thương hiệu nổi bật
-      </h3>
+      </h2>
       <SectionSwiper
         slidesPerView={6}
         classNameContainer={'border border-[#e4e4e4] rounded-[10px] p-3'}

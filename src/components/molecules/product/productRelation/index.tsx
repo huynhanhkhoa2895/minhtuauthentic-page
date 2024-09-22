@@ -43,11 +43,11 @@ export default function ProductRelation({ products }: Props) {
                     />
                   </div>
                   <div>
-                    <h5 className={'font-semibold'}>
+                    <h3 className={'font-semibold'}>
                       <Link href={generateSlugToHref(product?.slugs?.slug)}>
                         {product.title || product.name}
                       </Link>
-                    </h5>
+                    </h3>
                     <ProductPrice
                       variant={_variantActive}
                       classNameRegularPrice={'text-[14px] font-semibold'}

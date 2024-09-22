@@ -129,7 +129,7 @@ export default function FormRegister() {
       }}
       className={'p-4'}
     >
-      <h3 className={'text-primary font-semibold text-[24px] mb-6'}>Đăng Ký</h3>
+      <h1 className={'text-primary font-semibold text-[24px] mb-6'}>Đăng Ký</h1>
       {errorSubmit && (
         <div className={'text-red-500 font-semibold mb-3'}>{errorSubmit}</div>
       )}

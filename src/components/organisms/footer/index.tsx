@@ -26,9 +26,9 @@ const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
       case 2:
         return (
           <div key={item.id}>
-            <h4 className={'uppercase font-semibold text-[16px]'}>
+            <p className={'uppercase font-semibold text-[16px]'}>
               {item.title}
-            </h4>
+            </p>
             <div
               className={'mt-[12px]'}
               dangerouslySetInnerHTML={{ __html: item.content || '' }}
@@ -38,9 +38,9 @@ const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
       case 3:
         return (
           <div key={item.id}>
-            <h4 className={'uppercase font-semibold text-[16px]'}>
+            <p className={'uppercase font-semibold text-[16px]'}>
               {item.title}
-            </h4>
+            </p>
             <div
               className={'mt-[12px]'}
               dangerouslySetInnerHTML={{ __html: item.content || '' }}
@@ -106,7 +106,7 @@ const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
               <p className={'uppercase font-bold mb-[10px]'}>
                 Hình thức thanh toán
               </p>
-              <div className={'grid grid-cols-4 w-max gap-3'}>
+              <div className={'grid grid-cols-6 w-max gap-3'}>
                 {footerContent &&
                   footerContent[STATIC_CONTENT_TYPE.FOOTER_LOGO_PAYMENT]?.map(
                     (item: StaticContentsDto, index: number) => {

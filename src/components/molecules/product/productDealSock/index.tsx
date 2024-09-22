@@ -25,9 +25,9 @@ export default function ProductDealSock() {
     <>
       {promotion && (
         <div className={'w-full shadow-custom bg-white my-3 p-3'}>
-          <h3 className={'text-2xl font-bold text-primary mb-3'}>
-            MUA VỚI GIÁ ĐẶC BIỆT
-          </h3>
+          <p className={'text-2xl font-bold text-primary mb-3'}>
+            MUA KÈM GIÁ SỐC
+          </p>
           <SectionSwiper
             slidesPerView={5}
             slidesPerViewMobile={1}

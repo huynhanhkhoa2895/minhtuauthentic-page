@@ -45,6 +45,7 @@ const ProductDetailImage = ({
                 'w-full h-full object-contain hover:scale-105 transition-transform duration-300 cursor-pointer'
               }
               onClick={() => handleClickImage(imageItem)}
+              product={product}
               onMouseEnter={() => {
                 setImageActive(imageItem);
               }}
@@ -66,6 +67,7 @@ const ProductDetailImage = ({
         onClick={(image: ImageDto | null) => {
           setIsOpen && setIsOpen({ display: true, image });
         }}
+        product={product}
       />
       <div className={'px-3'}>{renderSlideImage}</div>
     </div>

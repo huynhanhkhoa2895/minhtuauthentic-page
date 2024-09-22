@@ -24,6 +24,7 @@ export default function CartSummaryTemplate() {
           'w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3',
         )}
       >
+        <h1 className={'text-3xl font-bold mb-3'}>Giỏ hàng</h1>
         <table className={'border border-gray-200 w-full'}>
           <thead>
           <tr>
@@ -56,6 +57,15 @@ export default function CartSummaryTemplate() {
                   >
                     {item.variant_name}
                   </Link>
+                  {
+                    item?.variant_configurations?.map((config, index) => {
+                      return (
+                        <p key={index} className={'text-sm'}>
+                          ({config.name}: {config.value})
+                        </p>
+                      )
+                    })
+                  }
                 </td>
                 <td className={'border-y border-gray-200 text-center'}>
                   <PriceWithLineThrough

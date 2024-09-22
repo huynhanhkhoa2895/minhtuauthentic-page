@@ -21,7 +21,7 @@ export default function TabsContainer({ header, content, className }: Props) {
         type={'button'}
         onClick={() => setIndexActive(index)}
       >
-        {item}
+        <h2>{item}</h2>
       </button>
     );
   }

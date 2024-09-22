@@ -27,7 +27,9 @@ export const Banners = ({
       slidesPerView={1}
       pagination={true}
       modules={[Pagination, EffectCreative, Autoplay]}
-      autoplay={true}
+      autoplay={{
+        delay: 6000,
+      }}
       loop={true}
     >
       {banners.map((banner, index) => {

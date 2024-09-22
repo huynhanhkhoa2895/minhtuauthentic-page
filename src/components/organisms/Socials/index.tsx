@@ -59,10 +59,10 @@ export default function Socials() {
                   <Link
                     href={social?.properties?.slug || '/'}
                     className={twMerge(
-                      'py-2 bg-primary text-white rounded-full  relative transition-all duration-300 visible opacity-0 group-hover:visible group-hover:opacity-100',
+                      'py-2 bg-primary text-white relative transition-all duration-300 invisible hidden opacity-0 group-hover:visible group-hover:opacity-100 group-hover:block ',
                       index === 0
-                        ? 'pl-[25px] pr-3  -translate-x-5 group-hover:-translate-x-6'
-                        : 'pr-[25px] pl-3  translate-x-5 group-hover:translate-x-6',
+                        ? 'pl-[25px] pr-3  -translate-x-5 group-hover:-translate-x-6 rounded-tr-full rounded-br-full'
+                        : 'pr-[25px] pl-3  translate-x-5 group-hover:translate-x-6 rounded-tl-full rounded-bl-full',
                     )}
                   >
                     {social?.title || 'Follow us'}
@@ -70,7 +70,7 @@ export default function Socials() {
                   <div className={'z-[2] '}>
                     <ImageWithFallback
                       className={
-                        'w-[60px] h-[60px] object-contain rounded-full'
+                        'w-[50px] h-[50px] object-contain rounded-full'
                       }
                       image={social?.images?.[0]?.image}
                     />

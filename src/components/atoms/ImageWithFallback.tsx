@@ -3,6 +3,7 @@ import Image, { StaticImageData } from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import noImage from '@/static/images/no-image.png';
+import { ProductDto } from '@/dtos/Product.dto';
 
 type Props = {
   image: ImageDto | null | undefined;
@@ -15,6 +16,7 @@ type Props = {
   priority?: boolean;
   unoptimized?: boolean;
   quality?: number;
+  product?: ProductDto
 };
 const ImageWithFallback = ({
   image,
@@ -27,6 +29,7 @@ const ImageWithFallback = ({
   priority,
   unoptimized,
   quality,
+  product
 }: Props) => {
   const [imgActiveSrc, setImageActiveSrc] = useState<string | StaticImageData>(
     image?.url || noImage,
@@ -47,7 +50,7 @@ const ImageWithFallback = ({
             }}
             onMouseEnter={(e) => onMouseEnter && onMouseEnter(e)}
             src={imgActiveSrc}
-            alt={alt || image?.alt || ''}
+            alt={alt || image?.alt || product?.title || product?.name || ''}
             fill={true}
             sizes={'(max-width: 768px) 100vw, 33vw'}
             className={className}
@@ -70,7 +73,7 @@ const ImageWithFallback = ({
               onMouseEnter && onMouseEnter(e);
             }}
             src={imgActiveSrc}
-            alt={alt || image?.alt || ''}
+            alt={alt || image?.alt || product?.title || product?.name || ''}
             width={image?.width || 0}
             height={image?.height || 0}
             unoptimized={unoptimized}

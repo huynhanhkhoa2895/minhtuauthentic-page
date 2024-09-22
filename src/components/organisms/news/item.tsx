@@ -26,10 +26,10 @@ export default function NewsItem({ news }: Props) {
       </div>
       <div className={'mt-3'}>
         <div className={'h-[65px] overflow-hidden'}>
-          <h5 className={'font-semibold text-[16px]'}>
+          <h3 className={'font-semibold text-[16px]'}>
             <NewsClock item={news} />
             <Link href={generateSlugToHref(news.slugs?.slug)}>{news.name}</Link>
-          </h5>
+          </h3>
         </div>
         <div
           className={'container-html'}

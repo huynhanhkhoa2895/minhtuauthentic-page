@@ -111,7 +111,7 @@ export const InputSearch = ({ classname, isMobile }: Props) => {
                       }
                       title={
                         <Link href={generateSlugToHref(item?.slugs?.slug)}>
-                          {item.name}
+                          {item.title || item.name}
                         </Link>
                       }
                       description={

@@ -130,7 +130,7 @@ export const Header = ({ menu, settings }: Props) => {
             </HeaderItem>
             <div
               className={twMerge(
-                'absolute max-h-[600px] overflow-auto top-12 -left-12 bg-white p-3 z-[2] rounded-[10px] shadow-custom transition-opacity duration-500',
+                'absolute max-h-[600px] overflow-auto top-12 -left-[12rem] bg-white p-3 z-[2] rounded-[10px] shadow-custom transition-opacity duration-500',
                 orderCtx?.isOpenHeaderCart
                   ? 'visible opacity-100 '
                   : 'invisible opacity-0',

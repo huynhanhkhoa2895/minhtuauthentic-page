@@ -46,11 +46,11 @@ const ProductCard = ({
         </div>
         <ProductCardImage product={product} priority={false} />
         <div className={'px-2 min-h-[84px] lg:min-h-[63px]'}>
-          <h6 className={'font-bold'}>
+          <h3 className={'font-bold'}>
             <Link className={'block'} href={`/${product?.slugs?.slug}`}>
               {product.title || product.name}
             </Link>
-          </h6>
+          </h3>
         </div>
         <div className={'h-[50px]'}>
           {isShowConfiguration &&

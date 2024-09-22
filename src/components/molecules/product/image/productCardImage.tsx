@@ -31,7 +31,7 @@ const ProductCardImage = ({
               'object-contain w-full h-full hover:scale-105 transition-transform duration-300'
             }
             priority={priority}
-            alt={product.name || ''}
+            product={product}
           />
         </div>
       </Link>

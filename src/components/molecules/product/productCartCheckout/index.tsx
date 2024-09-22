@@ -45,8 +45,8 @@ export default function ProductCartCheckout({ variant }: Props) {
           router.push('/gio-hang/tom-tat');
         }}
       >
-        <span className={'text-white'}>Mua ngay</span>
-        <span className={'text-white'}>Giao Tận Nơi</span>
+        <span className={'text-white text-xl font-bold uppercase'}>Mua ngay</span>
+        <span className={'text-white'}>Giao Tận Nơi hoặc Nhận Tại Cửa Hàng</span>
       </button>
       <button
         className={

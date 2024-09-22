@@ -33,7 +33,7 @@ const GroupCategory = ({
       style={{ backgroundColor: staticComponent?.properties?.backgroundColor }}
     >
       <div className={'flex flex-col lg:flex-row justify-between mb-3 gap-2'}>
-        <h3
+        <h2
           style={{ color: staticComponent?.properties?.textColor }}
           className={
             'w-max shrink-0 max-lg:items-center max-lg:flex max-lg:justify-between max-lg:w-full'
@@ -55,9 +55,9 @@ const GroupCategory = ({
                 ),
               })
             }
-            className={'lg:hidden last:mr-0 whitespace-nowrap'}
+            className={'lg:hidden last:mr-0 whitespace-nowrap text-black'}
           />
-        </h3>
+        </h2>
         <div
           className={'flex justify-end gap-3 w-full lg:basis-[60%] lg:w-[70%] '}
         >
@@ -96,7 +96,7 @@ const GroupCategory = ({
       <SectionSwiper
         isGrid={true}
         slidesPerView={5}
-        spaceBetween={10}
+        spaceBetween={5}
         isUseHeightWrapper={true}
         renderItem={(item: unknown) => {
           const iProduct = item as IProductCategoryDto;

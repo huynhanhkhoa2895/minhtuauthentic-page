@@ -36,49 +36,28 @@ export default function CartPreview() {
         <>
           {order?.cart?.items?.map((item: OrderItemsDto, key: number) => {
             return (
-              <>
-                <div
-                  className={
-                    'flex gap-2 w-[350px] border-b border-gray-200 pb-3'
-                  }
-                  key={key + '_' + item.variant_id}
-                >
-                  <div className={'w-[80px] h-[80px] shrink-0'}>
-                    <ImageWithFallback
-                      className={'w-[80px] h-[80px]'}
-                      image={item?.image}
-                    />
-                  </div>
-                  <div className={'flex flex-col gap-2 '}>
-                    <p>
-                      <Link
-                        href={generateSlugToHref(item?.slug)}
-                        className={
-                          'text-primary text-[12px] text-left font-bold'
-                        }
-                      >
-                        {item?.variant_name}
-                      </Link>
-                    </p>
-                    {(item.variant_configurations || [])?.map(
-                      (config, index) => {
-                        return (
-                          <p key={index} className={'text-[12px] text-left'}>
-                            ({config.name}: {config.value})
-                          </p>
-                        );
-                      },
-                    )}
-                    <div className={'flex justify-between items-center'}>
-                      <InputNumber
-                        min={1}
-                        value={item.qty}
-                        onChange={(value) => onChange(value, key)}
-                      />
-                      <PriceOnCart item={item} isDisplayTotal={true} />
-                    </div>
-                  </div>
-                  <div>
+              <div
+                className={
+                  'flex gap-2 w-[350px] border-b border-gray-200 pb-3'
+                }
+                key={key + '_' + item.variant_id}
+              >
+                <div className={'w-[80px] h-[80px] shrink-0'}>
+                  <ImageWithFallback
+                    className={'w-[80px] h-[80px]'}
+                    image={item?.image}
+                  />
+                </div>
+                <div className={'flex flex-col gap-2 '}>
+                  <p className={'flex justify-between gap-2'}>
+                    <Link
+                      href={generateSlugToHref(item?.slug)}
+                      className={
+                        'text-primary text-[12px] text-left font-bold'
+                      }
+                    >
+                      {item?.variant_name}
+                    </Link>
                     <Button
                       icon={<DeleteOutlined />}
                       danger
@@ -87,9 +66,26 @@ export default function CartPreview() {
                         order?.updateCart && order.updateCart(key, 0)
                       }
                     ></Button>
+                  </p>
+                  {(item.variant_configurations || [])?.map(
+                    (config, index) => {
+                      return (
+                        <p key={index} className={'text-[12px] text-left'}>
+                          ({config.name}: {config.value})
+                        </p>
+                      );
+                    },
+                  )}
+                  <div className={'flex justify-between items-center'}>
+                    <InputNumber
+                      min={1}
+                      value={item.qty}
+                      onChange={(value) => onChange(value, key)}
+                    />
+                    <PriceOnCart item={item} isDisplayTotal={true} />
                   </div>
                 </div>
-              </>
+              </div>
             );
           })}
           {order?.cart?.items?.length && order?.cart?.items?.length > 0 && (
