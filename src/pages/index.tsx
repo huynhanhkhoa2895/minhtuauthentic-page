@@ -50,14 +50,18 @@ export default function Home({
   footerContent,
   settingsHome,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  console.log('homePage.seo', homePage.seo)
   return (
     <>
       <Header settings={settings} menu={menu} />
-      <Layout settings={settings} menu={menu}>
+      <Layout seo={homePage.seo} settings={settings} menu={menu}>
         <div
           id={'main-home-page'}
           className={'lg:mt-[10px] flex w-full gap-2 relative'}
         >
+          <h1 className={'hidden'}>
+            {homePage?.seo?.title}
+          </h1>
           <MenuWrapper menu={menu} />
           <Banners
             className={'flex-1 rounded-3xl lg:h-[380px]'}

@@ -180,6 +180,7 @@ export default function FormCheckout({
               method: 'POST',
               body: JSON.stringify(
                 new SendTransactionBaoKimDto({
+                  merchant_id: 40002,
                   mrc_order_id: data?.data?.id,
                   total_amount: data?.data?.total_price,
                   description:

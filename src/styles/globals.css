@@ -9,6 +9,7 @@ html, body {
   width: 100%;
   font-size: 14px;
   background-color: #F8F9FA;
+  font-family: "Open Sans", sans-serif;
 }
 .ant-input-number-handler-wrap {
   opacity: 1 !important;

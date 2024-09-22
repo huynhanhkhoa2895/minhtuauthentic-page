@@ -9,7 +9,6 @@ type Props = {
   seo?: SEOProps;
 };
 export default function DefaultSeo({ settings, seo }: Props) {
-  const router = useRouter();
   const setting = (settings || []).find(
     (item) => item.key === SETTING_KEY.GENERAL.PAGE_INFORMATION.KEY,
   );
@@ -17,7 +16,7 @@ export default function DefaultSeo({ settings, seo }: Props) {
   return (
     <NextSeo
       title={seo?.title || setting?.value?.page_title || 'Minh tu Authentic'}
-      description={setting?.value?.page_description || 'Minh tu Authentic'}
+      description={seo?.description || setting?.value?.page_description || 'Minh tu Authentic'}
       additionalMetaTags={[
         {
           property: 'keywords',
@@ -36,7 +35,7 @@ export default function DefaultSeo({ settings, seo }: Props) {
           {
             url:
               seo?.image ||
-              process.env.API_URL + '/_next/static/media/logo.fc400164.png',
+              process.env.NEXT_PUBLIC_APP_URL + '/_next/static/media/logo.fc400164.png',
             width: seo?.width || 253,
             height: seo?.height || 83,
             alt: 'Minh tu Authentic',
@@ -44,7 +43,7 @@ export default function DefaultSeo({ settings, seo }: Props) {
         ],
         url: process.env.API_URL,
       }}
-      canonical={seo?.canonical || process.env.API_URL}
+      canonical={seo?.canonical || process.env.NEXT_PUBLIC_APP_URL}
     />
   );
 }

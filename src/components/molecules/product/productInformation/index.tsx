@@ -29,7 +29,7 @@ export default function ProductInformation({ product }: Props) {
           {SexName(product?.product_property?.sex || 2)}
         </span>
       ),
-      is_visible: !!product?.product_property?.sex,
+      is_visible: !!product?.product_property?.sex != null,
     },
     {
       label: 'Nồng độ',

@@ -6,7 +6,7 @@ type Props = {
 };
 export default function Countdown({ end_date, className }: Props) {
   const commonClass =
-    'bg-white p-2 lg:p-3 rounded-[10px] border border-gray-200 max-lg:text-sm';
+    'bg-white p-1 lg:p-2 rounded-[10px] border border-gray-200 max-lg:text-sm';
   const refInterval = useRef<NodeJS.Timeout>();
   const [countdown, setCountdown] = useState<{
     hours: string;
@@ -63,11 +63,15 @@ export default function Countdown({ end_date, className }: Props) {
     refInterval.current = setInterval(timer, 1000);
   }
   return (
-    <div className={twMerge('flex gap-3', className)}>
-      <span className={commonClass}>{countdown.day}</span>
-      <span className={commonClass}>{countdown.hours}</span>
-      <span className={commonClass}>{countdown.minutes}</span>
-      <span className={commonClass}>{countdown.seconds}</span>
+    <div className={className}>
+      <p className={'text-white text-2xl'}>Kết thúc sau: </p>
+      <div className={twMerge('flex gap-3')}>
+        <span className={commonClass}>{countdown.day}</span>
+        <span className={commonClass}>{countdown.hours}</span>
+        <span className={commonClass}>{countdown.minutes}</span>
+        <span className={commonClass}>{countdown.seconds}</span>
+      </div>
     </div>
+
   );
 }

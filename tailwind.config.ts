@@ -27,6 +27,10 @@ const config: Config = {
         'gradient-conic':
             'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      fontWeight: {
+        semibold: 500,
+        bold: 600
+      },
       colors: {
         primary: '#C44812',
         grey: '#f5f5f5',
