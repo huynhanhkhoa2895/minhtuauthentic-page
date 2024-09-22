@@ -13,7 +13,7 @@ export default async function handler(
       iss: process.env.NEXT_PUBLIC_BAO_KIM_API,
       aud: process.env.NEXT_PUBLIC_BAO_KIM_SECRET,
     };
-    const auth = await jwt.sign(sign, process.env.NEXT_PUBLIC_BAO_KIM_SECRET);
+    const auth = jwt.sign(sign, process.env.NEXT_PUBLIC_BAO_KIM_SECRET || '');
     console.log(
       'url baokim',
       process.env.NEXT_PUBLIC_BAO_KIM_API,
@@ -32,7 +32,6 @@ export default async function handler(
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('data', data);
         const _data = handleDataFetch(data);
         res.status(200).json(_data);
       })

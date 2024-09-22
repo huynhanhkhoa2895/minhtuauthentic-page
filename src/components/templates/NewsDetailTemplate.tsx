@@ -30,10 +30,6 @@ const NewsDetailTemplate = ({ slug }: Props) => {
           'w-full max-rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto rounded-[10px] p-3',
         )}
       >
-        <h1 className={'text-primary font-bold text-2xl mb-3'}>
-          {data?.news?.title || data?.news?.name}
-        </h1>
-
         {data?.news && <NewsClock item={data?.news} />}
         {image && (
           <div className={'w-full lg:w-[650px] p-3 mx-auto'}>
