@@ -53,7 +53,6 @@ export default function ProductRelation({ products }: Props) {
                       classNameRegularPrice={'text-[14px] font-semibold'}
                       classNamePrice={'font-[500] text-[10px]'}
                     />
-                    <StartRating />
                   </div>
                 </div>
               </div>

@@ -42,13 +42,13 @@ export default function CartPreview() {
                 }
                 key={key + '_' + item.variant_id}
               >
-                <div className={'w-[80px] h-[80px] shrink-0'}>
+                <div className={'w-[80px] h-[80px] shrink-0 '}>
                   <ImageWithFallback
                     className={'w-[80px] h-[80px]'}
                     image={item?.image}
                   />
                 </div>
-                <div className={'flex flex-col gap-2 '}>
+                <div className={'flex flex-col gap-2 w-full'}>
                   <p className={'flex justify-between gap-2'}>
                     <Link
                       href={generateSlugToHref(item?.slug)}

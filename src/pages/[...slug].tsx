@@ -147,6 +147,7 @@ export default function Page({
           image,
           width,
           height,
+          canonical: process.env.NEXT_PUBLIC_APP_URL + '/' + slug?.slug,
         }}
       >
         {renderTemplate()}
