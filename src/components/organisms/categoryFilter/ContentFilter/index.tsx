@@ -121,16 +121,23 @@ export default function ContentFilter({
       </>
     );
   }, [_products]);
-  return (
-    <div className={'p-3 w-full lg:col-span-5'}>
-      {ctx?.search && (
+  const renderTitle = () => {
+    console.log(slugData);
+    if (ctx?.search) {
+      return (
         <h1 className={'mb-6'}>
           <span className={'text-3xl text-primary font-semibold'}>
             Kết quả tìm kiếm cho:{' '}
           </span>
           <span className={'text-2xl '}>{ctx?.search}</span>
         </h1>
-      )}
+      );
+    }
+    return null;
+  };
+  return (
+    <div className={'p-3 w-full lg:col-span-5'}>
+      {renderTitle()}
       <Button
         type={'link'}
         className={'lg:hidden flex gap-1 p-0'}

@@ -31,6 +31,7 @@ export default function CategoryTemplate({
   breadcrumb,
   isSearch,
 }: Props) {
+  console.log(slug);
   const data = slug?.data as ResponseCategoryFilterPageDto;
   const renderLabelBreadcrumb: Record<string, string> = {
     [Entity.CATEGORIES]: 'Danh mục',
