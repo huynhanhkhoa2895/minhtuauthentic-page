@@ -31,8 +31,8 @@ export default function Checkout({
   ip,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <Layout settings={settings}>
+    <div className={'container  mx-auto p-3'}>
       <CheckoutTemplate payments={payments} ip={ip} />
-    </Layout>
+    </div>
   );
 }

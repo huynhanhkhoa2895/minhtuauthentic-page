@@ -202,7 +202,7 @@ export default function FormCheckout({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className={'flex-1'} onSubmit={handleSubmit(onSubmit)}>
       <h3 className={'text-3xl font-bold mb-6'}>Thông tin vận chuyển</h3>
       <div className={'grid grid-cols-2 gap-3'}>
         <FormControl

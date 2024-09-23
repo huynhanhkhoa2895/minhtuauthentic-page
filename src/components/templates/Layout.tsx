@@ -15,6 +15,10 @@ type Props = {
   seo?: SEOProps;
 };
 
+const MenuFooter = dynamic(() => import('@/components/organisms/MobileMenu/menuFooter'), {
+  ssr:false
+})
+
 const NavMenu = dynamic(
   () => import('@/components/organisms/MobileMenu/navMenu'),
   {
@@ -51,6 +55,7 @@ export default function Layout({
       </div>
       {menu && <NavMenu menu={menu} />}
       <Socials />
+      <MenuFooter />
     </>
   );
 }

@@ -8,6 +8,7 @@ import PhoneIconFooter from '@/components/icons/menuFooter/Phone';
 import { useRouter } from 'next/router';
 import MapIconFooter from '@/components/icons/menuFooter/Map';
 import AppContext from '@/contexts/appContext';
+import { createPortal } from 'react-dom';
 
 export default function MenuFooter() {
   const user = useUser();
@@ -79,18 +80,26 @@ export default function MenuFooter() {
   };
 
   return (
-    <div
-      className={
-        'lg:hidden fixed bottom-0 left-0 z-10 bg-white w-full shadow-custom rounded-tr-2xl rounded-tl-2xl z-[1001]'
+    <>
+      {
+        createPortal(
+          <div
+            className={
+              'lg:hidden fixed bottom-0 left-0 z-10 bg-white w-full shadow-custom rounded-tr-2xl rounded-tl-2xl z-[1001]'
+            }
+          >
+            <div className={'p-3 flex items-center justify-center'}>
+              {elementFooter.map((item, index) => {
+                return (
+                  <Fragment key={'menufooter' + index}>{ItemMenu(item)}</Fragment>
+                );
+              })}
+            </div>
+          </div>
+          , document.body
+        )
       }
-    >
-      <div className={'p-3 flex items-center justify-center'}>
-        {elementFooter.map((item, index) => {
-          return (
-            <Fragment key={'menufooter' + index}>{ItemMenu(item)}</Fragment>
-          );
-        })}
-      </div>
-    </div>
+    </>
+
   );
 }

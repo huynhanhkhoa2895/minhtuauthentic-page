@@ -28,7 +28,7 @@ export default function ListCart() {
     order?.updateCart && order.updateCart(index, value || 0);
   };
   return (
-    <div className={'border-l border-gray-200 px-3'}>
+    <div className={'border-l border-gray-200 px-3 flex-1'}>
       <h3 className={'text-3xl font-bold'}>Thông tin giỏ hàng</h3>
       <div className={'flex flex-col gap-3 border-b border-gray-200 p-6'}>
         {order?.cart?.items?.map((item, key) => (

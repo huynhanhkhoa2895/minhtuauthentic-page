@@ -28,7 +28,7 @@ export default function CheckItemCart({ item, onChange }: Props) {
   };
 
   return (
-    <div key={item.variant_id} className={'flex gap-3'}>
+    <div key={item.variant_id} className={'flex gap-3 '}>
       <div
         className={
           'w-[100px] h-[100px] shrink-0 boder border-gray-200 rounded-[10px] overflow-hidden'
