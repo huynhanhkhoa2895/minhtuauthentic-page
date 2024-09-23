@@ -30,7 +30,7 @@ export default function ProductDealSock() {
           </p>
           <SectionSwiper
             slidesPerView={5}
-            slidesPerViewMobile={1}
+            slidesPerViewMobile={2}
             spaceBetween={10}
             renderItem={(item: unknown) => {
               const iCoupon = item as CouponsDto;

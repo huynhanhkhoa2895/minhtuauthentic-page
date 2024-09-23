@@ -9,6 +9,7 @@ type Props = {
   seo?: SEOProps;
 };
 export default function DefaultSeo({ settings, seo }: Props) {
+  const router = useRouter();
   const setting = (settings || []).find(
     (item) => item.key === SETTING_KEY.GENERAL.PAGE_INFORMATION.KEY,
   );
@@ -16,11 +17,16 @@ export default function DefaultSeo({ settings, seo }: Props) {
   return (
     <NextSeo
       title={seo?.title || setting?.value?.page_title || 'Minh tu Authentic'}
-      description={seo?.description || setting?.value?.page_description || 'Minh tu Authentic'}
+      description={
+        seo?.description ||
+        setting?.value?.page_description ||
+        'Minh Tu Authentic, Shop nước hoa chính hãng uy tín Tphcm, Quận tân phú, Tân bình, Bình tân, sản phẩm khuyến mãi, Nước hoa trả góp, nước hoa chiết nam, chiết nữ, nuớc hoa Niche, Dubai, cao cấp, mỹ phẩm chính hãng'
+      }
       additionalMetaTags={[
         {
           property: 'keywords',
           content:
+            seo?.keyword ||
             setting?.value?.page_keyword ||
             'Shop nước hoa chính hãng Tphcm, Authentic, auth, Tân phú, trả góp',
         },
@@ -35,7 +41,8 @@ export default function DefaultSeo({ settings, seo }: Props) {
           {
             url:
               seo?.image ||
-              process.env.NEXT_PUBLIC_APP_URL + '/_next/static/media/logo.fc400164.png',
+              process.env.NEXT_PUBLIC_APP_URL +
+                '/_next/static/media/logo.fc400164.png',
             width: seo?.width || 253,
             height: seo?.height || 83,
             alt: 'Minh tu Authentic',
@@ -43,7 +50,9 @@ export default function DefaultSeo({ settings, seo }: Props) {
         ],
         url: process.env.API_URL,
       }}
-      canonical={seo?.canonical || process.env.NEXT_PUBLIC_APP_URL}
+      canonical={
+        seo?.canonical || process.env.NEXT_PUBLIC_APP_URL + router.asPath
+      }
     />
   );
 }

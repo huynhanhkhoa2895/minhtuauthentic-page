@@ -14,12 +14,6 @@ export default async function handler(
       aud: process.env.NEXT_PUBLIC_BAO_KIM_SECRET,
     };
     const auth = jwt.sign(sign, process.env.NEXT_PUBLIC_BAO_KIM_SECRET || '');
-    console.log(
-      'url baokim',
-      process.env.NEXT_PUBLIC_BAO_KIM_API,
-      process.env.NEXT_PUBLIC_BAO_KIM_SECRET,
-      url,
-    );
     console.log('sign', sign);
     console.log('jwt', auth);
     fetch(url, {

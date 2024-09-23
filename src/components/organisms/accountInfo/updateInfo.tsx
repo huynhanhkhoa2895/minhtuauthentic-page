@@ -99,7 +99,6 @@ export default function AccountInfoUpdate({ profile }: Props) {
     })
       .then((res) => res.json())
       .then((data: { data: UserDto }) => {
-        console.log(data);
         if (data?.data) {
           toast.success('Cập nhật thành công');
           setCookieUser(data.data);

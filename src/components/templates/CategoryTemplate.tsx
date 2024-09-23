@@ -24,8 +24,13 @@ type Props = {
     label: string;
     link: string;
   };
+  isSearch?: boolean;
 };
-export default function CategoryTemplate({ slug, breadcrumb, menu }: Props) {
+export default function CategoryTemplate({
+  slug,
+  breadcrumb,
+  isSearch,
+}: Props) {
   const data = slug?.data as ResponseCategoryFilterPageDto;
   const renderLabelBreadcrumb: Record<string, string> = {
     [Entity.CATEGORIES]: 'Danh mục',
@@ -33,7 +38,7 @@ export default function CategoryTemplate({ slug, breadcrumb, menu }: Props) {
     [Entity.KEYWORDS]: slug?.keyword?.value || 'Từ khóa',
   };
   return (
-    <CategoryFilterProvider>
+    <CategoryFilterProvider isSearch={isSearch}>
       <BreadcrumbComponent
         label={
           breadcrumb

@@ -48,8 +48,10 @@ export type TypeAppState = {
 
 export const CategoryFilterProvider = ({
   children,
+  isSearch,
 }: {
   children: React.ReactNode;
+  isSearch?: boolean;
 }) => {
   const router = useRouter();
   const queryString = new URLSearchParams(
@@ -92,6 +94,7 @@ export const CategoryFilterProvider = ({
         params.append(`filter[${key}][${index}]`, value.toString());
       }
     }
+
     refTimerCount.current = setTimeout(() => {
       updateRouter(params.toString());
     }, 500);
@@ -122,10 +125,10 @@ export const CategoryFilterProvider = ({
       setLoading(true);
       refTimer.current = setTimeout(() => {
         const params = new URLSearchParams(window.location.search);
-        fetch(
-          `/api/getProduct/${((router?.query?.slug as string[]) || []).join('/')}?` +
-            params.toString(),
-        )
+        const url = isSearch
+          ? `/api/getProduct/filter/?`
+          : `/api/getProduct/${((router?.query?.slug as string[]) || []).join('/')}?`;
+        fetch(url + params.toString())
           .then((res) => res.json())
           .then((res: { data: { data: ResponseCategoryFilterPageDto } }) => {
             setProducts(res?.data?.data?.products || []);

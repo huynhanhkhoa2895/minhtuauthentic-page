@@ -124,12 +124,12 @@ export default function ContentFilter({
   return (
     <div className={'p-3 w-full lg:col-span-5'}>
       {ctx?.search && (
-        <p className={'mb-6'}>
+        <h1 className={'mb-6'}>
           <span className={'text-3xl text-primary font-semibold'}>
             Kết quả tìm kiếm cho:{' '}
           </span>
           <span className={'text-2xl '}>{ctx?.search}</span>
-        </p>
+        </h1>
       )}
       <Button
         type={'link'}

@@ -18,6 +18,5 @@ export const handleHeader = (token?: string) => {
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
   }
-  console.log('headers', headers, token);
   return headers;
 };

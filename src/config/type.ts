@@ -32,4 +32,5 @@ export type SEOProps = {
   image?: string;
   width?: number;
   height?: number;
+  keyword?: string;
 };

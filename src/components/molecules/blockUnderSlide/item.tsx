@@ -7,9 +7,8 @@ import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 const BlockUnderSlideItem = ({ content }: { content: StaticContentsDto }) => {
   const imageDetail = content?.images?.[0];
   const image = imageDetail?.image || null;
-  const url = image?.url || noImage;
   return (
-    <div className={'w-full '}>
+    <>
       <div
         className={'rounded-[10px] overflow-hidden pt-[100%] relative'}
         style={{
@@ -29,7 +28,7 @@ const BlockUnderSlideItem = ({ content }: { content: StaticContentsDto }) => {
         </Link>
       </div>
       <p className={'text-center mt-3'}>{content.title || ''}</p>
-    </div>
+    </>
   );
 };
 export default BlockUnderSlideItem;

@@ -14,6 +14,7 @@ import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import { ServerSideProps } from '@/config/type';
 import { redirect } from 'next/navigation';
 import { Fragment } from 'react';
+import { useRouter } from 'next/router';
 
 export const getServerSideProps = (async (context) => {
   const { slug } = context.query;
@@ -39,7 +40,7 @@ export const getServerSideProps = (async (context) => {
   if (!data) {
     redirect('not-found');
   }
-
+  let keyword = undefined;
   if (
     data?.data?.model === Entity.PRODUCTS ||
     data?.data?.model === Entity.NEWS
@@ -48,6 +49,7 @@ export const getServerSideProps = (async (context) => {
       case Entity.PRODUCTS:
         let product =
           data?.data as ResponseSlugPageDto<ResponseProductDetailPageDto>;
+        console.log('test product', product);
         title =
           product?.data?.product?.seo?.title || product?.data?.product?.name;
         image =
@@ -55,14 +57,18 @@ export const getServerSideProps = (async (context) => {
         width = product?.data?.product?.feature_image_detail?.image?.width || 0;
         height =
           product?.data?.product?.feature_image_detail?.image?.height || 0;
+        description = product?.data?.product?.seo?.description;
+        keyword = product?.data?.product?.seo?.keyword;
         break;
       case Entity.NEWS:
         let news = data?.data as ResponseSlugPageDto<ResponseNewsDetailPageDto>;
-        title = news?.data?.news?.name;
-        description = news?.data?.news?.description;
+        title = news?.data?.news?.seo?.title || news?.data?.news?.name;
+        description =
+          news?.data?.news?.seo?.description || news?.data?.news?.description;
         image = news?.data?.news?.images?.[0]?.image?.url || null;
         width = news?.data?.news?.images?.[0]?.image?.width || 0;
         height = news?.data?.news?.images?.[0]?.image?.height || 0;
+        keyword = news?.data?.news?.seo?.keyword;
     }
     context.res.setHeader(
       'Cache-Control',
@@ -89,6 +95,7 @@ export const getServerSideProps = (async (context) => {
     image?: string | null;
     width?: number;
     height?: number;
+    keyword?: string;
   }
 >;
 export default function Page({
@@ -101,6 +108,7 @@ export default function Page({
   image,
   width,
   height,
+  keyword,
 }: {
   slug: ResponseSlugPageDto<unknown>;
   title?: string | null;
@@ -108,6 +116,7 @@ export default function Page({
   image?: string;
   width?: number;
   height?: number;
+  keyword?: string;
 } & ServerSideProps) {
   const renderTemplate = () => {
     switch (slug?.model) {
@@ -147,6 +156,7 @@ export default function Page({
           image,
           width,
           height,
+          keyword,
           canonical: process.env.NEXT_PUBLIC_APP_URL + '/' + slug?.slug,
         }}
       >

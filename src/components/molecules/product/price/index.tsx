@@ -26,7 +26,7 @@ const ProductPrice = ({
   return (
     <>
       {variant && (
-        <p className={twMerge('flex items-center gap-2', className)}>
+        <p className={twMerge('flex items-center gap-0.5 lg:gap-2', className)}>
           {prefix && <span className={classNamePrefix}>{prefix}</span>}
           <PriceWithLineThrough
             regularPrice={variant.regular_price}

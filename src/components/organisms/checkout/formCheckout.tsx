@@ -286,29 +286,31 @@ export default function FormCheckout({
         <FormControl
           control={control}
           errors={errors}
-          radioOptions={payments.map((item) => ({
-            label: (
-              <div className={'flex gap-2'}>
-                <ImageWithFallback
-                  image={item?.images?.[0]?.image}
-                  alt={item?.name}
-                  className={'w-[60px] h-[60px]'}
-                />
-                <div className={'flex flex-col gap-1'}>
-                  <span className={'text-xl font-semibold'}>
-                    {item.label || item.name}
-                  </span>
-                  {item.description && (
-                    <div
-                      className={'text-sm text-gray-500'}
-                      dangerouslySetInnerHTML={{ __html: item.description }}
-                    />
-                  )}
+          radioOptions={payments.map((item) => {
+            return {
+              label: (
+                <div className={'flex gap-2'}>
+                  <ImageWithFallback
+                    image={item?.images?.[0]?.image}
+                    alt={item?.name}
+                    className={'w-[60px] h-[60px]'}
+                  />
+                  <div className={'flex flex-col gap-1'}>
+                    <span className={'text-xl font-semibold'}>
+                      {item.label || item.name}
+                    </span>
+                    {item.description && (
+                      <div
+                        className={'text-sm text-gray-500'}
+                        dangerouslySetInnerHTML={{ __html: item.description }}
+                      />
+                    )}
+                  </div>
                 </div>
-              </div>
-            ),
-            value: item?.id ? (item?.id || '').toString() : '',
-          }))}
+              ),
+              value: item?.id ? (item?.id || '').toString() : '',
+            };
+          })}
           name={'payment_id'}
           type={'radio'}
           placeholder={'Chọn phương thức thanh toán'}

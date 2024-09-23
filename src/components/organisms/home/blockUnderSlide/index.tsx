@@ -16,8 +16,8 @@ export default function BlockUnderSlide({ contents }: Props) {
       <SectionSwiper
         classNameContainer={'mt-3 max-lg:p-3'}
         isGrid={true}
-        slidesPerView={12}
-        slidesPerViewMobile={6}
+        slidesPerView={10}
+        slidesPerViewMobile={4}
         spaceBetween={10}
         heightItem={145}
         isUseHeightWrapper={true}

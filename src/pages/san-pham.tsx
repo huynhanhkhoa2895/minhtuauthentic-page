@@ -9,6 +9,7 @@ import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage
 
 import Layout from '@/components/templates/Layout';
 import { ServerSideProps } from '@/config/type';
+import { useRouter } from 'next/router';
 export const getServerSideProps = (async (context) => {
   const resDefault = await getDefaultSeverSide();
   const res = await fetch(
@@ -39,10 +40,20 @@ export default function ProductPage({
   slug,
   settings,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const router = useRouter();
   return (
     <>
       <Header settings={settings} menu={menu} />
-      <Layout settings={settings} menu={menu}>
+      <Layout
+        settings={settings}
+        menu={menu}
+        seo={{
+          canonical:
+            process.env.NEXT_PUBLIC_APP_URL +
+            '/san-pham/?search=' +
+            router.query.search,
+        }}
+      >
         <CategoryTemplate
           menu={menu}
           slug={slug as ResponseSlugPageDto<ResponseCategoryFilterPageDto>}
@@ -50,6 +61,7 @@ export default function ProductPage({
             label: 'Sản phẩm',
             link: '/san-pham',
           }}
+          isSearch={true}
         />
       </Layout>
       <Footer footerContent={footerContent} />
