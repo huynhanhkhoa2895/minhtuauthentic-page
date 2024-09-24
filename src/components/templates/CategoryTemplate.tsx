@@ -31,13 +31,13 @@ export default function CategoryTemplate({
   breadcrumb,
   isSearch,
 }: Props) {
-  console.log(slug);
   const data = slug?.data as ResponseCategoryFilterPageDto;
   const renderLabelBreadcrumb: Record<string, string> = {
     [Entity.CATEGORIES]: 'Danh mục',
     [Entity.BRANDS]: 'Nhãn hiệu',
     [Entity.KEYWORDS]: slug?.keyword?.value || 'Từ khóa',
   };
+  console.log('test data', data);
   return (
     <CategoryFilterProvider isSearch={isSearch}>
       <BreadcrumbComponent
@@ -63,6 +63,7 @@ export default function CategoryTemplate({
           products={data.products || []}
           settings={data.settings}
           total={data?.total || 0}
+          category={data.category}
           slugData={
             new SlugDto({
               model: slug?.model,
@@ -72,6 +73,13 @@ export default function CategoryTemplate({
           }
         />
       </div>
+      {
+        data?.category?.static_components?.description && (
+          <div className={'w-full shadow-custom p-3 rounded-[10px] mt-3 bg-white container-html'}
+               dangerouslySetInnerHTML={{ __html: data?.category?.static_components?.description || '' }} />
+        )
+      }
+
       <NavFilterMobile key={'CategoryTemplate'} settings={data.settings} />
     </CategoryFilterProvider>
   );

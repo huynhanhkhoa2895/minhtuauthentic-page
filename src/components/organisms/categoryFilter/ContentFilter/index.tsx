@@ -11,12 +11,16 @@ import { ProductConfigurationValuesDto } from '@/dtos/productConfigurationValues
 import { SlugDto } from '@/dtos/Slug.dto';
 import { Pagination, Space, Skeleton, Button } from 'antd';
 import Filter from '@/components/icons/filter';
+import { CategoryDto } from '@/dtos/Category.dto';
+import { Entity } from '@/config/enum';
+import category from '@/components/icons/menuFooter/Category';
 
 type Props = {
   settings?: ProductFilterOptionDto;
   products: ProductDto[];
   slugData: SlugDto;
   total: number;
+  category?: CategoryDto
 };
 
 export default function ContentFilter({
@@ -24,6 +28,7 @@ export default function ContentFilter({
   settings,
   slugData,
   total,
+  category,
 }: Props) {
   const ctx = useContext(CategoryFilterContext);
   const [_products, setProducts] = useState<ProductDto[]>(products);
@@ -130,6 +135,16 @@ export default function ContentFilter({
             Kết quả tìm kiếm cho:{' '}
           </span>
           <span className={'text-2xl '}>{ctx?.search}</span>
+        </h1>
+      );
+    } else if(
+      slugData.model === Entity.CATEGORIES
+    ) {
+      return (
+        <h1 className={'mb-6'}>
+          <span className={'text-3xl text-primary font-semibold'}>
+            {category.name}
+          </span>
         </h1>
       );
     }

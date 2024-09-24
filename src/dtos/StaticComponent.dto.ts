@@ -12,4 +12,5 @@ export class StaticComponentDto extends BaseDto {
   category?: CategoryDto;
   properties?: StaticComponentPropertyDto;
   slugs?: SlugDto;
+  description?: string;
 }

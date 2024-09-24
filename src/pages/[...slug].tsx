@@ -43,13 +43,13 @@ export const getServerSideProps = (async (context) => {
   let keyword = undefined;
   if (
     data?.data?.model === Entity.PRODUCTS ||
+    data?.data?.model === Entity.CATEGORIES ||
     data?.data?.model === Entity.NEWS
   ) {
     switch (data?.data?.model) {
       case Entity.PRODUCTS:
         let product =
           data?.data as ResponseSlugPageDto<ResponseProductDetailPageDto>;
-        console.log('test product', product);
         title =
           product?.data?.product?.seo?.title || product?.data?.product?.name;
         image =
@@ -69,6 +69,13 @@ export const getServerSideProps = (async (context) => {
         width = news?.data?.news?.images?.[0]?.image?.width || 0;
         height = news?.data?.news?.images?.[0]?.image?.height || 0;
         keyword = news?.data?.news?.seo?.keyword;
+        break;
+      case Entity.CATEGORIES:
+        let category = (data?.data as ResponseSlugPageDto<ResponseCategoryFilterPageDto>).data?.category;
+        title = category?.seo?.title || category?.name;
+        description = category?.seo?.description;
+        keyword = category?.seo?.keyword;
+        break;
     }
     context.res.setHeader(
       'Cache-Control',
