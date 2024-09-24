@@ -23,7 +23,7 @@ export const getServerSideProps = async ({ res, query }: any) => {
   ) {
     if (!order?.id) {
       res.write(JSON.stringify({ RspCode: '01', Message: 'Order not found' }));
-    } else if (Number(vnp_Params['vnp_Amount']) % 100 !== 0) {
+    } else if (Number(vnp_Params['vnp_Amount']) % 1000 !== 0) {
       res.write(JSON.stringify({ RspCode: '04', Message: 'Invalid amount' }));
     } else if (
       vnp_Params['vnp_ResponseCode'] === '00' &&
