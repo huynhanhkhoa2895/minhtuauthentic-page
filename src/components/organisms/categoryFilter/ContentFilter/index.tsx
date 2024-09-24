@@ -139,6 +139,7 @@ export default function ContentFilter({
       );
     } else if(
       slugData.model === Entity.CATEGORIES
+      && category?.name
     ) {
       return (
         <h1 className={'mb-6'}>
