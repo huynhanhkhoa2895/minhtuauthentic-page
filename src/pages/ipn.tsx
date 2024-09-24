@@ -17,23 +17,23 @@ export const getServerSideProps = async ({ res, query }: any) => {
     process.env.BE_URL + `/api/pages/order/getById/${vnp_Params['vnp_TxnRef']}`,
   ).then((res) => res.json());
   const order: OrdersDto | undefined = rs?.data;
-  if (
-    vnp_Params['vnp_ResponseCode'] === '00' ||
-    vnp_Params['vnp_ResponseCode'] === '99'
-  ) {
-    if (!order?.id) {
-      res.write(JSON.stringify({ RspCode: '01', Message: 'Order not found' }));
-    } else if (Number(vnp_Params['vnp_Amount']) % 1000 !== 0) {
-      res.write(JSON.stringify({ RspCode: '04', Message: 'Invalid amount' }));
-    } else if (
-      vnp_Params['vnp_ResponseCode'] === '00' &&
-      order.status === ORDER_STATUS.DONE
+  if (secureHash === signed) {
+    if (
+      vnp_Params['vnp_ResponseCode'] === '00' ||
+      vnp_Params['vnp_ResponseCode'] === '99'
     ) {
-      res.write(
-        JSON.stringify({ RspCode: '02', Message: 'Order already confirmed' }),
-      );
-    } else {
-      if (secureHash === signed) {
+      if (!order?.id) {
+        res.write(JSON.stringify({ RspCode: '01', Message: 'Order not found' }));
+      } else if (Number(vnp_Params['vnp_Amount']) % 1000 !== 0) {
+        res.write(JSON.stringify({ RspCode: '04', Message: 'Invalid amount' }));
+      } else if (
+        vnp_Params['vnp_ResponseCode'] === '00' &&
+        order.status === ORDER_STATUS.DONE
+      ) {
+        res.write(
+          JSON.stringify({ RspCode: '02', Message: 'Order already confirmed' }),
+        );
+      } else {
         await fetch(`${process.env.BE_URL}/api/orders/${vnp_Params['vnp_TxnRef']}`, {
           method: 'PUT',
           headers: {
@@ -53,13 +53,15 @@ export const getServerSideProps = async ({ res, query }: any) => {
             return null;
           });
         res.write(JSON.stringify({ RspCode: '00', Message: 'success' }));
-      } else {
-        res.write(JSON.stringify({ RspCode: '97', Message: 'Fail checksum' }));
       }
+    } else {
+      res.write(JSON.stringify({ RspCode: '98', Message: 'Fail' }));
     }
+
   } else {
-    res.write(JSON.stringify({ RspCode: '98', Message: 'Fail' }));
+    res.write(JSON.stringify({ RspCode: '97', Message: 'Fail checksum' }));
   }
+
 
   res.end();
   return {
