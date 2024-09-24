@@ -34,6 +34,24 @@ export const getServerSideProps = async ({ res, query }: any) => {
       );
     } else {
       if (secureHash === signed) {
+        await fetch(`${process.env.BE_URL}/api/orders/${vnp_Params['vnp_TxnRef']}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: vnp_Params['vnp_TxnRef'],
+            status: ORDER_STATUS.DONE,
+            note: 'VNPAY đã thanh toán thành công',
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            return res;
+          })
+          .catch((err) => {
+            return null;
+          });
         res.write(JSON.stringify({ RspCode: '00', Message: 'success' }));
       } else {
         res.write(JSON.stringify({ RspCode: '97', Message: 'Fail checksum' }));
