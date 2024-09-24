@@ -64,6 +64,5 @@ export function createVNPayUrl({
   const signed = hashVNPAY(signDataObject);
   params.append('vnp_SecureHash', signed);
   vnpUrl += '?' + params.toString();
-  console.log('order vnpUrl', vnpUrl);
   return vnpUrl;
 }

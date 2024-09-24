@@ -5,9 +5,6 @@ import { SettingsDto } from '@/dtos/Settings.dto';
 import AppContext from '@/contexts/appContext';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import { generateSlugToHref } from '@/utils';
-import { Entity } from '@/config/enum';
-import { SlugDto } from '@/dtos/Slug.dto';
-import { ProductDto } from '@/dtos/Product.dto';
 import { ResponseSlugPageDto } from '@/dtos/responseSlugPage.dto';
 
 const ProductTemplate = ({

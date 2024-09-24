@@ -37,14 +37,13 @@ export default function CategoryTemplate({
     [Entity.BRANDS]: 'Nhãn hiệu',
     [Entity.KEYWORDS]: slug?.keyword?.value || 'Từ khóa',
   };
-  console.log('test data', data);
   return (
     <CategoryFilterProvider isSearch={isSearch}>
       <BreadcrumbComponent
         label={
           breadcrumb
             ? breadcrumb?.label
-            : renderLabelBreadcrumb[slug?.model || ''] || ''
+            : renderLabelBreadcrumb[slug?.model || ''] || '' as string
         }
         link={generateSlugToHref(breadcrumb?.link || slug?.slug)}
       />
@@ -53,17 +52,17 @@ export default function CategoryTemplate({
           'rounded-[10px] border-gray-500 bg-white shadow-custom grid grid-cols-1 lg:grid-cols-6 gap-3'
         }
       >
-        {data.settings && (
+        {data?.settings && (
           <SettingFilter
             className={'hidden lg:block'}
-            settings={data.settings}
+            settings={data?.settings}
           />
         )}
         <ContentFilter
-          products={data.products || []}
-          settings={data.settings}
+          products={data?.products || []}
+          settings={data?.settings}
           total={data?.total || 0}
-          category={data.category}
+          category={data?.category}
           slugData={
             new SlugDto({
               model: slug?.model,
@@ -80,7 +79,7 @@ export default function CategoryTemplate({
         )
       }
 
-      <NavFilterMobile key={'CategoryTemplate'} settings={data.settings} />
+      <NavFilterMobile key={'CategoryTemplate'} settings={data?.settings} />
     </CategoryFilterProvider>
   );
 }

@@ -31,12 +31,16 @@ export default function NewsItem({ news }: Props) {
             <Link href={generateSlugToHref(news.slugs?.slug)}>{news.name}</Link>
           </h3>
         </div>
-        <div
-          className={'container-html'}
-          dangerouslySetInnerHTML={{
-            __html: truncateString(news?.description || '', 250) || '',
-          }}
-        ></div>
+        {
+          news?.description && (
+            <div
+              className={'container-html'}
+              dangerouslySetInnerHTML={{
+                __html: truncateString(news?.description || '', 250),
+              }}
+            />
+          )
+        }
       </div>
     </div>
   );

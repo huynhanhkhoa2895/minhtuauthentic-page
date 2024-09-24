@@ -7,14 +7,20 @@ import NewsItem from '@/components/organisms/news/item';
 import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
 import NewsSmallList from '@/components/organisms/news/smallList';
+import NewsClock from '@/components/atoms/news/clock';
+import Image from 'next/image';
+import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import NewsDetail from '@/components/organisms/news/detail';
 
 type Props = {
-  news: NewsDto[];
+  news: NewsDto | NewsDto[];
   categoryNews: CategoryNewsDto[];
   newest: NewsDto[];
+  relationNews?: NewsDto[];
+  isDetail?: boolean;
 };
 
-export default function NewsTemplate({ news, categoryNews, newest }: Props) {
+export default function NewsTemplate({ news, categoryNews, newest,relationNews, isDetail}: Props) {
   return (
     <div className={'grid grid-cols-1 lg:grid-cols-6 gap-3'}>
       <div
@@ -22,12 +28,44 @@ export default function NewsTemplate({ news, categoryNews, newest }: Props) {
           'col-span-4 w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3'
         }
       >
-        <h1 className={'text-3xl text-primary font-bold'}>Tin tức</h1>
-        <div className={'grid grid-cols-1 lg:grid-cols-3 gap-3'}>
-          {news.map((item: NewsDto, key: number) => {
-            return <NewsItem news={item} key={key} />;
-          })}
-        </div>
+          <>
+            {!isDetail ?
+              <>
+                <h1 className={'text-3xl text-primary font-bold'}>Tin tức</h1>
+                <div className={'grid grid-cols-1 lg:grid-cols-3 gap-3'}>
+                  {
+                    Array.isArray(news) && news.map((item: NewsDto, key: number) => {
+                      return  <NewsItem news={item} key={key} />
+                    })
+                  }
+                </div>
+              </>
+              :
+              <>
+                <NewsDetail news={news as NewsDto} />
+                {(relationNews || [])?.length > 0 && (
+                  <div
+                    className={
+                      'p-3 rounded-[10px] border bg-gray-200 border-gray-200 mt-3'
+                    }
+                  >
+                    <h3 className={'font-bold text-xl '}>Xem thêm</h3>
+                    <ul className={'flex flex-col gap-3'}>
+                      {relationNews?.map((item, key) => {
+                        return (
+                          <li key={key} className={'py-3 border-b border-gray-200'}>
+                            <Link href={generateSlugToHref(item.slugs?.slug)}>
+                              {item?.name}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                )}
+              </>
+            }
+          </>
       </div>
       <div className={'col-span-2 flex flex-col gap-3'}>
         <div

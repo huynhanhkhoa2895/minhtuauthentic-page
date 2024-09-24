@@ -50,7 +50,6 @@ export default function Home({
   footerContent,
   settingsHome,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log('homePage.seo', homePage.seo)
   return (
     <>
       <Header settings={settings} menu={menu} />

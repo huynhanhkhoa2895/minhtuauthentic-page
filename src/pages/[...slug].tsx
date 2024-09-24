@@ -14,7 +14,9 @@ import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import { ServerSideProps } from '@/config/type';
 import { redirect } from 'next/navigation';
 import { Fragment } from 'react';
-import { useRouter } from 'next/router';
+import NewsTemplate from '@/components/templates/NewsTemplate';
+import { generateSlugToHref } from '@/utils';
+import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 
 export const getServerSideProps = (async (context) => {
   const { slug } = context.query;
@@ -142,9 +144,23 @@ export default function Page({
         );
       case Entity.NEWS:
         return (
-          <NewsDetailTemplate
-            slug={slug as ResponseSlugPageDto<ResponseNewsDetailPageDto>}
-          />
+          <>
+            <BreadcrumbComponent
+              label={'Tin tức'}
+              link={'/tin-tuc'}
+              current={{
+                label: slug?.data?.news?.name || '',
+                link: generateSlugToHref(slug.slug),
+              }}
+            />
+            <NewsTemplate
+              news={slug?.data?.news}
+              categoryNews={slug?.data?.categoryNews}
+              newest={slug?.data?.newest}
+              relationNews={slug?.data?.relationNews}
+            />
+          </>
+
         );
       default:
         return <div>Not Found</div>;

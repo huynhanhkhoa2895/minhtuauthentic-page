@@ -1,8 +1,6 @@
 import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
 import getDefaultSeverSide from '@/utils/getDefaultServerSide';
-import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
-import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import NewsTemplate from '@/components/templates/NewsTemplate';
 import { ResponseNewsPageDto } from '@/dtos/ResponseNewsPage.dto';

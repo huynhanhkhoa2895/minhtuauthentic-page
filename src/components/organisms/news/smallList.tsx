@@ -32,7 +32,7 @@ export default function NewsSmallList({ news }: Props) {
             </div>
             <div className={'h-[100px]'}>
               <NewsClock item={item} />
-              <h3 className={'font-semibold text-[14px] leading-[1] mb-1'}>
+              <h3 className={'font-semibold text-[14px] mb-1'}>
                 <Link key={key} href={generateSlugToHref(item.slugs?.slug)}>
                   {truncateString(item.name || '', 60)}
                 </Link>
