@@ -160,6 +160,7 @@ export default function Page({
               categoryNews={_news?.categoryNews || []}
               newest={_news?.newest}
               relationNews={_news?.relationNews}
+              isDetail={true}
             />
           </>
 
