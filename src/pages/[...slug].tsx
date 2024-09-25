@@ -143,21 +143,23 @@ export default function Page({
           />
         );
       case Entity.NEWS:
+        const _news = slug?.data as ResponseNewsDetailPageDto;
+
         return (
           <>
             <BreadcrumbComponent
               label={'Tin tức'}
               link={'/tin-tuc'}
               current={{
-                label: slug?.data?.news?.name || '',
+                label: _news?.news?.name || '',
                 link: generateSlugToHref(slug.slug),
               }}
             />
             <NewsTemplate
-              news={slug?.data?.news}
-              categoryNews={slug?.data?.categoryNews}
-              newest={slug?.data?.newest}
-              relationNews={slug?.data?.relationNews}
+              news={_news?.news || []}
+              categoryNews={_news?.categoryNews || []}
+              newest={_news?.newest}
+              relationNews={_news?.relationNews}
             />
           </>
 

@@ -15,7 +15,7 @@ import NewsDetail from '@/components/organisms/news/detail';
 type Props = {
   news: NewsDto | NewsDto[];
   categoryNews: CategoryNewsDto[];
-  newest: NewsDto[];
+  newest?: NewsDto[];
   relationNews?: NewsDto[];
   isDetail?: boolean;
 };
@@ -91,18 +91,23 @@ export default function NewsTemplate({ news, categoryNews, newest,relationNews, 
             })}
           </ul>
         </div>
-        <div
-          className={
-            'w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3'
-          }
-        >
-          <h3 className={'text-3xl text-primary font-bold mb-3'}>
-            Bài viết gần đây
-          </h3>
-          <div>
-            <NewsSmallList news={newest} />
-          </div>
-        </div>
+        {
+          newest && (
+            <div
+              className={
+                'w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3'
+              }
+            >
+              <h3 className={'text-3xl text-primary font-bold mb-3'}>
+                Bài viết gần đây
+              </h3>
+              <div>
+                <NewsSmallList news={newest} />
+              </div>
+            </div>
+          )
+        }
+
       </div>
     </div>
   );
