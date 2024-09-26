@@ -21,7 +21,7 @@ export default async function handler(
       'process.env.NEXT_PUBLIC_BAO_KIM_SECRET',
       process.env.NEXT_PUBLIC_BAO_KIM_SECRET,
     );
-    const auth = jwt.sign(sign, process.env.NEXT_PUBLIC_BAO_KIM_SECRET, {
+    const auth = jwt.sign(sign, process.env.NEXT_PUBLIC_BAO_KIM_SECRET || '', {
       algorithm: 'HS256',
     });
     console.log('sign', sign);
