@@ -1,27 +1,37 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { handleDataFetch } from '@/utils/api';
+import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
   if (req.method === 'POST') {
-    const url = `${process.env.NEXT_PUBLIC_BAO_KIM_URL}/payment/api/v5/order/send`;
+    const tokenId = crypto.randomBytes(32).toString('base64');
+    const now = Math.floor(Date.now() / 1000);
     const sign = {
-      iat: Math.floor(Date.now() / 1000),
-      exp: Math.floor(Date.now() / 1000) + 60 * 60,
+      iat: now,
+      exp: now + 86400,
+      jti: tokenId,
       iss: process.env.NEXT_PUBLIC_BAO_KIM_API,
-      aud: process.env.NEXT_PUBLIC_BAO_KIM_SECRET,
+      aud: 'www.example.com',
+      nbf: now,
     };
-    const auth = jwt.sign(sign, process.env.NEXT_PUBLIC_BAO_KIM_SECRET || '');
+    console.log(
+      'process.env.NEXT_PUBLIC_BAO_KIM_SECRET',
+      process.env.NEXT_PUBLIC_BAO_KIM_SECRET,
+    );
+    const auth = jwt.sign(sign, process.env.NEXT_PUBLIC_BAO_KIM_SECRET, {
+      algorithm: 'HS256',
+    });
     console.log('sign', sign);
     console.log('jwt', auth);
+    const url = `${process.env.NEXT_PUBLIC_BAO_KIM_URL}/payment/api/v5/order/send?jwt=${auth}`;
     fetch(url, {
       method: 'POST',
       body: req.body,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${auth}`,
       },
     })
       .then((response) => response.json())

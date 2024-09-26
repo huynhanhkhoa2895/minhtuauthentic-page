@@ -138,6 +138,8 @@ export default function PopupImage({
                           className={'object-contain h-full w-auto m-auto'}
                           image={image}
                           alt={product.title || product.name}
+                          unoptimized={true}
+                          quality={100}
                         />
                       </div>
                     </div>

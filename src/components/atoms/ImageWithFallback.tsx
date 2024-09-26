@@ -16,7 +16,8 @@ type Props = {
   priority?: boolean;
   unoptimized?: boolean;
   quality?: number;
-  product?: ProductDto
+  product?: ProductDto;
+  isUseNativeImage?: boolean;
 };
 const ImageWithFallback = ({
   image,
@@ -29,7 +30,8 @@ const ImageWithFallback = ({
   priority,
   unoptimized,
   quality,
-  product
+  product,
+  isUseNativeImage,
 }: Props) => {
   const [imgActiveSrc, setImageActiveSrc] = useState<string | StaticImageData>(
     image?.url || noImage,
@@ -90,6 +92,24 @@ const ImageWithFallback = ({
       </>
     );
   };
-  return <>{renderImage()}</>;
+
+  const renderNativeImage = () => {
+    return (
+      <img
+        src={imgActiveSrc.toString()}
+        onClick={() => {
+          onClick && image && onClick(image);
+        }}
+        onMouseEnter={(e) => {
+          onMouseEnter && onMouseEnter(e);
+        }}
+        alt={alt || image?.alt || product?.title || product?.name || ''}
+        width={image?.width || 0}
+        height={image?.height || 0}
+      />
+    );
+  };
+
+  return <>{isUseNativeImage ? renderNativeImage() : renderImage()}</>;
 };
 export default ImageWithFallback;

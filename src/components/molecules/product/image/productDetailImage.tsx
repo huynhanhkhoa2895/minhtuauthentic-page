@@ -49,6 +49,8 @@ const ProductDetailImage = ({
               onMouseEnter={() => {
                 setImageActive(imageItem);
               }}
+              unoptimized={true}
+              quality={100}
             />
           );
         }}
