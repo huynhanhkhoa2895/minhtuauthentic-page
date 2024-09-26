@@ -49,8 +49,7 @@ const ProductDetailImage = ({
               onMouseEnter={() => {
                 setImageActive(imageItem);
               }}
-              unoptimized={true}
-              quality={100}
+              isUseNativeImage={true}
             />
           );
         }}
@@ -70,6 +69,8 @@ const ProductDetailImage = ({
           setIsOpen && setIsOpen({ display: true, image });
         }}
         product={product}
+        unoptimized={true}
+        quality={100}
       />
       <div className={'px-3'}>{renderSlideImage}</div>
     </div>

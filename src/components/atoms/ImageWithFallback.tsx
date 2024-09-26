@@ -56,7 +56,7 @@ const ImageWithFallback = ({
             fill={true}
             sizes={'(max-width: 768px) 100vw, 33vw'}
             className={className}
-            unoptimized={unoptimized}
+            unoptimized={unoptimized || true}
             onError={() => {
               setImageActiveSrc(noImage);
             }}
@@ -78,7 +78,7 @@ const ImageWithFallback = ({
             alt={alt || image?.alt || product?.title || product?.name || ''}
             width={image?.width || 0}
             height={image?.height || 0}
-            unoptimized={unoptimized}
+            unoptimized={unoptimized || true}
             priority={priority}
             className={className}
             quality={quality || 100}
