@@ -85,18 +85,18 @@ export default function Home({
         {/*  homeCategory={homePage?.homeCategory || []}*/}
         {/*  bannerUnderCategory={homePage?.bannerUnderCategory}*/}
         {/*/>*/}
-        {/*{homePage?.homeNews && (*/}
-        {/*  <HomeNews*/}
-        {/*    content={homePage?.homeNews}*/}
-        {/*    setting={settingsHome[SETTING_KEY.NEWS_SECTION.KEY]}*/}
-        {/*  />*/}
-        {/*)}*/}
-        {/*{homePage?.homeBrand && (*/}
-        {/*  <HomeBrand*/}
-        {/*    contents={homePage?.homeBrand}*/}
-        {/*    setting={settingsHome[SETTING_KEY.BRAND_SECTION.KEY]}*/}
-        {/*  />*/}
-        {/*)}*/}
+        {homePage?.homeNews && (
+          <HomeNews
+            content={homePage?.homeNews}
+            setting={settingsHome[SETTING_KEY.NEWS_SECTION.KEY]}
+          />
+        )}
+        {homePage?.homeBrand && (
+          <HomeBrand
+            contents={homePage?.homeBrand}
+            setting={settingsHome[SETTING_KEY.BRAND_SECTION.KEY]}
+          />
+        )}
         <HomeSupport />
       </Layout>
       <Footer footerContent={footerContent} />
