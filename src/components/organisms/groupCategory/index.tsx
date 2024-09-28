@@ -8,7 +8,12 @@ import { generateSlugToHref } from '@/utils';
 import Link from 'next/link';
 import SectionSwiper from '@/components/organisms/sectionSwiper';
 import { IProductCategoryDto } from '@/dtos/IProductCategory.dto';
-
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+} from 'react-device-detect';
 const GroupCategory = ({
   staticComponent,
 }: {
@@ -45,53 +50,55 @@ const GroupCategory = ({
           >
             {staticComponent?.title || staticComponent?.category?.name}
           </Link>
-          <TagLink
-            tagLinks={
-              new TagLinkDto({
-                id: 0,
-                name: 'Xem tất cả',
-                slug: generateSlugToHref(
-                  staticComponent?.category?.slugs?.slug,
-                ),
-              })
-            }
-            className={'lg:hidden last:mr-0 whitespace-nowrap text-black'}
-          />
+          <MobileView>
+            <TagLink
+              tagLinks={
+                new TagLinkDto({
+                  id: 0,
+                  name: 'Xem tất cả',
+                  slug: generateSlugToHref(
+                    staticComponent?.category?.slugs?.slug,
+                  ),
+                })
+              }
+              className={'lg:hidden last:mr-0 whitespace-nowrap text-black'}
+            />
+          </MobileView>
         </h2>
-        <div
-          className={'flex justify-end gap-3 w-full lg:basis-[60%] lg:w-[70%] '}
-        >
-          {tagLinks.length > 0 && (
-            <div ref={ref} className={'w-full overflow-x-scroll '}>
-              <div
-                ref={refContainer}
-                className={'flex gap-3 pb-2 justify-end w-max min-w-full'}
-              >
-                {tagLinks.map((tagLink, key: number) => {
-                  return (
-                    <TagLink
-                      key={key}
-                      tagLinks={tagLink}
-                      className={'last:mr-0 whitespace-nowrap'}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          )}
-          <TagLink
-            className={'w-max max-lg:hidden shrink-0 h-[30px]'}
-            tagLinks={
-              new TagLinkDto({
-                id: 0,
-                name: 'Xem tất cả',
-                slug: generateSlugToHref(
-                  staticComponent?.category?.slugs?.slug,
-                ),
-              })
-            }
-          />
-        </div>
+        {/*<div*/}
+        {/*  className={'flex justify-end gap-3 w-full lg:basis-[60%] lg:w-[70%] '}*/}
+        {/*>*/}
+        {/*  {tagLinks.length > 0 && (*/}
+        {/*    <div ref={ref} className={'w-full overflow-x-scroll '}>*/}
+        {/*      <div*/}
+        {/*        ref={refContainer}*/}
+        {/*        className={'flex gap-3 pb-2 justify-end w-max min-w-full'}*/}
+        {/*      >*/}
+        {/*        {tagLinks.map((tagLink, key: number) => {*/}
+        {/*          return (*/}
+        {/*            <TagLink*/}
+        {/*              key={key}*/}
+        {/*              tagLinks={tagLink}*/}
+        {/*              className={'last:mr-0 whitespace-nowrap'}*/}
+        {/*            />*/}
+        {/*          );*/}
+        {/*        })}*/}
+        {/*      </div>*/}
+        {/*    </div>*/}
+        {/*  )}*/}
+        {/*  <TagLink*/}
+        {/*    className={'w-max max-lg:hidden shrink-0 h-[30px]'}*/}
+        {/*    tagLinks={*/}
+        {/*      new TagLinkDto({*/}
+        {/*        id: 0,*/}
+        {/*        name: 'Xem tất cả',*/}
+        {/*        slug: generateSlugToHref(*/}
+        {/*          staticComponent?.category?.slugs?.slug,*/}
+        {/*        ),*/}
+        {/*      })*/}
+        {/*    }*/}
+        {/*  />*/}
+        {/*</div>*/}
       </div>
       {/*<SectionSwiper*/}
       {/*  isGrid={true}*/}
