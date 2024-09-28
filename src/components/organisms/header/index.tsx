@@ -75,7 +75,6 @@ export const Header = ({ menu, settings }: Props) => {
           <Link className={'shrink-0'} href={'/'}>
             <Image
               src={Logo}
-              priority={true}
               height={54}
               width={227}
               className={'object-contain w-[230px]] h-[60px] '}

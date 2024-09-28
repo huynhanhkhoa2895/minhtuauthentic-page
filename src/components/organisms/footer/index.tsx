@@ -64,7 +64,6 @@ const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
           <div className={'grid grid-cols-1 lg:grid-cols-3 mt-3'}>
             <Image
               src={Logo}
-              priority={true}
               height={54}
               width={288}
               className={'object-contain w-auto h-auto'}
@@ -152,7 +151,6 @@ const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
             >
               <Image
                 src={LogoBCT}
-                priority={true}
                 height={57}
                 width={188}
                 className={'object-contain w-auto h-auto'}
@@ -169,7 +167,6 @@ const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
             >
               <Image
                 src={LogoGrn}
-                priority={true}
                 height={54}
                 width={118}
                 className={'object-contain w-[118px] h-[27px]'}

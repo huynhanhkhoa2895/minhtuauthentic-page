@@ -45,7 +45,6 @@ export const Banners = ({
               width={imageDetail?.image?.width || 0}
               height={imageDetail?.image?.height || 0}
               className={classNameImage || 'object-contain w-full'}
-              loading={'eager'}
               unoptimized={true}
               quality={100}
               blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPs7u2tBwAFdgImpqLKKAAAAABJRU5ErkJggg=="
