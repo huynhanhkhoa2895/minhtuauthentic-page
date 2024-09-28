@@ -25,14 +25,14 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
               'flex justify-end mb-3 items-center lg:h-[120px] w-full relative px-3'
             }
           >
-            {/*{promotion?.images?.[0]?.image?.url && (*/}
-            {/*  <Image*/}
-            {/*    src={promotion?.images?.[0]?.image?.url || ''}*/}
-            {/*    className={'object-cover w-full h-full'}*/}
-            {/*    alt={'Khuyến mãi flash sale'}*/}
-            {/*    fill*/}
-            {/*  />*/}
-            {/*)}*/}
+            {promotion?.images?.[0]?.image?.url && (
+              <Image
+                src={promotion?.images?.[0]?.image?.url || ''}
+                className={'object-cover w-full h-full'}
+                alt={'Khuyến mãi flash sale'}
+                fill
+              />
+            )}
 
             <Countdown className={'relative'} end_date={endDate} />
           </div>
