@@ -13,6 +13,7 @@ const nextConfig = {
       'admin.mikiperfume.com',
       'minhtuauthentic-be.hak-app.com',
       'be.mikiperfume.com',
+      'be.minhtuauthentic.com',
       'be-new.mikiperfume.com'
     ],
   },
