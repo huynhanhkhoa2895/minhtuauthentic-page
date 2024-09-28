@@ -44,26 +44,26 @@ const GroupCategory = ({
             'w-max shrink-0 max-lg:items-center max-lg:flex max-lg:justify-between max-lg:w-full'
           }
         >
-          <Link
-            className={'text-[18px] lg:text-[24px] uppercase font-bold '}
-            href={generateSlugToHref(staticComponent?.category?.slugs?.slug)}
-          >
-            {staticComponent?.title || staticComponent?.category?.name}
-          </Link>
-          <MobileView>
-            <TagLink
-              tagLinks={
-                new TagLinkDto({
-                  id: 0,
-                  name: 'Xem tất cả',
-                  slug: generateSlugToHref(
-                    staticComponent?.category?.slugs?.slug,
-                  ),
-                })
-              }
-              className={'lg:hidden last:mr-0 whitespace-nowrap text-black'}
-            />
-          </MobileView>
+          {/*<Link*/}
+          {/*  className={'text-[18px] lg:text-[24px] uppercase font-bold '}*/}
+          {/*  href={generateSlugToHref(staticComponent?.category?.slugs?.slug)}*/}
+          {/*>*/}
+          {/*  {staticComponent?.title || staticComponent?.category?.name}*/}
+          {/*</Link>*/}
+          {/*<MobileView>*/}
+          {/*  <TagLink*/}
+          {/*    tagLinks={*/}
+          {/*      new TagLinkDto({*/}
+          {/*        id: 0,*/}
+          {/*        name: 'Xem tất cả',*/}
+          {/*        slug: generateSlugToHref(*/}
+          {/*          staticComponent?.category?.slugs?.slug,*/}
+          {/*        ),*/}
+          {/*      })*/}
+          {/*    }*/}
+          {/*    className={'lg:hidden last:mr-0 whitespace-nowrap text-black'}*/}
+          {/*  />*/}
+          {/*</MobileView>*/}
         </h2>
         {/*<div*/}
         {/*  className={'flex justify-end gap-3 w-full lg:basis-[60%] lg:w-[70%] '}*/}
