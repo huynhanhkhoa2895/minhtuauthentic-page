@@ -190,7 +190,7 @@ export const Header = ({ menu, settings }: Props) => {
                       label: (
                         <Link
                           href={
-                            '/tai-khoan/dang-ky' +
+                            '/tai-khoan/dang-ky?' +
                             new URLSearchParams({
                               redirectUrl: router.asPath,
                             }).toString()
