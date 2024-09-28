@@ -93,37 +93,37 @@ const GroupCategory = ({
           />
         </div>
       </div>
-      <SectionSwiper
-        isGrid={true}
-        slidesPerView={5}
-        spaceBetween={5}
-        isUseHeightWrapper={true}
-        renderItem={(item: unknown) => {
-          const iProduct = item as IProductCategoryDto;
-          const variantMap = new Map(
-            iProduct.product?.variants?.map((variant) => [
-              variant.is_default,
-              variant,
-            ]),
-          );
-          const variant = variantMap.get(true);
-          if (!variant) {
-            return;
-          }
-          return (
-            iProduct.product && (
-              <>
-                {/*<ProductCard product={iProduct.product} variant={variant} />*/}
-              </>
-            )
-          );
-        }}
-        data={
-          staticComponent?.category?.products?.filter(
-            (item: IProductCategoryDto) => item.product,
-          ) || []
-        }
-      />
+      {/*<SectionSwiper*/}
+      {/*  isGrid={true}*/}
+      {/*  slidesPerView={5}*/}
+      {/*  spaceBetween={5}*/}
+      {/*  isUseHeightWrapper={true}*/}
+      {/*  renderItem={(item: unknown) => {*/}
+      {/*    const iProduct = item as IProductCategoryDto;*/}
+      {/*    const variantMap = new Map(*/}
+      {/*      iProduct.product?.variants?.map((variant) => [*/}
+      {/*        variant.is_default,*/}
+      {/*        variant,*/}
+      {/*      ]),*/}
+      {/*    );*/}
+      {/*    const variant = variantMap.get(true);*/}
+      {/*    if (!variant) {*/}
+      {/*      return;*/}
+      {/*    }*/}
+      {/*    return (*/}
+      {/*      iProduct.product && (*/}
+      {/*        <>*/}
+      {/*          /!*<ProductCard product={iProduct.product} variant={variant} />*!/*/}
+      {/*        </>*/}
+      {/*      )*/}
+      {/*    );*/}
+      {/*  }}*/}
+      {/*  data={*/}
+      {/*    staticComponent?.category?.products?.filter(*/}
+      {/*      (item: IProductCategoryDto) => item.product,*/}
+      {/*    ) || []*/}
+      {/*  }*/}
+      {/*/>*/}
     </div>
   );
 };
