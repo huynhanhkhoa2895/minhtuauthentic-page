@@ -74,17 +74,17 @@ export default function Home({
           />
         )}
 
-        {/*{homePage?.homeFlashSale && (*/}
-        {/*  <HomeFlashSale*/}
-        {/*    promotion={homePage?.homeFlashSale}*/}
-        {/*    setting={settingsHome[SETTING_KEY.FLASH_SALE_SECTION.KEY]}*/}
-        {/*  />*/}
-        {/*)}*/}
+        {homePage?.homeFlashSale && (
+          <HomeFlashSale
+            promotion={homePage?.homeFlashSale}
+            setting={settingsHome[SETTING_KEY.FLASH_SALE_SECTION.KEY]}
+          />
+        )}
 
-        <HomeCategory
-          homeCategory={homePage?.homeCategory || []}
-          bannerUnderCategory={homePage?.bannerUnderCategory}
-        />
+        {/*<HomeCategory*/}
+        {/*  homeCategory={homePage?.homeCategory || []}*/}
+        {/*  bannerUnderCategory={homePage?.bannerUnderCategory}*/}
+        {/*/>*/}
         {homePage?.homeNews && (
           <HomeNews
             content={homePage?.homeNews}
