@@ -172,7 +172,9 @@ export default function FormCheckout({
               ip,
             });
             orderCtx?.clearCart && orderCtx?.clearCart();
-            window.location.href = urlVnPay;
+            if (window) {
+              window.location.href = urlVnPay || '';
+            }
           } else if (
             paymentType(data?.data?.payment_id) === PAYMENT_TYPE.BAO_KIM
           ) {
