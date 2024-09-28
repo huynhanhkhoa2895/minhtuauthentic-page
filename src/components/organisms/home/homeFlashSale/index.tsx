@@ -36,41 +36,43 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
 
             <Countdown className={'relative'} end_date={endDate} />
           </div>
-          {/*<SectionSwiper*/}
-          {/*  slidesPerView={5}*/}
-          {/*  spaceBetween={10}*/}
-          {/*  renderItem={(item: unknown) => {*/}
-          {/*    const iCoupon = item as CouponsDto;*/}
-          {/*    const variant = iCoupon?.coupon_details?.[0].variant;*/}
-          {/*    if (!variant || !variant.regular_price) {*/}
-          {/*      return;*/}
-          {/*    }*/}
+          <SectionSwiper
+            slidesPerView={5}
+            spaceBetween={10}
+            renderItem={(item: unknown) => {
+              const iCoupon = item as CouponsDto;
+              const variant = iCoupon?.coupon_details?.[0].variant;
+              if (!variant || !variant.regular_price) {
+                return;
+              }
 
-          {/*    const newPrice = getPriceWithCoupon(*/}
-          {/*      variant.regular_price || 0,*/}
-          {/*      iCoupon,*/}
-          {/*    );*/}
-          {/*    return (*/}
-          {/*      variant.product && (*/}
-          {/*        <ProductCard*/}
-          {/*          product={variant.product}*/}
-          {/*          variant={{*/}
-          {/*            ...variant,*/}
-          {/*            ...{ regular_price: newPrice, coupon: iCoupon },*/}
-          {/*          }}*/}
-          {/*          promotions={promotion && [promotion]}*/}
-          {/*          coupon={iCoupon}*/}
-          {/*          isShowConfiguration*/}
-          {/*        />*/}
-          {/*      )*/}
-          {/*    );*/}
-          {/*  }}*/}
-          {/*  data={*/}
-          {/*    promotion?.coupons?.filter(*/}
-          {/*      (item: CouponsDto) => item?.coupon_details?.[0],*/}
-          {/*    ) || []*/}
-          {/*  }*/}
-          {/*/>*/}
+              const newPrice = getPriceWithCoupon(
+                variant.regular_price || 0,
+                iCoupon,
+              );
+              return (
+                variant.product && (
+                  <>
+                    {/*<ProductCard*/}
+                    {/*    product={variant.product}*/}
+                    {/*    variant={{*/}
+                    {/*      ...variant,*/}
+                    {/*      ...{ regular_price: newPrice, coupon: iCoupon },*/}
+                    {/*    }}*/}
+                    {/*    promotions={promotion && [promotion]}*/}
+                    {/*    coupon={iCoupon}*/}
+                    {/*    isShowConfiguration*/}
+                    {/*/>*/}
+                  </>
+                )
+              );
+            }}
+            data={
+              promotion?.coupons?.filter(
+                (item: CouponsDto) => item?.coupon_details?.[0],
+              ) || []
+            }
+          />
         </div>
       )}
     </>
