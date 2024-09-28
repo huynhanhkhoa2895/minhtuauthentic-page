@@ -1,10 +1,11 @@
 import { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
-import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 export default function Document() {
   return (
     <Html lang="vi">
       <Head>
-        <meta name="robots" content="noindex,nofollow" />
+        {process.env.NODE_ENV === 'development' && (
+          <meta name="robots" content="noindex,nofollow" />
+        )}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link

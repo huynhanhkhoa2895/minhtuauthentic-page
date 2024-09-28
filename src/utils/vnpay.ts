@@ -36,7 +36,7 @@ export function createVNPayUrl({
   order: OrdersDto;
   ip: string;
 }) {
-  let vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
+  let vnpUrl = process.env.NEXT_PUBLIC_VNPAY_URL;
   let signDataObject: Record<string, string> = {};
   const params = new URLSearchParams();
   params.append('vnp_Amount', ((order.total_price || 0) * 100).toString());
@@ -54,7 +54,7 @@ export function createVNPayUrl({
     'vnp_ReturnUrl',
     process.env.NEXT_PUBLIC_RETURN_URL_VNPAY || '',
   );
-  params.append('vnp_TmnCode', 'MTAUTEST');
+  params.append('vnp_TmnCode', process.env.NEXT_PUBLIC_VNPAY_CODE || '');
   params.append('vnp_TxnRef', (order?.id || Math.random()).toString());
   params.append('vnp_Version', '2.1.0');
 
