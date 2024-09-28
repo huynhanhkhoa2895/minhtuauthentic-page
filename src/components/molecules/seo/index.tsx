@@ -48,7 +48,7 @@ export default function DefaultSeo({ settings, seo }: Props) {
             alt: 'Minh tu Authentic',
           },
         ],
-        url: process.env.API_URL,
+        url: process.env.NEXT_PUBLIC_APP_URL,
       }}
       canonical={
         seo?.canonical || process.env.NEXT_PUBLIC_APP_URL + router.asPath
