@@ -52,7 +52,7 @@ export default function Home({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      {/*<Header settings={settings} menu={menu} />*/}
+      <Header settings={settings} menu={menu} />
       {/*<Layout seo={homePage.seo} settings={settings} menu={menu}>*/}
       {/*<div*/}
       {/*  id={'main-home-page'}*/}
@@ -101,7 +101,7 @@ export default function Home({
       {/*)}*/}
       {/*<HomeSupport />*/}
       {/*</Layout>*/}
-      {/*<Footer footerContent={footerContent} />*/}
+      <Footer footerContent={footerContent} />
     </>
   );
 }
