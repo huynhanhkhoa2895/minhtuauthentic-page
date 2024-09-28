@@ -16,7 +16,7 @@ const HomeCategory = ({
         const isActive = key === 0 || (key + 1) % 3 === 0;
         return (
           <Fragment key={'GroupCategory_' + key}>
-            <GroupCategory staticComponent={item} />
+            {/*<GroupCategory staticComponent={item} />*/}
             {/*<BannerUnderCategory*/}
             {/*  key={key + 'banner-under-category'}*/}
             {/*  contents={bannerUnderCategory || []}*/}
