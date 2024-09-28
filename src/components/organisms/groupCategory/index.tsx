@@ -113,7 +113,7 @@ const GroupCategory = ({
           return (
             iProduct.product && (
               <>
-                <ProductCard product={iProduct.product} variant={variant} />
+                {/*<ProductCard product={iProduct.product} variant={variant} />*/}
               </>
             )
           );
