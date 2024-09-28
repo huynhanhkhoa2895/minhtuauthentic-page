@@ -37,69 +37,69 @@ const GroupCategory = ({
       className={'mt-3 mx-auto p-3 rounded-[10px]'}
       style={{ backgroundColor: staticComponent?.properties?.backgroundColor }}
     >
-      <div className={'flex flex-col lg:flex-row justify-between mb-3 gap-2'}>
-        <h2
-          style={{ color: staticComponent?.properties?.textColor }}
-          className={
-            'w-max shrink-0 max-lg:items-center max-lg:flex max-lg:justify-between max-lg:w-full'
-          }
-        >
-          {/*<Link*/}
-          {/*  className={'text-[18px] lg:text-[24px] uppercase font-bold '}*/}
-          {/*  href={generateSlugToHref(staticComponent?.category?.slugs?.slug)}*/}
-          {/*>*/}
-          {/*  {staticComponent?.title || staticComponent?.category?.name}*/}
-          {/*</Link>*/}
-          {/*<MobileView>*/}
-          {/*  <TagLink*/}
-          {/*    tagLinks={*/}
-          {/*      new TagLinkDto({*/}
-          {/*        id: 0,*/}
-          {/*        name: 'Xem tất cả',*/}
-          {/*        slug: generateSlugToHref(*/}
-          {/*          staticComponent?.category?.slugs?.slug,*/}
-          {/*        ),*/}
-          {/*      })*/}
-          {/*    }*/}
-          {/*    className={'lg:hidden last:mr-0 whitespace-nowrap text-black'}*/}
-          {/*  />*/}
-          {/*</MobileView>*/}
-        </h2>
-        {/*<div*/}
-        {/*  className={'flex justify-end gap-3 w-full lg:basis-[60%] lg:w-[70%] '}*/}
-        {/*>*/}
-        {/*  {tagLinks.length > 0 && (*/}
-        {/*    <div ref={ref} className={'w-full overflow-x-scroll '}>*/}
-        {/*      <div*/}
-        {/*        ref={refContainer}*/}
-        {/*        className={'flex gap-3 pb-2 justify-end w-max min-w-full'}*/}
-        {/*      >*/}
-        {/*        {tagLinks.map((tagLink, key: number) => {*/}
-        {/*          return (*/}
-        {/*            <TagLink*/}
-        {/*              key={key}*/}
-        {/*              tagLinks={tagLink}*/}
-        {/*              className={'last:mr-0 whitespace-nowrap'}*/}
-        {/*            />*/}
-        {/*          );*/}
-        {/*        })}*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*  )}*/}
-        {/*  <TagLink*/}
-        {/*    className={'w-max max-lg:hidden shrink-0 h-[30px]'}*/}
-        {/*    tagLinks={*/}
-        {/*      new TagLinkDto({*/}
-        {/*        id: 0,*/}
-        {/*        name: 'Xem tất cả',*/}
-        {/*        slug: generateSlugToHref(*/}
-        {/*          staticComponent?.category?.slugs?.slug,*/}
-        {/*        ),*/}
-        {/*      })*/}
-        {/*    }*/}
-        {/*  />*/}
-        {/*</div>*/}
-      </div>
+      {/*<div className={'flex flex-col lg:flex-row justify-between mb-3 gap-2'}>*/}
+      {/*  <h2*/}
+      {/*    style={{ color: staticComponent?.properties?.textColor }}*/}
+      {/*    className={*/}
+      {/*      'w-max shrink-0 max-lg:items-center max-lg:flex max-lg:justify-between max-lg:w-full'*/}
+      {/*    }*/}
+      {/*  >*/}
+      {/*<Link*/}
+      {/*  className={'text-[18px] lg:text-[24px] uppercase font-bold '}*/}
+      {/*  href={generateSlugToHref(staticComponent?.category?.slugs?.slug)}*/}
+      {/*>*/}
+      {/*  {staticComponent?.title || staticComponent?.category?.name}*/}
+      {/*</Link>*/}
+      {/*<MobileView>*/}
+      {/*  <TagLink*/}
+      {/*    tagLinks={*/}
+      {/*      new TagLinkDto({*/}
+      {/*        id: 0,*/}
+      {/*        name: 'Xem tất cả',*/}
+      {/*        slug: generateSlugToHref(*/}
+      {/*          staticComponent?.category?.slugs?.slug,*/}
+      {/*        ),*/}
+      {/*      })*/}
+      {/*    }*/}
+      {/*    className={'lg:hidden last:mr-0 whitespace-nowrap text-black'}*/}
+      {/*  />*/}
+      {/*</MobileView>*/}
+      {/*</h2>*/}
+      {/*<div*/}
+      {/*  className={'flex justify-end gap-3 w-full lg:basis-[60%] lg:w-[70%] '}*/}
+      {/*>*/}
+      {/*  {tagLinks.length > 0 && (*/}
+      {/*    <div ref={ref} className={'w-full overflow-x-scroll '}>*/}
+      {/*      <div*/}
+      {/*        ref={refContainer}*/}
+      {/*        className={'flex gap-3 pb-2 justify-end w-max min-w-full'}*/}
+      {/*      >*/}
+      {/*        {tagLinks.map((tagLink, key: number) => {*/}
+      {/*          return (*/}
+      {/*            <TagLink*/}
+      {/*              key={key}*/}
+      {/*              tagLinks={tagLink}*/}
+      {/*              className={'last:mr-0 whitespace-nowrap'}*/}
+      {/*            />*/}
+      {/*          );*/}
+      {/*        })}*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  )}*/}
+      {/*  <TagLink*/}
+      {/*    className={'w-max max-lg:hidden shrink-0 h-[30px]'}*/}
+      {/*    tagLinks={*/}
+      {/*      new TagLinkDto({*/}
+      {/*        id: 0,*/}
+      {/*        name: 'Xem tất cả',*/}
+      {/*        slug: generateSlugToHref(*/}
+      {/*          staticComponent?.category?.slugs?.slug,*/}
+      {/*        ),*/}
+      {/*      })*/}
+      {/*    }*/}
+      {/*  />*/}
+      {/*</div>*/}
+      {/*</div>*/}
       {/*<SectionSwiper*/}
       {/*  isGrid={true}*/}
       {/*  slidesPerView={5}*/}
