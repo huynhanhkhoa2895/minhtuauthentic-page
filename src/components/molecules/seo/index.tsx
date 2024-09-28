@@ -32,6 +32,8 @@ export default function DefaultSeo({ settings, seo }: Props) {
         },
       ]}
       openGraph={{
+        type: 'website',
+        siteName: 'Minh tu Authentic',
         title: seo?.title || setting?.value?.page_title || 'Minh tu Authentic',
         description:
           seo?.description ||
@@ -48,7 +50,7 @@ export default function DefaultSeo({ settings, seo }: Props) {
             alt: 'Minh tu Authentic',
           },
         ],
-        url: process.env.NEXT_PUBLIC_APP_URL,
+        url: process.env.NEXT_PUBLIC_APP_URL + router.asPath,
       }}
       canonical={
         seo?.canonical || process.env.NEXT_PUBLIC_APP_URL + router.asPath

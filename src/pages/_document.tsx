@@ -88,7 +88,6 @@ export default function Document() {
             `,
           }}
         />
-        <title>Minh Tu Authentic Test</title>
       </Head>
       <body>
         <Main />
