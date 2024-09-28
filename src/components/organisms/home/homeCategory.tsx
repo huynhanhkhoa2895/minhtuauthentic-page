@@ -17,11 +17,11 @@ const HomeCategory = ({
         return (
           <Fragment key={'GroupCategory_' + key}>
             <GroupCategory staticComponent={item} />
-            <BannerUnderCategory
-              key={key + 'banner-under-category'}
-              contents={bannerUnderCategory || []}
-              position={key === 0 ? 0 : (key + 1) / 3}
-            />
+            {/*<BannerUnderCategory*/}
+            {/*  key={key + 'banner-under-category'}*/}
+            {/*  contents={bannerUnderCategory || []}*/}
+            {/*  position={key === 0 ? 0 : (key + 1) / 3}*/}
+            {/*/>*/}
           </Fragment>
         );
       })}
