@@ -25,52 +25,52 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
               'flex justify-end mb-3 items-center lg:h-[120px] w-full relative px-3'
             }
           >
-            {promotion?.images?.[0]?.image?.url && (
-              <Image
-                src={promotion?.images?.[0]?.image?.url || ''}
-                className={'object-cover w-full h-full'}
-                alt={'Khuyến mãi flash sale'}
-                fill
-              />
-            )}
+            {/*{promotion?.images?.[0]?.image?.url && (*/}
+            {/*  <Image*/}
+            {/*    src={promotion?.images?.[0]?.image?.url || ''}*/}
+            {/*    className={'object-cover w-full h-full'}*/}
+            {/*    alt={'Khuyến mãi flash sale'}*/}
+            {/*    fill*/}
+            {/*  />*/}
+            {/*)}*/}
 
             <Countdown className={'relative'} end_date={endDate} />
           </div>
-          <SectionSwiper
-            slidesPerView={5}
-            spaceBetween={10}
-            renderItem={(item: unknown) => {
-              const iCoupon = item as CouponsDto;
-              const variant = iCoupon?.coupon_details?.[0].variant;
-              if (!variant || !variant.regular_price) {
-                return;
-              }
+          {/*<SectionSwiper*/}
+          {/*  slidesPerView={5}*/}
+          {/*  spaceBetween={10}*/}
+          {/*  renderItem={(item: unknown) => {*/}
+          {/*    const iCoupon = item as CouponsDto;*/}
+          {/*    const variant = iCoupon?.coupon_details?.[0].variant;*/}
+          {/*    if (!variant || !variant.regular_price) {*/}
+          {/*      return;*/}
+          {/*    }*/}
 
-              const newPrice = getPriceWithCoupon(
-                variant.regular_price || 0,
-                iCoupon,
-              );
-              return (
-                variant.product && (
-                  <ProductCard
-                    product={variant.product}
-                    variant={{
-                      ...variant,
-                      ...{ regular_price: newPrice, coupon: iCoupon },
-                    }}
-                    promotions={promotion && [promotion]}
-                    coupon={iCoupon}
-                    isShowConfiguration
-                  />
-                )
-              );
-            }}
-            data={
-              promotion?.coupons?.filter(
-                (item: CouponsDto) => item?.coupon_details?.[0],
-              ) || []
-            }
-          />
+          {/*    const newPrice = getPriceWithCoupon(*/}
+          {/*      variant.regular_price || 0,*/}
+          {/*      iCoupon,*/}
+          {/*    );*/}
+          {/*    return (*/}
+          {/*      variant.product && (*/}
+          {/*        <ProductCard*/}
+          {/*          product={variant.product}*/}
+          {/*          variant={{*/}
+          {/*            ...variant,*/}
+          {/*            ...{ regular_price: newPrice, coupon: iCoupon },*/}
+          {/*          }}*/}
+          {/*          promotions={promotion && [promotion]}*/}
+          {/*          coupon={iCoupon}*/}
+          {/*          isShowConfiguration*/}
+          {/*        />*/}
+          {/*      )*/}
+          {/*    );*/}
+          {/*  }}*/}
+          {/*  data={*/}
+          {/*    promotion?.coupons?.filter(*/}
+          {/*      (item: CouponsDto) => item?.coupon_details?.[0],*/}
+          {/*    ) || []*/}
+          {/*  }*/}
+          {/*/>*/}
         </div>
       )}
     </>
