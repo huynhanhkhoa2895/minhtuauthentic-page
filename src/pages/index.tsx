@@ -81,10 +81,10 @@ export default function Home({
           />
         )}
 
-        <HomeCategory
-          homeCategory={homePage?.homeCategory || []}
-          bannerUnderCategory={homePage?.bannerUnderCategory}
-        />
+        {/*<HomeCategory*/}
+        {/*  homeCategory={homePage?.homeCategory || []}*/}
+        {/*  bannerUnderCategory={homePage?.bannerUnderCategory}*/}
+        {/*/>*/}
 
         {homePage?.homeNews && (
           <HomeNews
