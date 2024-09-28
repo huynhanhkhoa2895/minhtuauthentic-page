@@ -54,7 +54,6 @@ export default function Home({
     <>
       <Header settings={settings} menu={menu} />
       <Layout seo={homePage.seo} settings={settings} menu={menu}>
-        <></>
         {/*<div*/}
         {/*  id={'main-home-page'}*/}
         {/*  className={'lg:mt-[10px] flex w-full gap-2 relative'}*/}
@@ -77,30 +76,30 @@ export default function Home({
         {/*  />*/}
         {/*)}*/}
 
-        {/*{homePage?.homeFlashSale && (*/}
-        {/*  <HomeFlashSale*/}
-        {/*    promotion={homePage?.homeFlashSale}*/}
-        {/*    setting={settingsHome[SETTING_KEY.FLASH_SALE_SECTION.KEY]}*/}
-        {/*  />*/}
-        {/*)}*/}
+        {homePage?.homeFlashSale && (
+          <HomeFlashSale
+            promotion={homePage?.homeFlashSale}
+            setting={settingsHome[SETTING_KEY.FLASH_SALE_SECTION.KEY]}
+          />
+        )}
 
-        {/*<HomeCategory*/}
-        {/*  homeCategory={homePage?.homeCategory || []}*/}
-        {/*  bannerUnderCategory={homePage?.bannerUnderCategory}*/}
-        {/*/>*/}
-        {/*{homePage?.homeNews && (*/}
-        {/*  <HomeNews*/}
-        {/*    content={homePage?.homeNews}*/}
-        {/*    setting={settingsHome[SETTING_KEY.NEWS_SECTION.KEY]}*/}
-        {/*  />*/}
-        {/*)}*/}
-        {/*{homePage?.homeBrand && (*/}
-        {/*  <HomeBrand*/}
-        {/*    contents={homePage?.homeBrand}*/}
-        {/*    setting={settingsHome[SETTING_KEY.BRAND_SECTION.KEY]}*/}
-        {/*  />*/}
-        {/*)}*/}
-        {/*<HomeSupport />*/}
+        <HomeCategory
+          homeCategory={homePage?.homeCategory || []}
+          bannerUnderCategory={homePage?.bannerUnderCategory}
+        />
+        {homePage?.homeNews && (
+          <HomeNews
+            content={homePage?.homeNews}
+            setting={settingsHome[SETTING_KEY.NEWS_SECTION.KEY]}
+          />
+        )}
+        {homePage?.homeBrand && (
+          <HomeBrand
+            contents={homePage?.homeBrand}
+            setting={settingsHome[SETTING_KEY.BRAND_SECTION.KEY]}
+          />
+        )}
+        <HomeSupport />
       </Layout>
       <Footer footerContent={footerContent} />
     </>
