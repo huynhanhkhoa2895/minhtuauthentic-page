@@ -54,51 +54,49 @@ export default function Home({
     <>
       <Header settings={settings} menu={menu} />
       <Layout seo={homePage.seo} settings={settings} menu={menu}>
-        {/*<div*/}
-        {/*  id={'main-home-page'}*/}
-        {/*  className={'lg:mt-[10px] flex w-full gap-2 relative'}*/}
-        {/*>*/}
-        {/*  <h1 className={'hidden'}>*/}
-        {/*    {homePage?.seo?.title}*/}
-        {/*  </h1>*/}
-        {/*  <MenuWrapper menu={menu} />*/}
-        {/*  <Banners*/}
-        {/*    className={'flex-1 rounded-3xl lg:h-[380px]'}*/}
-        {/*    banners={homePage?.banners || []}*/}
-        {/*    classNameImage={'object-contain lg:object-cover w-full  '}*/}
-        {/*  />*/}
-        {/*</div>*/}
-        {/*<BlockUnderSlide contents={homePage?.homeBlockUnderSlide || []} />*/}
-        {/*{homePage?.homeBlockFeaturedCategory && (*/}
-        {/*  <HomeFeatureCategory*/}
-        {/*    contents={homePage?.homeBlockFeaturedCategory || []}*/}
-        {/*    setting={settingsHome[SETTING_KEY.FEATURE_CATEGORY.KEY]}*/}
+        <div
+          id={'main-home-page'}
+          className={'lg:mt-[10px] flex w-full gap-2 relative'}
+        >
+          <h1 className={'hidden'}>{homePage?.seo?.title}</h1>
+          <MenuWrapper menu={menu} />
+          <Banners
+            className={'flex-1 rounded-3xl lg:h-[380px]'}
+            banners={homePage?.banners || []}
+            classNameImage={'object-contain lg:object-cover w-full  '}
+          />
+        </div>
+        <BlockUnderSlide contents={homePage?.homeBlockUnderSlide || []} />
+        {homePage?.homeBlockFeaturedCategory && (
+          <HomeFeatureCategory
+            contents={homePage?.homeBlockFeaturedCategory || []}
+            setting={settingsHome[SETTING_KEY.FEATURE_CATEGORY.KEY]}
+          />
+        )}
+
+        {/*{homePage?.homeFlashSale && (*/}
+        {/*  <HomeFlashSale*/}
+        {/*    promotion={homePage?.homeFlashSale}*/}
+        {/*    setting={settingsHome[SETTING_KEY.FLASH_SALE_SECTION.KEY]}*/}
         {/*  />*/}
         {/*)}*/}
 
-        {homePage?.homeFlashSale && (
-          <HomeFlashSale
-            promotion={homePage?.homeFlashSale}
-            setting={settingsHome[SETTING_KEY.FLASH_SALE_SECTION.KEY]}
-          />
-        )}
-
-        <HomeCategory
-          homeCategory={homePage?.homeCategory || []}
-          bannerUnderCategory={homePage?.bannerUnderCategory}
-        />
-        {homePage?.homeNews && (
-          <HomeNews
-            content={homePage?.homeNews}
-            setting={settingsHome[SETTING_KEY.NEWS_SECTION.KEY]}
-          />
-        )}
-        {homePage?.homeBrand && (
-          <HomeBrand
-            contents={homePage?.homeBrand}
-            setting={settingsHome[SETTING_KEY.BRAND_SECTION.KEY]}
-          />
-        )}
+        {/*<HomeCategory*/}
+        {/*  homeCategory={homePage?.homeCategory || []}*/}
+        {/*  bannerUnderCategory={homePage?.bannerUnderCategory}*/}
+        {/*/>*/}
+        {/*{homePage?.homeNews && (*/}
+        {/*  <HomeNews*/}
+        {/*    content={homePage?.homeNews}*/}
+        {/*    setting={settingsHome[SETTING_KEY.NEWS_SECTION.KEY]}*/}
+        {/*  />*/}
+        {/*)}*/}
+        {/*{homePage?.homeBrand && (*/}
+        {/*  <HomeBrand*/}
+        {/*    contents={homePage?.homeBrand}*/}
+        {/*    setting={settingsHome[SETTING_KEY.BRAND_SECTION.KEY]}*/}
+        {/*  />*/}
+        {/*)}*/}
         <HomeSupport />
       </Layout>
       <Footer footerContent={footerContent} />
