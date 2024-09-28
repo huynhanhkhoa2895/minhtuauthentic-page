@@ -7,6 +7,7 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons/lib/icons';
 import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/pagination';
+import dynamic from 'next/dynamic';
 import SectionSwiperSlide from '@/components/organisms/sectionSwiper/slide';
 type Props = {
   classNameContainer?: string;
@@ -25,7 +26,12 @@ type Props = {
   isNotDisplayNavigation?: boolean;
   debug?: boolean;
 };
-import { Skeleton } from 'antd';
+const SwiperSkeleton = dynamic(
+  () => import('@/components/organisms/sectionSwiper/skelenton'),
+  {
+    ssr: false,
+  },
+);
 const SectionSwiper = ({
   classNameContainer,
   renderItem,
@@ -148,20 +154,7 @@ const SectionSwiper = ({
           )}
         </div>
       ) : (
-        <div className={'flex gap-3 p-3 bg-white my-3'}>
-          {/*<Skeleton.Image*/}
-          {/*  active={true}*/}
-          {/*  style={{ width: '100px', height: '100px' }}*/}
-          {/*/>*/}
-          {/*<Skeleton.Image*/}
-          {/*  active={true}*/}
-          {/*  style={{ width: '100px', height: '100px' }}*/}
-          {/*/>*/}
-          {/*<Skeleton.Image*/}
-          {/*  active={true}*/}
-          {/*  style={{ width: '100px', height: '100px' }}*/}
-          {/*/>*/}
-        </div>
+        <SwiperSkeleton />
       )}
     </>
   );
