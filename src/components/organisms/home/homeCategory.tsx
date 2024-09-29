@@ -11,35 +11,36 @@ const HomeCategory = ({
   homeCategory,
   bannerUnderCategory,
   homeBlockFeaturedCategory,
-  settingsHome
+  settingsHome,
 }: {
   homeBlockFeaturedCategory?: StaticContentsDto[];
   homeCategory: StaticComponentDto[];
   bannerUnderCategory?: StaticComponentDto[];
   settingsHome: Record<string, SettingOptionDto | undefined>;
 }) => {
+  const [blockContents, setBlockContents] = useState<
+    Map<number | undefined, StaticComponentDto[]>
+  >(new Map());
 
-  const [blockContents, setBlockContents] = useState<Map<number | undefined, StaticComponentDto[]>>(new Map());
-
-
-
-  useEffect(()=>{
-
-    const contents = Map.groupBy(bannerUnderCategory, (item)=> item.properties?.position_index);
-    setBlockContents(contents)
-  },[])
+  useEffect(() => {
+    const contents = Map.groupBy(
+      bannerUnderCategory || [],
+      (item) => item.properties?.position_index,
+    );
+    setBlockContents(contents);
+  }, []);
   return (
     <>
       {(homeCategory || []).map((item: StaticComponentDto, key: number) => {
-        const position =key % 4 === 0 ? key / 4 : null;
+        const position = key % 4 === 0 ? key / 4 : null;
         return (
           <Fragment key={'GroupCategory_' + key}>
-            {
-              position !== null && <BannerUnderCategory
+            {position !== null && (
+              <BannerUnderCategory
                 key={key + 'banner-under-category'}
                 contents={blockContents.get(position) || []}
               />
-            }
+            )}
             {position === 0 && homeBlockFeaturedCategory && (
               <HomeFeatureCategory
                 contents={homeBlockFeaturedCategory || []}
