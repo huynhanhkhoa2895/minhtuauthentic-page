@@ -45,14 +45,14 @@ const ProductCard = ({
           <Badge className={'bg-price'}>Trả góp 0%</Badge>
         </div>
         <ProductCardImage product={product} />
-        <div className={'px-2 min-h-[84px] lg:min-h-[63px]'}>
+        <div className={'px-2 h-[84px] lg:h-[63px]'}>
           <h3 className={'font-bold'}>
             <Link className={'block'} href={`/${product?.slugs?.slug}`}>
               {product.title || product.name}
             </Link>
           </h3>
         </div>
-        <div className={'h-[50px]'}>
+        <div className={'h-[50px] pt-2'}>
           {isShowConfiguration &&
             variant?.variant_product_configuration_values?.map(
               (item, index) => {
@@ -79,7 +79,7 @@ const ProductCard = ({
                   {promotionName(promotion)}:
                 </span>
                 <span
-                  className={'text-red-600 text-sm text-right cursor-pointer'}
+                  className={'text-red-600 text-[13px] font-bold text-right cursor-pointer'}
                 >
                   {formatMoney(
                     (variant?.regular_price || 0) -
@@ -89,7 +89,7 @@ const ProductCard = ({
               </p>
               <p className={'text-sm'}>
                 <span className={'mr-3'}>Tiết kiệm thêm:</span>
-                <span>
+                <span className={'text-[13px] font-bold'}>
                   {formatMoney(
                     calculatePriceMinus(variant?.regular_price || 0, coupon),
                   )}

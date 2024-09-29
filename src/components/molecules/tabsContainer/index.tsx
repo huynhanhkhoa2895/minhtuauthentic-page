@@ -15,7 +15,7 @@ export default function TabsContainer({ header, content, className }: Props) {
       <button
         key={index}
         className={twMerge(
-          'bg-primaryGrey rounded-[10px] px-3 py-2 text-sm font-semibold',
+          'bg-primaryGrey rounded-[10px] px-3 py-2 text-[13px] font-semibold',
           active ? 'bg-primary text-white' : 'bg-white text-black',
         )}
         type={'button'}

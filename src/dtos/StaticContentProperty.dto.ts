@@ -9,4 +9,5 @@ export class StaticComponentPropertyDto {
   tagLinks?: TagLinkDto[];
   position?: string;
   direction?: BLOCK_UNDER_CATEGORY_POSITION;
+  position_index?: number;
 }

@@ -18,7 +18,7 @@ const ProductTemplate = ({
           data?.product?.categories?.[0]?.category?.slugs?.slug || '/san-pham'
         }
         current={{
-          label: data?.product?.name || '',
+          label: data?.product?.title || data?.product?.name || '',
           link: generateSlugToHref(data?.product?.slugs?.slug),
         }}
       />

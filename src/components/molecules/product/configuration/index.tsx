@@ -58,7 +58,7 @@ export default function ProductConfiguration({
                         });
                       }}
                       className={twMerge(
-                        'rounded-[10px] p-3 border border-gray-300 text-gray-500 relative overflow-hidden',
+                        'rounded-[10px] p-3 border border-gray-300 text-gray-500 relative overflow-hidden font-bold',
                         isActived ? 'border-primary' : '',
                       )}
                     >

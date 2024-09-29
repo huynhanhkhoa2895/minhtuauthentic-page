@@ -49,7 +49,7 @@ export default function Document() {
                 },
                 "sameAs": [
                 " https://www.facebook.com/minhtuauthentic",
-                " https://minhtuauthentic.com/"
+                " https://minhtuauthentic.com/",
                 " https://shopee.vn/minhtu_authentic/",
                 " https://www.yellowpages.vn/lgs/1187978532/minh-tu-authentic",
                 " https://www.homepaylater.vn/doi-tac/minh-tu-authentic/"," https://toplist.vn/top/minh-tu-authentic-600215/", 

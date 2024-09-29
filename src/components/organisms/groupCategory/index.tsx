@@ -46,7 +46,7 @@ const GroupCategory = ({
         >
           <h2 style={{ color: staticComponent?.properties?.textColor }}>
             <Link
-              className={'text-[18px] lg:text-[24px] uppercase font-bold '}
+              className={'text-[18px] lg:text-[22px] uppercase font-bold '}
               href={generateSlugToHref(staticComponent?.category?.slugs?.slug)}
             >
               {staticComponent?.title || staticComponent?.category?.name}

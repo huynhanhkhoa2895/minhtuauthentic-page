@@ -67,12 +67,6 @@ export default function Home({
           />
         </div>
         <BlockUnderSlide contents={homePage?.homeBlockUnderSlide || []} />
-        {homePage?.homeBlockFeaturedCategory && (
-          <HomeFeatureCategory
-            contents={homePage?.homeBlockFeaturedCategory || []}
-            setting={settingsHome[SETTING_KEY.FEATURE_CATEGORY.KEY]}
-          />
-        )}
 
         {homePage?.homeFlashSale && (
           <HomeFlashSale
@@ -82,8 +76,10 @@ export default function Home({
         )}
 
         <HomeCategory
+          homeBlockFeaturedCategory={homePage?.homeBlockFeaturedCategory || []}
           homeCategory={homePage?.homeCategory || []}
           bannerUnderCategory={homePage?.bannerUnderCategory}
+          settingsHome={settingsHome}
         />
 
         {homePage?.homeNews && (

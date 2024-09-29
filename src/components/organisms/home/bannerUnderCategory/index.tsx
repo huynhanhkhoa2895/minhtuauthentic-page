@@ -5,22 +5,20 @@ import Image from 'next/image';
 import { EffectFade, Pagination, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import { generateSlugToHref } from '@/utils';
 
 export default function BannerUnderCategory({
   contents,
-  position,
 }: {
   contents: StaticContentsDto[];
-  position: number;
 }) {
-  const contentLeft = contents.find(
+  const contentLeft = contents.filter(
     (content, index) =>
-      (content?.position_index || 0) === position &&
       content.properties?.direction === BLOCK_UNDER_CATEGORY_POSITION.LEFT,
   );
-  const contentRight = contents.find(
+  const contentRight = contents.filter(
     (content, index) =>
-      (content?.position_index || 0) === position &&
       content.properties?.direction === BLOCK_UNDER_CATEGORY_POSITION.RIGHT,
   );
   const refContainer = useRef<HTMLDivElement>(null);
@@ -45,26 +43,28 @@ export default function BannerUnderCategory({
     }
   }, [ready]);
 
-  const renderImage = (image: ImageDetailDto) => {
+  const renderImage = (image: ImageDetailDto, content: StaticContentsDto) => {
     const imageDisplay = image.image?.url;
 
     return (
       <SwiperSlide key={image.id}>
-        {imageDisplay && (
+        {imageDisplay ? (
           <div
             ref={refContainer}
             style={{ height: wh.height }}
             className={'w-full h-full relative'}
           >
-            <Image
-              src={imageDisplay}
-              className={'w-full h-auto object-cover'}
-              alt={image.image?.alt || 'image'}
-              fill={true}
-              sizes="(max-width: 768px) 100vw, 33vw"
-            />
+            <Link href={generateSlugToHref(content?.properties?.slug)}>
+              <Image
+                src={imageDisplay}
+                className={'w-full h-auto object-cover'}
+                alt={image.image?.alt || 'image'}
+                fill={true}
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+            </Link>
           </div>
-        )}
+        ) : <></>}
       </SwiperSlide>
     );
   };
@@ -72,7 +72,7 @@ export default function BannerUnderCategory({
   return (
     <div className={'grid grid-cols-1 md:grid-cols-2 gap-3 mt-3'}>
       {['left', 'right'].map((direction, index) => {
-        const content = direction === 'left' ? contentLeft : contentRight;
+        const contents = direction === 'left' ? contentLeft : contentRight;
         return (
           <div key={index} className={'rounded-[10px] overflow-hidden'}>
             <Swiper
@@ -83,10 +83,12 @@ export default function BannerUnderCategory({
               autoplay={true}
               loop={true}
             >
-              {content &&
-                (content?.images || []).map((content) => {
-                  return renderImage(content);
-                })}
+              {
+                contents.map((content) => {
+                  const image = content?.images?.[0];
+                  return image && renderImage(image, content);
+                })
+              }
             </Swiper>
           </div>
         );

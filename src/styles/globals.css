@@ -69,6 +69,6 @@ iframe {
     @apply leading-[1.6] break-words my-[1em];
   }
   a{
-    @apply text-[#0782C1] underline cursor-text;
+    @apply text-[#0782C1] underline cursor-pointer;
   }
 }

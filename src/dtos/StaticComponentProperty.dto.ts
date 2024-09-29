@@ -8,4 +8,5 @@ export class StaticComponentPropertyDto {
   backgroundImage?: number;
   slug?: string;
   tagLink?: TagLinkDto[];
+  position_index?: number;
 }

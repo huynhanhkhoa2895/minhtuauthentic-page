@@ -22,7 +22,7 @@ export default function TabContent({
   useEffect(() => {
     if (ready) {
       const height = ref.current?.clientHeight;
-      setHeight && setHeight(height ? height + 12 : 0);
+      setHeight && setHeight(height ? height + 48 : 0);
     }
   }, [ready]);
   return (

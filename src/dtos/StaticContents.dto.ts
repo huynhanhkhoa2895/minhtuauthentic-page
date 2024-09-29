@@ -10,5 +10,5 @@ export class StaticContentsDto extends BaseDto {
   description?: string;
   images?: ImageDetailDto[];
   properties?: StaticComponentPropertyDto;
-  position_index?: number;
+
 }
