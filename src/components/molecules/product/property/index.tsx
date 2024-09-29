@@ -11,6 +11,7 @@ import PromotionDescription from '@/components/molecules/product/promotionDescri
 import Link from 'next/link';
 import { generateSlugToHref, SexName } from '@/utils';
 import StartRating from '@/components/atoms/product/startRating';
+import { Rate } from 'antd';
 type Props = {
   product: ProductDto;
   productConfigurations: ProductConfigurationsDto[];
@@ -105,7 +106,7 @@ const ProductProperty = ({
         </div>
         <div className={'flex gap-2'}>
           <span>Đánh giá: </span>
-          <StartRating />
+          <Rate disabled defaultValue={5} />
         </div>
       </div>
       <hr className={'mt-3'} />
