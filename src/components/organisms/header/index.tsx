@@ -89,6 +89,9 @@ export const Header = ({ menu, settings }: Props) => {
           <HeaderItem
             className={'w-max'}
             icon={<IconPhone className={'w-[24px] h-[24px]'} />}
+            onClick={()=>{
+              window.open('tel:0961693869')
+            }}
           >
             <p className={'block'}>Gọi mua hàng</p>
             <p>0961693869</p>
