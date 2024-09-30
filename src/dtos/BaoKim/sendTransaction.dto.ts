@@ -5,6 +5,7 @@ export default class SendTransactionBaoKimDto {
   url_success?: string;
   merchant_id?: number;
   url_detail?: string;
+  webhooks?: string;
 
   constructor(init?: Partial<SendTransactionBaoKimDto>) {
     Object.assign(this, init);
