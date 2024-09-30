@@ -7,25 +7,16 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   if (req.method === 'POST') {
-    const tokenId = crypto.randomBytes(32).toString('base64');
     const now = Math.floor(Date.now() / 1000);
     const sign = {
       iat: now,
       exp: now + 86400,
-      jti: tokenId,
       iss: process.env.NEXT_PUBLIC_BAO_KIM_API,
-      aud: 'www.example.com',
       nbf: now,
     };
-    console.log(
-      'process.env.NEXT_PUBLIC_BAO_KIM_SECRET',
-      process.env.NEXT_PUBLIC_BAO_KIM_SECRET,
-    );
     const auth = jwt.sign(sign, process.env.NEXT_PUBLIC_BAO_KIM_SECRET || '', {
       algorithm: 'HS256',
     });
-    console.log('sign', sign);
-    console.log('jwt', auth);
     const url = `${process.env.NEXT_PUBLIC_BAO_KIM_URL}/payment/api/v5/order/send?jwt=${auth}`;
     fetch(url, {
       method: 'POST',
@@ -36,9 +27,7 @@ export default async function handler(
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('data', data);
-        const _data = handleDataFetch(data);
-        res.status(200).json(_data);
+        res.status(200).json(data);
       })
       .catch((error) => {
         res

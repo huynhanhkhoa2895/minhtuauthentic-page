@@ -20,6 +20,7 @@ import { ArrowLeftOutlined } from '@ant-design/icons/lib/icons';
 import { createVNPayUrl } from '@/utils/vnpay';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 import SendTransactionBaoKimDto from '@/dtos/BaoKim/sendTransaction.dto';
+import ResponseSendTransactionDto from '@/dtos/BaoKim/responseSendTransaction.dto';
 const fetcher = () =>
   fetch(`/api/orders/province`, {
     method: 'GET',
@@ -178,22 +179,33 @@ export default function FormCheckout({
           } else if (
             paymentType(data?.data?.payment_id) === PAYMENT_TYPE.BAO_KIM
           ) {
+            console.log('test', process.env.BE_URL + '/api/webhook/baokim');
             fetch('/api/baokim/send', {
               method: 'POST',
               body: JSON.stringify(
                 new SendTransactionBaoKimDto({
                   merchant_id: 40002,
-                  mrc_order_id: data?.data?.id,
+                  mrc_order_id: Math.random().toString(36).substring(7),
                   total_amount: data?.data?.total_price,
                   description:
                     'Thanh toan don hang cua user ' +
                     data?.data?.user_id +
                     ' voi gia tri ' +
                     data?.data?.total_price,
-                  url_success: '/gio-hang/thanh-cong?orderId=' + data?.data?.id,
+                  url_success: process.env.NEXT_PUBLIC_APP_URL + '/baokim/',
+                  webhooks:
+                    process.env.NEXT_PUBLIC_BE_URL + '/api/webhook/baokim',
                 }),
               ),
-            });
+            })
+              .then((rs) => rs.json())
+              .then((data: ResponseSendTransactionDto) => {
+                if (data?.data?.payment_url) {
+                  window.location.href = data.data.payment_url;
+                } else {
+                  toast.error('Đã có lỗi xảy ra');
+                }
+              });
           }
         }
       })

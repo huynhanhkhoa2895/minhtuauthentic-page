@@ -23,7 +23,9 @@ export const getServerSideProps = async ({ res, query }: any) => {
       vnp_Params['vnp_ResponseCode'] === '99'
     ) {
       if (!order?.id) {
-        res.write(JSON.stringify({ RspCode: '01', Message: 'Order not found' }));
+        res.write(
+          JSON.stringify({ RspCode: '01', Message: 'Order not found' }),
+        );
       } else if (Number(vnp_Params['vnp_Amount']) % 1000 !== 0) {
         res.write(JSON.stringify({ RspCode: '04', Message: 'Invalid amount' }));
       } else if (
@@ -34,17 +36,19 @@ export const getServerSideProps = async ({ res, query }: any) => {
           JSON.stringify({ RspCode: '02', Message: 'Order already confirmed' }),
         );
       } else {
-        await fetch(`${process.env.BE_URL}/api/orders/${vnp_Params['vnp_TxnRef']}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
+        await fetch(
+          `${process.env.BE_URL}/api/orders/${vnp_Params['vnp_TxnRef']}`,
+          {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              id: vnp_Params['vnp_TxnRef'],
+              status: ORDER_STATUS.DONE,
+            }),
           },
-          body: JSON.stringify({
-            id: vnp_Params['vnp_TxnRef'],
-            status: ORDER_STATUS.DONE,
-            note: 'VNPAY đã thanh toán thành công',
-          }),
-        })
+        )
           .then((res) => res.json())
           .then((res) => {
             return res;
@@ -57,11 +61,9 @@ export const getServerSideProps = async ({ res, query }: any) => {
     } else {
       res.write(JSON.stringify({ RspCode: '98', Message: 'Fail' }));
     }
-
   } else {
     res.write(JSON.stringify({ RspCode: '97', Message: 'Fail checksum' }));
   }
-
 
   res.end();
   return {
