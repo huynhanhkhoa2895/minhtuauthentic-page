@@ -21,32 +21,30 @@ export const getServerSideProps = async ({ query }: any) => {
   if (secureHash === signed && vnp_Params['vnp_TransactionStatus'] === '00') {
     is_success = true;
     const order_id = vnp_Params['vnp_TxnRef'];
-    const res = await fetch(`${process.env.BE_URL}/api/orders/${order_id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
+    // const res = await fetch(`${process.env.BE_URL}/api/orders/${order_id}`, {
+    //   method: 'PUT',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     id: order_id,
+    //     status: ORDER_STATUS.DONE,
+    //     note: 'VNPAY đã thanh toán thành công',
+    //   }),
+    // })
+    //   .then((res) => res.json())
+    //   .then((res) => {
+    //     return res;
+    //   })
+    //   .catch((err) => {
+    //     return null;
+    //   });
+    return {
+      redirect: {
+        destination: '/gio-hang/thanh-cong?orderId=' + order_id,
+        permanent: false,
       },
-      body: JSON.stringify({
-        id: order_id,
-        status: ORDER_STATUS.DONE,
-        note: 'VNPAY đã thanh toán thành công',
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        return res;
-      })
-      .catch((err) => {
-        return null;
-      });
-    if (res) {
-      return {
-        redirect: {
-          destination: '/gio-hang/thanh-cong?orderId=' + order_id,
-          permanent: false,
-        },
-      };
-    }
+    };
   }
 
   return {
