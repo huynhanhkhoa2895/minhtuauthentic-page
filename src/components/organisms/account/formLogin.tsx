@@ -115,13 +115,13 @@ export default function FormLogin() {
           placeholder={'Mật khẩu'}
           prefix={<LockOutlined />}
         />
-        <div className={'flex justify-between'}>
+        <div className={'flex justify-between items-center'}>
           <Button type="primary" htmlType={'submit'}>
             Đăng nhập
           </Button>
-          <Button type={'link'} className={'text-primary hover:!text-primary'}>
-            <Link href={'/tai-khoan/dang-ky'}>Đăng ký</Link>
-          </Button>
+          <Link className={'text-primary'} href={'/tai-khoan/dang-ky'}>
+            Đăng ký
+          </Link>
         </div>
       </div>
       <div className={'login-options'}>
