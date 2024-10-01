@@ -38,7 +38,7 @@ export default function NewsTemplate({
       >
         <>
           {!isDetail ? (
-            <NewsList news={news as NewsDto[]} total={total} />
+            <NewsList news={news as NewsDto[]} total={total || 0} />
           ) : (
             <>
               <NewsDetail news={news as NewsDto} />
