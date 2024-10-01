@@ -15,7 +15,9 @@ export default function NewsList({ news, total }: Props) {
   const queryString = new URLSearchParams(
     router.query as Record<string, string>,
   );
-  const [page, setPage] = useState(queryString.get('page') || 1);
+  const [page, setPage] = useState<number>(
+    Number(queryString.get('page')) || 1,
+  );
   const [count, setCount] = useState(0);
   const [newsList, setNewsList] = useState<NewsDto[]>(news || []);
 
