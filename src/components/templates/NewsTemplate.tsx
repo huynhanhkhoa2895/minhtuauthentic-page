@@ -14,13 +14,21 @@ import NewsDetail from '@/components/organisms/news/detail';
 
 type Props = {
   news: NewsDto | NewsDto[];
+  total?: number;
   categoryNews: CategoryNewsDto[];
   newest?: NewsDto[];
   relationNews?: NewsDto[];
   isDetail?: boolean;
 };
 
-export default function NewsTemplate({ news, categoryNews, newest,relationNews, isDetail}: Props) {
+export default function NewsTemplate({
+  news,
+  categoryNews,
+  newest,
+  relationNews,
+  isDetail,
+  total,
+}: Props) {
   return (
     <div className={'grid grid-cols-1 lg:grid-cols-6 gap-3'}>
       <div
@@ -28,44 +36,38 @@ export default function NewsTemplate({ news, categoryNews, newest,relationNews, 
           'col-span-4 w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3'
         }
       >
-          <>
-            {!isDetail ?
-              <>
-                <h1 className={'text-3xl text-primary font-bold'}>Tin tức</h1>
-                <div className={'grid grid-cols-1 lg:grid-cols-3 gap-3'}>
-                  {
-                    Array.isArray(news) && news.map((item: NewsDto, key: number) => {
-                      return  <NewsItem news={item} key={key} />
-                    })
+        <>
+          {!isDetail ? (
+            <NewsList news={news as NewsDto[]} total={total} />
+          ) : (
+            <>
+              <NewsDetail news={news as NewsDto} />
+              {(relationNews || [])?.length > 0 && (
+                <div
+                  className={
+                    'p-3 rounded-[10px] border bg-gray-200 border-gray-200 mt-3'
                   }
+                >
+                  <h3 className={'font-bold text-xl '}>Xem thêm</h3>
+                  <ul className={'flex flex-col gap-3'}>
+                    {relationNews?.map((item, key) => {
+                      return (
+                        <li
+                          key={key}
+                          className={'py-3 border-b border-gray-200'}
+                        >
+                          <Link href={generateSlugToHref(item.slugs?.slug)}>
+                            {item?.name}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
-              </>
-              :
-              <>
-                <NewsDetail news={news as NewsDto} />
-                {(relationNews || [])?.length > 0 && (
-                  <div
-                    className={
-                      'p-3 rounded-[10px] border bg-gray-200 border-gray-200 mt-3'
-                    }
-                  >
-                    <h3 className={'font-bold text-xl '}>Xem thêm</h3>
-                    <ul className={'flex flex-col gap-3'}>
-                      {relationNews?.map((item, key) => {
-                        return (
-                          <li key={key} className={'py-3 border-b border-gray-200'}>
-                            <Link href={generateSlugToHref(item.slugs?.slug)}>
-                              {item?.name}
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                )}
-              </>
-            }
-          </>
+              )}
+            </>
+          )}
+        </>
       </div>
       <div className={'col-span-2 flex flex-col gap-3'}>
         <div
@@ -91,23 +93,20 @@ export default function NewsTemplate({ news, categoryNews, newest,relationNews, 
             })}
           </ul>
         </div>
-        {
-          newest && (
-            <div
-              className={
-                'w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3'
-              }
-            >
-              <h3 className={'text-3xl text-primary font-bold mb-3'}>
-                Bài viết gần đây
-              </h3>
-              <div>
-                <NewsSmallList news={newest} />
-              </div>
+        {newest && (
+          <div
+            className={
+              'w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3'
+            }
+          >
+            <h3 className={'text-3xl text-primary font-bold mb-3'}>
+              Bài viết gần đây
+            </h3>
+            <div>
+              <NewsSmallList news={newest} />
             </div>
-          )
-        }
-
+          </div>
+        )}
       </div>
     </div>
   );

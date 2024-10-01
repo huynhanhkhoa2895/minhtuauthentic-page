@@ -293,7 +293,9 @@ export default function FormCheckout({
       </div>
       <h3 className={'text-3xl font-bold my-6'}>Phương thức vận chuyển</h3>
       <div className={'flex flex-col'}>
-        <Radio checked>Miễn phí vận chuyển</Radio>
+        <Radio className={'border border-gray-200 p-3'} checked>
+          Miễn phí vận chuyển
+        </Radio>
       </div>
       <h3 className={'text-3xl font-bold my-6'}>Phương thức thanh toán</h3>
       <div className={'flex flex-col'}>
@@ -303,23 +305,23 @@ export default function FormCheckout({
           radioOptions={payments.map((item) => {
             return {
               label: (
-                <div className={'flex gap-2'}>
-                  <ImageWithFallback
-                    image={item?.images?.[0]?.image}
-                    alt={item?.name}
-                    className={'w-[60px] h-[60px]'}
-                  />
+                <div className={'flex gap-2 justify-between w-full'}>
                   <div className={'flex flex-col gap-1'}>
                     <span className={'text-xl font-semibold'}>
                       {item.label || item.name}
                     </span>
                     {item.description && (
                       <div
-                        className={'text-sm text-gray-500'}
+                        className={'text-sm text-gray-500 container-html'}
                         dangerouslySetInnerHTML={{ __html: item.description }}
                       />
                     )}
                   </div>
+                  <ImageWithFallback
+                    image={item?.images?.[0]?.image}
+                    alt={item?.name}
+                    className={'w-[60px] h-[60px] shrink-0'}
+                  />
                 </div>
               ),
               value: item?.id ? (item?.id || '').toString() : '',

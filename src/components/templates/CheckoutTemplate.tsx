@@ -17,7 +17,7 @@ export default function CheckoutTemplate({
   const { user } = useUser();
   return (
     <>
-      <BreadcrumbComponent label={'Giỏ hàng'} link={'/thanh-toan'} />
+      <BreadcrumbComponent label={'Giỏ hàng'} link={'/gio-hang/tom-tat'} />
       <div
         className={twMerge(
           'w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3 ',

@@ -20,7 +20,7 @@ type Props = {
   products: ProductDto[];
   slugData: SlugDto;
   total: number;
-  category?: CategoryDto
+  category?: CategoryDto;
 };
 
 export default function ContentFilter({
@@ -107,7 +107,7 @@ export default function ContentFilter({
             }
           >
             {_products.map((product, index) => {
-              const variant = product?.variants?.find(
+              const variant = (product?.variants || [])?.find(
                 (item) => item.is_default || [],
               );
               if (!variant) {
@@ -127,7 +127,6 @@ export default function ContentFilter({
     );
   }, [_products]);
   const renderTitle = () => {
-    console.log(slugData);
     if (ctx?.search) {
       return (
         <h1 className={'mb-6'}>
@@ -137,10 +136,7 @@ export default function ContentFilter({
           <span className={'text-2xl '}>{ctx?.search}</span>
         </h1>
       );
-    } else if(
-      slugData.model === Entity.CATEGORIES
-      && category?.name
-    ) {
+    } else if (slugData.model === Entity.CATEGORIES && category?.name) {
       return (
         <h1 className={'mb-6'}>
           <span className={'text-3xl text-primary font-semibold'}>

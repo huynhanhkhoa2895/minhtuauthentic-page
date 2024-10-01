@@ -5,4 +5,5 @@ export class ResponseNewsPageDto {
   news?: NewsDto[];
   categoryNews?: CategoryNewsDto[];
   newest?: NewsDto[];
+  total?: number;
 }

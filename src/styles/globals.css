@@ -71,4 +71,11 @@ iframe {
   a{
     @apply text-[#0782C1] underline cursor-pointer;
   }
+
+
+}
+.radio-custom {
+  > span:nth-child(2) {
+    @apply flex-1;
+  }
 }

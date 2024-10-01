@@ -40,13 +40,13 @@ export default function News({
       <Header settings={settings} menu={menu} />
       <Layout settings={settings} menu={menu}>
         <BreadcrumbComponent label={'Tin tức'} link={'/tin-tuc'} />
-        {news && (
-          <NewsTemplate
-            news={news?.news || []}
-            categoryNews={news.categoryNews || []}
-            newest={news.newest || []}
-          />
-        )}
+        <NewsTemplate
+          news={news?.news || []}
+          categoryNews={news.categoryNews || []}
+          newest={news.newest || []}
+          total={news.total}
+          isDetail={false}
+        />
       </Layout>
       <Footer footerContent={footerContent} />
     </>

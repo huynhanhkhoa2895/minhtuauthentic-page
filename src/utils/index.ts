@@ -87,7 +87,7 @@ export const generateSlugToHref = (slug?: string) => {
 };
 
 export function truncateString(str: string, num: number) {
-  if (str.length > num) {
+  if (str?.length && str?.length > num) {
     return str.slice(0, num) + '...';
   } else {
     return str;

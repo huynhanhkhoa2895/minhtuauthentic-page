@@ -28,7 +28,11 @@ export default function RadioForm({ value, onChange, radioOptions }: Props) {
       className={'flex flex-col gap-3'}
     >
       {radioOptions.map((option) => (
-        <Radio key={option.value} value={option.value}>
+        <Radio
+          className={'border border-gray-200 p-3 radio-custom'}
+          key={option.value}
+          value={option.value}
+        >
           {option.label}
         </Radio>
       ))}
