@@ -53,7 +53,7 @@ export default function Document() {
                 " https://shopee.vn/minhtu_authentic/",
                 " https://www.yellowpages.vn/lgs/1187978532/minh-tu-authentic",
                 " https://www.homepaylater.vn/doi-tac/minh-tu-authentic/"," https://toplist.vn/top/minh-tu-authentic-600215/", 
-                "https://www.pinterest.com/MinhTuAuthentic/?actingBusinessId=1121537250862165663",
+                "https://www.pinterest.com/MinhTuAuthentic/?actingBusinessId=1121537250862165663"
                 ] 
               }
             `,
