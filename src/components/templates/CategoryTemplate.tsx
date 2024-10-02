@@ -33,8 +33,8 @@ export default function CategoryTemplate({
 }: Props) {
   const data = slug?.data as ResponseCategoryFilterPageDto;
   const renderLabelBreadcrumb: Record<string, string> = {
-    [Entity.CATEGORIES]: 'Danh mục',
-    [Entity.BRANDS]: 'Nhãn hiệu',
+    [Entity.CATEGORIES]: data.title || 'Danh mục',
+    [Entity.BRANDS]: data.title || 'Thương hiệu',
     [Entity.KEYWORDS]: slug?.keyword?.value || 'Từ khóa',
   };
   return (
@@ -43,7 +43,7 @@ export default function CategoryTemplate({
         label={
           breadcrumb
             ? breadcrumb?.label
-            : renderLabelBreadcrumb[slug?.model || ''] || '' as string
+            : renderLabelBreadcrumb[slug?.model || ''] || ('' as string)
         }
         link={generateSlugToHref(breadcrumb?.link || slug?.slug)}
       />
@@ -63,6 +63,7 @@ export default function CategoryTemplate({
           settings={data?.settings}
           total={data?.total || 0}
           category={data?.category}
+          title={data?.title}
           slugData={
             new SlugDto({
               model: slug?.model,
@@ -72,12 +73,16 @@ export default function CategoryTemplate({
           }
         />
       </div>
-      {
-        data?.category?.static_components?.description && (
-          <div className={'w-full shadow-custom p-3 rounded-[10px] mt-3 bg-white container-html'}
-               dangerouslySetInnerHTML={{ __html: data?.category?.static_components?.description || '' }} />
-        )
-      }
+      {data?.category?.static_components?.description && (
+        <div
+          className={
+            'w-full shadow-custom p-3 rounded-[10px] mt-3 bg-white container-html'
+          }
+          dangerouslySetInnerHTML={{
+            __html: data?.category?.static_components?.description || '',
+          }}
+        />
+      )}
 
       <NavFilterMobile key={'CategoryTemplate'} settings={data?.settings} />
     </CategoryFilterProvider>

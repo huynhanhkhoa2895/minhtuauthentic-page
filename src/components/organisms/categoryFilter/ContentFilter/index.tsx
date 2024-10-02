@@ -20,6 +20,7 @@ type Props = {
   products: ProductDto[];
   slugData: SlugDto;
   total: number;
+  title?: string;
   category?: CategoryDto;
 };
 
@@ -29,6 +30,7 @@ export default function ContentFilter({
   slugData,
   total,
   category,
+  title,
 }: Props) {
   const ctx = useContext(CategoryFilterContext);
   const [_products, setProducts] = useState<ProductDto[]>(products);
@@ -136,12 +138,10 @@ export default function ContentFilter({
           <span className={'text-2xl '}>{ctx?.search}</span>
         </h1>
       );
-    } else if (slugData.model === Entity.CATEGORIES && category?.name) {
+    } else if (title) {
       return (
         <h1 className={'mb-6'}>
-          <span className={'text-3xl text-primary font-semibold'}>
-            {category.name}
-          </span>
+          <span className={'text-3xl text-primary font-semibold'}>{title}</span>
         </h1>
       );
     }

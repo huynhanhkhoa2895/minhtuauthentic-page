@@ -7,4 +7,5 @@ export class ResponseCategoryFilterPageDto {
   total?: number;
   settings?: ProductFilterOptionDto;
   category?: CategoryDto;
+  title?: string;
 }
