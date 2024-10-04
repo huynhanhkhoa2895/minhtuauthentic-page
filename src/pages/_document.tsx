@@ -6,6 +6,7 @@ export default function Document() {
         {process.env.NODE_ENV === 'development' && (
           <meta name="robots" content="noindex,nofollow" />
         )}
+        <meta name="google-site-verification" content="5P0Wm8H0ZaYhmtLWPwgMqdt6Z-o-0rOd1XTfaPRNu78" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
@@ -90,8 +91,8 @@ export default function Document() {
         />
       </Head>
       <body>
-        <Main />
-        <NextScript />
+      <Main />
+      <NextScript />
       </body>
     </Html>
   );
