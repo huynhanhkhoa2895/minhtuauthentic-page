@@ -12,17 +12,20 @@ import Link from 'next/link';
 import { generateSlugToHref, SexName } from '@/utils';
 import StartRating from '@/components/atoms/product/startRating';
 import { Rate } from 'antd';
+import { SettingsDto } from '@/dtos/Settings.dto';
 type Props = {
   product: ProductDto;
   productConfigurations: ProductConfigurationsDto[];
   variantActive: VariantDto;
   onChange?: (variant: VariantDto) => void;
+  settings?: SettingsDto[];
 };
 const ProductProperty = ({
   product,
   productConfigurations,
   variantActive,
   onChange,
+  settings
 }: Props) => {
   const [_variantActive, setVariantActive] =
     useState<VariantDto>(variantActive);
@@ -79,13 +82,15 @@ const ProductProperty = ({
       <div className={'mt-3 grid grid-cols-2'}>
         <div>
           <span>Thương hiệu: </span>
-          <span className={'font-semibold text-primary'}>
+
             {product.brands?.map(
               (item, index) =>
-                item.brand?.name +
-                (index === (product?.brands?.length || 0) - 1 ? '' : ', '),
+                <Link href={generateSlugToHref(item.brand?.slugs?.slug)} className={'font-semibold text-primary'} key={'brand-'+index}>
+                {item.brand?.name +
+                  (index === (product?.brands?.length || 0) - 1 ? '' : ', ')}
+                  </Link>
             )}
-          </span>
+
         </div>
         <div>
           <span>Giới tính: </span>
@@ -130,7 +135,7 @@ const ProductProperty = ({
       <div className={'mt-3'}>
         <ProductCartCheckout variant={_variantActive} />
       </div>
-      <PromotionDescription variant_id={variantActive.id} className={'mt-3'} />
+      <PromotionDescription settings={settings} variant_id={variantActive.id} className={'mt-3'} />
       <div className={'mt-3'}>
         <span className={'font-semibold'}>Danh mục </span>
         <span className={'text-[12px]'}>

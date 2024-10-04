@@ -7,7 +7,6 @@ import { Entity } from '@/config/enum';
 import { ResponseProductDetailPageDto } from '@/dtos/responseProductDetailPage.dto';
 import CategoryTemplate from '@/components/templates/CategoryTemplate';
 import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage.dto';
-import NewsDetailTemplate from '@/components/templates/NewsDetailTemplate';
 import { ResponseNewsDetailPageDto } from '@/dtos/ResponseNewsDetailPage.dto';
 import Layout from '@/components/templates/Layout';
 import getDefaultSeverSide from '@/utils/getDefaultServerSide';

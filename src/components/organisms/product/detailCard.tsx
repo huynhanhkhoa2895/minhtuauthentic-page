@@ -12,6 +12,7 @@ import ProductQuestionAnswer from '@/components/molecules/product/productQuestio
 import ProductDealSock from '@/components/molecules/product/productDealSock';
 import ListKeyword from '@/components/organisms/product/listKeyword';
 import dynamic from 'next/dynamic';
+import { SettingsDto } from '@/dtos/Settings.dto';
 const ProductRating = dynamic(
   () => import('@/components/molecules/product/productRating'),
   {
@@ -29,11 +30,13 @@ type Props = {
   product: ProductDto;
   relatedProducts: ProductDto[];
   productConfigurations: ProductConfigurationsDto[];
+  settings: SettingsDto[];
 };
 const ProductDetailCard = ({
   product,
   productConfigurations,
   relatedProducts,
+  settings
 }: Props) => {
   const [isOpen, setIsOpen] = useState<{
     display: boolean;
@@ -64,6 +67,7 @@ const ProductDetailCard = ({
             product={product}
             variantActive={variantActive}
             productConfigurations={productConfigurations}
+            settings={settings}
             onChange={(variant: VariantDto) => {
               setVariantActive(variant);
             }}

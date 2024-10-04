@@ -1,12 +1,15 @@
 import { ReactNode, useContext, useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
-import Menu from '@/components/molecules/header/menu';
-import appContext from '@/contexts/appContext';
+
 import { SettingsDto } from '@/dtos/Settings.dto';
 import DefaultSeo from '@/components/molecules/seo';
 import { SEOProps } from '@/config/type';
 import dynamic from 'next/dynamic';
+import {
+  isDesktop,
+  isMobile,
+} from 'react-device-detect';
 type Props = {
   className?: string;
   children: ReactNode;
@@ -50,10 +53,10 @@ export default function Layout({
           {children}
         </div>
         {
-          menu && <LayoutMenu menu={menu} />
+          isDesktop && menu && <LayoutMenu menu={menu} />
         }
       </div>
-      {menu && <NavMenu menu={menu} />}
+      {isMobile && menu && <NavMenu menu={menu} />}
       <Socials />
       <MenuFooter />
     </>

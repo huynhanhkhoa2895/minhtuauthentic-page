@@ -3,15 +3,17 @@ import { useContext, useState } from 'react';
 import AppContext from '@/contexts/appContext';
 import { SETTING_KEY } from '@/config/enum';
 import PromotionDescriptionCoupons from '@/components/molecules/product/promotionDescription/coupons';
+import { SettingsDto } from '@/dtos/Settings.dto';
 
 type Props = {
   className?: string;
   variant_id?: number;
+  settings?: SettingsDto[];
 };
-export default function PromotionDescription({ className, variant_id }: Props) {
+export default function PromotionDescription({ className, variant_id, settings }: Props) {
   const contents = ['Ưu đãi thêm', 'Mã giảm giá'];
   const [indexDisplay, setIndexDisplay] = useState(0);
-  const ctx = useContext(AppContext);
+
   const onChange = (index: number) => {
     setIndexDisplay(index);
   };
@@ -42,15 +44,15 @@ export default function PromotionDescription({ className, variant_id }: Props) {
   };
 
   function renderContent(index: number) {
+    const setting = settings?.find((item)=>item.key === SETTING_KEY.PRODUCT_DETAIL_OFFER_SPECIAL_CONTENT.KEY);
     switch (index) {
       case 0:
         return (
           <div
+            className={'container-html'}
             dangerouslySetInnerHTML={{
               __html:
-                ctx?.settings?.[
-                  SETTING_KEY.PRODUCT_DETAIL_OFFER_SPECIAL_CONTENT.KEY
-                ] || '',
+                setting?.value?.content || '',
             }}
           />
         );

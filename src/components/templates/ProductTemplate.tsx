@@ -27,6 +27,7 @@ const ProductTemplate = ({
           product={data?.product}
           relatedProducts={data?.relatedProducts || []}
           productConfigurations={data?.productConfigurations || []}
+          settings={data?.settings || []}
         />
       )}
     </>
