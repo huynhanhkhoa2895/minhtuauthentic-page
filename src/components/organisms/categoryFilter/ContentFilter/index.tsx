@@ -158,7 +158,7 @@ export default function ContentFilter({
         }}
       >
         <Filter className={'w-6 h-6'} />
-        <span className={'font-semibold text-[16px] shrink-0'}>Bộ lọc</span>
+        <span className={'font-semibold text-[16px] shrink-0 text-white'}>Bộ lọc</span>
       </Button>
       <div className={'mb-6'}>
         <span className={'font-semibold text-[16px] shrink-0'}>Lọc theo:</span>
