@@ -6,6 +6,7 @@ export class StaticComponentPropertyDto {
   backgroundColor?: string;
   borderColor?: string;
   slug?: string;
+  url?: string;
   tagLinks?: TagLinkDto[];
   position?: string;
   direction?: BLOCK_UNDER_CATEGORY_POSITION;

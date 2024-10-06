@@ -34,6 +34,8 @@ export default function Socials() {
     }
   }, [data]);
 
+  console.log('display',display)
+
   return (
     <>
       {display.map((socials, index) => {
@@ -57,7 +59,7 @@ export default function Socials() {
                   key={index2 + '-social'}
                 >
                   <Link
-                    href={social?.properties?.slug || '/'}
+                    href={social?.properties?.url || '/'}
                     className={twMerge(
                       'py-2 bg-primary text-white relative transition-all duration-300 invisible hidden opacity-0 group-hover:visible group-hover:opacity-100 group-hover:block ',
                       index === 0

@@ -79,3 +79,8 @@ iframe {
     @apply flex-1;
   }
 }
+.rate-custom{
+    .ant-rate-star {
+        @apply me-0 !important;
+    }
+}

@@ -43,7 +43,7 @@ export default function ProductConfiguration({
                 return (
                   <div
                     key={index + '_' + index2}
-                    className={'flex gap-3 flex-wrap py-3'}
+                    className={'flex gap-3 flex-wrap py-1'}
                   >
                     <button
                       type={'button'}
@@ -58,7 +58,7 @@ export default function ProductConfiguration({
                         });
                       }}
                       className={twMerge(
-                        'rounded-[10px] p-3 border border-gray-300 text-gray-500 relative overflow-hidden font-bold',
+                        'rounded-[10px] p-3 border border-gray-300 text-gray-500 relative overflow-hidden font-extrabold',
                         isActived ? 'border-primary' : '',
                       )}
                     >

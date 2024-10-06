@@ -13,11 +13,11 @@ const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
       case 0:
         return (
           <div key={item.id}>
-            <p className={'uppercase font-bold mb-[10px] text-[16px]'}>
+            <p className={'uppercase font-bold lg:mb-[10px] text-[16px]'}>
               VỀ CHÚNG TÔI
             </p>
             <div
-              className={'mt-[12px]'}
+              className={'lg:mt-[12px]'}
               dangerouslySetInnerHTML={{ __html: item.content || '' }}
             />
           </div>
@@ -30,7 +30,7 @@ const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
               {item.title}
             </p>
             <div
-              className={'mt-[12px]'}
+              className={'lg:mt-[12px]'}
               dangerouslySetInnerHTML={{ __html: item.content || '' }}
             />
           </div>
@@ -42,7 +42,7 @@ const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
               {item.title}
             </p>
             <div
-              className={'mt-[12px]'}
+              className={'lg:mt-[12px]'}
               dangerouslySetInnerHTML={{ __html: item.content || '' }}
             />
           </div>
@@ -51,11 +51,11 @@ const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
   };
 
   return (
-    <footer className={'relative z-[2]'}>
+    <footer className={'relative z-[2] max-lg:pb-[50px]'}>
       <div className={'bg-primaryGrey px-3'}>
         <div className={'container mx-auto '}>
           <div
-            className={'flex max-lg:flex-col justify-between w-full pt-[35px]'}
+            className={'flex max-lg:flex-col justify-between w-full pt-[35px] max-lg:gap-y-3'}
           >
             {orderBy(footerContent?.footer || [], 'sort').map((item, index) => {
               return renderFooter(item, index);
@@ -66,7 +66,7 @@ const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
               src={Logo}
               height={54}
               width={288}
-              className={'object-contain w-auto h-auto'}
+              className={'object-contain w-auto h-auto max-lg:hidden'}
               alt={
                 'Minh Tu Authentic, Nước hoa chính hãng Tphcm, Quận Tân Phú, Mỹ phẩm'
               }
@@ -75,7 +75,7 @@ const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
               <p className={'uppercase font-bold mb-[10px]'}>
                 Kết nối với chúng tôi
               </p>
-              <div className={'grid grid-cols-1 lg:grid-cols-4 w-max gap-3'}>
+              <div className={'grid grid-cols-4 w-max gap-3'}>
                 {footerContent &&
                   footerContent[STATIC_CONTENT_TYPE.FOOTER_LOGO_SOCIAL]?.map(
                     (item: StaticContentsDto, index: number) => {

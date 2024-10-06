@@ -25,7 +25,7 @@ export default function CheckoutTemplate({
       >
         <div className={'py-6 border-b border-gray-200 mb-6'}>
           <Link href={'/'}>
-            <Image src={Logo} alt={'minhtuauthentic'} width={253} height={60} />
+            <Image src={Logo} className={'w-[200px]'} alt={'minhtuauthentic'} width={253} height={60} />
           </Link>
         </div>
         <div className={'flex flex-col-reverse lg:flex-row gap-3'}>

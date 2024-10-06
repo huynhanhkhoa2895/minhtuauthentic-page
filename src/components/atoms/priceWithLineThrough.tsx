@@ -16,7 +16,7 @@ export default function PriceWithLineThrough({
     <>
       <span
         className={twMerge(
-          'text-[14px] lg:text-[18px] font-bold text-price mr-2',
+          'text-[16px] lg:text-[18px] font-bold text-price mr-2',
           classNameRegularPrice,
         )}
       >
@@ -24,7 +24,7 @@ export default function PriceWithLineThrough({
       </span>
       <span
         className={twMerge(
-          'text-[10px] lg:text-[12px] text-textSecondary line-through',
+          'text-[12px] lg:text-[14px] text-textSecondary line-through',
           classNamePrice,
         )}
       >

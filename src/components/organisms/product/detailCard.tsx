@@ -75,7 +75,7 @@ const ProductDetailCard = ({
         </div>
       )}
       <ProductDealSock />
-      <div className={'grid grid-cols-1 lg:grid-cols-3 gap-3 my-3'}>
+      <div className={'flex flex-col-reverse lg:grid lg:grid-cols-3 gap-3 my-3'}>
         <div className={'col-span-2'}>
           <ProductDescription product={product} />
           <ListKeyword product={product} />

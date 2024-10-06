@@ -46,10 +46,6 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
                 return;
               }
 
-              const newPrice = getPriceWithCoupon(
-                variant.regular_price || 0,
-                iCoupon,
-              );
               return (
                 variant.product && (
                   <ProductCard
@@ -57,7 +53,7 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
                     variant={
                       {
                         ...variant,
-                        ...{ regular_price: newPrice, coupon: iCoupon },
+                        ...{ coupon: iCoupon },
                       } as any
                     }
                     promotions={promotion && [promotion]}

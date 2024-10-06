@@ -61,6 +61,7 @@ export default function BannerUnderCategory({
                 alt={image.image?.alt || 'image'}
                 fill={true}
                 sizes="(max-width: 768px) 100vw, 33vw"
+                unoptimized={true}
               />
             </Link>
           </div>

@@ -8,12 +8,13 @@ import { generateSlugToHref } from '@/utils';
 import Link from 'next/link';
 import SectionSwiper from '@/components/organisms/sectionSwiper';
 import { IProductCategoryDto } from '@/dtos/IProductCategory.dto';
-import {
-  BrowserView,
-  MobileView,
-  isBrowser,
-  isMobile,
-} from 'react-device-detect';
+import dynamic from 'next/dynamic';
+const TagLinkMobileView = dynamic(
+  () => import('@/components/organisms/groupCategory/TagLinkMobileView'),
+  {
+    ssr: false,
+  },
+);
 const GroupCategory = ({
   staticComponent,
 }: {
@@ -52,20 +53,7 @@ const GroupCategory = ({
               {staticComponent?.title || staticComponent?.category?.name}
             </Link>
           </h2>
-          <MobileView>
-            <TagLink
-              tagLinks={
-                new TagLinkDto({
-                  id: 0,
-                  name: 'Xem tất cả',
-                  slug: generateSlugToHref(
-                    staticComponent?.category?.slugs?.slug,
-                  ),
-                })
-              }
-              className={'lg:hidden last:mr-0 whitespace-nowrap text-black'}
-            />
-          </MobileView>
+          <TagLinkMobileView slug={staticComponent?.category?.slugs?.slug || ''} />
         </div>
         <div
           className={'flex justify-end gap-3 w-full lg:basis-[60%] lg:w-[70%] '}

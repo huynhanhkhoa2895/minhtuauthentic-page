@@ -111,7 +111,7 @@ const ProductProperty = ({
         </div>
         <div className={'flex gap-2'}>
           <span>Đánh giá: </span>
-          <Rate disabled defaultValue={5} />
+          <Rate rootClassName={'rate-custom'} disabled defaultValue={5} />
         </div>
       </div>
       <hr className={'mt-3'} />
@@ -119,8 +119,8 @@ const ProductProperty = ({
         <ProductPrice
           prefix={'Giá'}
           variant={_variantActive}
-          classNameRegularPrice={'lg:text-[28px] font-bold'}
-          classNamePrice={'font-[500] text-[20px]'}
+          classNameRegularPrice={'text-[24px] lg:text-[28px] font-bold'}
+          classNamePrice={'font-[500] lg:text-[20px]'}
           displayGap
           classNameGap={
             'text-[14px] bg-red-600 ml-2 inline-block py-1 px-2 rounded-[10px] text-white'

@@ -18,10 +18,13 @@ import CartPreview from '@/components/molecules/header/cartPreview';
 import { CloseCircleOutlined, BarsOutlined } from '@ant-design/icons';
 import OrderContext from '@/contexts/orderContext';
 import { useContext } from 'react';
-import NavMenuHeader from '@/components/organisms/MobileMenu/navMenu/header';
 import IconWifi from '@/components/icons/wifi';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import { SETTING_KEY } from '@/config/enum';
+import dynamic from 'next/dynamic';
+const NavMenuHeader = dynamic(() => import('@/components/organisms/MobileMenu/navMenu/header'), {
+  ssr: false,
+});
 type Props = { menu: ResponseMenuDto | null; settings: SettingsDto[] };
 export const Header = ({ menu, settings }: Props) => {
   const pathname = usePathname();
@@ -66,7 +69,7 @@ export const Header = ({ menu, settings }: Props) => {
           'bg-primary lg:py-[10px] sticky top-0 left-0 z-[100] relative'
         }
       >
-        <NavMenuHeader className={'lg:hidden'} />
+        <NavMenuHeader isMobile={true} />
         <div
           className={
             'max-lg:hidden container mx-auto flex justify-between items-center gap-[10px]'
