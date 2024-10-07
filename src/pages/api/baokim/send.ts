@@ -17,7 +17,13 @@ export default async function handler(
     const auth = jwt.sign(sign, process.env.NEXT_PUBLIC_BAO_KIM_SECRET || '', {
       algorithm: 'HS256',
     });
-    console.log('req.body', req.body);
+    console.log('sign', sign);
+    console.log('auth', auth);
+    console.log('body', req.body);
+    console.log(
+      'url',
+      `${process.env.NEXT_PUBLIC_BAO_KIM_URL}/payment/api/v5/order/send?jwt=${auth}`,
+    );
     const url = `${process.env.NEXT_PUBLIC_BAO_KIM_URL}/payment/api/v5/order/send?jwt=${auth}`;
     fetch(url, {
       method: 'POST',
