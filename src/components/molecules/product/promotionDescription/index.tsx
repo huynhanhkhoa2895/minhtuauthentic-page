@@ -10,7 +10,11 @@ type Props = {
   variant_id?: number;
   settings?: SettingsDto[];
 };
-export default function PromotionDescription({ className, variant_id, settings }: Props) {
+export default function PromotionDescription({
+  className,
+  variant_id,
+  settings,
+}: Props) {
   const contents = ['Ưu đãi thêm', 'Mã giảm giá'];
   const [indexDisplay, setIndexDisplay] = useState(0);
 
@@ -44,15 +48,17 @@ export default function PromotionDescription({ className, variant_id, settings }
   };
 
   function renderContent(index: number) {
-    const setting = settings?.find((item)=>item.key === SETTING_KEY.PRODUCT_DETAIL_OFFER_SPECIAL_CONTENT.KEY);
+    const setting = (settings || [])?.find(
+      (item) =>
+        item.key === SETTING_KEY.PRODUCT_DETAIL_OFFER_SPECIAL_CONTENT.KEY,
+    );
     switch (index) {
       case 0:
         return (
           <div
             className={'container-html'}
             dangerouslySetInnerHTML={{
-              __html:
-                setting?.value?.content || '',
+              __html: setting?.value?.content || '',
             }}
           />
         );

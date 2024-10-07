@@ -157,10 +157,14 @@ export const ORDER_STATUS = {
   CLOSE: 'close',
 };
 
-export const PAYMENT_TYPE = {
+export const PAYMENT = {
   COD: 'cod',
   MOMO: 'momo',
   VN_PAY: 'vnpay',
   BAO_KIM: 'baokim',
   CK: 'ck',
+};
+
+export const PAYMENT_TYPE_ID = {
+  TRA_GOP_BAO_KIM: 339,
 };

@@ -94,7 +94,7 @@ export const InputSearch = ({ classname, isMobile }: Props) => {
             key={Math.random()}
             dataSource={data}
             renderItem={(item: ProductDto) => {
-              const variant = item?.variants?.find(
+              const variant = (item?.variants || [])?.find(
                 (variant) => variant.is_default,
               );
               return (

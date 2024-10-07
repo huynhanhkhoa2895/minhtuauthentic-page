@@ -89,7 +89,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
       );
     }
     const currentVariantOnCart = cart?.items
-      ? cart?.items.find((item) => item.variant_id === variant.id)
+      ? (cart?.items || []).find((item) => item.variant_id === variant.id)
       : null;
     if (!variant?.id) {
       toast('Variant không tồn tại', { type: 'error' });

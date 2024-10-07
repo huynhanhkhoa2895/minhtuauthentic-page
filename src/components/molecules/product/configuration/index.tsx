@@ -37,7 +37,7 @@ export default function ProductConfiguration({
             <p>{item.name}: </p>
             <div className={'flex gap-3 flex-wrap items-center'}>
               {item?.product_configuration_values?.map((value, index2) => {
-                const isActived = valueIdActive.find(
+                const isActived = (valueIdActive || []).find(
                   (item) => item.valueId === value.id,
                 );
                 return (

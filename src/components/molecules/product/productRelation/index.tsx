@@ -17,7 +17,7 @@ export default function ProductRelation({ products }: Props) {
         <div className={'flex flex-col gap-3 mt-3'}>
           {products.map((product, index) => {
             const _variantActive =
-              product?.variants?.find((item) => item.is_default) ||
+              (product?.variants || [])?.find((item) => item.is_default) ||
               product?.variants?.[0];
             return (
               <div

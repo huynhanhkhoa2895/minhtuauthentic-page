@@ -5,11 +5,16 @@ import CheckItemCart from '@/components/organisms/checkout/itemCart';
 import CouponsDto from '@/dtos/Coupons.dto';
 import ItemCoupon from '@/components/atoms/coupons';
 import { Button, Input, Tag } from 'antd';
-
-export default function ListCart() {
+import { PAYMENT, PAYMENT_TYPE_ID } from '@/config/enum';
+type Props = {
+  paymentType?: string;
+  setValue?: any;
+};
+export default function ListCart({ paymentType, setValue }: Props) {
   const order = useContext(OrderContext);
   const [couponInput, setCouponInput] = useState<string>('');
   const [coupons, setCoupons] = useState<CouponsDto[]>([]);
+  console.log('paymentType', paymentType);
   useEffect(() => {
     fetchCoupon().catch();
   }, []);
@@ -27,6 +32,48 @@ export default function ListCart() {
   const onChange = (value: null | number, index: number) => {
     order?.updateCart && order.updateCart(index, value || 0);
   };
+
+  const RenderButton = ({ type }: { type: number }) => {
+    if (type === 2) {
+      return (
+        <button
+          type={'submit'}
+          className={
+            'flex-1 flex flex-col gap-1 text-center bg-red-500 text-white p-3 text-center rounded-[10px]'
+          }
+          onClick={() => {
+            setValue('payment_type_id', PAYMENT_TYPE_ID.TRA_GOP_BAO_KIM);
+          }}
+        >
+          <span
+            className={'font-extrabold uppercase text-2xl text-center mx-auto'}
+          >
+            Trả góp 0%
+          </span>
+          <span className={'mx-auto'}>(Home Credit, Kredivo ...)</span>
+        </button>
+      );
+    }
+    return (
+      <button
+        type={'submit'}
+        className={
+          'flex-1 flex flex-col gap-1 text-center bg-primary text-white p-3 text-center rounded-[10px]'
+        }
+        onClick={() => {
+          setValue('payment_type_id', undefined);
+        }}
+      >
+        <span
+          className={'font-extrabold uppercase text-2xl text-center mx-auto'}
+        >
+          Thanh toán
+        </span>
+        <span className={'mx-auto'}>(Qua ATM, QR Code, Thẻ ngân hàng ...)</span>
+      </button>
+    );
+  };
+
   return (
     <div className={'border-l border-gray-200 px-3 flex-1'}>
       <h3 className={'text-3xl font-bold'}>Thông tin giỏ hàng</h3>
@@ -117,7 +164,7 @@ export default function ListCart() {
         </div>
       </div>
       {coupons && coupons.length > 0 && (
-        <div className={'w-full  my-3 flex flex-col gap-3'}>
+        <div className={'w-full  my-3 grid grid-cols-1 lg:grid-cols-2 gap-3'}>
           {coupons?.map((coupon, index) => {
             return (
               <div className={'shadow-custom rounded-[10px]'} key={index}>
@@ -132,6 +179,10 @@ export default function ListCart() {
           })}
         </div>
       )}
+      <div className={'flex gap-3'}>
+        {paymentType === PAYMENT.BAO_KIM && <RenderButton type={2} />}
+        <RenderButton type={1} />
+      </div>
     </div>
   );
 }

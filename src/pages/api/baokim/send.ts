@@ -17,6 +17,7 @@ export default async function handler(
     const auth = jwt.sign(sign, process.env.NEXT_PUBLIC_BAO_KIM_SECRET || '', {
       algorithm: 'HS256',
     });
+    console.log('req.body', req.body);
     const url = `${process.env.NEXT_PUBLIC_BAO_KIM_URL}/payment/api/v5/order/send?jwt=${auth}`;
     fetch(url, {
       method: 'POST',
@@ -30,6 +31,7 @@ export default async function handler(
         res.status(200).json(data);
       })
       .catch((error) => {
+        console.log('Error:', error);
         res
           .status(error?.response?.statusCode || error?.status || 500)
           .json(error);

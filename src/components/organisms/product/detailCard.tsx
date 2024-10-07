@@ -36,7 +36,7 @@ const ProductDetailCard = ({
   product,
   productConfigurations,
   relatedProducts,
-  settings
+  settings,
 }: Props) => {
   const [isOpen, setIsOpen] = useState<{
     display: boolean;
@@ -47,7 +47,7 @@ const ProductDetailCard = ({
   });
 
   const [variantActive, setVariantActive] = useState<VariantDto | undefined>(
-    product?.variants?.find((item: VariantDto) => item.is_default) ||
+    (product?.variants || [])?.find((item: VariantDto) => item.is_default) ||
       product?.variants?.[0],
   );
   return (
@@ -75,7 +75,9 @@ const ProductDetailCard = ({
         </div>
       )}
       <ProductDealSock />
-      <div className={'flex flex-col-reverse lg:grid lg:grid-cols-3 gap-3 my-3'}>
+      <div
+        className={'flex flex-col-reverse lg:grid lg:grid-cols-3 gap-3 my-3'}
+      >
         <div className={'col-span-2'}>
           <ProductDescription product={product} />
           <ListKeyword product={product} />

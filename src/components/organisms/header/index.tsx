@@ -22,16 +22,19 @@ import IconWifi from '@/components/icons/wifi';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import { SETTING_KEY } from '@/config/enum';
 import dynamic from 'next/dynamic';
-const NavMenuHeader = dynamic(() => import('@/components/organisms/MobileMenu/navMenu/header'), {
-  ssr: false,
-});
+const NavMenuHeader = dynamic(
+  () => import('@/components/organisms/MobileMenu/navMenu/header'),
+  {
+    ssr: false,
+  },
+);
 type Props = { menu: ResponseMenuDto | null; settings: SettingsDto[] };
 export const Header = ({ menu, settings }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useUser();
   const orderCtx = useContext(OrderContext);
-  const pageHeader = settings.find(
+  const pageHeader = (settings || []).find(
     (item) => item?.key && item?.key === SETTING_KEY.GENERAL.PAGE_HEADER.KEY,
   );
 
