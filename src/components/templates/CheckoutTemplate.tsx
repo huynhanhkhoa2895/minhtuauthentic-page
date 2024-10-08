@@ -99,11 +99,11 @@ export default function CheckoutTemplate({
       return;
     }
 
-    const paymentType = paymentType(data?.payment_id);
+    const _paymentType: string = paymentType(data?.payment_id);
 
     if (
-      paymentType === PAYMENT.COD ||
-      paymentType === PAYMENT.CK
+      _paymentType === PAYMENT.COD ||
+      _paymentType === PAYMENT.CK
     ) {
       data.status = ORDER_STATUS.DONE;
 
