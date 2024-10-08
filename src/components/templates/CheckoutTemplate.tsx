@@ -103,6 +103,8 @@ export default function CheckoutTemplate({
       data.status = ORDER_STATUS.DONE;
     }
 
+    const paymentTypeId = data?.payment_type_id;
+
     const order: FormData & {
       user_id: number;
       cart: CartDto | undefined;
@@ -131,10 +133,6 @@ export default function CheckoutTemplate({
               window.location.href = urlVnPay || '';
             }
           } else if (paymentType(data?.data?.payment_id) === PAYMENT.BAO_KIM) {
-            console.log(
-              'process.env.NEXT_PUBLIC_BAO_KIM_MERCHANT_ID',
-              process.env.NEXT_PUBLIC_BAO_KIM_MERCHANT_ID,
-            );
             fetch('/api/baokim/send', {
               method: 'POST',
               body: JSON.stringify(
@@ -142,7 +140,7 @@ export default function CheckoutTemplate({
                   merchant_id: Number(
                     process.env.NEXT_PUBLIC_BAO_KIM_MERCHANT_ID || 0,
                   ),
-                  mrc_order_id: data?.data?.id,
+                  mrc_order_id: Math.random().toString(36).substring(10),
                   total_amount: data?.data?.total_price,
                   description:
                     'Thanh toan don hang cua user Bao Kim ' +
@@ -152,7 +150,7 @@ export default function CheckoutTemplate({
                   url_success: process.env.NEXT_PUBLIC_APP_URL + '/baokim/',
                   webhooks:
                     process.env.NEXT_PUBLIC_BE_URL + '/api/webhook/baokim',
-                  bpm_id: data?.payment_type_id,
+                  bpm_id: Number(paymentTypeId) || undefined,
                 }),
               ),
             })

@@ -34,8 +34,6 @@ export default function Socials() {
     }
   }, [data]);
 
-  console.log('display',display)
-
   return (
     <>
       {display.map((socials, index) => {
