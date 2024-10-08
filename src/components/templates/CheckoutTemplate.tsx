@@ -99,7 +99,12 @@ export default function CheckoutTemplate({
       return;
     }
 
-    if (paymentType(data?.payment_id) === PAYMENT.COD) {
+    const paymentType = paymentType(data?.payment_id);
+
+    if (
+      paymentType === PAYMENT.COD ||
+      paymentType === PAYMENT.CK
+    ) {
       data.status = ORDER_STATUS.DONE;
     }
 

@@ -82,6 +82,11 @@ iframe {
     @apply flex-1;
   }
 }
+.news-title {
+  span {
+    @apply text-[16px] !important;
+  }
+}
 .rate-custom{
     .ant-rate-star {
         @apply me-0 !important;

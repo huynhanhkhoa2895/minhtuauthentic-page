@@ -15,6 +15,7 @@ export default function NewsSmallList({ news }: Props) {
         const imageDetail = item?.images?.[0];
         const image = imageDetail?.image || null;
         const url = image?.url || noImage;
+        console.log('item',item)
         return (
           <div key={key} className={'flex gap-3 mb-3 last:mb-0  '}>
             <div className={'w-[100px] overflow-hidden basis-[100px] shrink-0'}>

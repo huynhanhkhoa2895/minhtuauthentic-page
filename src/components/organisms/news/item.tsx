@@ -26,9 +26,9 @@ export default function NewsItem({ news }: Props) {
       </div>
       <div className={'mt-3'}>
         <div className={'h-[65px] overflow-hidden'}>
-          <h3 className={'font-semibold text-[16px]'}>
+          <h3 className={'font-semibold '}>
             <NewsClock item={news} />
-            <Link href={generateSlugToHref(news.slugs?.slug)} dangerouslySetInnerHTML={{__html:  getTitleNews(news.content || news.name || '')}}>
+            <Link className={'!text-[16px] news-title'} href={generateSlugToHref(news.slugs?.slug)} dangerouslySetInnerHTML={{__html:  getTitleNews(news.content || news.name || '')}}>
             </Link>
           </h3>
         </div>
