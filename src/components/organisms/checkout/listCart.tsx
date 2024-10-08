@@ -6,6 +6,7 @@ import CouponsDto from '@/dtos/Coupons.dto';
 import ItemCoupon from '@/components/atoms/coupons';
 import { Button, Input, Tag } from 'antd';
 import { PAYMENT, PAYMENT_TYPE_ID } from '@/config/enum';
+import PaymentButton from '@/components/molecules/paymentButton';
 type Props = {
   paymentType?: string;
   setValue?: any;
@@ -38,7 +39,7 @@ export default function ListCart({ paymentType, setValue }: Props) {
         <button
           type={'submit'}
           className={
-            'flex-1 flex flex-col gap-1 text-center bg-red-500 text-white p-3 text-center rounded-[10px]'
+            'flex-1 flex flex-col gap-1 text-center bg-[#f1eb1f] text-[#235d97] p-3 text-center rounded-[10px]'
           }
           onClick={() => {
             setValue('payment_type_id', PAYMENT_TYPE_ID.TRA_GOP_BAO_KIM);
@@ -47,17 +48,39 @@ export default function ListCart({ paymentType, setValue }: Props) {
           <span
             className={'font-extrabold uppercase text-2xl text-center mx-auto'}
           >
-            Trả góp 0%
+            Mua ngay - Trả sau
           </span>
-          <span className={'mx-auto'}>(Home Credit, Kredivo ...)</span>
+          <span className={'flex items-center justify-center m-auto'}>
+            <img src="https://pc.baokim.vn/platform/img/home-paylater-ngang-small.svg" alt="Minh tu authentic" className={'ml-[5px] h-[20px]'} />
+            <img src="https://pc.baokim.vn/platform/img/icon-muadee.svg" alt="Minh tu authentic"  className={'ml-[5px] h-[20px]'}  />
+          </span>
         </button>
       );
+    } else if (type === 3) {
+      return <button
+        type={'submit'}
+        className={
+          'flex-1 flex flex-col gap-1 text-center bg-[#288ad6] text-white p-3 text-center rounded-[10px]'
+        }
+        onClick={() => {
+          setValue('payment_type_id', PAYMENT_TYPE_ID.TRA_GOP_BAO_KIM_CREDIT_CARD);
+        }}
+      >
+          <span
+            className={'font-extrabold uppercase text-2xl text-center mx-auto'}
+          >
+            Trả góp qua thẻ
+          </span>
+        <span className={'flex items-center justify-center m-auto'}>
+            Visa, MasterCard, JCB
+          </span>
+      </button>;
     }
     return (
       <button
         type={'submit'}
         className={
-          'flex-1 flex flex-col gap-1 text-center bg-primary text-white p-3 text-center rounded-[10px]'
+          ' bg-primary text-white'
         }
         onClick={() => {
           setValue('payment_type_id', undefined);
@@ -178,9 +201,31 @@ export default function ListCart({ paymentType, setValue }: Props) {
           })}
         </div>
       )}
-      <div className={'flex gap-3'}>
-        {paymentType === PAYMENT.BAO_KIM && <RenderButton type={2} />}
-        <RenderButton type={1} />
+      <div className={'flex flex-col gap-3'}>
+        <PaymentButton
+          onClick={() => {
+            setValue('payment_type_id', undefined);
+          }}
+          type={1}
+          htmlType={'submit'}
+        />
+        {paymentType === PAYMENT.BAO_KIM && <>
+          <PaymentButton
+            onClick={() => {
+              setValue('payment_type_id', PAYMENT_TYPE_ID.TRA_GOP_BAO_KIM_CREDIT_CARD);
+            }}
+            htmlType={'submit'}
+            type={3}
+          />
+          <PaymentButton
+            onClick={() => {
+              setValue('payment_type_id', PAYMENT_TYPE_ID.TRA_GOP_BAO_KIM);
+            }}
+            htmlType={'submit'}
+            type={2}
+          />
+        </>}
+
       </div>
     </div>
   );

@@ -10,11 +10,6 @@ export default function NewsDetail({ news }: Props) {
   return (
     <>
       {news && <NewsClock item={news} />}
-      {news?.images?.[0] && (
-        <div className={'w-full lg:w-[650px] p-3 mx-auto'}>
-          <ImageWithFallback image={news?.images?.[0]?.image} />
-        </div>
-      )}
       <div
         className={'container-html'}
         dangerouslySetInnerHTML={{ __html: news?.content || '' }}

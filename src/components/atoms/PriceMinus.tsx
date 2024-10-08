@@ -5,13 +5,15 @@ import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { useContext } from 'react';
 import OrderContext from '@/contexts/orderContext';
+import { twMerge } from 'tailwind-merge';
 
 type Props = {
   item: OrderItemsDto;
   isDisplayTotal?: boolean;
+  className?: string;
 };
 
-export default function PriceMinus({ item }: Props) {
+export default function PriceMinus({ item,className }: Props) {
   const orderCtx = useContext(OrderContext);
   return (
     <>
@@ -26,7 +28,7 @@ export default function PriceMinus({ item }: Props) {
                 : 'Mã giảm giá: ' + coupon.code
             }
           >
-            <div className={'flex items-center gap-1 justify-end'}>
+            <div className={twMerge('flex items-center gap-1 justify-end', className)}>
               <span
                 className={'text-red-600 text-sm text-right cursor-pointer'}
               >

@@ -71,8 +71,11 @@ iframe {
   a{
     @apply text-[#0782C1] underline cursor-pointer;
   }
-
-
+}
+.html-description{
+  img {
+    @apply w-auto inline !important;
+  }
 }
 .radio-custom {
   > span:nth-child(2) {

@@ -56,7 +56,7 @@ export default function PromotionDescription({
       case 0:
         return (
           <div
-            className={'container-html'}
+            className={'container-html html-description'}
             dangerouslySetInnerHTML={{
               __html: setting?.value?.content || '',
             }}

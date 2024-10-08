@@ -1,11 +1,21 @@
 import { twMerge } from 'tailwind-merge';
 import { useContext } from 'react';
 import OrderContext from '@/contexts/orderContext';
-
+import {
+  isMobile,
+} from 'react-device-detect';
+import { useRouter } from 'next/router';
 const HeaderCart = ({ className, classNumber }: { className?: string, classNumber?: string }) => {
   const cart = useContext(OrderContext);
+  const router = useRouter();
   return (
-    <div className={twMerge(className, 'relative')}>
+    <div className={twMerge(className, 'relative')}
+      onClick={()=>{
+        if (isMobile) {
+          router.push('/gio-hang/tom-tat')
+        }
+      }}
+    >
       <div
         className={
           'absolute w-full h-full top-0 left-0 flex items-center justify-center'

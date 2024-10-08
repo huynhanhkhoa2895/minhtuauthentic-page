@@ -243,3 +243,8 @@ export function groupBy<T, K>(array: T[], keySelector: (item: T) => K): Map<K, T
     return map;
   }, new Map<K, T[]>());
 }
+
+export function getTitleNews(content: string) {
+  const match = content.match(/<h1>(.*?)<\/h1>/);
+  return match ? match[1] : '';
+}

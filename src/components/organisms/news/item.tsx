@@ -1,7 +1,7 @@
 import noImage from '@/static/images/no-image.png';
 import { NewsDto } from '@/dtos/News.dto';
 import Link from 'next/link';
-import { generateSlugToHref, truncateString } from '@/utils';
+import { generateSlugToHref, getTitleNews, truncateString } from '@/utils';
 import Image from 'next/image';
 import NewsClock from '@/components/atoms/news/clock';
 type Props = {
@@ -28,7 +28,8 @@ export default function NewsItem({ news }: Props) {
         <div className={'h-[65px] overflow-hidden'}>
           <h3 className={'font-semibold text-[16px]'}>
             <NewsClock item={news} />
-            <Link href={generateSlugToHref(news.slugs?.slug)}>{news.name}</Link>
+            <Link href={generateSlugToHref(news.slugs?.slug)} dangerouslySetInnerHTML={{__html:  getTitleNews(news.content || news.name || '')}}>
+            </Link>
           </h3>
         </div>
 
