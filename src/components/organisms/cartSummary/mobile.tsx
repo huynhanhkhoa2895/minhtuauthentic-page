@@ -22,7 +22,7 @@ export default function CartSummaryMobile() {
                 image={item?.image}
                 alt={item.variant_name}
               />
-              <diiv>
+              <div>
                 <Link
                   href={generateSlugToHref(item.slug)}
                   className={'text-primary font-semibold '}
@@ -41,7 +41,7 @@ export default function CartSummaryMobile() {
                   price={item.variant_price}
                 />
                 <PriceMinus item={item} className={'justify-start'} />
-              </diiv>
+              </div>
               <div className={'flex gap-3 justify-between items-center mt-3'}>
                 <InputNumber
                   min={1}
