@@ -106,6 +106,7 @@ export default function CheckoutTemplate({
       paymentType === PAYMENT.CK
     ) {
       data.status = ORDER_STATUS.DONE;
+
     }
 
     const paymentTypeId = data?.payment_type_id;
