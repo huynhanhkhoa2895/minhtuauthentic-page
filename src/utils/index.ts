@@ -230,3 +230,16 @@ export function promotionName(promotion?: PromotionsDto) {
       return 'Flash Sale';
   }
 }
+
+export function groupBy<T, K>(array: T[], keySelector: (item: T) => K): Map<K, T[]> {
+  return array.reduce((map, item) => {
+    const key = keySelector(item);
+    const group = map.get(key);
+    if (group) {
+      group.push(item);
+    } else {
+      map.set(key, [item]);
+    }
+    return map;
+  }, new Map<K, T[]>());
+}

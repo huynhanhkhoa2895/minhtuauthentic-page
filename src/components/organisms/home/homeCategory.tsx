@@ -6,6 +6,7 @@ import { StaticContentsDto } from '@/dtos/StaticContents.dto';
 import HomeFeatureCategory from '@/components/organisms/home/homeFeatureCategory';
 import { SETTING_KEY } from '@/config/enum';
 import { SettingOptionDto } from '@/dtos/SettingOption.dto';
+import { groupBy } from '@/utils';
 
 const HomeCategory = ({
   homeCategory,
@@ -23,7 +24,7 @@ const HomeCategory = ({
   >(new Map());
 
   useEffect(() => {
-    const contents = Map.groupBy(
+    const contents = groupBy(
       bannerUnderCategory || [],
       (item) => item.properties?.position_index,
     );
