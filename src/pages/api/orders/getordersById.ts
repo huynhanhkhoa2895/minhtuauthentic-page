@@ -8,13 +8,12 @@ export default async function handler(
   if (req.method === 'GET') {
     const query = req.query;
     console.log('query test', query);
-    const url =
-      `${process.env.BE_URL}/api/pages/order/getById/` +
-      query.id;
+    const url = `${process.env.BE_URL}/api/pages/order/getById/` + query.id;
     const rs = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + req.cookies['token'] || '',
       },
       body: req.body,
     })

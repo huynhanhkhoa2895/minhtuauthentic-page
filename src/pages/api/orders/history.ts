@@ -6,14 +6,14 @@ export default async function handler(
 ) {
   if (req.method === 'GET') {
     const query = req.query;
-    const url =
-      `${process.env.BE_URL}/api/orders/history`;
+    const url = `${process.env.BE_URL}/api/orders/history`;
 
     const rs = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + req.cookies['token'] || '',
+        Authorization: 'Bearer ' + req.cookies['token'] || '',
+        Authorization: 'Bearer ' + req.cookies['token'] || '',
       },
     })
       .then((response) => response.json())
