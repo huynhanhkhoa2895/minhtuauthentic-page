@@ -26,7 +26,7 @@ const GroupCategory = ({
     staticComponent?.properties?.tagLink || [],
   );
   const [isReady, setIsReady] = useState(false);
-
+  console.log('staticComponent?.category?.products', staticComponent?.category?.products?.length)
   useEffect(() => {
     setIsReady(true);
   }, []);
@@ -105,6 +105,7 @@ const GroupCategory = ({
           );
           const variant = variantMap.get(true);
           if (!variant) {
+            console.log('variant not found', iProduct.product);
             return;
           }
           return (
