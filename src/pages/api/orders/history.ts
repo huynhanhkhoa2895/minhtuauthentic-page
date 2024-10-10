@@ -13,7 +13,6 @@ export default async function handler(
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + req.cookies['token'] || '',
-        Authorization: 'Bearer ' + req.cookies['token'] || '',
       },
     })
       .then((response) => response.json())
