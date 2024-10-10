@@ -16,6 +16,7 @@ import { Fragment } from 'react';
 import NewsTemplate from '@/components/templates/NewsTemplate';
 import { generateSlugToHref } from '@/utils';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
+import { ResponseNewsPageDto } from '@/dtos/ResponseNewsPage.dto';
 
 export const getServerSideProps = (async (context) => {
   const { slug } = context.query;
@@ -141,6 +142,15 @@ export default function Page({
             menu={menu}
           />
         );
+      case Entity.CATEGORY_NEWS:
+        const _newsCategory = slug?.data as ResponseNewsPageDto;
+        return  <NewsTemplate
+          news={_newsCategory?.news || []}
+          categoryNews={_newsCategory?.categoryNews || []}
+          newest={_newsCategory?.newest}
+          total={_newsCategory?.total}
+        />
+
       case Entity.NEWS:
         const _news = slug?.data as ResponseNewsDetailPageDto;
 
