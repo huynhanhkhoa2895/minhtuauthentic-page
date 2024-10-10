@@ -26,7 +26,6 @@ const GroupCategory = ({
     staticComponent?.properties?.tagLink || [],
   );
   const [isReady, setIsReady] = useState(false);
-  console.log('staticComponent?.category?.products', staticComponent?.category?.products?.length)
   useEffect(() => {
     setIsReady(true);
   }, []);
@@ -53,7 +52,9 @@ const GroupCategory = ({
               {staticComponent?.title || staticComponent?.category?.name}
             </Link>
           </h2>
-          <TagLinkMobileView slug={staticComponent?.category?.slugs?.slug || ''} />
+          <TagLinkMobileView
+            slug={staticComponent?.category?.slugs?.slug || ''}
+          />
         </div>
         <div
           className={'flex justify-end gap-3 w-full lg:basis-[60%] lg:w-[70%] '}

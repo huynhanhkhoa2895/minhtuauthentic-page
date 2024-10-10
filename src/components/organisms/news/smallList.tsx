@@ -33,11 +33,13 @@ export default function NewsSmallList({ news }: Props) {
             <div className={'h-[100px]'}>
               <NewsClock item={item} />
               <h3 className={'font-semibold text-[14px] mb-1'}>
-                <Link key={key} href={generateSlugToHref(item.slugs?.slug)}
-                      dangerouslySetInnerHTML={{__html:  getTitleNews(item.content || item.name || '')}}
-                >
-
-                </Link>
+                <Link
+                  key={key}
+                  href={generateSlugToHref(item.slugs?.slug)}
+                  dangerouslySetInnerHTML={{
+                    __html: getTitleNews(item.content || item.name || ''),
+                  }}
+                ></Link>
               </h3>
               <div
                 className={'h-[47px] overflow-hidden'}

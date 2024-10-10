@@ -231,7 +231,10 @@ export function promotionName(promotion?: PromotionsDto) {
   }
 }
 
-export function groupBy<T, K>(array: T[], keySelector: (item: T) => K): Map<K, T[]> {
+export function groupBy<T, K>(
+  array: T[],
+  keySelector: (item: T) => K,
+): Map<K, T[]> {
   return array.reduce((map, item) => {
     const key = keySelector(item);
     const group = map.get(key);
@@ -247,7 +250,6 @@ export function groupBy<T, K>(array: T[], keySelector: (item: T) => K): Map<K, T
 export function getTitleNews(content: string) {
   const match = content.match(/<h1.*?>(.*?)<\/h1>/);
   if (match) {
-    // Remove any nested HTML tags
     const text = match[1].replace(/<[^>]*>/g, '');
     return text;
   }
