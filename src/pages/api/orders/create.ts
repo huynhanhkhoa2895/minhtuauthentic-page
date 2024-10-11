@@ -16,6 +16,7 @@ export default async function handler(
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + req.cookies['token'] || '',
+        'x-forwarded-for': req.headers['x-forwarded-for'] as string,
       },
       body: req.body,
     })

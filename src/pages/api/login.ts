@@ -12,6 +12,7 @@ export default async function handler(
       body: req.body,
       headers: {
         'Content-Type': 'application/json',
+        'x-forwarded-for': req.headers['x-forwarded-for'] as string,
       },
     })
       .then((response) => response.json())
