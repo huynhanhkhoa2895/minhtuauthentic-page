@@ -18,7 +18,7 @@ import { generateSlugToHref } from '@/utils';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import { ResponseNewsPageDto } from '@/dtos/ResponseNewsPage.dto';
 
-export const getServerSideProps = (async (context) => {
+export const getServerSideProps = async (context) => {
   const { slug } = context.query;
   let title = undefined,
     description = undefined,
@@ -76,7 +76,7 @@ export const getServerSideProps = (async (context) => {
       case Entity.CATEGORY_NEWS:
         let newsCategory =
           data?.data as ResponseSlugPageDto<ResponseNewsPageDto>;
-        title = newsCategory?.data?.title;
+        title = newsCategory?.data?.title || null;
         return;
       case Entity.CATEGORIES:
         let category = (
@@ -104,17 +104,7 @@ export const getServerSideProps = (async (context) => {
       ...resDefault,
     },
   };
-}) satisfies GetServerSideProps<
-  ServerSideProps & {
-    slug: ResponseSlugPageDto<unknown>;
-    title?: string | null;
-    description?: string | null;
-    image?: string | null;
-    width?: number;
-    height?: number;
-    keyword?: string;
-  }
->;
+};
 export default function Page({
   slug,
   footerContent,
