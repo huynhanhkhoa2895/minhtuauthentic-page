@@ -19,6 +19,7 @@ type Props = {
   newest?: NewsDto[];
   relationNews?: NewsDto[];
   isDetail?: boolean;
+  title?: string;
 };
 
 export default function NewsTemplate({
@@ -26,6 +27,7 @@ export default function NewsTemplate({
   categoryNews,
   newest,
   relationNews,
+  title,
   isDetail,
   total,
 }: Props) {
@@ -38,7 +40,11 @@ export default function NewsTemplate({
       >
         <>
           {!isDetail ? (
-            <NewsList news={news as NewsDto[]} total={total || 0} />
+            <NewsList
+              title={title}
+              news={news as NewsDto[]}
+              total={total || 0}
+            />
           ) : (
             <>
               <NewsDetail news={news as NewsDto} />

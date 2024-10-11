@@ -6,4 +6,5 @@ export class ResponseNewsPageDto {
   categoryNews?: CategoryNewsDto[];
   newest?: NewsDto[];
   total?: number;
+  title?: string;
 }

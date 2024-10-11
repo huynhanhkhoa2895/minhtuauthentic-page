@@ -8,9 +8,10 @@ import { ResponseNewsPageDto } from '@/dtos/ResponseNewsPage.dto';
 type Props = {
   news: NewsDto[];
   total: number;
+  title?: string;
 };
 
-export default function NewsList({ news, total }: Props) {
+export default function NewsList({ news, total, title }: Props) {
   const router = useRouter();
   const queryString = new URLSearchParams(
     router.query as Record<string, string>,
@@ -52,23 +53,33 @@ export default function NewsList({ news, total }: Props) {
 
   return (
     <>
-      <h1 className={'text-3xl text-primary font-bold'}>Tin tức</h1>
-      <div className={'grid grid-cols-1 lg:grid-cols-3 gap-3'}>
-        {newsList.map((item: NewsDto, key: number) => {
-          return <NewsItem news={item} key={key} />;
-        })}
-      </div>
-      <Pagination
-        className={'mt-6 justify-center'}
-        total={total}
-        showQuickJumper={true}
-        showSizeChanger={false}
-        current={page || 1}
-        pageSize={10}
-        onChange={(page: number) => {
-          setPage(page);
-        }}
-      />
+      <h1 className={'text-3xl text-primary font-bold mb-3'}>
+        {title || 'Tin tức'}
+      </h1>
+      {newsList.length > 0 ? (
+        <>
+          <div className={'grid grid-cols-1 lg:grid-cols-3 gap-3'}>
+            {newsList.map((item: NewsDto, key: number) => {
+              return <NewsItem news={item} key={key} />;
+            })}
+          </div>
+          <Pagination
+            className={'mt-6 justify-center'}
+            total={total}
+            showQuickJumper={true}
+            showSizeChanger={false}
+            current={page || 1}
+            pageSize={10}
+            onChange={(page: number) => {
+              setPage(page);
+            }}
+          />
+        </>
+      ) : (
+        <p className={'text-3xl text-center text-primary font-bold'}>
+          Hiện tại không có tin tức nào
+        </p>
+      )}
     </>
   );
 }

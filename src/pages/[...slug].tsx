@@ -72,8 +72,15 @@ export const getServerSideProps = (async (context) => {
         height = news?.data?.news?.images?.[0]?.image?.height || 0;
         keyword = news?.data?.news?.seo?.keyword;
         break;
+      case Entity.CATEGORY_NEWS:
+        let newsCategory =
+          data?.data as ResponseSlugPageDto<ResponseNewsPageDto>;
+        title = newsCategory?.data?.title;
+        return;
       case Entity.CATEGORIES:
-        let category = (data?.data as ResponseSlugPageDto<ResponseCategoryFilterPageDto>).data?.category;
+        let category = (
+          data?.data as ResponseSlugPageDto<ResponseCategoryFilterPageDto>
+        ).data?.category;
         title = category?.seo?.title || category?.name;
         description = category?.seo?.description;
         keyword = category?.seo?.keyword;
@@ -144,12 +151,26 @@ export default function Page({
         );
       case Entity.CATEGORY_NEWS:
         const _newsCategory = slug?.data as ResponseNewsPageDto;
-        return  <NewsTemplate
-          news={_newsCategory?.news || []}
-          categoryNews={_newsCategory?.categoryNews || []}
-          newest={_newsCategory?.newest}
-          total={_newsCategory?.total}
-        />
+        return (
+          <>
+            <BreadcrumbComponent
+              label={'Tin tức'}
+              link={'/tin-tuc'}
+              current={{
+                label: _newsCategory?.title || '',
+                link: generateSlugToHref(slug.slug),
+              }}
+            />
+            <NewsTemplate
+              key={slug.slug}
+              news={_newsCategory?.news || []}
+              categoryNews={_newsCategory?.categoryNews || []}
+              newest={_newsCategory?.newest}
+              total={_newsCategory?.total}
+              title={_newsCategory?.title}
+            />
+          </>
+        );
 
       case Entity.NEWS:
         const _news = slug?.data as ResponseNewsDetailPageDto;
@@ -165,6 +186,7 @@ export default function Page({
               }}
             />
             <NewsTemplate
+              key={slug.slug}
               news={_news?.news || []}
               categoryNews={_news?.categoryNews || []}
               newest={_news?.newest}
@@ -172,7 +194,6 @@ export default function Page({
               isDetail={true}
             />
           </>
-
         );
       default:
         return <div>Not Found</div>;
