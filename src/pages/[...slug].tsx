@@ -46,6 +46,7 @@ export const getServerSideProps = (async (context) => {
   if (
     data?.data?.model === Entity.PRODUCTS ||
     data?.data?.model === Entity.CATEGORIES ||
+    data?.data?.model === Entity.CATEGORY_NEWS ||
     data?.data?.model === Entity.NEWS
   ) {
     switch (data?.data?.model) {
