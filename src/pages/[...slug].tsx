@@ -18,7 +18,7 @@ import { generateSlugToHref } from '@/utils';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import { ResponseNewsPageDto } from '@/dtos/ResponseNewsPage.dto';
 
-export const getServerSideProps = async (context) => {
+export const getServerSideProps = async (context: any) => {
   const { slug } = context.query;
   let title = undefined,
     description = undefined,
