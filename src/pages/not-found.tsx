@@ -12,7 +12,6 @@ export const getServerSideProps = (async () => {
 }) satisfies GetServerSideProps<ServerSideProps>;
 export default function NotFoundPage({
   menu,
-  footerContent,
   settings,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (

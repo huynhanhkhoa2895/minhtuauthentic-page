@@ -6,12 +6,12 @@ import Footer from '@/components/organisms/footer';
 import Layout from '@/components/templates/Layout';
 import { ServerSideProps } from '@/config/type';
 
-export const getServerSideProps = (async () => {
+export const getServerSideProps = async () => {
   const resDefault = await getDefaultSeverSide();
   return {
     props: resDefault,
   };
-}) satisfies GetServerSideProps<ServerSideProps>;
+};
 
 export default function OderSuccess({
   menu,

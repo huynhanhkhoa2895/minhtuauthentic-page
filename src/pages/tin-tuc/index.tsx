@@ -8,7 +8,7 @@ import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import Layout from '@/components/templates/Layout';
 import { ServerSideProps } from '@/config/type';
 
-export const getServerSideProps = (async (context) => {
+export const getServerSideProps = async (context: any) => {
   const page = context.query.page;
   const resDefault = await getDefaultSeverSide();
   const rsNews: { data: ResponseNewsPageDto } = await fetch(
@@ -23,11 +23,7 @@ export const getServerSideProps = (async (context) => {
       ...resDefault,
     },
   };
-}) satisfies GetServerSideProps<
-  {
-    news: ResponseNewsPageDto;
-  } & ServerSideProps
->;
+};
 
 export default function News({
   menu,

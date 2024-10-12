@@ -7,7 +7,7 @@ import { STATIC_CONTENT_TYPE } from '@/config/enum';
 import Link from 'next/link';
 import { orderBy } from 'lodash';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
-const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
+const Footer = ({ footerContent }: { footerContent?: ResponseFooterDto }) => {
   const renderFooter = (item: StaticContentsDto, index: number) => {
     switch (index) {
       case 0:
@@ -55,7 +55,9 @@ const Footer = ({ footerContent }: { footerContent: ResponseFooterDto }) => {
       <div className={'bg-primaryGrey px-3'}>
         <div className={'container mx-auto '}>
           <div
-            className={'flex max-lg:flex-col justify-between w-full pt-[35px] max-lg:gap-y-3'}
+            className={
+              'flex max-lg:flex-col justify-between w-full pt-[35px] max-lg:gap-y-3'
+            }
           >
             {orderBy(footerContent?.footer || [], 'sort').map((item, index) => {
               return renderFooter(item, index);

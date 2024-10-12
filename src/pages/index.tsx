@@ -16,14 +16,14 @@ import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import HomeFlashSale from '@/components/organisms/home/homeFlashSale';
 import { ServerSideProps } from '@/config/type';
 import Layout from '@/components/templates/Layout';
-export const getServerSideProps = (async () => {
+import useSettings from '@/hooks/useSettings';
+export const getServerSideProps = async () => {
   // Fetch data from external API
   const res = await fetch(process.env.BE_URL + '/api/pages/home').catch(
     (error) => {
       return null;
     },
   );
-  const resDefault = await getDefaultSeverSide();
 
   const data: { data: ResponseHomePageDto } = res ? await res.json() : null;
   const settingsHome: Record<string, SettingOptionDto | undefined> = {};
@@ -34,22 +34,14 @@ export const getServerSideProps = (async () => {
     props: {
       homePage: data?.data,
       settingsHome,
-      ...resDefault,
     },
   };
-}) satisfies GetServerSideProps<
-  {
-    homePage: ResponseHomePageDto;
-    settingsHome: Record<string, SettingOptionDto | undefined>;
-  } & ServerSideProps
->;
+};
 export default function Home({
   homePage,
-  menu,
-  settings,
-  footerContent,
   settingsHome,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const { settings, menu, footerContent } = useSettings();
   return (
     <>
       <Header settings={settings} menu={menu} />
@@ -59,7 +51,7 @@ export default function Home({
           className={'lg:mt-[10px] flex w-full gap-2 relative'}
         >
           <h1 className={'hidden'}>{homePage?.seo?.title}</h1>
-          <MenuWrapper menu={menu} />
+          {menu && <MenuWrapper menu={menu} />}
           <Banners
             className={'flex-1 rounded-3xl lg:h-[380px]'}
             banners={homePage?.banners || []}

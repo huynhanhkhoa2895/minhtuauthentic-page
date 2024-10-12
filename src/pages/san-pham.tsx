@@ -10,8 +10,8 @@ import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage
 import Layout from '@/components/templates/Layout';
 import { ServerSideProps } from '@/config/type';
 import { useRouter } from 'next/router';
-export const getServerSideProps = (async (context) => {
-  const resDefault = await getDefaultSeverSide();
+import useSettings from '@/hooks/useSettings';
+export const getServerSideProps = async (context: any) => {
   const res = await fetch(
     process.env.BE_URL +
       '/api/pages/products/filter' +
@@ -25,22 +25,15 @@ export const getServerSideProps = (async (context) => {
     : null;
   return {
     props: {
-      ...resDefault,
       slug: data,
     },
   };
-}) satisfies GetServerSideProps<
-  ServerSideProps & {
-    footerContent: ResponseFooterDto;
-  }
->;
+};
 export default function ProductPage({
-  menu,
-  footerContent,
   slug,
-  settings,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
+  const { settings, menu, footerContent } = useSettings();
   return (
     <>
       <Header settings={settings} menu={menu} />

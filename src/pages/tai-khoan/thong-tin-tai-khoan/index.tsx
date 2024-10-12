@@ -11,7 +11,7 @@ import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { UserDto } from '@/dtos/User.dto';
 import { ServerSideProps } from '@/config/type';
 
-export const getServerSideProps = (async (context) => {
+export const getServerSideProps = async (context: any) => {
   const resDefault = await getDefaultSeverSide();
   const profile = await getProfile(context.req.cookies);
   return {
@@ -20,11 +20,7 @@ export const getServerSideProps = (async (context) => {
       ...resDefault,
     },
   };
-}) satisfies GetServerSideProps<
-  {
-    footerContent: ResponseFooterDto;
-  } & ServerSideProps
->;
+};
 export default function AccountInfoPage({
   menu,
   footerContent,

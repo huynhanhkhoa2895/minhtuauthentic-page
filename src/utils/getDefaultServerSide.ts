@@ -1,12 +1,15 @@
 import { handleHeader } from '@/utils/api';
 import { UserDto } from '@/dtos/User.dto';
-import { getCookie } from '@/utils/index';
 import { NextApiRequestCookies } from 'next/dist/server/api-utils';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { SettingsDto } from '@/dtos/Settings.dto';
 
-export default async function getDefaultSeverSide() {
+export default async function getDefaultSeverSide(): Promise<{
+  menu: ResponseMenuDto | undefined;
+  footerContent: ResponseFooterDto | undefined;
+  settings: SettingsDto[];
+}> {
   const resMenu: { data: ResponseMenuDto } = await fetch(
     process.env.BE_URL + '/api/pages/menu',
   )
@@ -29,9 +32,9 @@ export default async function getDefaultSeverSide() {
       return null;
     });
   return {
-    menu: resMenu?.data || null,
-    footerContent: resFooter?.data || null,
-    settings: (resSetting?.data as SettingsDto[]) || null,
+    menu: resMenu?.data || undefined,
+    footerContent: resFooter?.data || undefined,
+    settings: resSetting?.data as SettingsDto[],
   };
 }
 

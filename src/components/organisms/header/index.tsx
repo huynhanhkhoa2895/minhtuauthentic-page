@@ -28,7 +28,7 @@ const NavMenuHeader = dynamic(
     ssr: false,
   },
 );
-type Props = { menu: ResponseMenuDto | null; settings: SettingsDto[] };
+type Props = { menu: ResponseMenuDto | undefined; settings: SettingsDto[] };
 export const Header = ({ menu, settings }: Props) => {
   const pathname = usePathname();
   const router = useRouter();

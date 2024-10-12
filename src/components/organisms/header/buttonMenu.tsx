@@ -7,15 +7,15 @@ import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { useRouter } from 'next/router';
 import appContext from '@/contexts/appContext';
 
-const ButtonMenu = ({ menu }: { menu: ResponseMenuDto | null }) => {
-  const appCtx = useContext(appContext)
+const ButtonMenu = ({ menu }: { menu: ResponseMenuDto | undefined }) => {
+  const appCtx = useContext(appContext);
   const [isReady, setIsReady] = useState<boolean>(false);
   const router = useRouter();
   useEffect(() => {
     setIsReady(true);
   }, []);
   const handleClickMenu = () => {
-    if(router.pathname === '/') {
+    if (router.pathname === '/') {
       window.scroll({ top: 0, left: 0, behavior: 'smooth' });
     } else {
       appCtx?.setIsOpenMenu && appCtx.setIsOpenMenu(!appCtx.isOpenMenu);

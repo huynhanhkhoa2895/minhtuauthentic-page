@@ -17,6 +17,7 @@ import NewsTemplate from '@/components/templates/NewsTemplate';
 import { generateSlugToHref } from '@/utils';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import { ResponseNewsPageDto } from '@/dtos/ResponseNewsPage.dto';
+import useSettings from '@/hooks/useSettings';
 
 export const getServerSideProps = async (context: any) => {
   const { slug } = context.query;
@@ -25,7 +26,7 @@ export const getServerSideProps = async (context: any) => {
     image = null,
     width = 0,
     height = 0;
-  const resDefault = await getDefaultSeverSide();
+
   const res = await fetch(
     process.env.BE_URL +
       '/api/pages/slug/' +
@@ -101,15 +102,11 @@ export const getServerSideProps = async (context: any) => {
       width,
       height,
       image,
-      ...resDefault,
     },
   };
 };
 export default function Page({
   slug,
-  footerContent,
-  menu,
-  settings,
   title,
   description,
   image,
@@ -125,6 +122,7 @@ export default function Page({
   height?: number;
   keyword?: string;
 } & ServerSideProps) {
+  const { settings, menu, footerContent } = useSettings();
   const renderTemplate = () => {
     switch (slug?.model) {
       case Entity.PRODUCTS:

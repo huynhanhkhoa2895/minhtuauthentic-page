@@ -20,8 +20,8 @@ export enum POPUP_TYPE {
 }
 
 export type ServerSideProps = {
-  menu: ResponseMenuDto;
-  footerContent: ResponseFooterDto;
+  menu: ResponseMenuDto | undefined;
+  footerContent: ResponseFooterDto | undefined;
   settings: SettingsDto[];
 };
 

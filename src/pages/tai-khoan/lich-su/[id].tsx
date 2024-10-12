@@ -13,7 +13,7 @@ import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import Layout from '@/components/templates/Layout';
 import { ServerSideProps } from '@/config/type';
 
-export const getServerSideProps = (async (context) => {
+export const getServerSideProps = (async (context: any) => {
   const resDefault = await getDefaultSeverSide();
   const order = context.query.id;
   const user = JSON.parse(

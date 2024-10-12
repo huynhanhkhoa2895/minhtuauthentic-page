@@ -19,7 +19,7 @@ const NavFilterMobile = dynamic(
 
 type Props = {
   slug?: ResponseSlugPageDto<ResponseCategoryFilterPageDto>;
-  menu: ResponseMenuDto;
+  menu?: ResponseMenuDto;
   breadcrumb?: {
     label: string;
     link: string;
@@ -42,7 +42,7 @@ export default function CategoryTemplate({
       <BreadcrumbComponent
         label={
           breadcrumb
-            ? breadcrumb?.label
+            ? breadcrumb?.label || ''
             : renderLabelBreadcrumb[slug?.model || ''] || ('' as string)
         }
         link={generateSlugToHref(breadcrumb?.link || slug?.slug)}

@@ -10,7 +10,7 @@ import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import Layout from '@/components/templates/Layout';
 import { ServerSideProps } from '@/config/type';
 
-export const getServerSideProps = (async (context) => {
+export const getServerSideProps = (async (context: any) => {
   const resDefault = await getDefaultSeverSide();
   const user = JSON.parse(
     getCookie('user', context.req.headers.cookie || '', true),

@@ -9,24 +9,16 @@ import BrandsTemplate from '@/components/templates/BrandsTemplate';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import Layout from '@/components/templates/Layout';
 import { ServerSideProps } from '@/config/type';
+import useSettings from '@/hooks/useSettings';
 
-export const getServerSideProps = (async () => {
-  const resDefault = await getDefaultSeverSide();
-  return {
-    props: resDefault,
-  };
-}) satisfies GetServerSideProps<ServerSideProps>;
-export default function BrandsPage({
-  menu,
-  footerContent,
-  settings,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function BrandsPage() {
+  const { settings, menu, footerContent } = useSettings();
   return (
     <>
       <Header settings={settings} menu={menu} />
       <Layout settings={settings} menu={menu}>
         <BreadcrumbComponent label={'Thương hiệu'} link={'/thuong-hieu'} />
-        <BrandsTemplate brands={menu.brands || []} />
+        <BrandsTemplate brands={menu?.brands || []} />
       </Layout>
       <Footer footerContent={footerContent} />
     </>
