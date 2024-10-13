@@ -73,13 +73,13 @@ export default function CategoryTemplate({
           }
         />
       </div>
-      {data?.category?.static_components?.description && (
+      {data?.category?.static_components?.[0]?.description && (
         <div
           className={
             'w-full shadow-custom p-3 rounded-[10px] mt-3 bg-white container-html'
           }
           dangerouslySetInnerHTML={{
-            __html: data?.category?.static_components?.description || '',
+            __html: data?.category?.static_components?.[0]?.description || '',
           }}
         />
       )}

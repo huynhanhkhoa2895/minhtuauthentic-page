@@ -6,12 +6,15 @@ import SectionSwiper from '@/components/organisms/sectionSwiper';
 import { Suspense, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { PROMOTION_TYPE } from '@/config/enum';
-
+import { SettingsDto } from '@/dtos/Settings.dto';
+type Props = {
+  setting?: SettingsDto;
+};
 const fetcher = () =>
   fetch('/api/promotions/' + PROMOTION_TYPE.DEAL_SOCK, {
     method: 'GET',
   }).then((res) => res.json());
-export default function ProductDealSock() {
+export default function ProductDealSock({ setting }: Props) {
   const { data, error } = useSWR(
     '/api/promotions/' + PROMOTION_TYPE.DEAL_SOCK,
     fetcher,
@@ -24,7 +27,10 @@ export default function ProductDealSock() {
   return (
     <>
       {promotion && (
-        <div className={'w-full shadow-custom bg-white my-3 p-3'}>
+        <div
+          style={{ backgroundColor: setting?.value?.backgroundColor }}
+          className={'w-full shadow-custom bg-white my-3 p-3'}
+        >
           <p className={'text-2xl font-bold text-primary mb-3'}>
             MUA KÈM GIÁ SỐC
           </p>

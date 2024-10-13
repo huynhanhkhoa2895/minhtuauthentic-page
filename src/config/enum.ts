@@ -121,6 +121,10 @@ export const SETTING_KEY = {
     KEY: 'product_detail_guarantee',
     LABEL: 'Chính sách đổi trả và bảo hành',
   },
+  DEAL_SOCK_SECTION: {
+    KEY: 'dealsock_section',
+    LABEL: 'Vùng Deal Sock',
+  },
 };
 export type OrderStatus = 'processing' | 'pending' | 'done' | 'new' | 'close';
 

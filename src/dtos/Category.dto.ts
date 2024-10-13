@@ -8,7 +8,7 @@ import { SeoDto } from '@/dtos/Seo.dto';
 export class CategoryDto extends BaseDto {
   name?: string;
   is_feature?: boolean;
-  static_components?: StaticComponentDto;
+  static_components?: StaticComponentDto[];
   products?: IProductCategoryDto[];
   images?: ImageDetailDto[];
   parent_id?: number;

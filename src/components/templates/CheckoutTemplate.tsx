@@ -47,6 +47,7 @@ export type FormData = {
   note?: string;
   status?: string;
   payment_type_id?: string;
+  order_external_id?: string;
 };
 export default function CheckoutTemplate({
   payments,
@@ -81,6 +82,7 @@ export default function CheckoutTemplate({
       note: '',
       phone: user?.phone || '',
       status: ORDER_STATUS.NEW as string,
+      order_external_id: '',
     },
   });
 
@@ -99,14 +101,10 @@ export default function CheckoutTemplate({
       return;
     }
 
-    const _paymentType: string = paymentType(data?.payment_id);
+    const _paymentType = paymentType(data?.payment_id);
 
-    if (
-      _paymentType === PAYMENT.COD ||
-      _paymentType === PAYMENT.CK
-    ) {
+    if (_paymentType === PAYMENT.COD || _paymentType === PAYMENT.CK) {
       data.status = ORDER_STATUS.DONE;
-
     }
 
     const paymentTypeId = data?.payment_type_id;
@@ -214,7 +212,7 @@ export default function CheckoutTemplate({
 
           <ListCart
             setValue={setValue}
-            paymentType={paymentType(watch('payment_id'))}
+            paymentType={paymentType(watch('payment_id' as any) as number)}
           />
         </div>
       </form>

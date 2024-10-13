@@ -14,6 +14,7 @@ export class OrdersDto extends BaseDto {
   note?: string;
   status?: OrderStatus;
   phone?: string;
+  order_external_id?: string;
   shipping_address?: string;
   shipping_city?: string;
   shipping_district?: string;

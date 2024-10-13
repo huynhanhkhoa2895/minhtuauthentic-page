@@ -13,6 +13,7 @@ import ProductDealSock from '@/components/molecules/product/productDealSock';
 import ListKeyword from '@/components/organisms/product/listKeyword';
 import dynamic from 'next/dynamic';
 import { SettingsDto } from '@/dtos/Settings.dto';
+import { SETTING_KEY } from '@/config/enum';
 const ProductRating = dynamic(
   () => import('@/components/molecules/product/productRating'),
   {
@@ -76,7 +77,11 @@ const ProductDetailCard = ({
               />
             </div>
           )}
-          <ProductDealSock />
+          <ProductDealSock
+            setting={settings.find(
+              (item) => item.key === SETTING_KEY.DEAL_SOCK_SECTION.KEY,
+            )}
+          />
           <div
             className={
               'flex flex-col-reverse lg:grid lg:grid-cols-3 gap-3 my-3'
