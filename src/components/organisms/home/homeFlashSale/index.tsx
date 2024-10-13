@@ -40,8 +40,8 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
             slidesPerView={5}
             spaceBetween={10}
             renderItem={(item: unknown) => {
-              const iCoupon = item as CouponsDto;
-              const variant = iCoupon?.coupon_details?.[0].variant;
+              const coupon = item as CouponsDto;
+              const variant = coupon?.coupon_details?.[0].variant;
               if (!variant || !variant.regular_price) {
                 return;
               }
@@ -53,11 +53,11 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
                     variant={
                       {
                         ...variant,
-                        ...{ coupon: iCoupon },
+                        ...{ coupon },
                       } as any
                     }
                     promotions={promotion && [promotion]}
-                    coupon={iCoupon}
+                    coupon={coupon}
                     isShowConfiguration
                   />
                 )

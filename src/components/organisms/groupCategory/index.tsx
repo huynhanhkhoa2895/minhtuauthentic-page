@@ -98,15 +98,8 @@ const GroupCategory = ({
         isUseHeightWrapper={true}
         renderItem={(item: unknown) => {
           const iProduct = item as IProductCategoryDto;
-          const variantMap = new Map(
-            iProduct.product?.variants?.map((variant) => [
-              variant.is_default,
-              variant,
-            ]),
-          );
-          const variant = variantMap.get(true);
+          const variant = iProduct?.product?.variants?.[0];
           if (!variant) {
-            console.log('variant not found', iProduct.product);
             return;
           }
           return (

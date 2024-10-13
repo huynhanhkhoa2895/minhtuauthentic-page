@@ -25,14 +25,10 @@ const ProductProperty = ({
   productConfigurations,
   variantActive,
   onChange,
-  settings
+  settings,
 }: Props) => {
   const [_variantActive, setVariantActive] =
     useState<VariantDto>(variantActive);
-  const [isReady, setIsReady] = useState(false);
-  useEffect(() => {
-    setIsReady(true);
-  }, []);
   useEffect(() => {
     onChange && onChange(_variantActive);
   }, [_variantActive]);
@@ -83,14 +79,16 @@ const ProductProperty = ({
         <div>
           <span>Thương hiệu: </span>
 
-            {product.brands?.map(
-              (item, index) =>
-                <Link href={generateSlugToHref(item.brand?.slugs?.slug)} className={'font-semibold text-primary'} key={'brand-'+index}>
-                {item.brand?.name +
-                  (index === (product?.brands?.length || 0) - 1 ? '' : ', ')}
-                  </Link>
-            )}
-
+          {product.brands?.map((item, index) => (
+            <Link
+              href={generateSlugToHref(item.brand?.slugs?.slug)}
+              className={'font-semibold text-primary'}
+              key={'brand-' + index}
+            >
+              {item.brand?.name +
+                (index === (product?.brands?.length || 0) - 1 ? '' : ', ')}
+            </Link>
+          ))}
         </div>
         <div>
           <span>Giới tính: </span>
@@ -135,7 +133,11 @@ const ProductProperty = ({
       <div className={'mt-3'}>
         <ProductCartCheckout variant={_variantActive} />
       </div>
-      <PromotionDescription settings={settings} variant_id={variantActive.id} className={'mt-3'} />
+      <PromotionDescription
+        settings={settings}
+        variant_id={variantActive.id}
+        className={'mt-3'}
+      />
       <div className={'mt-3'}>
         <span className={'font-semibold'}>Danh mục </span>
         <span className={'text-[12px]'}>

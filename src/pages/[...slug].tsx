@@ -126,6 +126,7 @@ export default function Page({
   const renderTemplate = () => {
     switch (slug?.model) {
       case Entity.PRODUCTS:
+        console.log('slug?.data', slug?.data);
         return (
           <ProductTemplate data={slug?.data as ResponseProductDetailPageDto} />
         );

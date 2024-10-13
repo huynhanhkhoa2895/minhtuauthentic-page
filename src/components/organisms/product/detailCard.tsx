@@ -27,7 +27,7 @@ const PopupImage = dynamic(
   },
 );
 type Props = {
-  product: ProductDto;
+  product?: ProductDto;
   relatedProducts: ProductDto[];
   productConfigurations: ProductConfigurationsDto[];
   settings: SettingsDto[];
@@ -52,52 +52,60 @@ const ProductDetailCard = ({
   );
   return (
     <>
-      {variantActive && (
-        <div
-          className={
-            'p-3 grid grid-cols-1 lg:grid-cols-2 rounded-[10px] shadow-custom mt-3 bg-white gap-3'
-          }
-        >
-          <ProductDetailImage
-            product={product}
+      {product && (
+        <>
+          {variantActive && (
+            <div
+              className={
+                'p-3 grid grid-cols-1 lg:grid-cols-2 rounded-[10px] shadow-custom mt-3 bg-white gap-3'
+              }
+            >
+              <ProductDetailImage
+                product={product}
+                setIsOpen={setIsOpen}
+                variantActive={variantActive}
+              />
+              <ProductProperty
+                product={product}
+                variantActive={variantActive}
+                productConfigurations={productConfigurations}
+                settings={settings}
+                onChange={(variant: VariantDto) => {
+                  setVariantActive(variant);
+                }}
+              />
+            </div>
+          )}
+          <ProductDealSock />
+          <div
+            className={
+              'flex flex-col-reverse lg:grid lg:grid-cols-3 gap-3 my-3'
+            }
+          >
+            <div className={'col-span-2'}>
+              <ProductDescription product={product} settings={settings} />
+              <ListKeyword product={product} />
+              <ProductQuestionAnswer
+                questions={product?.question_answers || []}
+              />
+              {product.id && <ProductRating product_id={product.id} />}
+            </div>
+
+            <div>
+              <ProductInformation product={product} />
+              <ProductRelation products={relatedProducts} />
+            </div>
+          </div>
+
+          <PopupImage
+            open={isOpen.display}
             setIsOpen={setIsOpen}
-            variantActive={variantActive}
-          />
-          <ProductProperty
+            image={isOpen.image}
             product={product}
             variantActive={variantActive}
-            productConfigurations={productConfigurations}
-            settings={settings}
-            onChange={(variant: VariantDto) => {
-              setVariantActive(variant);
-            }}
           />
-        </div>
+        </>
       )}
-      <ProductDealSock />
-      <div
-        className={'flex flex-col-reverse lg:grid lg:grid-cols-3 gap-3 my-3'}
-      >
-        <div className={'col-span-2'}>
-          <ProductDescription product={product} />
-          <ListKeyword product={product} />
-          <ProductQuestionAnswer questions={product?.question_answers || []} />
-          {product.id && <ProductRating product_id={product.id} />}
-        </div>
-
-        <div>
-          <ProductInformation product={product} />
-          <ProductRelation products={relatedProducts} />
-        </div>
-      </div>
-
-      <PopupImage
-        open={isOpen.display}
-        setIsOpen={setIsOpen}
-        image={isOpen.image}
-        product={product}
-        variantActive={variantActive}
-      />
     </>
   );
 };
