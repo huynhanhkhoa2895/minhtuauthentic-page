@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
 import Image from 'next/image';
 import { ImageDto } from '@/dtos/Image.dto';
-import { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 
 export default function BannerUnderCategoryMobile({
                                                      contents,
@@ -14,7 +14,7 @@ export default function BannerUnderCategoryMobile({
 }) {
 
   const renderContent = useMemo(() => {
-    const xhtml = []
+    const xhtml: ReactNode[] = []
     contents.forEach((content: StaticContentsDto,index: number) => {
       content?.images?.forEach((image: { image: ImageDto }, index2) => {
         const imageDisplay = image?.image?.url  ;
