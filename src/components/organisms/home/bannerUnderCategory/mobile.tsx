@@ -6,6 +6,7 @@ import { generateSlugToHref } from '@/utils';
 import Image from 'next/image';
 import { ImageDto } from '@/dtos/Image.dto';
 import { ReactNode, useMemo } from 'react';
+import { ImageDetailDto } from '@/dtos/ImageDetail.dto';
 
 export default function BannerUnderCategoryMobile({
                                                      contents,
@@ -16,10 +17,10 @@ export default function BannerUnderCategoryMobile({
   const renderContent = useMemo(() => {
     const xhtml: ReactNode[] = []
     contents.forEach((content: StaticContentsDto,index: number) => {
-      (content?.images || [])?.forEach((image: { image: ImageDto }, index2) => {
-        const imageDisplay = image?.image?.url  ;
+      content?.images && (content?.images || []).forEach((item: ImageDetailDto, index2) => {
+        const imageDisplay = item?.image?.url  ;
         xhtml.push(<SwiperSlide key={index+'_'+index2}>
-          {imageDisplay && image ? (
+          {imageDisplay && item ? (
             <div
               style={{ height: 80 }}
               className={'w-full h-full relative'}
@@ -28,7 +29,7 @@ export default function BannerUnderCategoryMobile({
                 <Image
                   src={imageDisplay}
                   className={'w-full h-auto object-cover'}
-                  alt={image?.image?.alt || 'image'}
+                  alt={item?.image?.alt || 'image'}
                   fill={true}
                   sizes="(max-width: 768px) 100vw, 33vw"
                   unoptimized={true}
