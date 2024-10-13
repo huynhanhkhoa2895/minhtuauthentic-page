@@ -68,12 +68,14 @@ export default function Socials() {
                     {social?.title || 'Follow us'}
                   </Link>
                   <div className={'z-[2] '}>
-                    <ImageWithFallback
-                      className={
-                        'w-[42px] h-[42px] object-contain rounded-full'
-                      }
-                      image={social?.images?.[0]?.image}
-                    />
+                    <Link href={social?.properties?.url || '/'}>
+                      <ImageWithFallback
+                        className={
+                          'w-[42px] h-[42px] object-contain rounded-full'
+                        }
+                        image={social?.images?.[0]?.image}
+                      />
+                    </Link>
                   </div>
                 </div>
               );
