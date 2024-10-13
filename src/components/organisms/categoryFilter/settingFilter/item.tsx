@@ -95,13 +95,13 @@ export default function SettingFilterItem({
   };
   return (
     <div className={'flex flex-col gap-2 mb-3'}>
-      <h4
+      <p
         className={
           'font-semibold text-[16px] lg:pb-2 lg:border-b lg:border-gray-500'
         }
       >
         {title}
-      </h4>
+      </p>
       <div
         className={
           'lg:max-h-[220px] overflow-auto flex max-lg:flex-wrap lg:flex-col max-lg:gap-1'

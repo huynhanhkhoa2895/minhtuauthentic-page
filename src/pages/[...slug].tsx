@@ -20,12 +20,14 @@ import { ResponseNewsPageDto } from '@/dtos/ResponseNewsPage.dto';
 import useSettings from '@/hooks/useSettings';
 
 export const getServerSideProps = async (context: any) => {
+
   const { slug } = context.query;
   let title = undefined,
     description = undefined,
     image = null,
     width = 0,
     height = 0;
+
 
   const res = await fetch(
     process.env.BE_URL +
@@ -43,7 +45,9 @@ export const getServerSideProps = async (context: any) => {
   if (!data) {
     redirect('not-found');
   }
+
   let keyword = undefined;
+
   if (
     data?.data?.model === Entity.PRODUCTS ||
     data?.data?.model === Entity.CATEGORIES ||
@@ -78,7 +82,7 @@ export const getServerSideProps = async (context: any) => {
         let newsCategory =
           data?.data as ResponseSlugPageDto<ResponseNewsPageDto>;
         title = newsCategory?.data?.title || null;
-        return;
+        break;
       case Entity.CATEGORIES:
         let category = (
           data?.data as ResponseSlugPageDto<ResponseCategoryFilterPageDto>
@@ -126,13 +130,14 @@ export default function Page({
   const renderTemplate = () => {
     switch (slug?.model) {
       case Entity.PRODUCTS:
-        console.log('slug?.data', slug?.data);
+
         return (
           <ProductTemplate data={slug?.data as ResponseProductDetailPageDto} />
         );
       case Entity.CATEGORIES:
       case Entity.BRANDS:
       case Entity.KEYWORDS:
+        console.log('slug?.data', slug?.data);
         return (
           <CategoryTemplate
             slug={slug as ResponseSlugPageDto<ResponseCategoryFilterPageDto>}
