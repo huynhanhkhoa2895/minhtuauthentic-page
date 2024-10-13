@@ -52,6 +52,7 @@ const MenuPopup = ({
       [POPUP_TYPE.CATEGORY]: () => {
         return (
           <MenuPopupCategory
+            title={data?.title}
             filterSetting={menu?.filterSetting}
             categories={Array.isArray(data?.data) ? data?.data : [data?.data]}
           />

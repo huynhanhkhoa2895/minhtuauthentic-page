@@ -3,6 +3,7 @@ import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { SettingsDto } from '@/dtos/Settings.dto';
 
 export type PopupDisplay = {
+  title?: string;
   type?: string;
   data: unknown;
   display: boolean;

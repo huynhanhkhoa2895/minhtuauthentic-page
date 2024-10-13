@@ -23,7 +23,6 @@ export default function useSettings() {
   });
   useEffect(() => {
     if (data) {
-      console.log('test data', data);
       setData(data);
     }
   }, [data]);

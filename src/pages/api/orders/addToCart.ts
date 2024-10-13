@@ -7,7 +7,6 @@ export default async function handler(
 ) {
   if (req.method === 'POST') {
     const url = `${process.env.BE_URL}/api/orders/addToCart`;
-    console.log('req.cookies', req.headers['x-forwarded-for']);
     const rs: Promise<{ data: VariantDto }> = await fetch(url, {
       method: 'POST',
       headers: {

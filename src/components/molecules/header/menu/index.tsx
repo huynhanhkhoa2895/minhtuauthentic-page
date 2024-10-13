@@ -6,7 +6,7 @@ import MenuPopup from '@/components/molecules/header/menu/menuPopup';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { generateSlugToHref } from '@/utils';
-import { MenuDisplay, POPUP_TYPE, PopupDisplay } from '@/config/type';
+import { MenuDisplay,  POPUP_TYPE, PopupDisplay } from '@/config/type';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import useMenu from '@/hooks/useMenu';
 
@@ -50,14 +50,14 @@ const Menu = ({
         const _item = item.data as StaticComponentDto;
         const image = _item?.category?.images?.[0]?.image;
         return (
-          <Link href={generateSlugToHref(_item?.category?.slugs?.slug)}>
+          <Link key={_item?.category?.id} href={generateSlugToHref(_item?.category?.slugs?.slug)}>
             <div className={'flex items-center justify-between w-full'}>
               <div className={'flex gap-2 items-center'}>
                 {image && (
                   <Image
                     src={image.url || ''}
                     alt={_item?.category?.name || image.alt || ''}
-                    className={'w-[25px] h-[25px]'}
+                    className={'w-[20px] h-[20px]'}
                     width={image.width || 25}
                     height={image.height || 25}
                   />
@@ -112,6 +112,7 @@ const Menu = ({
           type: item.type,
           display: true,
           data: _item?.category?.children || [],
+          title: _item?.category?.name,
         });
         break;
       case POPUP_TYPE.BRAND:

@@ -5,10 +5,12 @@ import Link from 'next/link';
 type Props = {
   filterSetting?: ProductFilterOptionDto;
   categories: CategoryDto[];
+  title?: string;
 };
 export default function MenuPopupCategory({
   filterSetting,
   categories,
+  title
 }: Props) {
   const renderItem = () => {
     const listDisplay: Record<
@@ -106,5 +108,8 @@ export default function MenuPopupCategory({
     );
   };
 
-  return <div className={'grid grid-cols-4'}>{renderItem()}</div>;
+  return <>
+    {title && <p className={'mb-3 text-3xl font-bold'}>{title}</p>}
+    <div className={'grid grid-cols-4'}>{renderItem()}</div>
+  </>;
 }

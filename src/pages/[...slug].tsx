@@ -137,7 +137,6 @@ export default function Page({
       case Entity.CATEGORIES:
       case Entity.BRANDS:
       case Entity.KEYWORDS:
-        console.log('slug?.data', slug?.data);
         return (
           <CategoryTemplate
             slug={slug as ResponseSlugPageDto<ResponseCategoryFilterPageDto>}

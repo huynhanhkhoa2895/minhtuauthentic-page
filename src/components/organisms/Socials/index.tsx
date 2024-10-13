@@ -70,7 +70,7 @@ export default function Socials() {
                   <div className={'z-[2] '}>
                     <ImageWithFallback
                       className={
-                        'w-[50px] h-[50px] object-contain rounded-full'
+                        'w-[42px] h-[42px] object-contain rounded-full'
                       }
                       image={social?.images?.[0]?.image}
                     />
