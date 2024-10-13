@@ -16,7 +16,7 @@ export default function BannerUnderCategoryMobile({
   const renderContent = useMemo(() => {
     const xhtml: ReactNode[] = []
     contents.forEach((content: StaticContentsDto,index: number) => {
-      content?.images?.forEach((image: { image: ImageDto }, index2) => {
+      (content?.images || [])?.forEach((image: { image: ImageDto }, index2) => {
         const imageDisplay = image?.image?.url  ;
         xhtml.push(<SwiperSlide key={index+'_'+index2}>
           {imageDisplay && image ? (
