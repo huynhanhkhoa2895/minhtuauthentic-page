@@ -144,7 +144,7 @@ export default function CheckoutTemplate({
                   merchant_id: Number(
                     process.env.NEXT_PUBLIC_BAO_KIM_MERCHANT_ID || 0,
                   ),
-                  mrc_order_id: Math.random().toString(36).substring(10),
+                  mrc_order_id: data?.data?.id,
                   total_amount: data?.data?.total_price,
                   description:
                     'Thanh toan don hang cua user Bao Kim ' +
@@ -159,9 +159,18 @@ export default function CheckoutTemplate({
               ),
             })
               .then((rs) => rs.json())
-              .then((data: ResponseSendTransactionDto) => {
-                if (data?.data?.payment_url) {
-                  window.location.href = data.data.payment_url;
+              .then(async (item: ResponseSendTransactionDto) => {
+                if (item?.data?.order_id) {
+                  await fetch('/api/orders/update', {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                      id: data?.data?.id,
+                      order_external_id: item?.data?.order_id,
+                    })
+                  })
+                }
+                if (item?.data?.payment_url) {
+                  window.location.href = item.data.payment_url;
                 } else {
                   toast.error('Đã có lỗi xảy ra');
                 }
