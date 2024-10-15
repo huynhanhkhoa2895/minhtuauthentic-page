@@ -6,7 +6,12 @@ export const getServerSideProps = async (context: any) => {
   const headers = context.req?.headers;
   const payments: { data: { list: PaymentsDto[] } } = await fetch(
     `${process.env.BE_URL}/api/payments/getAll`,
-  ).then((res) => res.json());
+  )
+    .then((res) => res.json())
+    .catch((error) => {
+      console.log('Error:', error);
+      return null;
+    });
   return {
     props: {
       payments: payments?.data?.list || [],

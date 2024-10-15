@@ -1,10 +1,16 @@
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 import { OrdersDto } from '@/dtos/Orders.dto';
-import { ReactNode, useEffect, useState } from 'react';
+import { Fragment, ReactNode, useEffect, useState } from 'react';
 import { Table } from 'antd';
 import dayjs from 'dayjs';
-import { formatMoney } from '@/utils';
+import {
+  calculatePriceMinus,
+  formatMoney,
+  generateSlugToHref,
+  promotionName,
+} from '@/utils';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import Link from 'next/link';
 
 type Props = {
   order: OrdersDto;
@@ -16,6 +22,16 @@ export default function OrderDetailTemplate({ order }: Props) {
       render: ReactNode;
     }[]
   >([]);
+  const [totalPriceWithoutCoupon, setTotalPriceWithoutCoupon] =
+    useState<number>(0);
+
+  useEffect(() => {
+    let totalPriceWithoutCoupon = 0;
+    order?.order_items?.forEach((item) => {
+      totalPriceWithoutCoupon += item.price || 0;
+    });
+    setTotalPriceWithoutCoupon(totalPriceWithoutCoupon);
+  }, []);
 
   const columns = [
     {
@@ -23,13 +39,24 @@ export default function OrderDetailTemplate({ order }: Props) {
       dataIndex: 'name',
       key: 'name',
       render: (_: unknown, item: OrderItemsDto) => (
-        <div className={'flex gap-3'}>
+        <Link
+          href={generateSlugToHref(item?.variant?.product?.slugs?.slug)}
+          className={'flex gap-3'}
+        >
           <ImageWithFallback
             image={item?.variant?.images?.[0]?.image}
             className={'w-[50px] h-[50px] object-contain'}
           />
           <span>{item.variant_name}</span>
-        </div>
+        </Link>
+      ),
+    },
+    {
+      title: 'Đơn giá',
+      dataIndex: 'variant_regular_price',
+      key: 'variant_regular_price',
+      render: (_: unknown, item: OrderItemsDto) => (
+        <span>{formatMoney(item?.variant_regular_price || 0)}</span>
       ),
     },
     {
@@ -39,9 +66,38 @@ export default function OrderDetailTemplate({ order }: Props) {
       render: (_: unknown, item: OrderItemsDto) => <span>{item.qty}</span>,
     },
     {
+      title: 'Khuyến mãi',
+      dataIndex: 'coupons',
+      key: 'coupons',
+      render: (_: unknown, item: OrderItemsDto) => (
+        <ul className={'flex flex-col gap-3'}>
+          {item?.coupon_details?.map((couponDetail, index) => (
+            <li className={'flex items-center'} key={index}>
+              <span className={'font-semibold mr-3'}>
+                {promotionName(couponDetail?.coupon?.promotion)}:
+              </span>
+              <span
+                className={
+                  'text-red-600 text-[13px] font-bold text-right cursor-pointer'
+                }
+              >
+                -
+                {formatMoney(
+                  calculatePriceMinus(
+                    item?.variant_regular_price || 0,
+                    couponDetail?.coupon,
+                  ),
+                )}
+              </span>
+            </li>
+          ))}
+        </ul>
+      ),
+    },
+    {
       title: 'Tổng tiền',
-      dataIndex: 'price',
-      key: 'price',
+      dataIndex: 'total_price',
+      key: 'total_price',
       render: (_: unknown, item: OrderItemsDto) => (
         <span>{formatMoney(item?.price || 0)}</span>
       ),
@@ -134,6 +190,49 @@ export default function OrderDetailTemplate({ order }: Props) {
               columns={columns}
               pagination={false}
             />
+          </div>
+          <div className={'mt-3 flex justify-end'}>
+            <table className={''}>
+              <tr>
+                <td className={'text-primary text-xl'}>Tạm Tính: </td>
+                <td className={'text-right pr-5'}>
+                  {formatMoney(totalPriceWithoutCoupon)}
+                </td>
+              </tr>
+
+              {order?.coupons &&
+                order?.coupons?.length > 0 &&
+                order?.coupons.map((couponDetail, index) => {
+                  return (
+                    <tr key={'OrderDetailTemplate-' + index}>
+                      <td className={'text-lg'}>
+                        <span className={'text-primary '}>Coupon {'  '}</span>
+                        <span
+                          className={
+                            'font-bold p-1 bg-[#efefef] rounded-[4px] text-sm'
+                          }
+                        >
+                          {couponDetail?.coupon?.code}
+                        </span>{' '}
+                        <span>: </span>
+                      </td>
+                      <td className={'text-right pr-5'}>
+                        -
+                        {formatMoney(
+                          calculatePriceMinus(
+                            order.total_price || 0,
+                            couponDetail?.coupon,
+                          ),
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              <tr>
+                <td className={'text-primary text-xl'}>Tổng tiền: </td>
+                <td>{formatMoney(order.total_price || 0)}</td>
+              </tr>
+            </table>
           </div>
         </>
       )}

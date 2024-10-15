@@ -1,8 +1,6 @@
 import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
 import getDefaultSeverSide from '@/utils/getDefaultServerSide';
-import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
-import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getCookie } from '@/utils';
 import { OrdersDto } from '@/dtos/Orders.dto';
@@ -13,7 +11,7 @@ import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import Layout from '@/components/templates/Layout';
 import { ServerSideProps } from '@/config/type';
 
-export const getServerSideProps = (async (context: any) => {
+export const getServerSideProps = async (context: any) => {
   const resDefault = await getDefaultSeverSide();
   const order = context.query.id;
   const user = JSON.parse(
@@ -29,26 +27,21 @@ export const getServerSideProps = (async (context: any) => {
   )
     .then((res) => res.json())
     .catch((err) => null);
+
   const dataOrderItems: {
     data: {
       order: OrdersDto;
       order_items: OrderItemsDto[];
     };
   } = rsOrderItems ? rsOrderItems : null;
+
   return {
     props: {
       data: dataOrderItems?.data,
       ...resDefault,
     },
   };
-}) satisfies GetServerSideProps<
-  {
-    data: {
-      order: OrdersDto;
-      order_items: OrderItemsDto[];
-    };
-  } & ServerSideProps
->;
+};
 
 export default function UserHistoryDetail({
   menu,
