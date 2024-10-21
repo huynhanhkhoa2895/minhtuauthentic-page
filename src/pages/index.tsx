@@ -27,7 +27,7 @@ export const getServerSideProps = async () => {
 
   const data: { data: ResponseHomePageDto } = res ? await res.json() : null;
   const settingsHome: Record<string, SettingOptionDto | undefined> = {};
-  data?.data?.settings?.map((item) => {
+  (data?.data?.settings || [])?.map((item) => {
     settingsHome[item?.key || ''] = item?.value;
   });
   return {
@@ -45,7 +45,7 @@ export default function Home({
   return (
     <>
       <Header settings={settings} menu={menu} />
-      <Layout seo={homePage.seo} settings={settings} menu={menu}>
+      <Layout seo={homePage?.seo} settings={settings} menu={menu}>
         <div
           id={'main-home-page'}
           className={'lg:mt-[10px] flex w-full gap-2 relative'}

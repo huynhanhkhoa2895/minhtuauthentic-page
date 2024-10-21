@@ -103,10 +103,6 @@ export default function CheckoutTemplate({
 
     const _paymentType = paymentType(data?.payment_id);
 
-    if (_paymentType === PAYMENT.COD || _paymentType === PAYMENT.CK) {
-      data.status = ORDER_STATUS.DONE;
-    }
-
     const paymentTypeId = data?.payment_type_id;
 
     const order: FormData & {
@@ -123,10 +119,7 @@ export default function CheckoutTemplate({
     })
       .then((rs) => rs.json())
       .then((data) => {
-        if (data?.data?.status === ORDER_STATUS.DONE) {
-          toast.success('Đặt hàng thành công');
-          router.push('/gio-hang/thanh-cong?orderId=' + data?.data?.id);
-        } else if (data?.data?.status === ORDER_STATUS.NEW) {
+        if (data?.data?.id) {
           if (paymentType(data?.data?.payment_id) === PAYMENT.VN_PAY) {
             const urlVnPay = createVNPayUrl({
               order: data?.data,
@@ -166,8 +159,8 @@ export default function CheckoutTemplate({
                     body: JSON.stringify({
                       id: data?.data?.id,
                       order_external_id: item?.data?.order_id,
-                    })
-                  })
+                    }),
+                  });
                 }
                 if (item?.data?.payment_url) {
                   window.location.href = item.data.payment_url;
@@ -175,7 +168,12 @@ export default function CheckoutTemplate({
                   toast.error('Đã có lỗi xảy ra');
                 }
               });
+          } else {
+            toast.success('Đặt hàng thành công');
+            router.push('/gio-hang/thanh-cong?orderId=' + data?.data?.id);
           }
+        } else {
+          toast.error('Đã có lỗi xảy ra');
         }
       })
       .catch((e) => {
