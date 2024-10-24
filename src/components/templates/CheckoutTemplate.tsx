@@ -168,7 +168,9 @@ export default function CheckoutTemplate({
                   customer_name: data?.name,
                   customer_phone: data?.phone,
                   customer_address: data?.address + fullAddress,
-                  extension: orderExtensionItem,
+                  extension: {
+                    items: orderExtensionItem || [],
+                  },
                 }),
               ),
             })

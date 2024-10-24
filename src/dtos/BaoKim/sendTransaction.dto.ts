@@ -13,7 +13,9 @@ export default class SendTransactionBaoKimDto {
   customer_name?: string;
   customer_phone?: string;
   customer_address?: string;
-  extension?: SendTransactionExtensionItemDto[];
+  extension?: {
+    items: SendTransactionExtensionItemDto[]
+  };
   constructor(init?: Partial<SendTransactionBaoKimDto>) {
     Object.assign(this, init);
   }
