@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 import { createVNPayUrl } from '@/utils/vnpay';
 import SendTransactionBaoKimDto from '@/dtos/BaoKim/sendTransaction.dto';
 import ResponseSendTransactionDto from '@/dtos/BaoKim/responseSendTransaction.dto';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import OrderContext from '@/contexts/orderContext';
 import { useRouter } from 'next/router';
 const schema = yup
@@ -59,6 +59,7 @@ export default function CheckoutTemplate({
   const { user } = useUser();
   const orderCtx = useContext(OrderContext);
   const router = useRouter();
+  const [fullAddress, setFullAddress] = useState<string>('');
   const paymentMap = new Map(
     payments.map((item) => [item.id, item.name?.toLowerCase()]),
   );
@@ -101,8 +102,6 @@ export default function CheckoutTemplate({
       return;
     }
 
-    const _paymentType = paymentType(data?.payment_id);
-
     const paymentTypeId = data?.payment_type_id;
 
     const order: FormData & {
@@ -118,18 +117,18 @@ export default function CheckoutTemplate({
       body: JSON.stringify(order),
     })
       .then((rs) => rs.json())
-      .then((data) => {
-        if (data?.data?.id) {
-          if (paymentType(data?.data?.payment_id) === PAYMENT.VN_PAY) {
+      .then((res) => {
+        if (res?.data?.id) {
+          if (paymentType(res?.data?.payment_id) === PAYMENT.VN_PAY) {
             const urlVnPay = createVNPayUrl({
-              order: data?.data,
+              order: res?.data,
               ip,
             });
             orderCtx?.clearCart && orderCtx?.clearCart();
             if (window) {
               window.location.href = urlVnPay || '';
             }
-          } else if (paymentType(data?.data?.payment_id) === PAYMENT.BAO_KIM) {
+          } else if (paymentType(res?.data?.payment_id) === PAYMENT.BAO_KIM) {
             fetch('/api/baokim/send', {
               method: 'POST',
               body: JSON.stringify(
@@ -137,17 +136,21 @@ export default function CheckoutTemplate({
                   merchant_id: Number(
                     process.env.NEXT_PUBLIC_BAO_KIM_MERCHANT_ID || 0,
                   ),
-                  mrc_order_id: data?.data?.id,
-                  total_amount: data?.data?.total_price,
+                  mrc_order_id: res?.data?.id,
+                  total_amount: res?.data?.total_price,
                   description:
                     'Thanh toan don hang cua user Bao Kim ' +
-                    data?.data?.user_id +
+                    res?.data?.user_id +
                     ' voi gia tri ' +
-                    data?.data?.total_price,
+                    res?.data?.total_price,
                   url_success: process.env.NEXT_PUBLIC_APP_URL + '/baokim/',
                   webhooks:
                     process.env.NEXT_PUBLIC_BE_URL + '/api/webhook/baokim',
                   bpm_id: Number(paymentTypeId) || undefined,
+                  customer_email: data?.email,
+                  customer_name: data?.name,
+                  customer_phone: data?.phone,
+                  customer_address: fullAddress,
                 }),
               ),
             })
@@ -157,7 +160,7 @@ export default function CheckoutTemplate({
                   await fetch('/api/orders/update', {
                     method: 'PUT',
                     body: JSON.stringify({
-                      id: data?.data?.id,
+                      id: res?.data?.id,
                       order_external_id: item?.data?.order_id,
                     }),
                   });
@@ -170,7 +173,7 @@ export default function CheckoutTemplate({
               });
           } else {
             toast.success('Đặt hàng thành công');
-            router.push('/gio-hang/thanh-cong?orderId=' + data?.data?.id);
+            router.push('/gio-hang/thanh-cong?orderId=' + res?.data?.id);
           }
         } else {
           toast.error('Đã có lỗi xảy ra');
@@ -213,7 +216,7 @@ export default function CheckoutTemplate({
               ip={ip}
               setError={setError}
               errors={errors}
-              handleSubmit={handleSubmit}
+              setFullAddress={setFullAddress}
             />
           )}
 
