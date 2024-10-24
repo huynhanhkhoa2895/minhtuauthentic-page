@@ -6,5 +6,6 @@ export default class ResponseSendTransactionDto {
     order_id?: string;
     redirect_url?: string;
     payment_url?: string;
+    message?: string[];
   };
 }

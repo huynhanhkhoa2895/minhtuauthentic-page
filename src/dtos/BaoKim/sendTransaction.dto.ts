@@ -1,3 +1,5 @@
+import SendTransactionExtensionItemDto from '@/dtos/sendTransactionExtensionItem.dto';
+
 export default class SendTransactionBaoKimDto {
   mrc_order_id?: string;
   total_amount?: number;
@@ -11,6 +13,7 @@ export default class SendTransactionBaoKimDto {
   customer_name?: string;
   customer_phone?: string;
   customer_address?: string;
+  extension?: SendTransactionExtensionItemDto[];
   constructor(init?: Partial<SendTransactionBaoKimDto>) {
     Object.assign(this, init);
   }

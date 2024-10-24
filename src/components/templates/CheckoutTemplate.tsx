@@ -19,6 +19,7 @@ import ResponseSendTransactionDto from '@/dtos/BaoKim/responseSendTransaction.dt
 import { useContext, useEffect, useState } from 'react';
 import OrderContext from '@/contexts/orderContext';
 import { useRouter } from 'next/router';
+import SendTransactionExtensionItemDto from '@/dtos/sendTransactionExtensionItem.dto';
 const schema = yup
   .object({
     name: yup.string().required('Vui lòng nhập tên').test({
@@ -135,6 +136,16 @@ export default function CheckoutTemplate({
               window.location.href = urlVnPay || '';
             }
           } else if (paymentType(res?.data?.payment_id) === PAYMENT.BAO_KIM) {
+            const orderExtensionItem = orderCtx?.cart?.items?.map((item) => {
+              return new SendTransactionExtensionItemDto({
+                item_id: item?.variant_id?.toString(),
+                item_name: item?.variant_name,
+                item_code: item?.variant_id?.toString(),
+                price_amount: item?.price || 0,
+                quantity: item?.qty || 1,
+                url: item?.slug || ''
+              });
+            });
             fetch('/api/baokim/send', {
               method: 'POST',
               body: JSON.stringify(
@@ -157,6 +168,7 @@ export default function CheckoutTemplate({
                   customer_name: data?.name,
                   customer_phone: data?.phone,
                   customer_address: data?.address + fullAddress,
+                  extension: orderExtensionItem,
                 }),
               ),
             })
@@ -173,12 +185,15 @@ export default function CheckoutTemplate({
                 }
                 if (item?.data?.payment_url) {
                   window.location.href = item.data.payment_url;
+                } else if (item?.data?.message?.[0]) {
+                  toast.error('Lỗi bảo kim: '+item?.data?.message?.[0]);
                 } else {
                   toast.error('Đã có lỗi xảy ra');
                 }
               });
           } else {
             toast.success('Đặt hàng thành công');
+            orderCtx?.clearCart && orderCtx?.clearCart();
             router.push('/gio-hang/thanh-cong?orderId=' + res?.data?.id);
           }
         } else {
