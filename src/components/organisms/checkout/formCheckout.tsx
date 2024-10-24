@@ -80,7 +80,7 @@ export default function FormCheckout({
       const city = (provinceData?.data || []).find((item: ProvinceDto) => item.code === watch('shipping_city'));
       const district = districts.find((item: ProvinceDto) => item.code === watch('shipping_district'));
       const ward = wards.find((item: ProvinceDto) => item.code === watch('shipping_ward'));
-      const address = `${watch('address')} ${ward?.full_name}, ${district?.full_name}, ${city?.full_name}`;
+      const address = ` ${ward?.full_name}, ${district?.full_name}, ${city?.full_name}`;
       setFullAddress(address);
     }
   }, [watch('shipping_city'), watch('shipping_district'), watch('shipping_ward')]);

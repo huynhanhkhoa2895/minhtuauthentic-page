@@ -21,7 +21,13 @@ import OrderContext from '@/contexts/orderContext';
 import { useRouter } from 'next/router';
 const schema = yup
   .object({
-    name: yup.string().required('Vui lòng nhập tên'),
+    name: yup.string().required('Vui lòng nhập tên').test({
+      message: () => 'Tên phải ít nhất 2 chữ',
+      test: async (values: string) => {
+        const arr = values.split(' ');
+        return arr.length >= 2;
+      }
+    } as any),
     shipping_city: yup.string().required('Vui lòng chọn tỉnh/thành phố'),
     shipping_district: yup.string().required('Vui lòng chọn quận/huyện'),
     shipping_ward: yup.string().required('Vui lòng chọn phường/xã'),
@@ -150,7 +156,7 @@ export default function CheckoutTemplate({
                   customer_email: data?.email,
                   customer_name: data?.name,
                   customer_phone: data?.phone,
-                  customer_address: fullAddress,
+                  customer_address: data?.address + fullAddress,
                 }),
               ),
             })
