@@ -143,7 +143,7 @@ export default function CheckoutTemplate({
                 item_code: item?.variant_id?.toString(),
                 price_amount: item?.price || 0,
                 quantity: item?.qty || 1,
-                url: item?.slug || ''
+                url: process.env.APP_URL + '/' + (item?.slug || '')
               });
             });
             fetch('/api/baokim/send', {
