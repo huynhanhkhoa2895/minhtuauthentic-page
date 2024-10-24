@@ -141,7 +141,7 @@ export default function CheckoutTemplate({
                 item_id: item?.variant_id?.toString(),
                 item_name: item?.variant_name,
                 item_code: item?.variant_id?.toString(),
-                price_amount: item?.price || 0,
+                price_amount: (item?.variant_total_price || 0) / (item?.qty || 1),
                 quantity: item?.qty || 1,
                 url: process.env.APP_URL + '/' + (item?.slug || '')
               });
@@ -187,8 +187,8 @@ export default function CheckoutTemplate({
                 }
                 if (item?.data?.payment_url) {
                   window.location.href = item.data.payment_url;
-                } else if (item?.data?.message?.[0]) {
-                  toast.error('Lỗi bảo kim: '+item?.data?.message?.[0]);
+                } else if (item?.message?.[0]) {
+                  toast.error('Lỗi bảo kim: '+item?.message?.[0]);
                 } else {
                   toast.error('Đã có lỗi xảy ra');
                 }
