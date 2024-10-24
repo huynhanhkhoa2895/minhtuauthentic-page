@@ -137,11 +137,12 @@ export default function CheckoutTemplate({
             }
           } else if (paymentType(res?.data?.payment_id) === PAYMENT.BAO_KIM) {
             const orderExtensionItem = orderCtx?.cart?.items?.map((item) => {
+              const qty = item?.qty || 1;
               return new SendTransactionExtensionItemDto({
                 item_id: item?.variant_id?.toString(),
                 item_name: item?.variant_name,
                 item_code: item?.variant_id?.toString(),
-                price_amount: (item?.variant_total_price || 0) / (item?.qty || 1),
+                price_amount: ((item?.price || 0) / qty) * ((item?.price_minus || 0) / qty),
                 quantity: item?.qty || 1,
                 url: process.env.APP_URL + '/' + (item?.slug || '')
               });
