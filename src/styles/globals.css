@@ -94,6 +94,7 @@ iframe {
 }
 
 .bk-btn {
+  @apply w-full;
   &-box{
     @apply flex items-center justify-center;
   }

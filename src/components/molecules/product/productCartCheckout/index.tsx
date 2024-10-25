@@ -70,7 +70,7 @@ export default function ProductCartCheckout({ variant }: Props) {
           <span className={'text-primary '}>Thêm vào giỏ</span>
         </button>
       </div>
-      <div className="bk-btn w-full"></div>
+      <div className="bk-btn"></div>
       {/*<div className={'grid grid-cols-1 lg:grid-cols-2 gap-3'}>*/}
       {/*<PaymentButton*/}
       {/*  onClick={() => {*/}

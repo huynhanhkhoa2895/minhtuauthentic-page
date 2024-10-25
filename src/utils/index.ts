@@ -83,7 +83,7 @@ export const generateSlugToHref = (slug?: string) => {
     }
     return `/${slug}`;
   }
-  return slug;
+  return slug.trim();
 };
 
 export function truncateString(str: string, num: number) {
