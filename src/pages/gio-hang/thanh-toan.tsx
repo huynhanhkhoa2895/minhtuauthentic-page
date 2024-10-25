@@ -4,7 +4,7 @@ import { PaymentsDto } from '@/dtos/Payments.dto';
 
 export const getServerSideProps = async (context: any) => {
   const headers = context.req?.headers;
-  const payments: { data: { list: PaymentsDto[] } } = await fetch(
+  const payments: { data: PaymentsDto[] } = await fetch(
     `${process.env.BE_URL}/api/pages/payments`,
   )
     .then((res) => res.json())
