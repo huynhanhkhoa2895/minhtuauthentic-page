@@ -95,13 +95,13 @@ iframe {
 
 .bk-btn {
   @apply w-full;
-  &-box{
-    @apply flex items-center justify-center;
-  }
 
-  .bk-insta-content {
-    >span {
-      @apply flex items-center justify-center;
-    }
+}
+.bk-btn-box{
+  @apply flex items-center justify-center;
+}
+.bk-insta-content {
+  >span {
+    @apply flex items-center justify-center;
   }
 }
