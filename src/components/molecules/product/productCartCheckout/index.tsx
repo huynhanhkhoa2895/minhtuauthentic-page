@@ -70,25 +70,25 @@ export default function ProductCartCheckout({ variant }: Props) {
           <span className={'text-primary '}>Thêm vào giỏ</span>
         </button>
       </div>
-      <div className={'grid grid-cols-1 lg:grid-cols-2 gap-3'}>
-        <div className="bk-btn"></div>
-        {/*<PaymentButton*/}
-        {/*  onClick={() => {*/}
-        {/*    handleAddToCart();*/}
-        {/*    router.push('/gio-hang/thanh-toan');*/}
-        {/*  }}*/}
-        {/*  htmlType={'button'}*/}
-        {/*  type={3}*/}
-        {/*/>*/}
-        {/*<PaymentButton*/}
-        {/*  onClick={() => {*/}
-        {/*    handleAddToCart();*/}
-        {/*    router.push('/gio-hang/thanh-toan');*/}
-        {/*  }}*/}
-        {/*  htmlType={'button'}*/}
-        {/*  type={2}*/}
-        {/*/>*/}
-      </div>
+      <div className="bk-btn w-full"></div>
+      {/*<div className={'grid grid-cols-1 lg:grid-cols-2 gap-3'}>*/}
+      {/*<PaymentButton*/}
+      {/*  onClick={() => {*/}
+      {/*    handleAddToCart();*/}
+      {/*    router.push('/gio-hang/thanh-toan');*/}
+      {/*  }}*/}
+      {/*  htmlType={'button'}*/}
+      {/*  type={3}*/}
+      {/*/>*/}
+      {/*<PaymentButton*/}
+      {/*  onClick={() => {*/}
+      {/*    handleAddToCart();*/}
+      {/*    router.push('/gio-hang/thanh-toan');*/}
+      {/*  }}*/}
+      {/*  htmlType={'button'}*/}
+      {/*  type={2}*/}
+      {/*/>*/}
+      {/*</div>*/}
     </>
   );
 }

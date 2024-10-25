@@ -92,3 +92,15 @@ iframe {
         @apply me-0 !important;
     }
 }
+
+.bk-btn {
+  &-box{
+    @apply flex items-center justify-center;
+  }
+
+  .bk-insta-content {
+    >span {
+      @apply flex items-center justify-center;
+    }
+  }
+}

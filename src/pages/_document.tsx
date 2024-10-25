@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
+import Script from 'next/script';
 export default function Document() {
   return (
     <Html lang="vi">
@@ -102,7 +103,7 @@ export default function Document() {
         <Main />
         <NextScript />
         <div id="bk-modal"></div>
-        <script
+        <Script
           data-partytown-config
           src="https://pc.baokim.vn/js/bk_plus_v2.popup.js"
         />
