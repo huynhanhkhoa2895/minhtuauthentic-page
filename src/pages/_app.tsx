@@ -4,7 +4,7 @@ import { AppProvider } from '@/contexts/appContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { OrderProvider } from '@/contexts/orderContext';
-import { Head } from 'next/document';
+import Head from 'next/head';
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
