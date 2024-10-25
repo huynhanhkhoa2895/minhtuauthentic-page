@@ -23,7 +23,6 @@ const ProductPrice = ({
   displayGap?: boolean;
   classNameGap?: string;
 }) => {
-  console.log('test variant', variant);
   return (
     <>
       {variant && (

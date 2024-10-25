@@ -14,7 +14,7 @@ export const getServerSideProps = async (context: any) => {
     });
   return {
     props: {
-      payments: payments?.data?.list || [],
+      payments: payments?.data || [],
       ip: (headers?.['x-forwarded-for'] as string) || '',
     },
   };
