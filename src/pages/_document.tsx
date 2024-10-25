@@ -95,15 +95,17 @@ export default function Document() {
             `,
           }}
         />
+        <Script
+          data-partytown-config
+          type={'text/javascript'}
+          src="https://pc.baokim.vn/js/bk_plus_v2.popup.js"
+          strategy="beforeInteractive"
+        />
       </Head>
       <body>
         <Main />
         <NextScript />
         <div id="bk-modal"></div>
-        <Script
-          data-partytown-config
-          src="https://pc.baokim.vn/js/bk_plus_v2.popup.js"
-        />
       </body>
     </Html>
   );
