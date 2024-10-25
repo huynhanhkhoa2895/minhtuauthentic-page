@@ -23,6 +23,7 @@ const ProductPrice = ({
   displayGap?: boolean;
   classNameGap?: string;
 }) => {
+  console.log('test variant', variant);
   return (
     <>
       {variant && (
@@ -33,6 +34,7 @@ const ProductPrice = ({
             price={variant.price}
             classNamePrice={classNamePrice}
             classNameRegularPrice={classNameRegularPrice}
+            coupons={variant.coupons}
           />
           {displayGap && (
             <span className={classNameGap}>

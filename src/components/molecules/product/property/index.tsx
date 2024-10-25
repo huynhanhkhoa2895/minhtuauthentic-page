@@ -93,7 +93,11 @@ const ProductProperty = ({
         <div>
           <span>Giới tính: </span>
           <span className={'font-semibold text-primary'}>
-            {SexName(product?.product_property?.sex || 2)}
+            {SexName(
+              product?.product_property?.sex === 0
+                ? 0
+                : product?.product_property?.sex || 2,
+            )}
           </span>
         </div>
         <div>
