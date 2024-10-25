@@ -14,6 +14,7 @@ export default function PriceWithLineThrough({
 }) {
   return (
     <>
+      <span className={'bk-product-price hidden'}>{regularPrice}</span>
       <span
         className={twMerge(
           'text-[16px] lg:text-[18px] font-bold text-price mr-2',

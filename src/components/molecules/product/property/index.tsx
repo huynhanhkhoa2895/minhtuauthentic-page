@@ -72,7 +72,7 @@ const ProductProperty = ({
 
   return (
     <div>
-      <h1 className={'font-bold text-[22px] leading-[1.2]'}>
+      <h1 className={'font-bold text-[22px] leading-[1.2] bk-product-name'}>
         {product.title || product.name}
       </h1>
       <div className={'mt-3 grid grid-cols-2'}>
