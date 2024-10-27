@@ -6,7 +6,6 @@ import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 import { CouponDetailDto } from '@/dtos/CouponDetail.dto';
 
 export class OrdersDto extends BaseDto {
-  id?: number;
   type?: string;
   total_price?: number;
   user_id?: number;

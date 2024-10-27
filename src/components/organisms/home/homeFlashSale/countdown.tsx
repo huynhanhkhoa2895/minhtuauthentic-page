@@ -7,7 +7,7 @@ type Props = {
 export default function Countdown({ end_date, className }: Props) {
   const commonClass =
     'bg-white p-1 lg:p-2 rounded-[10px] border border-gray-200 max-lg:text-sm';
-  const refInterval = useRef<NodeJS.Timeout>();
+  const refInterval = useRef<NodeJS.Timeout | null>(null);
   const [countdown, setCountdown] = useState<{
     hours: string;
     minutes: string;

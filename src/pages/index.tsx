@@ -17,8 +17,28 @@ import dynamic from 'next/dynamic';
 const HomeBanner = dynamic(
   () => import('@/components/organisms/home/homeBanner'),
 );
-export const getServerSideProps = async () => {
-  // Fetch data from external API
+// export const getServerSideProps = async () => {
+//   // Fetch data from external API
+//   const res = await fetch(process.env.BE_URL + '/api/pages/home').catch(
+//     (error) => {
+//       return null;
+//     },
+//   );
+//
+//   const data: { data: ResponseHomePageDto } = res ? await res.json() : null;
+//   const settingsHome: Record<string, SettingOptionDto | undefined> = {};
+//   (data?.data?.settings || [])?.map((item) => {
+//     settingsHome[item?.key || ''] = item?.value;
+//   });
+//   return {
+//     props: {
+//       homePage: data?.data,
+//       settingsHome,
+//     },
+//   };
+// };
+
+export async function getStaticProps() {
   const res = await fetch(process.env.BE_URL + '/api/pages/home').catch(
     (error) => {
       return null;
@@ -35,28 +55,18 @@ export const getServerSideProps = async () => {
       homePage: data?.data,
       settingsHome,
     },
+
   };
-};
-
-export async function getStaticProps() {
-  // Call an external API endpoint to get posts
-  const res = await fetch('https://.../posts')
-  const posts = await res.json()
-
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
-  return {
-    props: {
-      posts,
-    },
-  }
 }
 
 
 export default function Home({
   homePage,
   settingsHome,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: {
+  homePage: ResponseHomePageDto;
+  settingsHome: Record<string, SettingOptionDto | undefined>;
+}) {
   const { settings, menu, footerContent } = useSettings();
   return (
     <>

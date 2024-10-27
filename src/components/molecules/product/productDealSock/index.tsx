@@ -1,12 +1,13 @@
 import { PromotionsDto } from '@/dtos/Promotions.dto';
 import CouponsDto from '@/dtos/Coupons.dto';
-import { getPriceWithCoupon } from '@/utils';
 import ProductCard from '@/components/organisms/product/card';
 import SectionSwiper from '@/components/organisms/sectionSwiper';
-import { Suspense, useEffect, useState } from 'react';
+import {  useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { PROMOTION_TYPE } from '@/config/enum';
 import { SettingsDto } from '@/dtos/Settings.dto';
+import { Skeleton } from 'antd';
+
 type Props = {
   setting?: SettingsDto;
 };

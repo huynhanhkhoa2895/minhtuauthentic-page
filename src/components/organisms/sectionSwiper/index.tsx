@@ -1,5 +1,5 @@
 import { Grid, Pagination } from 'swiper/modules';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperClass } from 'swiper/types';
 import { twMerge } from 'tailwind-merge';
@@ -9,6 +9,8 @@ import 'swiper/css/grid';
 import 'swiper/css/pagination';
 import dynamic from 'next/dynamic';
 import SectionSwiperSlide from '@/components/organisms/sectionSwiper/slide';
+import { Skeleton } from 'antd';
+import SkeletonMobile from '@/components/atoms/skeletonMobile';
 type Props = {
   classNameContainer?: string;
   classNameItems?: string;
@@ -25,13 +27,9 @@ type Props = {
   onSlideChange?: (activeIndex: number) => void;
   isNotDisplayNavigation?: boolean;
   debug?: boolean;
+  skeleton?: ReactNode;
+  onLoad?: () => void;
 };
-const SwiperSkeleton = dynamic(
-  () => import('@/components/organisms/sectionSwiper/skelenton'),
-  {
-    ssr: false,
-  },
-);
 const SectionSwiper = ({
   classNameContainer,
   renderItem,
@@ -47,13 +45,15 @@ const SectionSwiper = ({
   slidesPerViewMobile,
   isNotDisplayNavigation,
   heightItem,
-  debug,
+  skeleton,
+  onLoad
 }: Props) => {
   const rows = 2;
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
-  const [heightWrapper, setHeightWrapper] = useState<number>(0);
+  const [heightWrapper, setHeightWrapper] = useState<number>(heightItem || 0);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [ready, setReady] = useState<boolean>(false);
+  const [isDone, setIsDone] = useState<boolean>(false);
   useEffect(() => {
     setReady(true);
     if (typeof window !== 'undefined') {
@@ -65,6 +65,7 @@ const SectionSwiper = ({
       } else {
         setCurrentSlide(slidesPerView || 0);
       }
+      onLoad && onLoad();
     }
   }, []);
   const renderNavigatorButton = (variant: string) => {
@@ -97,65 +98,70 @@ const SectionSwiper = ({
 
   const handlerHeightWrapper = (height: number) => {
     setHeightWrapper(height * rows + (spaceBetween || 50));
+    setIsDone(true);
   };
+
+  const renderSwiper = useMemo(() => {
+    return <>
+      <Swiper
+        effect={'fade'}
+        grid={isGrid ? { rows } : {}}
+        style={{ height: heightWrapper || '100%' }}
+        modules={isGrid ? [Grid] : [Pagination]}
+        loop={loop || false}
+        className={twMerge('mx-auto w-full')}
+        wrapperClass={'mx-auto'}
+        onSwiper={(swiper) => setSwiper(swiper)}
+        centeredSlides={isCenter}
+        breakpoints={{
+          320: {
+            slidesPerView: currentSlide || 2,
+            spaceBetween: 10,
+          },
+          1024: {
+            slidesPerView: slidesPerView,
+            spaceBetween: spaceBetween,
+          },
+        }}
+        onSlideChange={() => {
+          onSlideChange && onSlideChange(swiper?.activeIndex || 0);
+        }}
+      >
+        {data &&
+          data.map((content, index: number) => {
+            return (
+              <SwiperSlide key={index}>
+                <SectionSwiperSlide
+                  setHeightItem={(height: number) => {
+                    if (index === 0 && isUseHeightWrapper && !heightItem) {
+                      handlerHeightWrapper(height);
+                    }
+                  }}
+                  className={classNameItems}
+                  key={index}
+                >
+                  {renderItem(content)}
+                </SectionSwiperSlide>
+              </SwiperSlide>
+            );
+          })}
+      </Swiper>
+      {data.length > 0 && !isNotDisplayNavigation && (
+        <>
+          {renderNavigatorButton('prev')}
+          {renderNavigatorButton('next')}
+        </>
+      )}
+    </>
+  }, [heightWrapper])
 
   return (
     <>
-      {ready ? (
-        <div className={twMerge('relative', classNameContainer)}>
-          <Swiper
-            effect={'fade'}
-            grid={isGrid ? { rows } : {}}
-            style={{ height: heightWrapper || '100%' }}
-            modules={isGrid ? [Grid] : [Pagination]}
-            loop={loop || false}
-            className={twMerge('mx-auto w-full')}
-            wrapperClass={'mx-auto'}
-            onSwiper={(swiper) => setSwiper(swiper)}
-            centeredSlides={isCenter}
-            breakpoints={{
-              320: {
-                slidesPerView: currentSlide || 2,
-                spaceBetween: 10,
-              },
-              1024: {
-                slidesPerView: slidesPerView,
-                spaceBetween: spaceBetween,
-              },
-            }}
-            onSlideChange={() => {
-              onSlideChange && onSlideChange(swiper?.activeIndex || 0);
-            }}
-          >
-            {data &&
-              data.map((content, index: number) => {
-                return (
-                  <SwiperSlide key={index}>
-                    <SectionSwiperSlide
-                      setHeightItem={(height: number) => {
-                        if (index === 0 && isUseHeightWrapper && !heightItem) {
-                          handlerHeightWrapper(height);
-                        }
-                      }}
-                      className={classNameItems}
-                      key={index}
-                    >
-                      {renderItem(content)}
-                    </SectionSwiperSlide>
-                  </SwiperSlide>
-                );
-              })}
-          </Swiper>
-          {data.length > 0 && !isNotDisplayNavigation && (
-            <>
-              {renderNavigatorButton('prev')}
-              {renderNavigatorButton('next')}
-            </>
-          )}
+      {
+        !ready ? <SkeletonMobile /> : <div className={twMerge('relative', classNameContainer)}>
+          {renderSwiper}
         </div>
-      ) : (
-        <SwiperSkeleton />
-      )}
+      }
     </>
   );
 };

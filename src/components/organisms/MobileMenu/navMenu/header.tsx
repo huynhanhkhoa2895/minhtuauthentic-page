@@ -21,11 +21,9 @@ export default function NavMenuHeader({className,isMobile}: Props) {
   }
   return (
     <>
-      {isMobile ? <MobileView className={twMerge('flex p-3 gap-2 items-center', className)}>
+      <div className={twMerge('flex p-3 gap-2 items-center', className)}>
         {renderItem()}
-      </MobileView> : <div className={twMerge('flex p-3 gap-2 items-center', className)}>
-        {renderItem()}
-      </div>}
+      </div>
     </>
   )
 }

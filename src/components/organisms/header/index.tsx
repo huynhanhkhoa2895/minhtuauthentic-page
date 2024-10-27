@@ -22,12 +22,7 @@ import IconWifi from '@/components/icons/wifi';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import { SETTING_KEY } from '@/config/enum';
 import dynamic from 'next/dynamic';
-const NavMenuHeader = dynamic(
-  () => import('@/components/organisms/MobileMenu/navMenu/header'),
-  {
-    ssr: false,
-  },
-);
+import NavMenuHeader from '@/components/organisms/MobileMenu/navMenu/header';
 type Props = { menu: ResponseMenuDto | undefined; settings: SettingsDto[] };
 export const Header = ({ menu, settings }: Props) => {
   const pathname = usePathname();
@@ -40,12 +35,13 @@ export const Header = ({ menu, settings }: Props) => {
 
   return (
     <>
+    <div
+      className={
+        ' hidden lg:grid  bg-primaryGrey relative z-[3] grid-cols-3 items-center p-3 h-[50px]'
+      }
+    >
       {pageHeader?.value && (
-        <div
-          className={
-            ' hidden lg:grid  bg-primaryGrey relative z-[3] grid-cols-3 items-center p-3'
-          }
-        >
+        <>
           <div
             dangerouslySetInnerHTML={{
               __html: pageHeader?.value?.page_title_left || '',
@@ -63,16 +59,16 @@ export const Header = ({ menu, settings }: Props) => {
               __html: pageHeader?.value?.page_title_right || '',
             }}
           />
-        </div>
+        </>
       )}
-
+    </div>
       <header
         id={'header'}
         className={
           'bg-primary lg:py-[10px] sticky top-0 left-0 z-[100] relative'
         }
       >
-        <NavMenuHeader isMobile={true} />
+        <NavMenuHeader className={'lg:hidden'} isMobile={true} />
         <div
           className={
             'max-lg:hidden container mx-auto flex justify-between items-center gap-[10px]'

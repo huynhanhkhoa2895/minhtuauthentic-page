@@ -2,11 +2,14 @@ import { StaticContentsDto } from '@/dtos/StaticContents.dto';
 import BlockUnderSlideItem from '@/components/molecules/blockUnderSlide/item';
 import { MobileView } from 'react-device-detect';
 import SectionSwiper from '@/components/organisms/sectionSwiper';
+import { Skeleton } from 'antd';
 
 export default function SlideMobileView({
   contents,
+  onLoad,
 }: {
   contents: StaticContentsDto[];
+  onLoad: () => void;
 }) {
   return (
     <MobileView>
@@ -19,7 +22,9 @@ export default function SlideMobileView({
         heightItem={145}
         isUseHeightWrapper={true}
         isNotDisplayNavigation={true}
-        debug={true}
+        onLoad={()=>{
+          onLoad && onLoad()
+        }}
         renderItem={(item: unknown) => {
           const content = item as StaticContentsDto;
           return (
