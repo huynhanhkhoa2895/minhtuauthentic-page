@@ -14,10 +14,12 @@ export const Banners = ({
   banners,
   className,
   classNameImage,
+  isMobile,
 }: {
   banners: StaticContentsDto[];
   className?: string;
   classNameImage?: string;
+  isMobile?: boolean;
 }) => {
   return (
     <Swiper
@@ -45,8 +47,7 @@ export const Banners = ({
               width={imageDetail?.image?.width || 0}
               height={imageDetail?.image?.height || 0}
               className={classNameImage || 'object-contain w-full'}
-              unoptimized={true}
-              quality={100}
+              unoptimized={!isMobile}
               blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPs7u2tBwAFdgImpqLKKAAAAABJRU5ErkJggg=="
             />
           </SwiperSlide>

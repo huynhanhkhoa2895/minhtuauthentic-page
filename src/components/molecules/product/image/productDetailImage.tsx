@@ -42,7 +42,7 @@ const ProductDetailImage = ({
             <ImageWithFallback
               image={imageItem}
               className={
-                'w-full h-full object-contain hover:scale-105 transition-transform duration-300 cursor-pointer'
+                'w-full h-full object-contain hover:scale-105 transition-transform duration-300 cursor-pointer bk-product-image'
               }
               onClick={() => handleClickImage(imageItem)}
               product={product}
@@ -64,7 +64,7 @@ const ProductDetailImage = ({
     <div className={twMerge(containerClassName)}>
       <ImageWithFallback
         image={imageActive}
-        className={'object-contain cursor-pointer'}
+        className={'object-contain cursor-pointer bk-product-image'}
         onClick={(image: ImageDto | null) => {
           setIsOpen && setIsOpen({ display: true, image });
         }}

@@ -6,10 +6,24 @@ import AppContext from '@/contexts/appContext';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import { generateSlugToHref } from '@/utils';
 import { ResponseSlugPageDto } from '@/dtos/responseSlugPage.dto';
+import Script from 'next/script';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 const ProductTemplate = ({
   data,
 }: ResponseSlugPageDto<ResponseProductDetailPageDto>) => {
+  const router = useRouter();
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      const loadEvent = new Event('load');
+      window.dispatchEvent(loadEvent);
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
   return (
     <>
       <BreadcrumbComponent

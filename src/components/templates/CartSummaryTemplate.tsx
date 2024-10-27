@@ -1,18 +1,33 @@
 import { twMerge } from 'tailwind-merge';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import OrderContext from '@/contexts/orderContext';
 import { formatMoney } from '@/utils';
 import Link from 'next/link';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import dynamic from 'next/dynamic';
-const CartSummaryDesktop = dynamic(() => import('@/components/organisms/cartSummary/desktop'), {
-  ssr: false,
-});
-const CartSummaryMobile = dynamic(() => import('@/components/organisms/cartSummary/mobile'), {
-  ssr: false,
-});
+import { useRouter } from 'next/router';
+const CartSummaryDesktop = dynamic(
+  () => import('@/components/organisms/cartSummary/desktop'),
+  {
+    ssr: false,
+  },
+);
+const CartSummaryMobile = dynamic(
+  () => import('@/components/organisms/cartSummary/mobile'),
+  {
+    ssr: false,
+  },
+);
 export default function CartSummaryTemplate() {
   const orderCtx = useContext(OrderContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!orderCtx?.cart?.items?.length) {
+      router.push('/');
+    }
+  }, [orderCtx?.cart]);
+
   return (
     <>
       <BreadcrumbComponent label={'Giỏ hàng'} link={'/gio-hang/tom-tat'} />

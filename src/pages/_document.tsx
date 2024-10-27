@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
+import Script from 'next/script';
 export default function Document() {
   return (
     <Html lang="vi">
@@ -6,10 +7,14 @@ export default function Document() {
         {process.env.NODE_ENV === 'development' && (
           <meta name="robots" content="noindex,nofollow" />
         )}
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <meta name="google-site-verification" content="5P0Wm8H0ZaYhmtLWPwgMqdt6Z-o-0rOd1XTfaPRNu78" />
+
+        <meta
+          name="google-site-verification"
+          content="5P0Wm8H0ZaYhmtLWPwgMqdt6Z-o-0rOd1XTfaPRNu78"
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link rel="stylesheet" href="https://pc.baokim.vn/css/bk.css" />
         <link
           href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
           rel="stylesheet"
@@ -92,8 +97,14 @@ export default function Document() {
         />
       </Head>
       <body>
-      <Main />
-      <NextScript />
+        <Main />
+        <NextScript />
+        <div id="bk-modal"></div>
+        <Script
+          strategy={'beforeInteractive'}
+          data-partytown-config
+          src="https://pc.baokim.vn/js/bk_plus_v2.popup.js"
+        />
       </body>
     </Html>
   );

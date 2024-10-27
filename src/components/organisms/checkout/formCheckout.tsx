@@ -28,7 +28,7 @@ export default function FormCheckout({
   setError,
   control,
   errors,
-  handleSubmit,
+  setFullAddress,
 }: {
   user?: UserDto;
   payments: PaymentsDto[];
@@ -38,7 +38,7 @@ export default function FormCheckout({
   setValue: any;
   setError: any;
   errors: any;
-  handleSubmit: any;
+  setFullAddress: any;
 }) {
   const { data: provinceData, error } = useSWR('/api/orders/province', fetcher);
   const orderCtx = useContext(OrderContext);
@@ -74,6 +74,17 @@ export default function FormCheckout({
       );
     }
   }, [watch('shipping_district')]);
+
+  useEffect(() => {
+    if(watch('shipping_city') && watch('shipping_district') && watch('shipping_ward')){
+      const city = (provinceData?.data || []).find((item: ProvinceDto) => item.code === watch('shipping_city'));
+      const district = districts.find((item: ProvinceDto) => item.code === watch('shipping_district'));
+      const ward = wards.find((item: ProvinceDto) => item.code === watch('shipping_ward'));
+      const address = ` ${ward?.full_name}, ${district?.full_name}, ${city?.full_name}`;
+      setFullAddress(address);
+    }
+  }, [watch('shipping_city'), watch('shipping_district'), watch('shipping_ward')]);
+
   const fetchDataProvince = async (parent_key: string, parent_id: string) => {
     const query = new URLSearchParams();
     query.append('parent_key', parent_key);

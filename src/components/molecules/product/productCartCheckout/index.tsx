@@ -48,8 +48,12 @@ export default function ProductCartCheckout({ variant }: Props) {
             router.push('/gio-hang/thanh-toan');
           }}
         >
-          <span className={'text-white text-xl font-bold uppercase'}>Mua ngay</span>
-          <span className={'text-white'}>Giao Tận Nơi hoặc Nhận Tại Cửa Hàng</span>
+          <span className={'text-white text-xl font-bold uppercase'}>
+            Mua ngay
+          </span>
+          <span className={'text-white'}>
+            Giao Tận Nơi hoặc Nhận Tại Cửa Hàng
+          </span>
         </button>
         <button
           className={
@@ -60,31 +64,31 @@ export default function ProductCartCheckout({ variant }: Props) {
             handleAddToCart();
           }}
         >
-        <span>
-          <CartPlus className={'w-6 h-6 text-primary'} />
-        </span>
+          <span>
+            <CartPlus className={'w-6 h-6 text-primary'} />
+          </span>
           <span className={'text-primary '}>Thêm vào giỏ</span>
         </button>
       </div>
-      <div className={'grid grid-cols-1 lg:grid-cols-2 gap-3'}>
-        <PaymentButton
-          onClick={() => {
-            handleAddToCart();
-            router.push('/gio-hang/thanh-toan');
-          }}
-          htmlType={'button'}
-          type={3}
-        />
-        <PaymentButton
-          onClick={() => {
-            handleAddToCart();
-            router.push('/gio-hang/thanh-toan');
-          }}
-          htmlType={'button'}
-          type={2}
-        />
-      </div>
+      <div className="bk-btn"></div>
+      {/*<div className={'grid grid-cols-1 lg:grid-cols-2 gap-3'}>*/}
+      {/*<PaymentButton*/}
+      {/*  onClick={() => {*/}
+      {/*    handleAddToCart();*/}
+      {/*    router.push('/gio-hang/thanh-toan');*/}
+      {/*  }}*/}
+      {/*  htmlType={'button'}*/}
+      {/*  type={3}*/}
+      {/*/>*/}
+      {/*<PaymentButton*/}
+      {/*  onClick={() => {*/}
+      {/*    handleAddToCart();*/}
+      {/*    router.push('/gio-hang/thanh-toan');*/}
+      {/*  }}*/}
+      {/*  htmlType={'button'}*/}
+      {/*  type={2}*/}
+      {/*/>*/}
+      {/*</div>*/}
     </>
-
   );
 }

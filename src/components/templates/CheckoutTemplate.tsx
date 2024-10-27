@@ -16,12 +16,19 @@ import { toast } from 'react-toastify';
 import { createVNPayUrl } from '@/utils/vnpay';
 import SendTransactionBaoKimDto from '@/dtos/BaoKim/sendTransaction.dto';
 import ResponseSendTransactionDto from '@/dtos/BaoKim/responseSendTransaction.dto';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import OrderContext from '@/contexts/orderContext';
 import { useRouter } from 'next/router';
+import SendTransactionExtensionItemDto from '@/dtos/sendTransactionExtensionItem.dto';
 const schema = yup
   .object({
-    name: yup.string().required('Vui lòng nhập tên'),
+    name: yup.string().required('Vui lòng nhập tên').test({
+      message: () => 'Tên phải ít nhất 2 chữ',
+      test: async (values: string) => {
+        const arr = values.split(' ');
+        return arr.length >= 2;
+      }
+    } as any),
     shipping_city: yup.string().required('Vui lòng chọn tỉnh/thành phố'),
     shipping_district: yup.string().required('Vui lòng chọn quận/huyện'),
     shipping_ward: yup.string().required('Vui lòng chọn phường/xã'),
@@ -59,6 +66,7 @@ export default function CheckoutTemplate({
   const { user } = useUser();
   const orderCtx = useContext(OrderContext);
   const router = useRouter();
+  const [fullAddress, setFullAddress] = useState<string>('');
   const paymentMap = new Map(
     payments.map((item) => [item.id, item.name?.toLowerCase()]),
   );
@@ -101,12 +109,6 @@ export default function CheckoutTemplate({
       return;
     }
 
-    const _paymentType = paymentType(data?.payment_id);
-
-    if (_paymentType === PAYMENT.COD || _paymentType === PAYMENT.CK) {
-      data.status = ORDER_STATUS.DONE;
-    }
-
     const paymentTypeId = data?.payment_type_id;
 
     const order: FormData & {
@@ -122,21 +124,29 @@ export default function CheckoutTemplate({
       body: JSON.stringify(order),
     })
       .then((rs) => rs.json())
-      .then((data) => {
-        if (data?.data?.status === ORDER_STATUS.DONE) {
-          toast.success('Đặt hàng thành công');
-          router.push('/gio-hang/thanh-cong?orderId=' + data?.data?.id);
-        } else if (data?.data?.status === ORDER_STATUS.NEW) {
-          if (paymentType(data?.data?.payment_id) === PAYMENT.VN_PAY) {
+      .then((res) => {
+        if (res?.data?.id) {
+          if (paymentType(res?.data?.payment_id) === PAYMENT.VN_PAY) {
             const urlVnPay = createVNPayUrl({
-              order: data?.data,
+              order: res?.data,
               ip,
             });
             orderCtx?.clearCart && orderCtx?.clearCart();
             if (window) {
               window.location.href = urlVnPay || '';
             }
-          } else if (paymentType(data?.data?.payment_id) === PAYMENT.BAO_KIM) {
+          } else if (paymentType(res?.data?.payment_id) === PAYMENT.BAO_KIM) {
+            const orderExtensionItem = orderCtx?.cart?.items?.map((item) => {
+              const qty = item?.qty || 1;
+              return new SendTransactionExtensionItemDto({
+                item_id: item?.variant_id?.toString(),
+                item_name: item?.variant_name,
+                item_code: item?.variant_id?.toString(),
+                price_amount: item?.price || 0,
+                quantity: 1,
+                url: process.env.APP_URL + '/' + (item?.slug || '')
+              });
+            });
             fetch('/api/baokim/send', {
               method: 'POST',
               body: JSON.stringify(
@@ -144,17 +154,24 @@ export default function CheckoutTemplate({
                   merchant_id: Number(
                     process.env.NEXT_PUBLIC_BAO_KIM_MERCHANT_ID || 0,
                   ),
-                  mrc_order_id: data?.data?.id,
-                  total_amount: data?.data?.total_price,
+                  mrc_order_id: res?.data?.id,
+                  total_amount: res?.data?.total_price,
                   description:
                     'Thanh toan don hang cua user Bao Kim ' +
-                    data?.data?.user_id +
+                    res?.data?.user_id +
                     ' voi gia tri ' +
-                    data?.data?.total_price,
+                    res?.data?.total_price,
                   url_success: process.env.NEXT_PUBLIC_APP_URL + '/baokim/',
                   webhooks:
                     process.env.NEXT_PUBLIC_BE_URL + '/api/webhook/baokim',
                   bpm_id: Number(paymentTypeId) || undefined,
+                  customer_email: data?.email,
+                  customer_name: data?.name,
+                  customer_phone: data?.phone,
+                  customer_address: data?.address + fullAddress,
+                  extension: {
+                    items: orderExtensionItem || [],
+                  },
                 }),
               ),
             })
@@ -164,18 +181,26 @@ export default function CheckoutTemplate({
                   await fetch('/api/orders/update', {
                     method: 'PUT',
                     body: JSON.stringify({
-                      id: data?.data?.id,
+                      id: res?.data?.id,
                       order_external_id: item?.data?.order_id,
-                    })
-                  })
+                    }),
+                  });
                 }
                 if (item?.data?.payment_url) {
                   window.location.href = item.data.payment_url;
+                } else if (item?.message?.[0]) {
+                  toast.error('Lỗi bảo kim: '+item?.message?.[0]);
                 } else {
                   toast.error('Đã có lỗi xảy ra');
                 }
               });
+          } else {
+            toast.success('Đặt hàng thành công');
+            orderCtx?.clearCart && orderCtx?.clearCart();
+            router.push('/gio-hang/thanh-cong?orderId=' + res?.data?.id);
           }
+        } else {
+          toast.error('Đã có lỗi xảy ra');
         }
       })
       .catch((e) => {
@@ -215,7 +240,7 @@ export default function CheckoutTemplate({
               ip={ip}
               setError={setError}
               errors={errors}
-              handleSubmit={handleSubmit}
+              setFullAddress={setFullAddress}
             />
           )}
 

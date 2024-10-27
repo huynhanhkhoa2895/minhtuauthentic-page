@@ -72,7 +72,7 @@ const ProductProperty = ({
 
   return (
     <div>
-      <h1 className={'font-bold text-[22px] leading-[1.2]'}>
+      <h1 className={'font-bold text-[22px] leading-[1.2] bk-product-name'}>
         {product.title || product.name}
       </h1>
       <div className={'mt-3 grid grid-cols-2'}>
@@ -93,7 +93,11 @@ const ProductProperty = ({
         <div>
           <span>Giới tính: </span>
           <span className={'font-semibold text-primary'}>
-            {SexName(product?.product_property?.sex || 2)}
+            {SexName(
+              product?.product_property?.sex === 0
+                ? 0
+                : product?.product_property?.sex || 2,
+            )}
           </span>
         </div>
         <div>

@@ -46,7 +46,7 @@ export default function CartInput({ value, onChange, className }: Props) {
       </button>
       <input
         type="text"
-        className="text-[16px] font-semibold w-[35px] text-black text-center"
+        className="text-[16px] font-semibold w-[35px] text-black text-center bk-product-qty"
         value={_value}
         onChange={(e) => {
           setValue(parseInt(e.target.value) || 1);
