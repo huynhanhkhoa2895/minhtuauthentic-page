@@ -104,7 +104,6 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
     setCart(newCartResponse?.data || []);
-    toast('Đã thêm vào giỏ hàng', { type: 'success' });
   };
 
   const updateCart = async (index: number, qty: number = 1) => {

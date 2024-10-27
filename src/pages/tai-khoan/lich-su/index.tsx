@@ -12,8 +12,19 @@ import { ServerSideProps } from '@/config/type';
 
 export const getServerSideProps = (async (context: any) => {
   const resDefault = await getDefaultSeverSide();
+  const cookie = getCookie('user', context.req.headers.cookie || '', true)
+
+  if (!cookie) {
+    return {
+      redirect: {
+        destination: '/tai-khoan/dang-nhap',
+        permanent: false,
+      },
+    };
+  }
+
   const user = JSON.parse(
-    getCookie('user', context.req.headers.cookie || '', true),
+    cookie,
   );
   const rsHistory = await fetch(
     process.env.BE_URL + '/api/pages/orders/' + user?.id,
