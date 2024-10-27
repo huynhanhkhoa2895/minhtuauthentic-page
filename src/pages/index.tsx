@@ -55,7 +55,7 @@ export async function getStaticProps() {
       homePage: data?.data,
       settingsHome,
     },
-
+    revalidate: 300,
   };
 }
 
