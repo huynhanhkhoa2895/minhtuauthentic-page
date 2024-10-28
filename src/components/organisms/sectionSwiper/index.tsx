@@ -11,7 +11,7 @@ import { SwiperProps } from '@/components/organisms/sectionSwiper/item';
 
 type Props = {
   slidePerViewMobile?: number;
-  slidePerView?: number;
+  slidesPerView?: number;
   spaceBetween?: number;
   spaceBetweenMobile?: number;
 } & SwiperProps;
@@ -28,7 +28,7 @@ const SectionSwiper = (props: Props) => {
       {isDesktop && (
         <SectionSwiperItem
           {...props}
-          slidesPerView={props.slidePerView || 10}
+          slidesPerView={props.slidesPerView || 5}
           spaceBetween={props.spaceBetween || 10}
         />
       )}

@@ -11,8 +11,20 @@ type Props = {
 export default function BlockUnderSlide({ contents }: Props) {
   return (
     <Suspense>
+      <div className={'grid grid-cols-10 gap-1 mt-3 max-lg:hidden'}>
+        {contents.map((content, index) => {
+          return (
+            <div key={index} className={'flex flex-col gap-1'}>
+              <BlockUnderSlideItem
+                content={content}
+                classImage={'w-[100px] h-[100px] object-contain'}
+              />
+            </div>
+          );
+        })}
+      </div>
       <SectionSwiper
-        classNameContainer={'mt-3'}
+        classNameContainer={'mt-3 lg:hidden'}
         isGrid={true}
         slidePerViewMobile={4}
         heightItem={145}
