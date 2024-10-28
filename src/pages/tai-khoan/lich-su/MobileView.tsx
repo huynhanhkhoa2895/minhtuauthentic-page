@@ -7,7 +7,7 @@ type Props = {
 export default function HistoryMobileView({ orders, column }: Props) {
   return (
     <>
-      {orders.map((item, index) => {
+      {(orders || []).map((item, index) => {
         return (
           <table className={'mb-3 w-full'} key={index}>
             <tbody>
