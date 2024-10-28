@@ -25,7 +25,9 @@ const ProductDetailImage = ({
   });
 
   const handleClickImage = (image: ImageDto) => {
-    setImageActive(image);
+    if (image) {
+      setImageActive(image);
+    }
   };
 
   const renderSlideImage = useMemo(() => {

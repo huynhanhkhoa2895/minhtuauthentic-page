@@ -19,7 +19,9 @@ export function useProductImageDetail({ product, variant }: Props) {
       }
     });
     setImages(listImage);
-    setImageActive(listImage[0]);
+    if (listImage[0]) {
+      setImageActive(listImage[0]);
+    }
   }, [variant]);
   return {
     images,

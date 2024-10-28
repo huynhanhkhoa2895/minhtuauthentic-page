@@ -107,7 +107,9 @@ export default function PopupImage({
         }}
         onSlideChange={(swiper) => {
           const activeIndex = swiper.activeIndex;
-          setImageActive(images[activeIndex]);
+          if (images[activeIndex]) {
+            setImageActive(images[activeIndex]);
+          }
         }}
       >
         {images.map((image, index) => (
@@ -123,7 +125,7 @@ export default function PopupImage({
         ))}
       </Swiper>
     );
-  }, []);
+  }, [images]);
 
   return (
     <>
