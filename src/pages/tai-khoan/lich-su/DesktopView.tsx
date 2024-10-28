@@ -8,7 +8,7 @@ type Props = {
 export default function HistoryDesktopView({ orders, column }: Props) {
   return (
     <>
-      {orders.map((item, index) => {
+      {(orders || []).map((item, index) => {
         return (
           <Table
             key={index}
