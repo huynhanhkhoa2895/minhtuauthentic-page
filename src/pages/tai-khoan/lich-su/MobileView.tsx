@@ -2,7 +2,7 @@ import { OrdersDto } from '@/dtos/Orders.dto';
 
 type Props = {
   orders: OrdersDto[];
-  column: unknown[];
+  column: any[];
 };
 export default function HistoryMobileView({ orders, column }: Props) {
   return (
