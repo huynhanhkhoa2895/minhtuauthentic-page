@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { ProductDto } from '@/dtos/Product.dto';
@@ -91,6 +90,41 @@ export default function PopupImage({
     );
   };
 
+  const renderSwiper = useMemo(() => {
+    return (
+      <Swiper
+        className={'h-full'}
+        modules={[Pagination, EffectFade, Navigation]}
+        effect={'fade'}
+        loop={true}
+        slidesPerView={1}
+        fadeEffect={{
+          crossFade: true,
+        }}
+        key={'popup-image'}
+        onSwiper={(swiper) => {
+          setSwiper(swiper);
+        }}
+        onSlideChange={(swiper) => {
+          const activeIndex = swiper.activeIndex;
+          setImageActive(images[activeIndex]);
+        }}
+      >
+        {images.map((image, index) => (
+          <SwiperSlide key={image.url + '_' + index}>
+            <ImageWithFallback
+              className={'object-contain h-full w-auto m-auto'}
+              image={image}
+              alt={product.title || product.name}
+              unoptimized={true}
+              quality={100}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    );
+  }, []);
+
   return (
     <>
       <div
@@ -112,40 +146,7 @@ export default function PopupImage({
             }
           >
             <div className={'relative h-full max-lg:px-3'}>
-              <Swiper
-                className={'h-full'}
-                modules={[Pagination, EffectFade, Navigation]}
-                effect={'fade'}
-                loop={true}
-                slidesPerView={1}
-                fadeEffect={{
-                  crossFade: true,
-                }}
-                key={'popup-image'}
-                onSwiper={(swiper) => {
-                  setSwiper(swiper);
-                }}
-                onSlideChange={(swiper) => {
-                  const activeIndex = swiper.activeIndex;
-                  setImageActive(images[activeIndex]);
-                }}
-              >
-                {images.map((image, index) => (
-                  <SwiperSlide key={image.url + '_' + index}>
-                    <div className={'pl-full relative h-full  m-auto'}>
-                      <div className={'absolute inset-0'}>
-                        <ImageWithFallback
-                          className={'object-contain h-full w-auto m-auto'}
-                          image={image}
-                          alt={product.title || product.name}
-                          unoptimized={true}
-                          quality={100}
-                        />
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+              {renderSwiper}
               {images.length > 0 && (
                 <>
                   {renderNavigatorButton('prev')}

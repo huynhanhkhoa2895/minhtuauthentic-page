@@ -6,9 +6,12 @@ import CouponsDto from '@/dtos/Coupons.dto';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { isDesktop, isMobile } from 'react-device-detect';
-const CountdownContainer = dynamic(()=>import('@/components/organisms/home/homeFlashSale/countdownContainer'), {
-  ssr: false,
-});
+const CountdownContainer = dynamic(
+  () => import('@/components/organisms/home/homeFlashSale/countdownContainer'),
+  {
+    ssr: false,
+  },
+);
 type Props = {
   promotion?: PromotionsDto;
   setting?: SettingOptionDto;
@@ -20,7 +23,7 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
     <>
       {endDate?.getTime() > new Date().getTime() && (
         <div
-          className={'mt-3 mx-auto p-3 rounded-[10px]'}
+          className={'mt-3 mx-auto p-1 lg:p-3 rounded-[10px]'}
           style={{ backgroundColor: setting?.backgroundColor || '#fff' }}
         >
           <div
@@ -36,9 +39,16 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
                 fill
               />
             )}
-            {isDesktop && <CountdownContainer className={'relative'} endDate={endDate} />}
+            {isDesktop && (
+              <CountdownContainer className={'relative'} endDate={endDate} />
+            )}
           </div>
-          {isMobile && <CountdownContainer className={'flex gap-3 mb-3 items-center justify-center'} endDate={endDate} />}
+          {isMobile && (
+            <CountdownContainer
+              className={'flex gap-3 mb-3 items-center justify-center'}
+              endDate={endDate}
+            />
+          )}
           <SectionSwiper
             slidesPerView={5}
             spaceBetween={10}

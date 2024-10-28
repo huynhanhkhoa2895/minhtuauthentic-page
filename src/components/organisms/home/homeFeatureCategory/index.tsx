@@ -10,7 +10,7 @@ type Props = {
 export default function HomeFeatureCategory({ contents, setting }: Props) {
   return (
     <div
-      className={'mt-3 mx-auto p-3 rounded-[10px]'}
+      className={'mt-3 mx-auto p-1 lg:p-3 rounded-[10px]'}
       style={{ backgroundColor: setting?.backgroundColor || '#fff' }}
     >
       <div className={'flex justify-between mb-3'}>
@@ -25,7 +25,7 @@ export default function HomeFeatureCategory({ contents, setting }: Props) {
       <SectionSwiper
         slidesPerView={10}
         spaceBetween={10}
-        slidesPerViewMobile={4}
+        slidePerViewMobile={4}
         renderItem={(item: unknown) => {
           const content = item as StaticContentsDto;
           return <BlockUnderSlideItem content={content} />;

@@ -32,7 +32,7 @@ const ProductDetailImage = ({
     return (
       <SectionSwiper
         classNameContainer={'mt-3'}
-        slidesPerViewMobile={4}
+        slidePerViewMobile={4}
         classNameItems={
           'p-1 hover:shadow-md transition-shadow duration-300 hover:border-primary border border-transparent'
         }
@@ -42,7 +42,7 @@ const ProductDetailImage = ({
             <ImageWithFallback
               image={imageItem}
               className={
-                'w-full h-full object-contain hover:scale-105 transition-transform duration-300 cursor-pointer bk-product-image'
+                'w-full h-full object-contain hover:scale-105 transition-transform duration-300 cursor-pointer'
               }
               onClick={() => handleClickImage(imageItem)}
               product={product}
@@ -51,7 +51,7 @@ const ProductDetailImage = ({
               }}
               isUseNativeImage={true}
             />
-          );
+          ) as any;
         }}
         slidesPerView={6}
         spaceBetween={10}
@@ -72,7 +72,7 @@ const ProductDetailImage = ({
         unoptimized={true}
         quality={100}
       />
-      <div className={'px-3'}>{renderSlideImage}</div>
+      {renderSlideImage}
     </div>
   );
 };

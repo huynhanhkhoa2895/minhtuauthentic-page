@@ -39,21 +39,23 @@ export default function TabsContainer({ header, content, className }: Props) {
           return renderButton(item, index);
         })}
       </div>
-      <div className={'relative'} style={{ height }}>
+      <div className={'relative'}>
         {content.map((item, index: number) => {
           return (
-            <TabContent
-              key={index}
-              item={item}
-              index={index}
-              indexActive={indexActive}
-              setHeight={(value: number) => {
-                setHeight((height: number) => {
-                  if (height < value) return value;
-                  return height;
-                });
-              }}
-            />
+            index === indexActive && (
+              <TabContent
+                key={index}
+                item={item}
+                index={index}
+                indexActive={indexActive}
+                setHeight={(value: number) => {
+                  setHeight((height: number) => {
+                    if (height < value) return value;
+                    return height;
+                  });
+                }}
+              />
+            )
           );
         })}
       </div>

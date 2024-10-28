@@ -6,10 +6,7 @@ import { SettingsDto } from '@/dtos/Settings.dto';
 import DefaultSeo from '@/components/molecules/seo';
 import { SEOProps } from '@/config/type';
 import dynamic from 'next/dynamic';
-import {
-  isDesktop,
-  isMobile,
-} from 'react-device-detect';
+import { isDesktop, isMobile } from 'react-device-detect';
 type Props = {
   className?: string;
   children: ReactNode;
@@ -18,9 +15,12 @@ type Props = {
   seo?: SEOProps;
 };
 
-const MenuFooter = dynamic(() => import('@/components/organisms/MobileMenu/menuFooter'), {
-  ssr:false
-})
+const MenuFooter = dynamic(
+  () => import('@/components/organisms/MobileMenu/menuFooter'),
+  {
+    ssr: false,
+  },
+);
 
 const NavMenu = dynamic(
   () => import('@/components/organisms/MobileMenu/navMenu'),
@@ -33,9 +33,12 @@ const Socials = dynamic(() => import('@/components/organisms/Socials'), {
   ssr: false,
 });
 
-const LayoutMenu = dynamic(() => import('@/components/organisms/layout/LayoutMenu'), {
-  ssr: false,
-});
+const LayoutMenu = dynamic(
+  () => import('@/components/organisms/layout/LayoutMenu'),
+  {
+    ssr: false,
+  },
+);
 
 export default function Layout({
   children,
@@ -44,17 +47,14 @@ export default function Layout({
   settings,
   seo,
 }: Props) {
-
   return (
     <>
       <DefaultSeo settings={settings} seo={seo} />
       <div className={twMerge('relative ', className)}>
-        <div id={'main-body'} className={'container mx-auto p-3'}>
+        <div id={'main-body'} className={'container mx-auto p-1 lg:p-3'}>
           {children}
         </div>
-        {
-          isDesktop && menu && <LayoutMenu menu={menu} />
-        }
+        {isDesktop && menu && <LayoutMenu menu={menu} />}
       </div>
       {isMobile && menu && <NavMenu menu={menu} />}
       <Socials />

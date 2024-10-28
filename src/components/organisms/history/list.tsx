@@ -1,8 +1,22 @@
-import { Button, Table } from 'antd';
 import { OrdersDto } from '@/dtos/Orders.dto';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 import { formatMoney } from '@/utils';
+import { isDesktop, isMobile, MobileView } from 'react-device-detect';
+import dynamic from 'next/dynamic';
+const HistoryMobileView = dynamic(
+  () => import('@/pages/tai-khoan/lich-su/MobileView'),
+  {
+    ssr: false,
+  },
+);
+const HistoryDesktopView = dynamic(
+  () => import('@/pages/tai-khoan/lich-su/DesktopView'),
+  {
+    ssr: false,
+  },
+);
+
 type Props = {
   orders: OrdersDto[];
 };
@@ -59,7 +73,8 @@ export default function HistoryList({ orders }: Props) {
   return (
     <>
       <h1 className={'text-2xl font-bold mb-3 text-primary'}>Lịch sử</h1>
-      <Table dataSource={orders} columns={column} pagination={false} />
+      {isMobile && <HistoryMobileView orders={orders} column={column} />}
+      {isDesktop && <HistoryDesktopView orders={orders} column={column} />}
     </>
   );
 }

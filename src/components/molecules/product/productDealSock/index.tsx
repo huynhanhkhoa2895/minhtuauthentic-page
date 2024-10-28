@@ -2,7 +2,7 @@ import { PromotionsDto } from '@/dtos/Promotions.dto';
 import CouponsDto from '@/dtos/Coupons.dto';
 import ProductCard from '@/components/organisms/product/card';
 import SectionSwiper from '@/components/organisms/sectionSwiper';
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { PROMOTION_TYPE } from '@/config/enum';
 import { SettingsDto } from '@/dtos/Settings.dto';
@@ -37,7 +37,7 @@ export default function ProductDealSock({ setting }: Props) {
           </p>
           <SectionSwiper
             slidesPerView={5}
-            slidesPerViewMobile={2}
+            slidePerViewMobile={2}
             spaceBetween={10}
             renderItem={(item: unknown) => {
               const iCoupon = item as CouponsDto;

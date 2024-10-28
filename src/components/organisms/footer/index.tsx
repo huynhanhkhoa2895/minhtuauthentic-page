@@ -51,7 +51,7 @@ const Footer = ({ footerContent }: { footerContent?: ResponseFooterDto }) => {
   };
 
   return (
-    <footer className={'relative z-[2] max-lg:pb-[50px]'}>
+    <footer className={'relative z-[2] max-lg:pb-[68px]'}>
       <div className={'bg-primaryGrey px-3'}>
         <div className={'container mx-auto '}>
           <div
@@ -63,7 +63,7 @@ const Footer = ({ footerContent }: { footerContent?: ResponseFooterDto }) => {
               return renderFooter(item, index);
             })}
           </div>
-          <div className={'grid grid-cols-1 lg:grid-cols-3 mt-3'}>
+          <div className={'grid grid-cols-1 lg:grid-cols-3 mt-3  '}>
             <Image
               src={Logo}
               height={54}
@@ -139,7 +139,7 @@ const Footer = ({ footerContent }: { footerContent?: ResponseFooterDto }) => {
       <div className={'bg-[#ededed]'}>
         <div
           className={
-            'container mx-auto flex py-[12px] w-full justify-between items-center'
+            'container mx-auto flex max-lg:flex-col py-[14px] w-full justify-between items-center max-lg:px-3 max-lg:text-center'
           }
         >
           <p className={'py-2'}>

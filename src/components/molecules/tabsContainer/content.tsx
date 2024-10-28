@@ -29,7 +29,7 @@ export default function TabContent({
     <div
       key={index}
       className={twMerge(
-        ' absolute inset-0 p-3 opacity-0 invisible transition-opacity duration-500 z-[-1]',
+        ' inset-0 p-3 opacity-0 invisible transition-opacity duration-500 z-[-1]',
         index === indexActive && 'opacity-100 visible z-[1]',
         className,
       )}

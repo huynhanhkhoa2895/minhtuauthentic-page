@@ -10,7 +10,7 @@ html, body {
   background-color: #F8F9FA;
   font-family: "Nunito Sans", sans-serif;
   font-optical-sizing: auto;
-  font-size: 13px;
+  @apply text-[15px] lg:text-[14px];
 }
 .ant-input-number-handler-wrap {
   opacity: 1 !important;

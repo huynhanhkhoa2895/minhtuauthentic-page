@@ -45,7 +45,7 @@ const ProductCard = ({
           <Badge className={'bg-price'}>Trả góp 0%</Badge>
         </div>
         <ProductCardImage product={product} />
-        <div className={'px-2 h-[84px] lg:h-[63px]'}>
+        <div className={'px-2 h-[110px] lg:h-[63px]'}>
           <h3 className={'font-bold'}>
             <Link className={'block'} href={`/${product?.slugs?.slug}`}>
               {product.title || product.name}
@@ -79,7 +79,9 @@ const ProductCard = ({
                   {promotionName(promotion)}:
                 </span>
                 <span
-                  className={'text-red-600 text-[13px] font-bold text-right cursor-pointer'}
+                  className={
+                    'text-red-600 text-[13px] font-bold text-right cursor-pointer'
+                  }
                 >
                   {formatMoney(
                     (variant?.regular_price || 0) -

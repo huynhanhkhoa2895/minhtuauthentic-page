@@ -34,7 +34,7 @@ const GroupCategory = ({
 
   return (
     <div
-      className={'mt-3 mx-auto p-3 rounded-[10px]'}
+      className={'mt-3 mx-auto p-1 lg:p-3 rounded-[10px]'}
       style={{ backgroundColor: staticComponent?.properties?.backgroundColor }}
     >
       <div className={'flex flex-col lg:flex-row justify-between mb-3 gap-2'}>

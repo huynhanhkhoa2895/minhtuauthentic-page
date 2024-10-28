@@ -17,13 +17,13 @@ export default function SlideMobileView({
         classNameContainer={'mt-3 max-lg:p-3'}
         isGrid={true}
         slidesPerView={10}
-        slidesPerViewMobile={4}
+        slidePerViewMobile={4}
         spaceBetween={10}
         heightItem={145}
         isUseHeightWrapper={true}
         isNotDisplayNavigation={true}
-        onLoad={()=>{
-          onLoad && onLoad()
+        onLoad={() => {
+          onLoad && onLoad();
         }}
         renderItem={(item: unknown) => {
           const content = item as StaticContentsDto;

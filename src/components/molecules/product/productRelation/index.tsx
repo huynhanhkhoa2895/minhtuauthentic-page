@@ -20,7 +20,8 @@ export default function ProductRelation({ products }: Props) {
               (product?.variants || [])?.find((item) => item.is_default) ||
               product?.variants?.[0];
             return (
-              <div
+              <Link
+                href={generateSlugToHref(product?.slugs?.slug)}
                 key={index}
                 className={twMerge(
                   'bg-white rounded-[10px] p-3 border-[#e4e4e4] border-2 transition-colors duration-500 hover:border-primary',
@@ -44,9 +45,7 @@ export default function ProductRelation({ products }: Props) {
                   </div>
                   <div>
                     <h3 className={'font-semibold'}>
-                      <Link href={generateSlugToHref(product?.slugs?.slug)}>
-                        {product.title || product.name}
-                      </Link>
+                      {product.title || product.name}
                     </h3>
                     <ProductPrice
                       variant={_variantActive}
@@ -55,7 +54,7 @@ export default function ProductRelation({ products }: Props) {
                     />
                   </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
