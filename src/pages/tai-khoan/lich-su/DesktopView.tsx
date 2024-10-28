@@ -11,6 +11,7 @@ export default function HistoryDesktopView({ orders, column }: Props) {
       {orders.map((item, index) => {
         return (
           <Table
+            key={index}
             dataSource={orders}
             columns={column as any}
             pagination={false}
