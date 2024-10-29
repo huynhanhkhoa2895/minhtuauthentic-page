@@ -25,12 +25,6 @@ export default function CartSummaryTemplate() {
   const orderCtx = useContext(OrderContext);
   const router = useRouter();
 
-  useEffect(() => {
-    if (!orderCtx?.cart?.items?.length) {
-      router.push('/');
-    }
-  }, [orderCtx?.cart]);
-
   return (
     <>
       <BreadcrumbComponent label={'Giỏ hàng'} link={'/gio-hang/tom-tat'} />
@@ -77,7 +71,7 @@ export default function CartSummaryTemplate() {
           >
             Tiến hành thanh toán
           </Link>
-          <div className="bk-btn"></div>
+          <div className="bk-btn cart-summary"></div>
         </div>
       </div>
       <CustomScript />

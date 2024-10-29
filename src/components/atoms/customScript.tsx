@@ -1,11 +1,15 @@
 import Script from 'next/script';
 import { createPortal } from 'react-dom';
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 export default function CustomScript() {
+  const router = useRouter();
+
   useEffect(() => {
-    console.log('CustomScript');
-  }, []);
+    const loadEvent = new Event('load');
+    window.dispatchEvent(loadEvent);
+  }, [router.pathname]);
   return (
     <>
       {createPortal(

@@ -40,7 +40,7 @@ export default function ProductCartCheckout({ variant }: Props) {
         />
         <button
           className={
-            'flex flex-col bg-primary items-center justify-center p-3 rounded-[10px] grow text-[12px]'
+            'flex flex-col bg-primary items-center justify-center p-[4px_10px] rounded-[10px] grow text-[12px]'
           }
           type={'button'}
           onClick={() => {
@@ -57,7 +57,7 @@ export default function ProductCartCheckout({ variant }: Props) {
         </button>
         <button
           className={
-            'flex flex-col border border-primary items-center justify-center p-3 rounded-[10px] w-[100px] text-[12px]'
+            'flex flex-col border border-primary items-center justify-center  p-[4px_10px] rounded-[10px] w-[100px] text-[12px]'
           }
           type={'button'}
           onClick={() => {
