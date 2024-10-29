@@ -49,12 +49,12 @@ export default function CartSummaryMobile() {
                   <InputNumber
                     min={1}
                     value={item.qty}
-                    className={'bk-product-qty'}
                     onChange={(value) => {
                       orderCtx?.updateCart &&
                         orderCtx.updateCart(index, Number(value) || 1);
                     }}
                   />
+                  <input type={'hidden'} className={'hidden bk-product-qty'} />
                   <span className={'text-primary font-bold'}>
                     {formatMoney(item.price || 0, 0, '.', '.')}
                   </span>

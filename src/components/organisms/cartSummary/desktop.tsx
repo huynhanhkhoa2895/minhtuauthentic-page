@@ -77,6 +77,10 @@ export default function CartSummaryDesktop() {
                           orderCtx.updateCart(index, Number(value) || 1);
                       }}
                     />
+                    <input
+                      type={'hidden'}
+                      className={'hidden bk-product-qty'}
+                    />
                   </td>
                   <td className={'border-y border-gray-200 text-center'}>
                     {formatMoney(item.price || 0, 0, '.', '.')}
