@@ -71,7 +71,6 @@ export default function CartSummaryDesktop() {
                     <InputNumber
                       min={1}
                       value={item.qty}
-                      className={'bk-product-qty'}
                       onChange={(value) => {
                         orderCtx?.updateCart &&
                           orderCtx.updateCart(index, Number(value) || 1);

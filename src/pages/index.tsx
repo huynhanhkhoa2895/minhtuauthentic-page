@@ -71,13 +71,13 @@ export default function Home({
     <>
       <Header settings={settings} menu={menu} />
       <Layout seo={homePage?.seo} settings={settings} menu={menu}>
+        <h1 className={'hidden'}>{homePage?.seo?.title}</h1>
         <div
           id={'main-home-page'}
           className={'lg:mt-[10px] flex w-full gap-2 relative'}
         >
-          <h1 className={'hidden'}>{homePage?.seo?.title}</h1>
           {menu && <MenuWrapper menu={menu} />}
-          <div className={'h-[140px] lg:h-[380px] w-full'}>
+          <div className={'min-h-[140px] lg:h-[380px] w-full'}>
             <HomeBanner banners={homePage?.banners || []} />
           </div>
         </div>

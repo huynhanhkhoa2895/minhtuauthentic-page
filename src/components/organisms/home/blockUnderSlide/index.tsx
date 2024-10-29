@@ -10,8 +10,8 @@ type Props = {
 };
 export default function BlockUnderSlide({ contents }: Props) {
   return (
-    <div className={'h-[295px] lg:h-auto'}>
-      <div className={'grid grid-cols-10 gap-1 mt-3 max-lg:hidden'}>
+    <div className={'min-h-[295px] lg:h-auto mt-3'}>
+      <div className={'grid grid-cols-10 gap-1  max-lg:hidden'}>
         {contents.map((content, index) => {
           return (
             <div key={index} className={'flex flex-col gap-1'}>
@@ -27,7 +27,6 @@ export default function BlockUnderSlide({ contents }: Props) {
         classNameContainer={'mt-3 lg:hidden'}
         isGrid={true}
         slidePerViewMobile={4}
-        heightItem={145}
         isUseHeightWrapper={true}
         isNotDisplayNavigation={true}
         renderItem={(item: unknown) => {
