@@ -10,7 +10,7 @@ type Props = {
 };
 export default function BlockUnderSlide({ contents }: Props) {
   return (
-    <Suspense>
+    <div className={'h-[295px] lg:h-auto'}>
       <div className={'grid grid-cols-10 gap-1 mt-3 max-lg:hidden'}>
         {contents.map((content, index) => {
           return (
@@ -38,6 +38,6 @@ export default function BlockUnderSlide({ contents }: Props) {
         }}
         data={contents}
       />
-    </Suspense>
+    </div>
   );
 }

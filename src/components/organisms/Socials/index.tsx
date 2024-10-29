@@ -57,7 +57,7 @@ export default function Socials() {
                   key={index2 + '-social'}
                 >
                   <Link
-                    href={social?.properties?.url || '/'}
+                    href={social?.properties?.url?.trim() || '/'}
                     className={twMerge(
                       'py-2 bg-primary text-white relative transition-all duration-300 invisible hidden opacity-0 group-hover:visible group-hover:opacity-100 group-hover:block ',
                       index === 0

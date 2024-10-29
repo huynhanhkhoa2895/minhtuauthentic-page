@@ -6,7 +6,7 @@ import MenuPopup from '@/components/molecules/header/menu/menuPopup';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { generateSlugToHref } from '@/utils';
-import { MenuDisplay,  POPUP_TYPE, PopupDisplay } from '@/config/type';
+import { MenuDisplay, POPUP_TYPE, PopupDisplay } from '@/config/type';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import useMenu from '@/hooks/useMenu';
 
@@ -50,14 +50,17 @@ const Menu = ({
         const _item = item.data as StaticComponentDto;
         const image = _item?.category?.images?.[0]?.image;
         return (
-          <Link key={_item?.category?.id} href={generateSlugToHref(_item?.category?.slugs?.slug)}>
+          <Link
+            key={_item?.category?.id}
+            href={generateSlugToHref(_item?.category?.slugs?.slug)}
+          >
             <div className={'flex items-center justify-between w-full'}>
               <div className={'flex gap-2 items-center'}>
                 {image && (
                   <Image
                     src={image.url || ''}
                     alt={_item?.category?.name || image.alt || ''}
-                    className={'w-[20px] h-[20px]'}
+                    className={'w-[15px] h-[15px]'}
                     width={image.width || 25}
                     height={image.height || 25}
                   />
@@ -67,7 +70,7 @@ const Menu = ({
                 </span>
               </div>
               <div>
-                <IconCheveronRight className={'w-[20px] h-[20px]'} />
+                <IconCheveronRight className={'w-[15px] h-[15px]'} />
               </div>
             </div>
           </Link>
@@ -93,7 +96,7 @@ const Menu = ({
             <Link className={'capitalize font-bold'} href={'/thuong-hieu'}>
               Thương hiệu
             </Link>
-            <IconCheveronRight className={'w-[20px] h-[20px]'} />
+            <IconCheveronRight className={'w-[15px] h-[15px]'} />
           </div>
         );
       },
@@ -143,7 +146,7 @@ const Menu = ({
               return (
                 <li
                   key={index}
-                  className={'flex-1 py-1 hover:bg-[#f3f4f6] px-[10px]'}
+                  className={'flex-1 hover:bg-[#f3f4f6] p-[3px_0_10px_10px]'}
                   onMouseEnter={() => handleMouseEnter(item)}
                   onMouseLeave={() => {
                     refTimeout.current = setTimeout(() => {

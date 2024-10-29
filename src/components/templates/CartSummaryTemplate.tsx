@@ -18,6 +18,9 @@ const CartSummaryMobile = dynamic(
     ssr: false,
   },
 );
+const CustomScript = dynamic(() => import('@/components/atoms/customScript'), {
+  ssr: false,
+});
 export default function CartSummaryTemplate() {
   const orderCtx = useContext(OrderContext);
   const router = useRouter();
@@ -74,8 +77,10 @@ export default function CartSummaryTemplate() {
           >
             Tiến hành thanh toán
           </Link>
+          <div className="bk-btn"></div>
         </div>
       </div>
+      <CustomScript />
     </>
   );
 }

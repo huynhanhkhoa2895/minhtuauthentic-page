@@ -100,11 +100,6 @@ export default function Document() {
         <Main />
         <NextScript />
         <div id="bk-modal"></div>
-        <Script
-          strategy={'beforeInteractive'}
-          data-partytown-config
-          src="https://pc.baokim.vn/js/bk_plus_v2.popup.js"
-        />
       </body>
     </Html>
   );

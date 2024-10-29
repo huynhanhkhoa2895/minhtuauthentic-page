@@ -21,20 +21,20 @@ export default function CartSummaryMobile() {
                 className={'p-3 border rounded-[10px] flex flex-col relative'}
               >
                 <ImageWithFallback
-                  className={'w-[100px] h-[100px] mx-auto'}
+                  className={'w-[100px] h-[100px] mx-auto bk-product-image'}
                   image={item?.image}
                   alt={item.variant_name}
                 />
                 <div>
                   <Link
                     href={generateSlugToHref(item.slug)}
-                    className={'text-primary font-semibold '}
+                    className={'text-primary font-semibold bk-product-name'}
                   >
                     {item.variant_name}
                   </Link>
                   {item?.variant_configurations?.map((config, index2) => {
                     return (
-                      <p key={index2} className={'text-sm'}>
+                      <p key={index2} className={'text-sm bk-product-property'}>
                         ({config.name}: {config.value})
                       </p>
                     );
@@ -49,6 +49,7 @@ export default function CartSummaryMobile() {
                   <InputNumber
                     min={1}
                     value={item.qty}
+                    className={'bk-product-qty'}
                     onChange={(value) => {
                       orderCtx?.updateCart &&
                         orderCtx.updateCart(index, Number(value) || 1);

@@ -59,7 +59,6 @@ export async function getStaticProps() {
   };
 }
 
-
 export default function Home({
   homePage,
   settingsHome,
@@ -78,7 +77,9 @@ export default function Home({
         >
           <h1 className={'hidden'}>{homePage?.seo?.title}</h1>
           {menu && <MenuWrapper menu={menu} />}
-          <HomeBanner banners={homePage?.banners || []} />
+          <div className={'h-[140px] lg:h-[380px] w-full'}>
+            <HomeBanner banners={homePage?.banners || []} />
+          </div>
         </div>
         <BlockUnderSlide contents={homePage?.homeBlockUnderSlide || []} />
 
