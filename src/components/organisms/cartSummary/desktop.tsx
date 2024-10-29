@@ -80,6 +80,7 @@ export default function CartSummaryDesktop() {
                     <input
                       type={'hidden'}
                       className={'hidden bk-product-qty'}
+                      value={item.qty || 1}
                     />
                   </td>
                   <td className={'border-y border-gray-200 text-center'}>

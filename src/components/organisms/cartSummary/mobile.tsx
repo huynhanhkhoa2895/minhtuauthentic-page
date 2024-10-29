@@ -54,7 +54,11 @@ export default function CartSummaryMobile() {
                         orderCtx.updateCart(index, Number(value) || 1);
                     }}
                   />
-                  <input type={'hidden'} className={'hidden bk-product-qty'} />
+                  <input
+                    type={'hidden'}
+                    className={'hidden bk-product-qty'}
+                    value={item.qty || 1}
+                  />
                   <span className={'text-primary font-bold'}>
                     {formatMoney(item.price || 0, 0, '.', '.')}
                   </span>
