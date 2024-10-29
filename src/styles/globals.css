@@ -102,6 +102,11 @@ iframe {
 .cart-summary .bk-btn-box{
     @apply flex-col gap-3;
 }
+
+.cart-summary .bk-btn-box button{
+    @apply w-full m-0 rounded-[10px] !important;
+}
+
 .bk-insta-content {
   >span {
     @apply flex items-center justify-center;

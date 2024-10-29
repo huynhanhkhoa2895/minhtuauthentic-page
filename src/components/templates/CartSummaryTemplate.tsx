@@ -71,7 +71,7 @@ export default function CartSummaryTemplate() {
           >
             Tiến hành thanh toán
           </Link>
-          <div className="bk-btn cart-summary"></div>
+          <div className="bk-btn cart-summary mt-3"></div>
         </div>
       </div>
       <CustomScript />
