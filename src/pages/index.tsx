@@ -70,7 +70,12 @@ export default function Home({
   return (
     <>
       <Header settings={settings} menu={menu} />
-      <Layout seo={homePage?.seo} settings={settings} menu={menu}>
+      <Layout
+        seo={homePage?.seo}
+        settings={settings}
+        menu={menu}
+        className={'overflow-hidden'}
+      >
         <h1 className={'hidden'}>{homePage?.seo?.title}</h1>
         <div
           id={'main-home-page'}
