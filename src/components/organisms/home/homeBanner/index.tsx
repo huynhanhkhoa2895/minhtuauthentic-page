@@ -28,6 +28,7 @@ export default function HomeBanner({ banners }: Props) {
           <Image
             className={'object-cover w-full h-full inset-0'}
             src=""
+            alt={'loading'}
             fill
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPs7u2tBwAFdgImpqLKKAAAAABJRU5ErkJggg=="
           />
