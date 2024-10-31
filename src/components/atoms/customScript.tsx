@@ -8,7 +8,7 @@ export default function CustomScript() {
 
   useEffect(() => {
     const loadEvent = new Event('load');
-    document.dispatchEvent(loadEvent);
+    window.dispatchEvent(loadEvent);
   }, [router.pathname]);
   return (
     <>
@@ -19,7 +19,7 @@ export default function CustomScript() {
             src="https://pc.baokim.vn/js/bk_plus_v2.popup.js"
             onLoad={() => {
               const loadEvent = new Event('load');
-              document.dispatchEvent(loadEvent);
+              window.dispatchEvent(loadEvent);
             }}
           />
         ) as any,

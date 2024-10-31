@@ -52,7 +52,6 @@ export const Banners = ({
               height={imageDetail?.image?.height || 0}
               className={classNameImage || 'object-contain w-full'}
               unoptimized={!isMobile}
-              priority={true}
               blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPs7u2tBwAFdgImpqLKKAAAAABJRU5ErkJggg=="
             />
           </SwiperSlide>

@@ -1,11 +1,14 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import withBundleAnalyzer from '@next/bundle-analyzer';
+const nextConfig = withBundleAnalyzer({
+    enabled: process.env.ANALYZE === 'true',
+})({
   reactStrictMode: true,
   logging: {
     fetches: {
       fullUrl: true,
     },
   },
+  compress: true,
   images: {
     domains: [
       's3.ap-southeast-1.amazonaws.com',
@@ -24,6 +27,6 @@ const nextConfig = {
     "rc-picker",
     "rc-tree",
     "rc-table",],
-};
+});
 
 export default nextConfig;
