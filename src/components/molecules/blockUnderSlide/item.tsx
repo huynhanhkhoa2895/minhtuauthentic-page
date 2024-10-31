@@ -1,9 +1,8 @@
-import noImage from '@/static/images/no-image.png';
 import Link from 'next/link';
-import Image from 'next/image';
 import { StaticContentsDto } from '@/dtos/StaticContents.dto';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 import { twMerge } from 'tailwind-merge';
+import { isMobile } from 'react-device-detect';
 
 const BlockUnderSlideItem = ({
   content,
@@ -36,6 +35,7 @@ const BlockUnderSlideItem = ({
             )}
             isFill={isUseImageFill}
             alt={imageDetail?.alt || content?.title || ''}
+            unoptimized={!isMobile}
           />
         </Link>
       </div>

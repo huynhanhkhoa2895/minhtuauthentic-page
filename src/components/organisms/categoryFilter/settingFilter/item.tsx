@@ -66,8 +66,8 @@ export default function SettingFilterItem({
                   }
                   className={twMerge(
                     check[item.id]
-                      ? 'bg-primary text-white'
-                      : 'bg-white text-black',
+                      ? '!bg-primary !text-white'
+                      : '!bg-white !text-black',
                   )}
                 >
                   {item.name}
@@ -104,7 +104,7 @@ export default function SettingFilterItem({
       </p>
       <div
         className={
-          'lg:max-h-[220px] overflow-auto flex max-lg:flex-wrap lg:flex-col max-lg:gap-1'
+          'lg:max-h-[220px] overflow-auto flex max-lg:flex-wrap lg:flex-col max-lg:gap-1 filter-button'
         }
       >
         {renderValue()}

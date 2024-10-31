@@ -40,10 +40,14 @@ export const Banners = ({
           return null;
         }
         return (
-          <SwiperSlide key={index}>
+          <SwiperSlide key={index + '-' + isMobile && 'isMobile'}>
             <Image
-              src={imageDetail?.image?.url || ''}
-              alt={imageDetail?.image?.alt || ''}
+              src={
+                isMobile
+                  ? imageDetail?.image?.thumbnail_url || ''
+                  : imageDetail?.image?.url || ''
+              }
+              alt={imageDetail?.image?.alt || 'minhtuauthentic'}
               width={imageDetail?.image?.width || 0}
               height={imageDetail?.image?.height || 0}
               className={classNameImage || 'object-contain w-full'}

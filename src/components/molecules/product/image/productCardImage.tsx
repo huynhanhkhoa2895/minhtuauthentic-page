@@ -5,6 +5,7 @@ import noImage from '@/static/images/no-image.png';
 import { ImageDto } from '@/dtos/Image.dto';
 import Link from 'next/link';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import { isMobile } from 'react-device-detect';
 const ProductCardImage = ({
   product,
   className,
@@ -29,6 +30,7 @@ const ProductCardImage = ({
               'object-contain w-full h-full hover:scale-105 transition-transform duration-300'
             }
             product={product}
+            unoptimized={!isMobile}
           />
         </div>
       </Link>

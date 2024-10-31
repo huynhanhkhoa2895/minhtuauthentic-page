@@ -4,6 +4,8 @@ import { ImageDetailDto } from '@/dtos/ImageDetail.dto';
 export class ImageDto extends BaseDto {
   url?: string;
 
+  thumbnail_url?: string;
+
   name?: string;
 
   storage?: string;

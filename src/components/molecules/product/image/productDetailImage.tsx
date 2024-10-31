@@ -7,6 +7,7 @@ import { twMerge } from 'tailwind-merge';
 import { useProductImageDetail } from '@/hooks/useProductImageDetail';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 import { useMemo } from 'react';
+import { isMobile } from 'react-device-detect';
 type Props = {
   product: ProductDto;
   containerClassName?: string;
@@ -36,7 +37,7 @@ const ProductDetailImage = ({
         classNameContainer={'mt-3'}
         slidePerViewMobile={4}
         classNameItems={
-          'p-1 hover:shadow-md transition-shadow duration-300 hover:border-primary border border-transparent'
+          'p-1 lg:hover:shadow-md transition-shadow duration-300 lg:hover:border-primary border border-transparent'
         }
         renderItem={(item) => {
           const imageItem = item as ImageDto;
@@ -49,9 +50,9 @@ const ProductDetailImage = ({
               onClick={() => handleClickImage(imageItem)}
               product={product}
               onMouseEnter={() => {
-                setImageActive(imageItem);
+                !isMobile && setImageActive(imageItem);
               }}
-              isUseNativeImage={true}
+              unoptimized={!isMobile}
             />
           ) as any;
         }}
@@ -60,7 +61,7 @@ const ProductDetailImage = ({
         data={images}
       />
     );
-  }, [images]);
+  }, [images, imageActive]);
 
   return (
     <div className={twMerge(containerClassName)}>
@@ -71,7 +72,7 @@ const ProductDetailImage = ({
           setIsOpen && setIsOpen({ display: true, image });
         }}
         product={product}
-        unoptimized={true}
+        unoptimized={!isMobile}
         quality={100}
       />
       {renderSlideImage}
