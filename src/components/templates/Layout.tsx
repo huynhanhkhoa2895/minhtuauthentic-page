@@ -7,6 +7,8 @@ import DefaultSeo from '@/components/molecules/seo';
 import { SEOProps } from '@/config/type';
 import dynamic from 'next/dynamic';
 import { isDesktop, isMobile } from 'react-device-detect';
+import Loading from '@/components/atoms/loading';
+import React from 'types-react';
 type Props = {
   className?: string;
   children: ReactNode;
@@ -40,6 +42,10 @@ const LayoutMenu = dynamic(
   },
 );
 
+const PageLoading = dynamic(() => import('@/components/atoms/PageLoading'), {
+  ssr: false,
+});
+
 export default function Layout({
   children,
   className,
@@ -59,6 +65,7 @@ export default function Layout({
       {isMobile && menu && <NavMenu menu={menu} />}
       <Socials />
       <MenuFooter />
+      <PageLoading />
     </>
   );
 }
