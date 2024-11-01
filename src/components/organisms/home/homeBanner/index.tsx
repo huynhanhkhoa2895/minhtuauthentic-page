@@ -17,7 +17,6 @@ export default function HomeBanner({ banners }: Props) {
     <>
       {ready ? (
         <Banners
-          key={'home-banner-' + (isMobile ? 'mobile' : 'desktop')}
           className={'flex-1 rounded-3xl lg:h-[380px]'}
           banners={banners || []}
           classNameImage={'object-contain lg:object-cover w-full  '}

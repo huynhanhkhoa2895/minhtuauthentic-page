@@ -11,7 +11,7 @@ import { SlugDto } from '@/dtos/Slug.dto';
 import { ProductConfigurationsDto } from '@/dtos/productConfigurations.dto';
 import { ProductConfigurationValuesDto } from '@/dtos/productConfigurationValues.dto';
 type Props = {
-  setting: ProductFilterOptionDto;
+  setting?: ProductFilterOptionDto;
   menu: MenuDisplay;
   brands: BrandDto[];
 };
