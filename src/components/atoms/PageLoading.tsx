@@ -7,11 +7,11 @@ export default function PageLoading() {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const handleRouteChange = (url) => {
+    const handleRouteChange = () => {
       setLoading(true);
     };
 
-    const handleRouteComplete = (url) => {
+    const handleRouteComplete = () => {
       setLoading(false);
     };
 
