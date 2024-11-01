@@ -8,6 +8,7 @@ const SectionSwiperItem = dynamic(
 );
 import { isDesktop, isMobile } from 'react-device-detect';
 import { SwiperProps } from '@/components/organisms/sectionSwiper/item';
+import { useState } from 'react';
 
 type Props = {
   slidePerViewMobile?: number;

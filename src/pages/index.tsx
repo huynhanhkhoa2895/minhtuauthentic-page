@@ -79,10 +79,16 @@ export default function Home({
         <h1 className={'hidden'}>{homePage?.seo?.title}</h1>
         <div
           id={'main-home-page'}
-          className={'lg:mt-[10px] flex w-full gap-2 relative'}
+          className={'lg:mt-[10px] lg:flex w-full gap-2 relative'}
         >
-          {menu && <MenuWrapper menu={menu} />}
-          <div className={'min-h-[140px] lg:h-[380px] w-full'}>
+          <div className={'lg:w-[220px] lg:basis-[220px] shrink-0'}>
+            {menu && <MenuWrapper menu={menu} className={'w-full'} />}
+          </div>
+          <div
+            className={
+              'min-h-[140px] lg:h-[380px] w-full basis-[calc(100%-230px)] lg:w-[calc(100%-230px)] max-w-full'
+            }
+          >
             <HomeBanner banners={homePage?.banners || []} />
           </div>
         </div>
