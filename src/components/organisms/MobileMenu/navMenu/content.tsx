@@ -142,7 +142,7 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
     label: string;
     name: string;
     data: DataValue[];
-  }[] = Object.keys(setting).map((key) => {
+  }[] = Object.keys(setting || {}).map((key) => {
     return {
       name: key,
       label: generateLabel(key),
