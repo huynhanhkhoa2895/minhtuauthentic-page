@@ -7,8 +7,6 @@ import DefaultSeo from '@/components/molecules/seo';
 import { SEOProps } from '@/config/type';
 import dynamic from 'next/dynamic';
 import { isDesktop, isMobile } from 'react-device-detect';
-import Loading from '@/components/atoms/loading';
-import React from 'types-react';
 type Props = {
   className?: string;
   children: ReactNode;
