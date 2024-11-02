@@ -1,11 +1,11 @@
 import Loading from '@/components/atoms/loading';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 
 export default function PageLoading() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
-
+  const refTimeout = useRef<NodeJS.Timeout | null>(null);
   useEffect(() => {
     const handleRouteChange = () => {
       setLoading(true);
@@ -25,6 +25,19 @@ export default function PageLoading() {
       router.events.on('routeChangeComplete', handleRouteComplete);
     };
   }, []);
+
+  useEffect(()=>{
+    if (loading) {
+      refTimeout.current = setTimeout(() => {
+        setLoading(false);
+      }, 1500);
+    }
+    return () => {
+      if (refTimeout.current) {
+        clearTimeout(refTimeout.current as NodeJS.Timeout);
+      }
+    }
+  },[loading])
 
   return (
     <>
