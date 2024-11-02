@@ -105,7 +105,6 @@ export const InputSearch = ({ classname, isMobile }: Props) => {
                         <ImageWithFallback
                           image={item?.feature_image_detail?.image}
                           className={'w-[50px] h-[50px]'}
-                          loading={'lazy'}
                           unoptimized={true}
                         />
                       }

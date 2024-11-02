@@ -68,7 +68,7 @@ const ImageWithFallback = ({
             }}
             priority={priority}
             loading={loading}
-            quality={quality || 100}
+            quality={quality || 70}
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPs7u2tBwAFdgImpqLKKAAAAABJRU5ErkJggg=="
           />
         ) : (
@@ -87,7 +87,7 @@ const ImageWithFallback = ({
             unoptimized={unoptimized == null ? true : unoptimized}
             priority={priority}
             className={className}
-            quality={quality || 100}
+            quality={quality || 70}
             onError={() => {
               setImageActiveSrc(noImage);
             }}
