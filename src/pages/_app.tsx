@@ -15,7 +15,6 @@ export default function App({ Component, pageProps }: AppProps) {
           content="width=device-width, initial-scale=1, maximum-scale=1"
         />
       </Head>
-      gi
       <AppProvider>
         <OrderProvider>
           <Component {...pageProps} />
