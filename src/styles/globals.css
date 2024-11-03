@@ -108,5 +108,5 @@ iframe {
 }
 
 .bk-insta-content > span {
-    @apply flex items-center justify-center;
+    @apply flex items-center justify-center !important;
 }
