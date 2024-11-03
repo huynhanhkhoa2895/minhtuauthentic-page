@@ -1,4 +1,5 @@
 import '@/styles/globals.css';
+import '@/styles/bk.css';
 import type { AppProps } from 'next/app';
 import { AppProvider } from '@/contexts/appContext';
 import { ToastContainer, toast } from 'react-toastify';

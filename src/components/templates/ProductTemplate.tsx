@@ -1,6 +1,5 @@
 import { ResponseProductDetailPageDto } from '@/dtos/responseProductDetailPage.dto';
 import ProductDetailCard from '@/components/organisms/product/detailCard';
-import '@/styles/bk.css';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import { generateSlugToHref } from '@/utils';
 import { ResponseSlugPageDto } from '@/dtos/responseSlugPage.dto';

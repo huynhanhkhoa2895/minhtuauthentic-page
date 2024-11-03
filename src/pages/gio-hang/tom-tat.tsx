@@ -5,7 +5,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import CartSummaryTemplate from '@/components/templates/CartSummaryTemplate';
 import Layout from '@/components/templates/Layout';
 import { ServerSideProps } from '@/config/type';
-import '../../styles/bk.css';
+
 export const getServerSideProps = (async () => {
   const resDefault = await getDefaultSeverSide();
   return {
