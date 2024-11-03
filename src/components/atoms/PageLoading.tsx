@@ -14,17 +14,19 @@ export default function PageLoading() {
     // const handleRouteComplete = () => {
     //   setLoading(false);
     // };
-
+    //
     // router.events.on('routeChangeStart', handleRouteChange);
     // router.events.on('routeChangeComplete', handleRouteComplete);
 
+    // If the component is unmounted, unsubscribe
+    // from the event with the `off` method:
     return () => {
       // router.events.off('routeChangeStart', handleRouteChange);
-      // router.events.off('routeChangeComplete', handleRouteComplete);
+      // router.events.on('routeChangeComplete', handleRouteComplete);
     };
   }, []);
 
-  useEffect(() => {
+  useEffect(()=>{
     if (loading) {
       refTimeout.current = setTimeout(() => {
         setLoading(false);
@@ -34,8 +36,8 @@ export default function PageLoading() {
       if (refTimeout.current) {
         clearTimeout(refTimeout.current as NodeJS.Timeout);
       }
-    };
-  }, [loading]);
+    }
+  },[loading])
 
   return (
     <>

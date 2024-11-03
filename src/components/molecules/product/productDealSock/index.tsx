@@ -30,7 +30,7 @@ export default function ProductDealSock({ setting }: Props) {
       {promotion && (
         <div
           style={{ backgroundColor: setting?.value?.backgroundColor }}
-          className={'w-full shadow-custom bg-white my-3 p-3'}
+          className={'w-full shadow-custom bg-white my-1 lg:my-3 p-1 lg:p-3'}
         >
           <p className={'text-2xl font-bold text-primary mb-3'}>
             MUA KÈM GIÁ SỐC
