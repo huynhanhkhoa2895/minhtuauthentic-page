@@ -4,6 +4,7 @@ import { IBrandCategoryDto } from '@/dtos/IBrandCategory.dto';
 import { SlugDto } from '@/dtos/Slug.dto';
 import { ImageDetailDto } from '@/dtos/ImageDetail.dto';
 import { SeoDto } from '@/dtos/Seo.dto';
+import { StaticComponentDto } from '@/dtos/StaticComponent.dto';
 
 export class BrandDto extends BaseDto {
   name?: string;
@@ -12,6 +13,7 @@ export class BrandDto extends BaseDto {
   slugs?: SlugDto;
   images?: ImageDetailDto[];
   seo?: SeoDto;
+  static_components?: StaticComponentDto[];
 
   constructor(init?: Partial<BrandDto>) {
     super();

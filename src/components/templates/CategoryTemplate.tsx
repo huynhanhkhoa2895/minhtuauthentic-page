@@ -37,6 +37,10 @@ export default function CategoryTemplate({
     [Entity.BRANDS]: data.title || 'Thương hiệu',
     [Entity.KEYWORDS]: slug?.keyword?.value || 'Từ khóa',
   };
+  const description =
+    data?.category?.static_components?.[0]?.description ||
+    data?.brand?.static_components?.[0]?.description ||
+    '';
   return (
     <CategoryFilterProvider isSearch={isSearch}>
       <BreadcrumbComponent
@@ -73,13 +77,13 @@ export default function CategoryTemplate({
           }
         />
       </div>
-      {data?.category?.static_components?.[0]?.description && (
+      {description && (
         <div
           className={
             'w-full shadow-custom p-3 rounded-[10px] mt-3 bg-white container-html'
           }
           dangerouslySetInnerHTML={{
-            __html: data?.category?.static_components?.[0]?.description || '',
+            __html: description || '',
           }}
         />
       )}

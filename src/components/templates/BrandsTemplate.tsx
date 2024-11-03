@@ -81,17 +81,21 @@ export default function BrandsTemplate({ brands }: Props) {
           .map((item, index) => {
             return (
               <div
-                className={'flex py-[20px] border-b border-gray-200 '}
+                className={
+                  'flex py-[10px] lg:py-[20px] border-b border-gray-200 '
+                }
                 key={index}
               >
                 <h4
                   className={
-                    'flex items-center justify-center font-bold text-primary w-[50px] px-[3rem]'
+                    'flex items-center justify-center font-bold text-primary w-[25px] lg:w-[50px] px-[2rem] lg:px-[3rem]'
                   }
                 >
-                  <span className={'text-[2.5rem]'}>{item.keyword}</span>
+                  <span className={'text-[1.3rem] lg:text-[2.5rem]'}>
+                    {item.keyword}
+                  </span>
                 </h4>
-                <div className={'grid grid-cols-5 gap-3'}>
+                <div className={'grid grid-cols-4 LG:grid-cols-5 gap-3'}>
                   {item.data.map((brand, index) => {
                     return <BrandWithImage brand={brand} key={index} />;
                   })}

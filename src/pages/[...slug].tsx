@@ -19,14 +19,12 @@ import { ResponseNewsPageDto } from '@/dtos/ResponseNewsPage.dto';
 import useSettings from '@/hooks/useSettings';
 
 export const getServerSideProps = async (context: any) => {
-
   const { slug } = context.query;
   let title = undefined,
     description = undefined,
     image = null,
     width = 0,
     height = 0;
-
 
   const res = await fetch(
     process.env.BE_URL +
@@ -95,7 +93,7 @@ export const getServerSideProps = async (context: any) => {
         let brand = (
           data?.data as ResponseSlugPageDto<ResponseCategoryFilterPageDto>
         ).data?.brand;
-        title = brand?.seo?.title || category?.name;
+        title = brand?.seo?.title || brand?.name;
         description = brand?.seo?.description;
         keyword = brand?.seo?.keyword;
         break;
@@ -138,7 +136,6 @@ export default function Page({
   const renderTemplate = () => {
     switch (slug?.model) {
       case Entity.PRODUCTS:
-
         return (
           <ProductTemplate data={slug?.data as ResponseProductDetailPageDto} />
         );
