@@ -50,6 +50,7 @@ export const getServerSideProps = async (context: any) => {
   if (
     data?.data?.model === Entity.PRODUCTS ||
     data?.data?.model === Entity.CATEGORIES ||
+    data?.data?.model === Entity.BRANDS ||
     data?.data?.model === Entity.CATEGORY_NEWS ||
     data?.data?.model === Entity.NEWS
   ) {
