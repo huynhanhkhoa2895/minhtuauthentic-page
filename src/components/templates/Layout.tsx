@@ -63,7 +63,7 @@ export default function Layout({
       {isMobile && menu && <NavMenu menu={menu} />}
       <Socials />
       <MenuFooter />
-      <PageLoading />
+      {/*<PageLoading />*/}
     </>
   );
 }

@@ -107,8 +107,6 @@ iframe {
     @apply w-full m-0 rounded-[10px] !important;
 }
 
-.bk-insta-content {
-  >span {
+.bk-insta-content > span {
     @apply flex items-center justify-center;
-  }
 }
