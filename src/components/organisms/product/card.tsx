@@ -70,12 +70,12 @@ const ProductCard = ({
           {variant && <ProductPrice className={'px-2'} variant={variant} />}
         </div>
       </div>
-      <div className={'h-[50px] px-[8px]'}>
+      <div className={'h-[50px] px-2 lg:px-[8px]'}>
         {promotions?.map((promotion, index) => {
           return (
             <Fragment key={'Product-card-' + index}>
               <p>
-                <span className={'font-semibold mr-3'}>
+                <span className={'font-semibold mr-1 lg:mr-3'}>
                   {promotionName(promotion)}:
                 </span>
                 <span
@@ -90,7 +90,7 @@ const ProductCard = ({
                 </span>
               </p>
               <p className={'text-sm'}>
-                <span className={'mr-3'}>Tiết kiệm thêm:</span>
+                <span className={'mr-1 lg:mr-3'}>Tiết kiệm thêm:</span>
                 <span className={'text-[13px] font-bold'}>
                   {formatMoney(
                     calculatePriceMinus(variant?.regular_price || 0, coupon),

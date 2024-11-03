@@ -45,7 +45,7 @@ export default function ProductCartCheckout({ variant }: Props) {
           type={'button'}
           onClick={() => {
             handleAddToCart();
-            router.push('/gio-hang/thanh-toan');
+            router.push('/gio-hang/tom-tat');
           }}
         >
           <span className={'text-white text-xl font-bold uppercase'}>

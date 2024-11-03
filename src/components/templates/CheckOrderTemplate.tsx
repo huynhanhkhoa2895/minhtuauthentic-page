@@ -36,7 +36,7 @@ export default function CheckOrderTemplate() {
   return (
     <>
       <BreadcrumbComponent
-        label={'Kiểm tra đơn hàng'}
+        label={'Tra cứu đơn hàng'}
         link={'/kiem-tra-don-hang'}
       />
       <div
@@ -45,7 +45,7 @@ export default function CheckOrderTemplate() {
         )}
       >
         <h1 className={'text-center text-3xl text-primary font-bold'}>
-          Theo dõi đơn hàng
+          Tra cứu đơn hàng
         </h1>
         <p className={'mt-3 text-center'}>
           Để theo dõi đơn hàng của bạn, vui lòng nhập ID đơn hàng của bạn vào ô

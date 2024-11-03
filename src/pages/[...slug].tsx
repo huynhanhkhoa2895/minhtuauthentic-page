@@ -1,6 +1,5 @@
 import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import ProductTemplate from '@/components/templates/ProductTemplate';
 import { ResponseSlugPageDto } from '@/dtos/responseSlugPage.dto';
 import { Entity } from '@/config/enum';
@@ -90,6 +89,14 @@ export const getServerSideProps = async (context: any) => {
         title = category?.seo?.title || category?.name;
         description = category?.seo?.description;
         keyword = category?.seo?.keyword;
+        break;
+      case Entity.BRANDS:
+        let brand = (
+          data?.data as ResponseSlugPageDto<ResponseCategoryFilterPageDto>
+        ).data?.brand;
+        title = brand?.seo?.title || category?.name;
+        description = brand?.seo?.description;
+        keyword = brand?.seo?.keyword;
         break;
     }
     context.res.setHeader(

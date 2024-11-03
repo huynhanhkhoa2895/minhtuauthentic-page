@@ -35,7 +35,7 @@ export default function ProductConfiguration({
         return (
           <div key={index}>
             <p>{item.name}: </p>
-            <div className={'flex gap-3 flex-wrap items-center'}>
+            <div className={'flex gap-1 lg:gap-3 flex-wrap items-center'}>
               {item?.product_configuration_values?.map((value, index2) => {
                 const isActived = (valueIdActive || []).find(
                   (item) => item.valueId === value.id,
@@ -43,7 +43,7 @@ export default function ProductConfiguration({
                 return (
                   <div
                     key={index + '_' + index2}
-                    className={'flex gap-3 flex-wrap py-1'}
+                    className={'flex gap-3 flex-wrap'}
                   >
                     <button
                       type={'button'}
@@ -58,7 +58,7 @@ export default function ProductConfiguration({
                         });
                       }}
                       className={twMerge(
-                        'rounded-[10px] p-3 border border-gray-300 text-gray-500 relative overflow-hidden font-extrabold',
+                        'rounded-[10px] p-2 lg:p-3 border border-gray-300 text-gray-500 relative overflow-hidden font-extrabold',
                         isActived ? 'border-primary' : '',
                       )}
                     >

@@ -49,7 +49,7 @@ export default function ProductRelation({ products }: Props) {
                     </h3>
                     <ProductPrice
                       variant={_variantActive}
-                      classNameRegularPrice={'text-[14px] font-semibold'}
+                      classNameRegularPrice={'font-semibold'}
                       classNamePrice={'font-[500] text-[10px]'}
                     />
                   </div>

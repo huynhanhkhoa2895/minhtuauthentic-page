@@ -7,22 +7,22 @@ export default function PageLoading() {
   const [loading, setLoading] = useState<boolean>(false);
   const refTimeout = useRef<NodeJS.Timeout | null>(null);
   useEffect(() => {
-    const handleRouteChange = () => {
-      setLoading(true);
-    };
-
-    const handleRouteComplete = () => {
-      setLoading(false);
-    };
-
-    router.events.on('routeChangeStart', handleRouteChange);
-    router.events.on('routeChangeComplete', handleRouteComplete);
+    // const handleRouteChange = () => {
+    //   setLoading(true);
+    // };
+    //
+    // const handleRouteComplete = () => {
+    //   setLoading(false);
+    // };
+    //
+    // router.events.on('routeChangeStart', handleRouteChange);
+    // router.events.on('routeChangeComplete', handleRouteComplete);
 
     // If the component is unmounted, unsubscribe
     // from the event with the `off` method:
     return () => {
-      router.events.off('routeChangeStart', handleRouteChange);
-      router.events.on('routeChangeComplete', handleRouteComplete);
+      // router.events.off('routeChangeStart', handleRouteChange);
+      // router.events.on('routeChangeComplete', handleRouteComplete);
     };
   }, []);
 
