@@ -28,7 +28,11 @@ export default function ProductInformation({ product }: Props) {
       label: 'Giới tính',
       value: (
         <span className={'font-[700] lg:font-bold'}>
-          {SexName(product?.product_property?.sex || 2)}
+          {SexName(
+            product?.product_property?.sex === 0
+              ? 0
+              : product?.product_property?.sex || 2,
+          )}
         </span>
       ),
       is_visible: !!product?.product_property?.sex != null,
