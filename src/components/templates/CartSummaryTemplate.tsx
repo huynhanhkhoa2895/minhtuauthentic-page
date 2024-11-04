@@ -1,5 +1,5 @@
 import { twMerge } from 'tailwind-merge';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import OrderContext from '@/contexts/orderContext';
 import { formatMoney } from '@/utils';
 import Link from 'next/link';
@@ -23,12 +23,7 @@ const CustomScript = dynamic(() => import('@/components/atoms/customScript'), {
 });
 export default function CartSummaryTemplate() {
   const orderCtx = useContext(OrderContext);
-  const [ready, setReady] = useState(false);
-  useEffect(() => {
-    if (orderCtx?.cart) {
-      setReady(true);
-    }
-  }, [orderCtx?.cart]);
+  const router = useRouter();
 
   return (
     <>
@@ -79,7 +74,7 @@ export default function CartSummaryTemplate() {
           <div className="bk-btn cart-summary mt-3"></div>
         </div>
       </div>
-      {ready && orderCtx?.cart?.items?.length === 0 && <CustomScript />}
+      <CustomScript />
     </>
   );
 }
