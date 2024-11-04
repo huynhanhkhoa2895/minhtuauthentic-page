@@ -28,18 +28,18 @@ export default async function handler(
       process.env.NEXT_PUBLIC_FUNDIN_SECRET || '',
       _bodyString,
     );
-    console.log('test', _bodyString, {
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Client-Id': process.env.NEXT_PUBLIC_FUNDIN_CLIENT_ID,
-      'process.env.NEXT_PUBLIC_FUNDIN_SECRET':
-        process.env.NEXT_PUBLIC_FUNDIN_SECRET || '',
-      hex,
-      decode: verifyHmacSHA256Signature(
-        process.env.NEXT_PUBLIC_FUNDIN_SECRET,
-        _bodyString,
-        hex,
-      ),
-    });
+    // console.log('test', _bodyString, {
+    //   'Content-Type': 'application/json; charset=UTF-8',
+    //   'Client-Id': process.env.NEXT_PUBLIC_FUNDIN_CLIENT_ID,
+    //   'process.env.NEXT_PUBLIC_FUNDIN_SECRET':
+    //     process.env.NEXT_PUBLIC_FUNDIN_SECRET || '',
+    //   hex,
+    //   decode: verifyHmacSHA256Signature(
+    //     process.env.NEXT_PUBLIC_FUNDIN_SECRET,
+    //     _bodyString,
+    //     hex,
+    //   ),
+    // });
 
     const url = `${process.env.NEXT_PUBLIC_FUNDIN_URL}/v2/payments`;
     fetch(url, {
@@ -49,7 +49,7 @@ export default async function handler(
         'Content-Type': 'application/json; charset=UTF-8',
         'Client-Id': process.env.NEXT_PUBLIC_FUNDIN_CLIENT_ID,
         Signature: hex,
-      },
+      } as any,
     })
       .then((response) => response.json())
       .then((data) => {
@@ -75,7 +75,11 @@ export function generateHmacSHA256Signature(
   return hmac.digest('hex');
 }
 
-function verifyHmacSHA256Signature(secretKey, data, signatureToVerify) {
+function verifyHmacSHA256Signature(
+  secretKey: string,
+  data: string,
+  signatureToVerify: string,
+) {
   const generatedSignature = generateHmacSHA256Signature(secretKey, data);
   return generatedSignature === signatureToVerify;
 }
