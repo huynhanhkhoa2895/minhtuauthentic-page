@@ -133,6 +133,7 @@ const ProductProperty = ({
           classNameGap={
             'text-[14px] bg-red-600 ml-2 inline-block py-1 px-2 rounded-[10px] text-white'
           }
+          isHaveBKPrice={true}
         />
         <ProductConfiguration
           productConfigurations={productConfigurations}

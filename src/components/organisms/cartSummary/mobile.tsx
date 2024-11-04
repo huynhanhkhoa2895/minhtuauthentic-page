@@ -42,6 +42,7 @@ export default function CartSummaryMobile() {
                   <PriceWithLineThrough
                     regularPrice={item.variant_regular_price}
                     price={item.variant_price}
+                    isHaveBKPrice={true}
                   />
                   <PriceMinus item={item} className={'justify-start'} />
                 </div>

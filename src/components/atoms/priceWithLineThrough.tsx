@@ -8,16 +8,20 @@ export default function PriceWithLineThrough({
   classNameRegularPrice,
   classNamePrice,
   coupons,
+  isHaveBKPrice,
 }: {
   regularPrice?: number;
   price?: number;
   classNameRegularPrice?: string;
   classNamePrice?: string;
   coupons?: CouponsDto[];
+  isHaveBKPrice?: boolean;
 }) {
   return (
     <>
-      <span className={'bk-product-price hidden'}>{regularPrice}</span>
+      {isHaveBKPrice && (
+        <span className={'bk-product-price hidden'}>{regularPrice}</span>
+      )}
       <span
         className={twMerge(
           'text-[16px] lg:text-[18px] font-[700] lg:font-bold text-price mr-2',

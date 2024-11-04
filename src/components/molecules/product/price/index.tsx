@@ -13,6 +13,7 @@ const ProductPrice = ({
   classNamePrice,
   displayGap,
   classNameGap,
+  isHaveBKPrice,
 }: {
   variant?: VariantDto;
   className?: string;
@@ -22,6 +23,7 @@ const ProductPrice = ({
   classNamePrefix?: string;
   displayGap?: boolean;
   classNameGap?: string;
+  isHaveBKPrice?: boolean;
 }) => {
   return (
     <>
@@ -34,6 +36,7 @@ const ProductPrice = ({
             classNamePrice={classNamePrice}
             classNameRegularPrice={classNameRegularPrice}
             coupons={variant.coupons}
+            isHaveBKPrice={isHaveBKPrice}
           />
           {displayGap && (
             <span className={classNameGap}>

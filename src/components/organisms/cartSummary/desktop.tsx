@@ -60,6 +60,7 @@ export default function CartSummaryDesktop() {
                     <PriceWithLineThrough
                       regularPrice={item.variant_regular_price}
                       price={item.variant_price}
+                      isHaveBKPrice={true}
                     />
                   </td>
                   <td className={'border-y border-gray-200 text-center'}>
