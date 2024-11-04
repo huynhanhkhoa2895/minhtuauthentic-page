@@ -167,6 +167,7 @@ export const PAYMENT = {
   VN_PAY: 'vnpay',
   BAO_KIM: 'baokim',
   CK: 'ck',
+  FUDIIN: 'fudiin',
 };
 
 export const PAYMENT_TYPE_ID = {

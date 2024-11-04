@@ -20,15 +20,22 @@ import { useContext, useEffect, useState } from 'react';
 import OrderContext from '@/contexts/orderContext';
 import { useRouter } from 'next/router';
 import SendTransactionExtensionItemDto from '@/dtos/sendTransactionExtensionItem.dto';
+import SendTransactionFudiinDto from '@/dtos/Fudiin/sendTransaction.dto';
+import ItemFudiinDto from '@/dtos/Fudiin/item.dto';
+import CustomerFudiinDto from '@/dtos/Fudiin/customer.dto';
+import ShippingFudiinDto from '@/dtos/Fudiin/shipping.dto';
 const schema = yup
   .object({
-    name: yup.string().required('Vui lòng nhập tên').test({
-      message: () => 'Tên phải ít nhất 2 chữ',
-      test: async (values: string) => {
-        const arr = values.split(' ');
-        return arr.length >= 2;
-      }
-    } as any),
+    name: yup
+      .string()
+      .required('Vui lòng nhập tên')
+      .test({
+        message: () => 'Tên phải ít nhất 2 chữ',
+        test: async (values: string) => {
+          const arr = values.split(' ');
+          return arr.length >= 2;
+        },
+      } as any),
     shipping_city: yup.string().required('Vui lòng chọn tỉnh/thành phố'),
     shipping_district: yup.string().required('Vui lòng chọn quận/huyện'),
     shipping_ward: yup.string().required('Vui lòng chọn phường/xã'),
@@ -66,7 +73,12 @@ export default function CheckoutTemplate({
   const { user } = useUser();
   const orderCtx = useContext(OrderContext);
   const router = useRouter();
-  const [fullAddress, setFullAddress] = useState<string>('');
+  const [fullAddress, setFullAddress] = useState<{
+    city?: string;
+    district?: string;
+    ward?: string;
+    fullAddress?: string;
+  }>();
   const paymentMap = new Map(
     payments.map((item) => [item.id, item.name?.toLowerCase()]),
   );
@@ -135,43 +147,54 @@ export default function CheckoutTemplate({
             if (window) {
               window.location.href = urlVnPay || '';
             }
-          } else if (paymentType(res?.data?.payment_id) === PAYMENT.BAO_KIM) {
+          } else if (paymentType(res?.data?.payment_id) === PAYMENT.FUDIIN) {
             const orderExtensionItem = orderCtx?.cart?.items?.map((item) => {
-              const qty = item?.qty || 1;
-              return new SendTransactionExtensionItemDto({
-                item_id: item?.variant_id?.toString(),
-                item_name: item?.variant_name,
-                item_code: item?.variant_id?.toString(),
-                price_amount: item?.price || 0,
+              return new ItemFudiinDto({
+                productId: item?.variant_id?.toString(),
+                productName: item?.variant_name,
+                category: 'Perfume',
+                currency: 'VND',
                 quantity: 1,
-                url: process.env.APP_URL + '/' + (item?.slug || '')
+                price: item?.price || 0,
+                totalAmount: item?.price || 0,
               });
             });
-            fetch('/api/baokim/send', {
+            fetch('/api/fudiin/send', {
               method: 'POST',
               body: JSON.stringify(
-                new SendTransactionBaoKimDto({
-                  merchant_id: Number(
-                    process.env.NEXT_PUBLIC_BAO_KIM_MERCHANT_ID || 0,
-                  ),
-                  mrc_order_id: res?.data?.id,
-                  total_amount: res?.data?.total_price,
+                new SendTransactionFudiinDto({
+                  merchantId: process.env.NEXT_PUBLIC_FUNDIN_MERCHANT_ID,
+                  referenceId: res?.data?.id,
+                  amount: {
+                    currency: 'VND',
+                    value: res?.data?.total_price,
+                  },
+                  storeId: 'minhtuauthentic',
+                  requestType: 'installment',
+                  paymentMethod: 'WEB',
                   description:
                     'Thanh toan don hang cua user Bao Kim ' +
                     res?.data?.user_id +
                     ' voi gia tri ' +
                     res?.data?.total_price,
-                  url_success: process.env.NEXT_PUBLIC_APP_URL + '/baokim/',
-                  webhooks:
-                    process.env.NEXT_PUBLIC_BE_URL + '/api/webhook/baokim',
-                  bpm_id: Number(paymentTypeId) || undefined,
-                  customer_email: data?.email,
-                  customer_name: data?.name,
-                  customer_phone: data?.phone,
-                  customer_address: data?.address + fullAddress,
-                  extension: {
-                    items: orderExtensionItem || [],
-                  },
+                  successRedirectUrl:
+                    process.env.NEXT_PUBLIC_APP_URL + '/baokim/',
+                  unSuccessRedirectUrl: '/',
+                  customer: new CustomerFudiinDto({
+                    phoneNumber: data?.phone,
+                    email: data?.email,
+                    firstName: data?.name.split(' ')[0],
+                    lastName: data?.name.split(' ')[1],
+                  }),
+                  shipping: new ShippingFudiinDto({
+                    city: fullAddress?.city || '',
+                    district: fullAddress?.district || '',
+                    ward: fullAddress?.ward || '',
+                    street: data?.address,
+                    houseNumber: data?.phone,
+                    country: 'VN',
+                  }),
+                  items: orderExtensionItem,
                 }),
               ),
             })
@@ -189,7 +212,7 @@ export default function CheckoutTemplate({
                 if (item?.data?.payment_url) {
                   window.location.href = item.data.payment_url;
                 } else if (item?.message?.[0]) {
-                  toast.error('Lỗi bảo kim: '+item?.message?.[0]);
+                  toast.error('Lỗi bảo kim: ' + item?.message?.[0]);
                 } else {
                   toast.error('Đã có lỗi xảy ra');
                 }

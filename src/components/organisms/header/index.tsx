@@ -35,33 +35,33 @@ export const Header = ({ menu, settings }: Props) => {
 
   return (
     <>
-    <div
-      className={
-        ' hidden lg:grid  bg-primaryGrey relative z-[3] grid-cols-3 items-center p-3 h-[50px]'
-      }
-    >
-      {pageHeader?.value && (
-        <>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: pageHeader?.value?.page_title_left || '',
-            }}
-          />
-          <div
-            className={'text-center'}
-            dangerouslySetInnerHTML={{
-              __html: pageHeader?.value?.page_title_center || '',
-            }}
-          />
-          <div
-            className={'text-right'}
-            dangerouslySetInnerHTML={{
-              __html: pageHeader?.value?.page_title_right || '',
-            }}
-          />
-        </>
-      )}
-    </div>
+      <div
+        className={
+          ' hidden lg:grid  bg-primaryGrey relative z-[3] grid-cols-3 items-center p-3 h-[50px]'
+        }
+      >
+        {pageHeader?.value && (
+          <>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: pageHeader?.value?.page_title_left || '',
+              }}
+            />
+            <div
+              className={'text-center'}
+              dangerouslySetInnerHTML={{
+                __html: pageHeader?.value?.page_title_center || '',
+              }}
+            />
+            <div
+              className={'text-right'}
+              dangerouslySetInnerHTML={{
+                __html: pageHeader?.value?.page_title_right || '',
+              }}
+            />
+          </>
+        )}
+      </div>
       <header
         id={'header'}
         className={
@@ -216,10 +216,7 @@ export const Header = ({ menu, settings }: Props) => {
               {user ? (
                 <span className={'capitalize'}>{user.name || user.email}</span>
               ) : (
-                <>
-                  <p>Tài</p>
-                  <p>khoản</p>
-                </>
+                <>Tài khoản</>
               )}
             </Button>
           </Dropdown>

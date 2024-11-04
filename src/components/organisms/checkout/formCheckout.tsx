@@ -76,14 +76,33 @@ export default function FormCheckout({
   }, [watch('shipping_district')]);
 
   useEffect(() => {
-    if(watch('shipping_city') && watch('shipping_district') && watch('shipping_ward')){
-      const city = (provinceData?.data || []).find((item: ProvinceDto) => item.code === watch('shipping_city'));
-      const district = districts.find((item: ProvinceDto) => item.code === watch('shipping_district'));
-      const ward = wards.find((item: ProvinceDto) => item.code === watch('shipping_ward'));
-      const address = ` ${ward?.full_name}, ${district?.full_name}, ${city?.full_name}`;
-      setFullAddress(address);
+    if (
+      watch('shipping_city') &&
+      watch('shipping_district') &&
+      watch('shipping_ward')
+    ) {
+      const city = (provinceData?.data || []).find(
+        (item: ProvinceDto) => item.code === watch('shipping_city'),
+      );
+      const district = districts.find(
+        (item: ProvinceDto) => item.code === watch('shipping_district'),
+      );
+      const ward = wards.find(
+        (item: ProvinceDto) => item.code === watch('shipping_ward'),
+      );
+      const fullAddress = ` ${ward?.full_name}, ${district?.full_name}, ${city?.full_name}`;
+      setFullAddress({
+        city: city?.full_name || '',
+        district: district?.full_name || '',
+        ward: ward?.full_name || '',
+        fullAddress,
+      });
     }
-  }, [watch('shipping_city'), watch('shipping_district'), watch('shipping_ward')]);
+  }, [
+    watch('shipping_city'),
+    watch('shipping_district'),
+    watch('shipping_ward'),
+  ]);
 
   const fetchDataProvince = async (parent_key: string, parent_id: string) => {
     const query = new URLSearchParams();
