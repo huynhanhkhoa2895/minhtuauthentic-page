@@ -78,7 +78,7 @@ export default function OrderDetailTemplate({ order }: Props) {
               </span>
               <span
                 className={
-                  'text-red-600 text-[13px] font-bold text-right cursor-pointer'
+                  'text-red-600 text-[13px] font-[700] lg:font-bold text-right cursor-pointer'
                 }
               >
                 -
@@ -170,7 +170,7 @@ export default function OrderDetailTemplate({ order }: Props) {
     <>
       {order && (
         <>
-          <h1 className={'text-2xl text-primary font-bold mb-3'}>
+          <h1 className={'text-2xl text-primary font-[700] lg:font-bold mb-3'}>
             Chi tiết đơn hàng
           </h1>
           <div className={'grid grid-cols-2 gap-3'}>
@@ -184,7 +184,9 @@ export default function OrderDetailTemplate({ order }: Props) {
             })}
           </div>
           <div className={'mt-3'}>
-            <h2 className={'text-xl text-primary font-bold mb-3'}>Sản phẩm</h2>
+            <h2 className={'text-xl text-primary font-[700] lg:font-bold mb-3'}>
+              Sản phẩm
+            </h2>
             <Table
               dataSource={order?.order_items || []}
               columns={columns}
@@ -209,7 +211,7 @@ export default function OrderDetailTemplate({ order }: Props) {
                         <span className={'text-primary '}>Coupon {'  '}</span>
                         <span
                           className={
-                            'font-bold p-1 bg-[#efefef] rounded-[4px] text-sm'
+                            'font-[700] lg:font-bold p-1 bg-[#efefef] rounded-[4px] text-sm'
                           }
                         >
                           {couponDetail?.coupon?.code}

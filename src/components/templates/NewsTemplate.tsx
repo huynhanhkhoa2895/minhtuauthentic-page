@@ -54,7 +54,9 @@ export default function NewsTemplate({
                     'p-3 rounded-[10px] border bg-gray-200 border-gray-200 mt-3'
                   }
                 >
-                  <h3 className={'font-bold text-xl '}>Xem thêm</h3>
+                  <h3 className={'font-[700] lg:font-bold text-xl '}>
+                    Xem thêm
+                  </h3>
                   <ul className={'flex flex-col gap-3'}>
                     {relationNews?.map((item, key) => {
                       return (
@@ -81,7 +83,7 @@ export default function NewsTemplate({
             'w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3'
           }
         >
-          <h2 className={'text-3xl text-primary font-bold mb-3'}>
+          <h2 className={'text-3xl text-primary font-[700] lg:font-bold mb-3'}>
             Danh mục tin tức
           </h2>
           <ul className={'flex flex-col gap-3'}>
@@ -105,7 +107,9 @@ export default function NewsTemplate({
               'w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3'
             }
           >
-            <h3 className={'text-3xl text-primary font-bold mb-3'}>
+            <h3
+              className={'text-3xl text-primary font-[700] lg:font-bold mb-3'}
+            >
               Bài viết gần đây
             </h3>
             <div>

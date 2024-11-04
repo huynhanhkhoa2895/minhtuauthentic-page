@@ -72,7 +72,9 @@ export default function HistoryList({ orders }: Props) {
 
   return (
     <>
-      <h1 className={'text-2xl font-bold mb-3 text-primary'}>Lịch sử</h1>
+      <h1 className={'text-2xl font-[700] lg:font-bold mb-3 text-primary'}>
+        Lịch sử
+      </h1>
       {isMobile && <HistoryMobileView orders={orders} column={column} />}
       {isDesktop && <HistoryDesktopView orders={orders} column={column} />}
     </>

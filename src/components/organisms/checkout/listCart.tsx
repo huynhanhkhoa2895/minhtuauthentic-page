@@ -51,37 +51,48 @@ export default function ListCart({ paymentType, setValue }: Props) {
             Mua ngay - Trả sau
           </span>
           <span className={'flex items-center justify-center m-auto'}>
-            <img src="https://pc.baokim.vn/platform/img/home-paylater-ngang-small.svg" alt="Minh tu authentic" className={'ml-[5px] h-[20px]'} />
-            <img src="https://pc.baokim.vn/platform/img/icon-muadee.svg" alt="Minh tu authentic"  className={'ml-[5px] h-[20px]'}  />
+            <img
+              src="https://pc.baokim.vn/platform/img/home-paylater-ngang-small.svg"
+              alt="Minh tu authentic"
+              className={'ml-[5px] h-[20px]'}
+            />
+            <img
+              src="https://pc.baokim.vn/platform/img/icon-muadee.svg"
+              alt="Minh tu authentic"
+              className={'ml-[5px] h-[20px]'}
+            />
           </span>
         </button>
       );
     } else if (type === 3) {
-      return <button
-        type={'submit'}
-        className={
-          'flex-1 flex flex-col gap-1 text-center bg-[#288ad6] text-white p-3 text-center rounded-[10px]'
-        }
-        onClick={() => {
-          setValue('payment_type_id', PAYMENT_TYPE_ID.TRA_GOP_BAO_KIM_CREDIT_CARD);
-        }}
-      >
+      return (
+        <button
+          type={'submit'}
+          className={
+            'flex-1 flex flex-col gap-1 text-center bg-[#288ad6] text-white p-3 text-center rounded-[10px]'
+          }
+          onClick={() => {
+            setValue(
+              'payment_type_id',
+              PAYMENT_TYPE_ID.TRA_GOP_BAO_KIM_CREDIT_CARD,
+            );
+          }}
+        >
           <span
             className={'font-extrabold uppercase text-2xl text-center mx-auto'}
           >
             Trả góp qua thẻ
           </span>
-        <span className={'flex items-center justify-center m-auto'}>
+          <span className={'flex items-center justify-center m-auto'}>
             Visa, MasterCard, JCB
           </span>
-      </button>;
+        </button>
+      );
     }
     return (
       <button
         type={'submit'}
-        className={
-          ' bg-primary text-white'
-        }
+        className={' bg-primary text-white'}
         onClick={() => {
           setValue('payment_type_id', undefined);
         }}
@@ -98,7 +109,7 @@ export default function ListCart({ paymentType, setValue }: Props) {
 
   return (
     <div className={'border-l border-gray-200 px-3 flex-1'}>
-      <h3 className={'text-3xl font-bold'}>Thông tin giỏ hàng</h3>
+      <h3 className={'text-3xl font-[700] lg:font-bold'}>Thông tin giỏ hàng</h3>
       <div className={'flex flex-col gap-3 border-b border-gray-200 p-6'}>
         {order?.cart?.items?.map((item, key) => (
           <CheckItemCart
@@ -209,23 +220,27 @@ export default function ListCart({ paymentType, setValue }: Props) {
           type={1}
           htmlType={'submit'}
         />
-        {paymentType === PAYMENT.BAO_KIM && <>
-          <PaymentButton
-            onClick={() => {
-              setValue('payment_type_id', PAYMENT_TYPE_ID.TRA_GOP_BAO_KIM_CREDIT_CARD);
-            }}
-            htmlType={'submit'}
-            type={3}
-          />
-          <PaymentButton
-            onClick={() => {
-              setValue('payment_type_id', PAYMENT_TYPE_ID.TRA_GOP_BAO_KIM);
-            }}
-            htmlType={'submit'}
-            type={2}
-          />
-        </>}
-
+        {paymentType === PAYMENT.BAO_KIM && (
+          <>
+            <PaymentButton
+              onClick={() => {
+                setValue(
+                  'payment_type_id',
+                  PAYMENT_TYPE_ID.TRA_GOP_BAO_KIM_CREDIT_CARD,
+                );
+              }}
+              htmlType={'submit'}
+              type={3}
+            />
+            <PaymentButton
+              onClick={() => {
+                setValue('payment_type_id', PAYMENT_TYPE_ID.TRA_GOP_BAO_KIM);
+              }}
+              htmlType={'submit'}
+              type={2}
+            />
+          </>
+        )}
       </div>
     </div>
   );

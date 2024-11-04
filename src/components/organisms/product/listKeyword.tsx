@@ -24,7 +24,7 @@ export default function ListKeyword({ product }: Props) {
             : 'invisible opacity-0 h-0',
         )}
       >
-        <span className={'font-bold'}>Từ khóa:</span>
+        <span className={'font-[700] lg:font-bold'}>Từ khóa:</span>
         {product?.keywords?.map((item) => {
           return (
             <Link

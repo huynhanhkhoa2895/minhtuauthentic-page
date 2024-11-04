@@ -10,7 +10,7 @@ type Props = {
 export default function ItemCoupon({ coupon, onClick }: Props) {
   return (
     <div className={'p-3 rounded-[10px] border border-gray-200 w-full'}>
-      <p className={'font-bold text-xl text-primary'}>
+      <p className={'font-[700] lg:font-bold text-xl text-primary'}>
         <span>Giảm </span>
         {coupon?.price_minus_type === PROMOTION_PRICE_TYPE.PRICE
           ? formatMoney(coupon.price_minus_value || 0)
@@ -26,7 +26,7 @@ export default function ItemCoupon({ coupon, onClick }: Props) {
           'p-3 bg-[#efefef] rounded-[4px] flex items-center justify-between w-full'
         }
       >
-        <span className={'font-bold'}>{coupon.code}</span>
+        <span className={'font-[700] lg:font-bold'}>{coupon.code}</span>
         <Button
           type="primary"
           onClick={() => {

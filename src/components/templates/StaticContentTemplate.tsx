@@ -11,7 +11,7 @@ const StaticContentTemplate = ({ staticContent }: Props) => {
         'w-full max-rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto rounded-[10px] p-3',
       )}
     >
-      <h1 className={'text-primary font-bold text-2xl mb-3'}>
+      <h1 className={'text-primary font-[700] lg:font-bold text-2xl mb-3'}>
         {staticContent?.title}
       </h1>
       <div

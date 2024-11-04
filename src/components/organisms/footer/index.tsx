@@ -13,7 +13,11 @@ const Footer = ({ footerContent }: { footerContent?: ResponseFooterDto }) => {
       case 0:
         return (
           <div key={item.id}>
-            <p className={'uppercase font-bold lg:mb-[10px] text-[16px]'}>
+            <p
+              className={
+                'uppercase font-[700] lg:font-bold lg:mb-[10px] text-[16px]'
+              }
+            >
               VỀ CHÚNG TÔI
             </p>
             <div
@@ -74,7 +78,7 @@ const Footer = ({ footerContent }: { footerContent?: ResponseFooterDto }) => {
               }
             />
             <div>
-              <p className={'uppercase font-bold mb-[10px]'}>
+              <p className={'uppercase font-[700] lg:font-bold mb-[10px]'}>
                 Kết nối với chúng tôi
               </p>
               <div className={'grid grid-cols-4 w-max gap-3'}>
@@ -104,7 +108,7 @@ const Footer = ({ footerContent }: { footerContent?: ResponseFooterDto }) => {
               </div>
             </div>
             <div>
-              <p className={'uppercase font-bold mb-[10px]'}>
+              <p className={'uppercase font-[700] lg:font-bold mb-[10px]'}>
                 Hình thức thanh toán
               </p>
               <div className={'grid grid-cols-6 w-max gap-3'}>

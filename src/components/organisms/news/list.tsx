@@ -53,7 +53,7 @@ export default function NewsList({ news, total, title }: Props) {
 
   return (
     <>
-      <h1 className={'text-3xl text-primary font-bold mb-3'}>
+      <h1 className={'text-3xl text-primary font-[700] lg:font-bold mb-3'}>
         {title || 'Tin tức'}
       </h1>
       {newsList.length > 0 ? (
@@ -76,7 +76,11 @@ export default function NewsList({ news, total, title }: Props) {
           />
         </>
       ) : (
-        <p className={'text-3xl text-center text-primary font-bold'}>
+        <p
+          className={
+            'text-3xl text-center text-primary font-[700] lg:font-bold'
+          }
+        >
           Hiện tại không có tin tức nào
         </p>
       )}

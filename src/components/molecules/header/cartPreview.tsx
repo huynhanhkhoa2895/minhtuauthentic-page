@@ -37,9 +37,7 @@ export default function CartPreview() {
           {order?.cart?.items?.map((item: OrderItemsDto, key: number) => {
             return (
               <div
-                className={
-                  'flex gap-2 w-[350px] border-b border-gray-200 pb-3'
-                }
+                className={'flex gap-2 w-[350px] border-b border-gray-200 pb-3'}
                 key={key + '_' + item.variant_id}
               >
                 <div className={'w-[80px] h-[80px] shrink-0 '}>
@@ -53,7 +51,7 @@ export default function CartPreview() {
                     <Link
                       href={generateSlugToHref(item?.slug)}
                       className={
-                        'text-primary text-[12px] text-left font-bold'
+                        'text-primary text-[12px] text-left font-[700] lg:font-bold'
                       }
                     >
                       {item?.variant_name}
@@ -67,15 +65,13 @@ export default function CartPreview() {
                       }
                     ></Button>
                   </p>
-                  {(item.variant_configurations || [])?.map(
-                    (config, index) => {
-                      return (
-                        <p key={index} className={'text-[12px] text-left'}>
-                          ({config.name}: {config.value})
-                        </p>
-                      );
-                    },
-                  )}
+                  {(item.variant_configurations || [])?.map((config, index) => {
+                    return (
+                      <p key={index} className={'text-[12px] text-left'}>
+                        ({config.name}: {config.value})
+                      </p>
+                    );
+                  })}
                   <div className={'flex justify-between items-center'}>
                     <InputNumber
                       min={1}

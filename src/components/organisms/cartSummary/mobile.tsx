@@ -59,7 +59,7 @@ export default function CartSummaryMobile() {
                     className={'hidden bk-product-qty'}
                     value={item.qty || 1}
                   />
-                  <span className={'text-primary font-bold'}>
+                  <span className={'text-primary font-[700] lg:font-bold'}>
                     {formatMoney(item.price || 0, 0, '.', '.')}
                   </span>
                 </div>

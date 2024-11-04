@@ -52,7 +52,9 @@ export default function BrandsTemplate({ brands }: Props) {
         'w-full rounded-[10px] shadow-custom bg-white relative mx-auto p-3',
       )}
     >
-      <h1 className={'text-2xl text-primary font-bold '}>Thương hiệu</h1>
+      <h1 className={'text-2xl text-primary font-[700] lg:font-bold '}>
+        Thương hiệu
+      </h1>
       <div className={'flex gap-2 flex-wrap h-max mt-3'}>
         {listLetter.map((item, index) => {
           return (
@@ -88,7 +90,7 @@ export default function BrandsTemplate({ brands }: Props) {
               >
                 <h4
                   className={
-                    'flex items-center justify-center font-bold text-primary w-[25px] lg:w-[50px] px-[2rem] lg:px-[3rem]'
+                    'flex items-center justify-center font-[700] lg:font-bold text-primary w-[25px] lg:w-[50px] px-[2rem] lg:px-[3rem]'
                   }
                 >
                   <span className={'text-[1.3rem] lg:text-[2.5rem]'}>

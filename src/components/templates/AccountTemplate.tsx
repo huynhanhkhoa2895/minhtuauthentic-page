@@ -4,7 +4,9 @@ import { ReactNode } from 'react';
 export default function AccountTemplate({ children }: { children: ReactNode }) {
   return (
     <>
-      <h1 className={'text-3xl text-primary font-bold my-6'}>Tài khoản</h1>
+      <h1 className={'text-3xl text-primary font-[700] lg:font-bold my-6'}>
+        Tài khoản
+      </h1>
       <div className={'w-full grid grid-cols-1 lg:grid-cols-6 gap-3'}>
         <ul className={'border border-gray-200'}>
           <li

@@ -53,7 +53,7 @@ const NewsDetailTemplate = ({ slug }: Props) => {
               'p-3 rounded-[10px] border bg-gray-200 border-gray-200 mt-3'
             }
           >
-            <h3 className={'font-bold text-xl '}>Xem thêm</h3>
+            <h3 className={'font-[700] lg:font-bold text-xl '}>Xem thêm</h3>
             <ul className={'flex flex-col gap-3'}>
               {data?.relationNews?.map((item, key) => {
                 return (

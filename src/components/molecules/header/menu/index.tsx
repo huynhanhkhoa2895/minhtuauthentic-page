@@ -65,7 +65,7 @@ const Menu = ({
                     height={image.height || 25}
                   />
                 )}
-                <span className={'capitalize font-bold'}>
+                <span className={'capitalize font-[700] lg:font-bold'}>
                   {_item?.category?.name}
                 </span>
               </div>
@@ -78,14 +78,20 @@ const Menu = ({
       },
       [POPUP_TYPE.PRODUCT]: () => {
         return (
-          <Link className={'capitalize font-bold'} href={'/san-pham'}>
+          <Link
+            className={'capitalize font-[700] lg:font-bold'}
+            href={'/san-pham'}
+          >
             Sản phẩm
           </Link>
         );
       },
       [POPUP_TYPE.NEWS]: () => {
         return (
-          <Link className={'capitalize font-bold'} href={'/tin-tuc'}>
+          <Link
+            className={'capitalize font-[700] lg:font-bold'}
+            href={'/tin-tuc'}
+          >
             Tin tức
           </Link>
         );
@@ -93,7 +99,10 @@ const Menu = ({
       [POPUP_TYPE.BRAND]: () => {
         return (
           <div className={'flex justify-between'}>
-            <Link className={'capitalize font-bold'} href={'/thuong-hieu'}>
+            <Link
+              className={'capitalize font-[700] lg:font-bold'}
+              href={'/thuong-hieu'}
+            >
               Thương hiệu
             </Link>
             <IconCheveronRight className={'w-[15px] h-[15px]'} />

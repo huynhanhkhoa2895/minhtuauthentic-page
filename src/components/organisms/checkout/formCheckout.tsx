@@ -116,7 +116,9 @@ export default function FormCheckout({
 
   return (
     <div className={'flex-1'}>
-      <h3 className={'text-3xl font-bold mb-6'}>Thông tin vận chuyển</h3>
+      <h3 className={'text-3xl font-[700] lg:font-bold mb-6'}>
+        Thông tin vận chuyển
+      </h3>
       <div className={'grid grid-cols-2 gap-3'}>
         <FormControl
           control={control}
@@ -192,13 +194,17 @@ export default function FormCheckout({
           className={'col-span-2'}
         />
       </div>
-      <h3 className={'text-3xl font-bold my-6'}>Phương thức vận chuyển</h3>
+      <h3 className={'text-3xl font-[700] lg:font-bold my-6'}>
+        Phương thức vận chuyển
+      </h3>
       <div className={'flex flex-col'}>
         <Radio className={'border border-gray-200 p-3'} checked>
           Miễn phí vận chuyển
         </Radio>
       </div>
-      <h3 className={'text-3xl font-bold my-6'}>Phương thức thanh toán</h3>
+      <h3 className={'text-3xl font-[700] lg:font-bold my-6'}>
+        Phương thức thanh toán
+      </h3>
       <div className={'flex flex-col'}>
         <FormControl
           control={control}
@@ -234,7 +240,7 @@ export default function FormCheckout({
           className={'col-span-2'}
         />
       </div>
-      <h3 className={'text-3xl font-bold my-6'}>Ghi chú</h3>
+      <h3 className={'text-3xl font-[700] lg:font-bold my-6'}>Ghi chú</h3>
       <div className={'flex flex-col'}>
         <FormControl
           control={control}

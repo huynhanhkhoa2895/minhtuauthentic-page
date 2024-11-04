@@ -10,7 +10,7 @@ type Props = {
 export default function MenuPopupCategory({
   filterSetting,
   categories,
-  title
+  title,
 }: Props) {
   const renderItem = () => {
     const listDisplay: Record<
@@ -108,8 +108,12 @@ export default function MenuPopupCategory({
     );
   };
 
-  return <>
-    {title && <p className={'mb-3 text-3xl font-bold'}>{title}</p>}
-    <div className={'grid grid-cols-4'}>{renderItem()}</div>
-  </>;
+  return (
+    <>
+      {title && (
+        <p className={'mb-3 text-3xl font-[700] lg:font-bold'}>{title}</p>
+      )}
+      <div className={'grid grid-cols-4'}>{renderItem()}</div>
+    </>
+  );
 }

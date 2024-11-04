@@ -46,7 +46,7 @@ const ProductCard = ({
         </div>
         <ProductCardImage product={product} />
         <div className={'px-2 h-[110px] lg:h-[63px]'}>
-          <h3 className={'font-bold'}>
+          <h3 className={'font-[700] lg:font-bold'}>
             <Link className={'block'} href={`/${product?.slugs?.slug}`}>
               {product.title || product.name}
             </Link>
@@ -80,7 +80,7 @@ const ProductCard = ({
                 </span>
                 <span
                   className={
-                    'text-red-600 text-[13px] font-bold text-right cursor-pointer'
+                    'text-red-600 text-[13px] font-[700] lg:font-bold text-right cursor-pointer'
                   }
                 >
                   {formatMoney(
@@ -91,7 +91,7 @@ const ProductCard = ({
               </p>
               <p className={'text-sm'}>
                 <span className={'mr-1 lg:mr-3'}>Tiết kiệm thêm:</span>
-                <span className={'text-[13px] font-bold'}>
+                <span className={'text-[13px] font-[700] lg:font-bold'}>
                   {formatMoney(
                     calculatePriceMinus(variant?.regular_price || 0, coupon),
                   )}

@@ -44,7 +44,11 @@ export default function CheckOrderTemplate() {
           'w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative m-auto p-3',
         )}
       >
-        <h1 className={'text-center text-3xl text-primary font-bold'}>
+        <h1
+          className={
+            'text-center text-3xl text-primary font-[700] lg:font-bold'
+          }
+        >
           Tra cứu đơn hàng
         </h1>
         <p className={'mt-3 text-center'}>

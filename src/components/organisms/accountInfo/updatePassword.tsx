@@ -68,7 +68,7 @@ export default function AccountUpdatePassword() {
   console.log(errors);
   return (
     <div className={'p-4'}>
-      <h1 className={'text-2xl font-bold mb-3 text-primary'}>
+      <h1 className={'text-2xl font-[700] lg:font-bold mb-3 text-primary'}>
         Thay đổi mật khẩu
       </h1>
       <form

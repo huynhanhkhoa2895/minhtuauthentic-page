@@ -69,7 +69,9 @@ export default function HomeSupport() {
               }
             />
             <div>
-              <p className={'text-[14px] font-bold'}>{item.title}</p>
+              <p className={'text-[14px] font-[700] lg:font-bold'}>
+                {item.title}
+              </p>
               <p className={'mt-1 text-[12px]'}>{item.description}</p>
             </div>
           </div>

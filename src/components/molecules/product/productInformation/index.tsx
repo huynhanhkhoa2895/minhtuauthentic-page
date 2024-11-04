@@ -9,7 +9,7 @@ export default function ProductInformation({ product }: Props) {
     {
       label: 'Thương hiệu',
       value: (
-        <span className={'text-primary font-bold'}>
+        <span className={'text-primary font-[700] lg:font-bold'}>
           {product?.brands?.[0]?.brand?.name || ''}
         </span>
       ),
@@ -18,14 +18,16 @@ export default function ProductInformation({ product }: Props) {
     {
       label: 'Xuất xứ',
       value: (
-        <span className={'font-bold'}>{product?.product_property?.origin}</span>
+        <span className={'font-[700] lg:font-bold'}>
+          {product?.product_property?.origin}
+        </span>
       ),
       is_visible: !!product?.product_property?.origin,
     },
     {
       label: 'Giới tính',
       value: (
-        <span className={'font-bold'}>
+        <span className={'font-[700] lg:font-bold'}>
           {SexName(product?.product_property?.sex || 2)}
         </span>
       ),
@@ -34,7 +36,7 @@ export default function ProductInformation({ product }: Props) {
     {
       label: 'Nồng độ',
       value: (
-        <span className={'font-bold'}>
+        <span className={'font-[700] lg:font-bold'}>
           {product?.concentration_gradient?.name}
         </span>
       ),
@@ -43,21 +45,25 @@ export default function ProductInformation({ product }: Props) {
     {
       label: 'Năm ra mắt',
       value: (
-        <span className={'font-bold'}>{product?.product_property?.year}</span>
+        <span className={'font-[700] lg:font-bold'}>
+          {product?.product_property?.year}
+        </span>
       ),
       is_visible: !!product?.product_property?.year,
     },
     {
       label: 'Nhà pha chế',
       value: (
-        <span className={'font-bold'}>{product?.product_property?.mixer}</span>
+        <span className={'font-[700] lg:font-bold'}>
+          {product?.product_property?.mixer}
+        </span>
       ),
       is_visible: !!product?.product_property?.mixer,
     },
     {
       label: 'Độ lưu hương',
       value: (
-        <span className={'font-bold'}>
+        <span className={'font-[700] lg:font-bold'}>
           {product?.fragrance_retention?.name}
         </span>
       ),
@@ -66,7 +72,7 @@ export default function ProductInformation({ product }: Props) {
     {
       label: 'Độ toả hương',
       value: (
-        <span className={'font-bold'}>
+        <span className={'font-[700] lg:font-bold'}>
           {product?.product_property?.fragrance_level}
         </span>
       ),
@@ -75,14 +81,16 @@ export default function ProductInformation({ product }: Props) {
     {
       label: 'Phong cách',
       value: (
-        <span className={'font-bold'}>{product?.product_property?.style}</span>
+        <span className={'font-[700] lg:font-bold'}>
+          {product?.product_property?.style}
+        </span>
       ),
       is_visible: !!product?.product_property?.style,
     },
     {
       label: 'Khuyên dùng',
       value: (
-        <span className={'font-bold'}>
+        <span className={'font-[700] lg:font-bold'}>
           {product?.product_property?.recommend}
         </span>
       ),
@@ -92,44 +100,43 @@ export default function ProductInformation({ product }: Props) {
 
   return (
     <div className={'rounded-[10px] shadow-custom bg-white'}>
-      <h2 className={'font-bold text-primary text-[24px] p-3'}>
+      <h2 className={'font-[700] lg:font-bold text-primary text-[24px] p-3'}>
         Thông tin sản phẩm
       </h2>
       <table className={'w-full'}>
         <tbody>
-          {fields.filter(item => item.is_visible).map((item, index) => {
-            return (
-              <tr
-                className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}
-                key={index}
-              >
-                <td className={'p-3'}>{item.label}</td>
-                <td>{item.value}</td>
+          {fields
+            .filter((item) => item.is_visible)
+            .map((item, index) => {
+              return (
+                <tr
+                  className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}
+                  key={index}
+                >
+                  <td className={'p-3'}>{item.label}</td>
+                  <td>{item.value}</td>
+                </tr>
+              );
+            })}
+          {product?.product_property?.fragrant && (
+            <>
+              <tr className={'bg-gray-100'}>
+                <td className={'p-3'} colSpan={2}>
+                  <span>Mùi hương</span>
+                </td>
               </tr>
-            );
-          })}
-          {
-            product?.product_property?.fragrant && (
-              <>
-                <tr className={'bg-gray-100'}>
-                  <td className={'p-3'} colSpan={2}>
-                    <span>Mùi hương</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan={2}>
-                    <div
-                      className={'p-3'}
-                      dangerouslySetInnerHTML={{
-                        __html: product?.product_property?.fragrant || '',
-                      }}
-                    />
-                  </td>
-                </tr>
-              </>
-            )
-          }
-
+              <tr>
+                <td colSpan={2}>
+                  <div
+                    className={'p-3'}
+                    dangerouslySetInnerHTML={{
+                      __html: product?.product_property?.fragrant || '',
+                    }}
+                  />
+                </td>
+              </tr>
+            </>
+          )}
         </tbody>
       </table>
     </div>

@@ -72,7 +72,11 @@ const ProductProperty = ({
 
   return (
     <div>
-      <h1 className={'font-bold text-[22px] leading-[1.2] bk-product-name'}>
+      <h1
+        className={
+          'font-[700] lg:font-bold text-[22px] leading-[1.2] bk-product-name'
+        }
+      >
         {product.title || product.name}
       </h1>
       <div className={'mt-3 grid grid-cols-2'}>
@@ -121,7 +125,9 @@ const ProductProperty = ({
         <ProductPrice
           prefix={'Giá'}
           variant={_variantActive}
-          classNameRegularPrice={'text-[24px] lg:text-[28px] font-bold'}
+          classNameRegularPrice={
+            'text-[24px] lg:text-[28px] font-[700] lg:font-bold'
+          }
           classNamePrice={'font-[500] lg:text-[20px]'}
           displayGap
           classNameGap={

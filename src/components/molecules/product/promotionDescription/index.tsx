@@ -42,7 +42,7 @@ export default function PromotionDescription({
         )}
         onClick={() => onChange(index)}
       >
-        <span className={'font-bold'}>{text}</span>
+        <span className={'font-[700] lg:font-bold'}>{text}</span>
       </button>
     );
   };

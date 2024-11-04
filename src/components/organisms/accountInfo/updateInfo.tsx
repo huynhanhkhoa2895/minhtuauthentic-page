@@ -115,7 +115,7 @@ export default function AccountInfoUpdate({ profile }: Props) {
 
   return (
     <div className={'p-4'}>
-      <h1 className={'text-2xl font-bold mb-3 text-primary'}>
+      <h1 className={'text-2xl font-[700] lg:font-bold mb-3 text-primary'}>
         Thông tin tài khoản
       </h1>
       <form

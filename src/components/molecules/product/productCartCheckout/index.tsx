@@ -48,7 +48,9 @@ export default function ProductCartCheckout({ variant }: Props) {
             router.push('/gio-hang/tom-tat');
           }}
         >
-          <span className={'text-white text-xl font-bold uppercase'}>
+          <span
+            className={'text-white text-xl font-[700] lg:font-bold uppercase'}
+          >
             Mua ngay
           </span>
           <span className={'text-white'}>

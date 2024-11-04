@@ -33,11 +33,11 @@ export default function CartSummaryTemplate() {
           'w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3',
         )}
       >
-        <h1 className={'text-3xl font-bold mb-3'}>Giỏ hàng</h1>
+        <h1 className={'text-3xl font-[700] lg:font-bold mb-3'}>Giỏ hàng</h1>
         <CartSummaryDesktop />
         <CartSummaryMobile />
         <div className={'w-full lg:w-[40%] lg:ml-auto max-w-full mt-6'}>
-          <h4 className={'text-2xl text-primary font-bold mb-3'}>
+          <h4 className={'text-2xl text-primary font-[700] lg:font-bold mb-3'}>
             Tổng giỏ hàng
           </h4>
           <table className={'w-full border border-gray-200'}>
