@@ -13,6 +13,9 @@ type Props = {
 export default function ProductRelation({ products }: Props) {
   return (
     <>
+      <h2 className={'font-[700] lg:font-bold text-primary text-[24px] mt-3'}>
+        Sản phẩm liên quan
+      </h2>
       {products?.length > 0 && (
         <div className={'flex flex-col gap-3 mt-3'}>
           {products.map((product, index) => {

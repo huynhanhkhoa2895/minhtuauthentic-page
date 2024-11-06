@@ -27,44 +27,56 @@ const ProductProperty = ({
   onChange,
   settings,
 }: Props) => {
+  const variantMap = new Map<number, VariantDto>(
+    (product?.variants || []).map((variant) => [variant.id || 0, variant]),
+  );
+  const [variantConfigurationValueMap, setVariantConfigurationValueMap] =
+    useState<Map<number, VariantDto> | null>(null);
+
   const [_variantActive, setVariantActive] =
     useState<VariantDto>(variantActive);
   useEffect(() => {
     onChange && onChange(_variantActive);
   }, [_variantActive]);
 
-  const handleConfigurationChange = (
-    value: { configurationId: number; valueId: number }[],
-  ) => {
-    let variant: VariantDto[] = product?.variants || [];
-
-    value.forEach((item) => {
-      variant?.forEach((variantItem) => {
-        variantItem.variant_product_configuration_values?.forEach(
-          (variantConfigurationValue) => {
-            if (
-              variantConfigurationValue.product_configuration_value_id ===
-              item.valueId
-            ) {
-              variant = [variantItem];
-            }
-          },
-        );
-      });
+  useEffect(() => {
+    const _variantConfigurationValueMap = new Map<number, VariantDto>();
+    (product?.variants || []).map((variant) => {
+      return (variant?.variant_product_configuration_values || []).map(
+        (item) => {
+          _variantConfigurationValueMap.set(
+            item.product_configuration_value_id || 0,
+            variant,
+          );
+        },
+      );
     });
-    setVariantActive(variant[0]);
+    setVariantConfigurationValueMap(_variantConfigurationValueMap);
+  }, []);
+
+  const handleConfigurationChange = (
+    value: { configurationId: number; valueId: number; variant?: VariantDto }[],
+  ) => {
+    if (value?.[0]?.variant) {
+      setVariantActive(value[0].variant);
+    }
   };
 
   const getConfigurationValue = (): {
     configurationId: number;
     valueId: number;
   }[] => {
-    const value: { configurationId: number; valueId: number }[] = [];
+    const value: {
+      configurationId: number;
+      valueId: number;
+      variant?: VariantDto;
+    }[] = [];
     _variantActive?.variant_product_configuration_values?.map((item) => {
       value.push({
         configurationId:
           item.product_configuration_value?.product_configuration_id || 0,
         valueId: item.product_configuration_value_id || 0,
+        variant: variantMap.get(item.variant_id || 0),
       });
     });
     return value;
@@ -135,11 +147,14 @@ const ProductProperty = ({
           }
           isHaveBKPrice={true}
         />
-        <ProductConfiguration
-          productConfigurations={productConfigurations}
-          onChange={handleConfigurationChange}
-          value={getConfigurationValue()}
-        />
+        {variantConfigurationValueMap && (
+          <ProductConfiguration
+            productConfigurations={productConfigurations}
+            onChange={handleConfigurationChange}
+            value={getConfigurationValue()}
+            variantMap={variantConfigurationValueMap}
+          />
+        )}
       </div>
       <div className={'mt-3'}>
         <ProductCartCheckout variant={_variantActive} />

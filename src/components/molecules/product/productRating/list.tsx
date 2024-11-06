@@ -12,7 +12,7 @@ export function ProductRatingList({ ratings }: Props) {
       {ratings.map((rating, index) => {
         return (
           <div key={index} className={'flex flex-row gap-6'}>
-            <Avatar className={'bg-primary'} size="large">
+            <Avatar className={'bg-primary shrink-0'} size="large">
               {rating?.name?.charAt(0).toUpperCase() || 'A'}
             </Avatar>
             <div className={'flex flex-col gap-3'}>

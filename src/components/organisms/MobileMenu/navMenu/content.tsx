@@ -23,6 +23,12 @@ type DataValue = {
   slug?: SlugDto;
 };
 
+type FilterSettingItem = {
+  label: string;
+  name: string;
+  data: DataValue[];
+};
+
 export default function NavMenuContent({ setting, menu, brands }: Props) {
   const _menu = menu.data as StaticComponentDto;
 
@@ -35,7 +41,7 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
       sex: 'Giới tính',
       product_configurations: 'Biến thể',
     };
-    return obj[label];
+    return obj[label] || label;
   };
 
   const generateValue = (name: string, items: unknown[]): DataValue[] => {
@@ -76,16 +82,30 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
           configuration: ProductConfigurationsDto;
           values: ProductConfigurationValuesDto[];
         }[];
-        const _itemConfigurations: { label: string; value: number }[] = [];
+        const _itemConfigurations: Record<
+          string,
+          { label: string; value: number }[]
+        > = {};
         _configurations.forEach((item) => {
+          (
+            _itemConfigurations as Record<
+              string,
+              { label: string; value: number }[]
+            >
+          )[item.configuration.name] = [];
           item.values.forEach((value) => {
-            _itemConfigurations.push({
-              label: item.configuration.name + ': ' + value.value,
+            _itemConfigurations[item.configuration.name].push({
+              label: value.value || '',
               value: value.id || 0,
             });
           });
         });
-        return _itemConfigurations;
+        return Object.keys(_itemConfigurations).map((key) => {
+          return {
+            label: key,
+            data: _itemConfigurations[key],
+          };
+        });
       },
       fragrance_retention: () => {
         return items.map((item: any) => {
@@ -108,10 +128,11 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
     if (obj[name]) {
       data = [...obj[name]()];
     }
+
     return data;
   };
 
-  const renderItem = (name: string, url: string, item: DataValue) => {
+  const renderItemDetail = (name: string, url: string, item: DataValue) => {
     switch (name) {
       case 'brands':
         return (
@@ -138,18 +159,37 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
     }
   };
 
-  const filtersSetting: {
-    label: string;
-    name: string;
-    data: DataValue[];
-  }[] = Object.keys(setting || {}).map((key) => {
-    return {
-      name: key,
-      label: generateLabel(key),
-      data: generateValue(key, (setting as any)[key]),
-      // value: setting[key],
-    };
-  });
+  const filtersSetting: FilterSettingItem[] = Object.keys(setting || {}).map(
+    (key) => {
+      return {
+        name: key,
+        label: generateLabel(key),
+        data: generateValue(key, (setting as any)[key]),
+        // value: setting[key],
+      };
+    },
+  );
+
+  const renderItem = (item: FilterSettingItem) => {
+    return (
+      <div className={'p-3'}>
+        <p className={'font-semibold text-md'}>{item.label}</p>
+        <div className={'flex flex-wrap gap-2'}>
+          {(item.data || []).map((_item, index) => {
+            const url =
+              generateSlugToHref(_menu?.category?.slugs?.slug) +
+              `?${item.name}=${_item.value}`;
+            return (
+              <Fragment key={'content-filter-' + index}>
+                {renderItemDetail(item.name, url, _item)}
+              </Fragment>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
       <div className={'flex items-center justify-between p-3'}>
@@ -168,22 +208,22 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
           if (item.name === 'categories') {
             return null;
           }
+          if (item.name === 'product_configurations') {
+            const _item = item?.data as FilterSettingItem[];
+
+            return (_item || []).map((__item, index2) => {
+              __item.name = item.name;
+              return (
+                <Fragment key={'content-filter-' + index + index2}>
+                  {renderItem(__item)}
+                </Fragment>
+              );
+            });
+          }
           return (
-            <div className={'p-3'} key={'filtersSetting' + index}>
-              <p className={'font-semibold text-md'}>{item.label}</p>
-              <div className={'flex flex-wrap gap-2'}>
-                {item.data.map((_item, index) => {
-                  const url =
-                    generateSlugToHref(_menu?.slugs?.slug) +
-                    `?${item.name}=${_item.value}`;
-                  return (
-                    <Fragment key={'content-filter-' + index}>
-                      {renderItem(item.name, url, _item)}
-                    </Fragment>
-                  );
-                })}
-              </div>
-            </div>
+            <Fragment key={'content-filter-' + index}>
+              {renderItem(item)}
+            </Fragment>
           );
         })}
       </div>

@@ -41,6 +41,8 @@ export default function ProductDealSock({ setting }: Props) {
             slidesPerView={5}
             slidePerViewMobile={2}
             spaceBetween={10}
+            auto={true}
+            loop={true}
             renderItem={(item: unknown) => {
               const iCoupon = item as CouponsDto;
               const variant = iCoupon?.coupon_details?.[0].variant;

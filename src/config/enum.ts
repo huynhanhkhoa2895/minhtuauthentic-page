@@ -31,6 +31,8 @@ export enum FIELD_TYPE {
 }
 export enum Entity {
   PRODUCTS = 'ProductsEntity',
+  SLUGS = 'SlugsEntity',
+  VARIANTS = 'VariantsEntity',
   NEWS = 'NewsEntity',
   KEYWORDS = 'KeywordEntity',
   CATEGORIES = 'CategoriesEntity',

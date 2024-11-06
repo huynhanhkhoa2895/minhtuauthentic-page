@@ -56,6 +56,18 @@ export default function NavMenu({ menu, className }: Props) {
     };
   }, [itemDebounceMenu]);
 
+  useEffect(() => {
+    return () => {
+      setLoading(false);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!appCtx?.isOpenNavMenu) {
+      setLoading(false);
+    }
+  }, [appCtx?.isOpenNavMenu]);
+
   return (
     <div
       ref={ref}

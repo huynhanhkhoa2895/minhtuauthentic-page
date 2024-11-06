@@ -5,7 +5,7 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons/lib/icons';
 
 import SectionSwiperSlide from '@/components/organisms/sectionSwiper/slide';
 import SkeletonMobile from '@/components/atoms/skeletonMobile';
-import { Grid, Pagination } from 'swiper/modules';
+import { Grid, Pagination, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 export type SwiperProps = {
   classNameContainer?: string;
@@ -24,6 +24,7 @@ export type SwiperProps = {
   debug?: boolean;
   onLoad?: () => void;
   isMobile?: boolean;
+  auto?: boolean;
 };
 export default function SectionSwiperItem({
   classNameContainer,
@@ -40,6 +41,7 @@ export default function SectionSwiperItem({
   isNotDisplayNavigation,
   heightItem,
   onLoad,
+  auto,
 }: SwiperProps) {
   const rows = 2;
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
@@ -93,7 +95,8 @@ export default function SectionSwiperItem({
           effect={'fade'}
           grid={isGrid ? { rows } : {}}
           style={{ height: heightWrapper || '100%' }}
-          modules={isGrid ? [Grid] : [Pagination]}
+          modules={isGrid ? [Grid, Autoplay] : [Pagination, Autoplay]}
+          autoplay={auto}
           loop={loop || false}
           className={twMerge('mx-auto w-full')}
           wrapperClass={'mx-auto'}
