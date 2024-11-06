@@ -87,7 +87,7 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
           { label: string; value: number }[]
         > = {};
         _configurations.forEach((item) => {
-          (_itemConfigurations as any)[item.configuration.name] = [];
+          _itemConfigurations[item?.configuration?.name || ''] = [];
           item.values.forEach((value) => {
             _itemConfigurations[item.configuration.name].push({
               label: value.value || '',
