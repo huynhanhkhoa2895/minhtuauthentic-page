@@ -89,7 +89,7 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
         _configurations.forEach((item) => {
           _itemConfigurations[item?.configuration?.name || ''] = [];
           item.values.forEach((value) => {
-            _itemConfigurations[item.configuration.name].push({
+            _itemConfigurations[item.configuration.name || ''].push({
               label: value.value || '',
               value: value.id || 0,
             });
