@@ -204,7 +204,7 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
             return null;
           }
           if (item.name === 'product_configurations') {
-            const _item = item?.data as FilterSettingItem[];
+            const _item = item?.data as unknown as FilterSettingItem[];
 
             return (_item || []).map((__item, index2) => {
               __item.name = item.name;
