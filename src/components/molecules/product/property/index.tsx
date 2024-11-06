@@ -13,6 +13,7 @@ import { generateSlugToHref, SexName } from '@/utils';
 import StartRating from '@/components/atoms/product/startRating';
 import { Rate } from 'antd';
 import { SettingsDto } from '@/dtos/Settings.dto';
+import { useRouter } from 'next/router';
 type Props = {
   product: ProductDto;
   productConfigurations: ProductConfigurationsDto[];
@@ -57,8 +58,11 @@ const ProductProperty = ({
   const handleConfigurationChange = (
     value: { configurationId: number; valueId: number; variant?: VariantDto }[],
   ) => {
-    if (value?.[0]?.variant) {
-      setVariantActive(value[0].variant);
+    if (variantConfigurationValueMap) {
+      const _variant = variantConfigurationValueMap.get(value[0].valueId);
+      if (_variant) {
+        setVariantActive(_variant);
+      }
     }
   };
 

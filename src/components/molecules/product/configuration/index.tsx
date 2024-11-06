@@ -6,6 +6,7 @@ import { VariantDto } from '@/dtos/Variant.dto';
 import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
 import { ProductConfigurationValuesDto } from '@/dtos/productConfigurationValues.dto';
+import { useRouter } from 'next/router';
 type Props = {
   productConfigurations: ProductConfigurationsDto[];
   onChange?: (value: StateProps[]) => void;
@@ -25,7 +26,7 @@ export default function ProductConfiguration({
 }: Props) {
   const [valueIdActive, setValueActiveId] = useState<StateProps[]>(value);
   const [isReady, setIsReady] = useState(false);
-
+  const router = useRouter();
   useEffect(() => {
     setIsReady(true);
   }, []);
@@ -82,12 +83,15 @@ export default function ProductConfiguration({
                 if (!variant) {
                   return null;
                 }
+
                 return (
                   <div
                     key={index + '_' + index2}
                     className={'flex gap-3 flex-wrap'}
                   >
-                    {variant?.slugs ? (
+                    {variant?.slugs &&
+                    router.asPath !==
+                      generateSlugToHref(variant?.slugs?.slug) ? (
                       <Link
                         href={generateSlugToHref(variant?.slugs?.slug)}
                         className={twMerge(
