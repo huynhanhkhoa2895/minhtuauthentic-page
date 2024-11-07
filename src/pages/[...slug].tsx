@@ -135,6 +135,7 @@ export default function Page({
   const { settings, menu, footerContent } = useSettings();
   const renderTemplate = () => {
     switch (slug?.model) {
+      case Entity.VARIANTS:
       case Entity.PRODUCTS:
         return (
           <ProductTemplate data={slug?.data as ResponseProductDetailPageDto} />

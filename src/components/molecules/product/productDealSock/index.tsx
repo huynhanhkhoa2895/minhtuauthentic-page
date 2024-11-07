@@ -30,7 +30,9 @@ export default function ProductDealSock({ setting }: Props) {
       {promotion && (
         <div
           style={{ backgroundColor: setting?.value?.backgroundColor }}
-          className={'w-full shadow-custom bg-white my-1 lg:my-3 p-1 lg:p-3'}
+          className={
+            'w-full shadow-custom bg-white my-1 lg:my-3 p-1 lg:p-3 overflow-hidden'
+          }
         >
           <p className={'text-2xl font-[700] lg:font-bold text-primary mb-3'}>
             MUA KÈM GIÁ SỐC
@@ -39,6 +41,8 @@ export default function ProductDealSock({ setting }: Props) {
             slidesPerView={5}
             slidePerViewMobile={2}
             spaceBetween={10}
+            auto={true}
+            loop={true}
             renderItem={(item: unknown) => {
               const iCoupon = item as CouponsDto;
               const variant = iCoupon?.coupon_details?.[0].variant;

@@ -29,6 +29,7 @@ const ProductTemplate = ({
       {data?.product && (
         <ProductDetailCard
           product={data?.product}
+          variantActive={data?.variantActive}
           relatedProducts={data?.relatedProducts || []}
           productConfigurations={data?.productConfigurations || []}
           settings={data?.settings || []}

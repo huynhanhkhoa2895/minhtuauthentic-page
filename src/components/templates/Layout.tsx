@@ -54,10 +54,11 @@ export default function Layout({
   return (
     <>
       <DefaultSeo settings={settings} seo={seo} />
-      <div className={twMerge('relative ', className)}>
-        <div id={'main-body'} className={'container mx-auto p-1 lg:p-3'}>
-          {children}
-        </div>
+      <div
+        id={'main-body'}
+        className={twMerge('relative container mx-auto p-1 lg:p-3', className)}
+      >
+        {children}
         {isDesktop && menu && <LayoutMenu menu={menu} />}
       </div>
       {isMobile && menu && <NavMenu menu={menu} />}

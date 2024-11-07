@@ -4,6 +4,7 @@ import { ImageDetailDto } from '@/dtos/ImageDetail.dto';
 import { IVariantProductConfigurationValuesDto } from '@/dtos/iVariantProductConfigurationValues.dto';
 import { ImageDto } from '@/dtos/Image.dto';
 import CouponsDto from '@/dtos/Coupons.dto';
+import { SlugDto } from '@/dtos/Slug.dto';
 
 export class VariantDto extends BaseDto {
   product_id?: number;
@@ -15,6 +16,7 @@ export class VariantDto extends BaseDto {
   images?: ImageDetailDto[];
   variant_product_configuration_values?: IVariantProductConfigurationValuesDto[];
   coupons?: CouponsDto[];
+  slugs?: SlugDto;
 
   constructor(init?: Partial<VariantDto>) {
     super();

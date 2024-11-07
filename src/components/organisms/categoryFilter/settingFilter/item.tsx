@@ -111,47 +111,4 @@ export default function SettingFilterItem({
       </div>
     </div>
   );
-  // const renderValue = () => {
-  //   return (
-  //       <>
-  //         {((value as any[]) || []).map((item: any, index: number) => {
-  //           return (
-  //               <Fragment key={filterKey + '_' + item.name + '_' + item.id + '_'}>
-  //                 <Checkbox
-  //                     checked={check[item.id]}
-  //                     onClick={() => onClickCheck(item.id)}
-  //                     className={'filter-checkbox hidden lg:block'}
-  //                     disabled={
-  //                         ctx?.loading ||
-  //                         (ctx?.dataSlug?.model
-  //                             ? ctx?.dataSlug?.model === entity
-  //                             : false)
-  //                     }
-  //                 >
-  //                   {item.name}
-  //                 </Checkbox>
-  //               </Fragment>
-  //           );
-  //         })}
-  //       </>
-  //   );
-  // };
-  // return (
-  //     <div className={'flex flex-col gap-2 mb-3'}>
-  //       <h4
-  //           className={
-  //             'font-semibold text-[16px] lg:pb-2 lg:border-b lg:border-gray-500'
-  //           }
-  //       >
-  //         {title}
-  //       </h4>
-  //       <div
-  //           className={
-  //             'lg:max-h-[220px] overflow-auto flex max-lg:flex-wrap lg:flex-col max-lg:gap-1'
-  //           }
-  //       >
-  //         {renderValue()}
-  //       </div>
-  //     </div>
-  // );
 }

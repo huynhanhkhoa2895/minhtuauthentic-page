@@ -32,12 +32,14 @@ type Props = {
   relatedProducts: ProductDto[];
   productConfigurations: ProductConfigurationsDto[];
   settings: SettingsDto[];
+  variantActive: VariantDto | undefined;
 };
 const ProductDetailCard = ({
   product,
   productConfigurations,
   relatedProducts,
   settings,
+  variantActive,
 }: Props) => {
   const [isOpen, setIsOpen] = useState<{
     display: boolean;
@@ -47,15 +49,17 @@ const ProductDetailCard = ({
     image: null,
   });
 
-  const [variantActive, setVariantActive] = useState<VariantDto | undefined>(
-    (product?.variants || [])?.find((item: VariantDto) => item.is_default) ||
+  const [_variantActive, setVariantActive] = useState<VariantDto | undefined>(
+    variantActive ||
+      (product?.variants || [])?.find((item: VariantDto) => item.is_default) ||
       product?.variants?.[0],
   );
+
   return (
     <>
       {product && (
         <>
-          {variantActive && (
+          {_variantActive && (
             <div
               className={
                 'p-3 grid grid-cols-1 lg:grid-cols-2 rounded-[10px] shadow-custom mt-3 bg-white gap-3'
@@ -64,11 +68,11 @@ const ProductDetailCard = ({
               <ProductDetailImage
                 product={product}
                 setIsOpen={setIsOpen}
-                variantActive={variantActive}
+                variantActive={_variantActive}
               />
               <ProductProperty
                 product={product}
-                variantActive={variantActive}
+                variantActive={_variantActive}
                 productConfigurations={productConfigurations}
                 settings={settings}
                 onChange={(variant: VariantDto) => {
@@ -107,7 +111,7 @@ const ProductDetailCard = ({
             setIsOpen={setIsOpen}
             image={isOpen.image}
             product={product}
-            variantActive={variantActive}
+            variantActive={_variantActive}
           />
         </>
       )}

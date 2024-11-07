@@ -36,6 +36,7 @@ const ProductDetailImage = ({
       <SectionSwiper
         classNameContainer={'mt-3'}
         slidePerViewMobile={4}
+        key={variantActive?.id}
         classNameItems={
           'p-1 lg:hover:shadow-md transition-shadow duration-300 lg:hover:border-primary border border-transparent'
         }
@@ -61,7 +62,7 @@ const ProductDetailImage = ({
         data={images}
       />
     );
-  }, [images, imageActive]);
+  }, [imageActive, variantActive]);
 
   return (
     <div className={twMerge(containerClassName)}>

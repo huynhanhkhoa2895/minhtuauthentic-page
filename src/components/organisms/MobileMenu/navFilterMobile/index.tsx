@@ -1,14 +1,8 @@
-import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
-import useMenu from '@/hooks/useMenu';
 import React, { useContext, useEffect, useRef } from 'react';
-
 import { createPortal } from 'react-dom';
-import NavMenuContent from '@/components/organisms/MobileMenu/navMenu/content';
-import AppContext from '@/contexts/appContext';
 import CategoryFilterContext from '@/contexts/categoryFilterContext';
 import { twMerge } from 'tailwind-merge';
 import SettingFilter from '@/components/organisms/categoryFilter/settingFilter';
-import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage.dto';
 import { ProductFilterOptionDto } from '@/dtos/ProductFilterSettingOption/ProductFilterOption.dto';
 
 type Props = {
