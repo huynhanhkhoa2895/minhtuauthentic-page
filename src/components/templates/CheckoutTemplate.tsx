@@ -169,7 +169,7 @@ export default function CheckoutTemplate({
                     currency: 'VND',
                     value: res?.data?.total_price,
                   },
-                  storeId: 'minhtuauthentic',
+                  storeId: 'ST_S7SA7972',
                   requestType: 'installment',
                   paymentMethod: 'WEB',
                   description:

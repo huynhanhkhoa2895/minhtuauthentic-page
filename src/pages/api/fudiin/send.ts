@@ -16,30 +16,28 @@ export default async function handler(
       description: _body.description,
       successRedirectUrl: 'minhtuauthentic.com',
       unSuccessRedirectUrl: 'minhtuauthentic.com',
-      'amount.value': _body.amount.value,
-      'amount.currency': _body.amount.currency,
+      amount: _body.amount,
       items: _body.items,
       customer: _body.customer,
       shipping: _body.shipping,
     };
-    delete _body.amount;
     const _bodyString = JSON.stringify(_body);
     const hex = generateHmacSHA256Signature(
       process.env.NEXT_PUBLIC_FUNDIN_SECRET || '',
       _bodyString,
     );
-    // console.log('test', _bodyString, {
-    //   'Content-Type': 'application/json; charset=UTF-8',
-    //   'Client-Id': process.env.NEXT_PUBLIC_FUNDIN_CLIENT_ID,
-    //   'process.env.NEXT_PUBLIC_FUNDIN_SECRET':
-    //     process.env.NEXT_PUBLIC_FUNDIN_SECRET || '',
-    //   hex,
-    //   decode: verifyHmacSHA256Signature(
-    //     process.env.NEXT_PUBLIC_FUNDIN_SECRET,
-    //     _bodyString,
-    //     hex,
-    //   ),
-    // });
+    console.log('test', _bodyString, {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Client-Id': process.env.NEXT_PUBLIC_FUNDIN_CLIENT_ID,
+      'process.env.NEXT_PUBLIC_FUNDIN_SECRET':
+        process.env.NEXT_PUBLIC_FUNDIN_SECRET || '',
+      hex,
+      decode: verifyHmacSHA256Signature(
+        process.env.NEXT_PUBLIC_FUNDIN_SECRET,
+        _bodyString,
+        hex,
+      ),
+    });
 
     const url = `${process.env.NEXT_PUBLIC_FUNDIN_URL}/v2/payments`;
     fetch(url, {
