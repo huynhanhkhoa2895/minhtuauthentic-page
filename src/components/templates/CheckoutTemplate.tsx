@@ -14,8 +14,7 @@ import * as yup from 'yup';
 import CartDto from '@/dtos/Cart.dto';
 import { toast } from 'react-toastify';
 import { createVNPayUrl } from '@/utils/vnpay';
-import SendTransactionBaoKimDto from '@/dtos/BaoKim/sendTransaction.dto';
-import ResponseSendTransactionDto from '@/dtos/BaoKim/responseSendTransaction.dto';
+import ResponseSendTransactionDto from '@/dtos/Fudiin/responseSendTransaction.dto';
 import { useContext, useEffect, useState } from 'react';
 import OrderContext from '@/contexts/orderContext';
 import { useRouter } from 'next/router';
@@ -173,12 +172,14 @@ export default function CheckoutTemplate({
                   requestType: 'installment',
                   paymentMethod: 'WEB',
                   description:
-                    'Thanh toan don hang cua user Bao Kim ' +
+                    'Thanh toan don hang cua user Fudiin ' +
                     res?.data?.user_id +
                     ' voi gia tri ' +
                     res?.data?.total_price,
                   successRedirectUrl:
-                    process.env.NEXT_PUBLIC_APP_URL + '/baokim/',
+                    process.env.NEXT_PUBLIC_APP_URL +
+                    '/gio-hang/thanh-cong/?orderId=' +
+                    res?.data?.id,
                   unSuccessRedirectUrl: '/',
                   customer: new CustomerFudiinDto({
                     phoneNumber: data?.phone,
@@ -200,19 +201,17 @@ export default function CheckoutTemplate({
             })
               .then((rs) => rs.json())
               .then(async (item: ResponseSendTransactionDto) => {
-                if (item?.data?.order_id) {
+                if (item?.referenceId) {
                   await fetch('/api/orders/update', {
                     method: 'PUT',
                     body: JSON.stringify({
                       id: res?.data?.id,
-                      order_external_id: item?.data?.order_id,
+                      order_external_id: item?.referenceId,
                     }),
                   });
                 }
-                if (item?.data?.payment_url) {
-                  window.location.href = item.data.payment_url;
-                } else if (item?.message?.[0]) {
-                  toast.error('Lỗi bảo kim: ' + item?.message?.[0]);
+                if (item?.paymentUrl) {
+                  window.location.href = item.paymentUrl;
                 } else {
                   toast.error('Đã có lỗi xảy ra');
                 }

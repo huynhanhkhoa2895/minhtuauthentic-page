@@ -4,7 +4,6 @@ import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
 import Layout from '@/components/templates/Layout';
-import { ServerSideProps } from '@/config/type';
 
 export const getServerSideProps = async () => {
   const resDefault = await getDefaultSeverSide();

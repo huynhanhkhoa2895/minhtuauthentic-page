@@ -65,6 +65,9 @@ export default function NavMenu({ menu, className }: Props) {
   useEffect(() => {
     if (!appCtx?.isOpenNavMenu) {
       setLoading(false);
+      document.body.style.overflow = 'auto';
+    } else {
+      document.body.style.overflow = 'hidden';
     }
   }, [appCtx?.isOpenNavMenu]);
 
