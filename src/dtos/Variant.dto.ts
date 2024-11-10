@@ -16,7 +16,7 @@ export class VariantDto extends BaseDto {
   images?: ImageDetailDto[];
   variant_product_configuration_values?: IVariantProductConfigurationValuesDto[];
   coupons?: CouponsDto[];
-  slugs?: SlugDto;
+  link?: string;
 
   constructor(init?: Partial<VariantDto>) {
     super();

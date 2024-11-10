@@ -1,13 +1,15 @@
 import { Breadcrumb } from 'antd';
 import Link from 'next/link';
 import { ReactNode, useEffect, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 type Props = {
   link: string
   label: string
   current?: {label: string, link: string}
+  className?: string
 }
-export default function BreadcrumbComponent({link, label, current}: Props) {
+export default function BreadcrumbComponent({link, label, current, className}: Props) {
   const [items, setItems] = useState<{title: ReactNode | string}[]>([
     {
       title: <Link href={'/'}>Trang chủ</Link>,
@@ -26,7 +28,7 @@ export default function BreadcrumbComponent({link, label, current}: Props) {
     }
   }, []);
   return <Breadcrumb
-    className={'mb-3'}
+    className={twMerge('mb-3 overflow-auto', className)}
     items={items}
   />
 }

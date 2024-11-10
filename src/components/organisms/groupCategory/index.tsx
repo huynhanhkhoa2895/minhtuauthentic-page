@@ -37,11 +37,11 @@ const GroupCategory = ({
       className={'mt-3 mx-auto p-1 lg:p-3 rounded-[10px]'}
       style={{ backgroundColor: staticComponent?.properties?.backgroundColor }}
     >
-      <div className={'flex flex-col lg:flex-row justify-between mb-3 gap-2'}>
+      <div className={'flex flex-col lg:flex-row justify-between mb-3 gap-2 items-center'}>
         <div
           style={{ color: staticComponent?.properties?.textColor }}
           className={
-            'w-max shrink-0 max-lg:items-center max-lg:flex max-lg:justify-between max-lg:w-full'
+            'w-max shrink-0 max-lg:items-center max-lg:flex max-lg:justify-between max-lg:w-full max-lg:mt-3'
           }
         >
           <h2 style={{ color: staticComponent?.properties?.textColor }}>

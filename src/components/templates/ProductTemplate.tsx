@@ -3,9 +3,6 @@ import ProductDetailCard from '@/components/organisms/product/detailCard';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import { generateSlugToHref } from '@/utils';
 import { ResponseSlugPageDto } from '@/dtos/responseSlugPage.dto';
-import Script from 'next/script';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 const CustomScript = dynamic(() => import('@/components/atoms/customScript'), {
   ssr: false,
@@ -25,6 +22,7 @@ const ProductTemplate = ({
           label: data?.product?.title || data?.product?.name || '',
           link: generateSlugToHref(data?.product?.slugs?.slug),
         }}
+        className={'breakcrumb-no-wrap'}
       />
       {data?.product && (
         <ProductDetailCard

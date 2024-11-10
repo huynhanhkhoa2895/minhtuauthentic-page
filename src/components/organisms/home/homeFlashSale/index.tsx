@@ -53,7 +53,6 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
             slidesPerView={5}
             spaceBetween={10}
             auto={true}
-            loop={true}
             renderItem={(item: unknown) => {
               const coupon = item as CouponsDto;
               const variant = coupon?.coupon_details?.[0].variant;

@@ -9,7 +9,10 @@ type SortBy = {
   name: string;
   value: string;
 };
-export default function SortBy() {
+type Props = {
+  isNeedWrapper?: boolean;
+}
+export default function SortBy({ isNeedWrapper }: Props) {
   const ctx = useContext(CategoryFilterContext);
   const sortBy: SortBy[] = [
     {
@@ -37,8 +40,8 @@ export default function SortBy() {
       value: CATEGORY_FILTER.SORT_BY.PRICE_DESC,
     },
   ];
-  return (
-    <div className={'flex gap-3 flex-wrap'}>
+  const renderItem = () => {
+    return <>
       {sortBy.map((sort, index) => {
         return (
           <button
@@ -54,6 +57,18 @@ export default function SortBy() {
           </button>
         );
       })}
-    </div>
+    </>
+  }
+  return (
+    <>
+      {isNeedWrapper ?
+        <div className={'flex gap-3 flex-wrap'}>
+          {renderItem()}
+        </div>
+        :
+        renderItem()
+      }
+    </>
+
   );
 }

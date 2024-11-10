@@ -66,7 +66,7 @@ iframe {
     @apply text-[1.17em] leading-[1.2] my-[1em];
   }
   p{
-    @apply leading-[1.6] break-words my-[1em];
+    @apply leading-[1.6] break-words;
   }
   a{
     @apply text-[#0782C1] underline cursor-pointer;
@@ -114,3 +114,10 @@ iframe {
     @apply flex items-center justify-center !important;
 }
 
+.breakcrumb-no-wrap ol{
+  @apply flex-nowrap;
+}
+
+.breakcrumb-no-wrap ol > li{
+    @apply shrink-0;
+}

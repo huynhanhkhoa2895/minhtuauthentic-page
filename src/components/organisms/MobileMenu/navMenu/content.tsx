@@ -35,7 +35,7 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
   const generateLabel = (label: string) => {
     const obj: Record<string, string> = {
       brands: 'Thương hiệu',
-      price_range: 'Khoảng giá',
+      price_range: 'Phạm vi giá',
       concentration_gradients: 'Nồng độ',
       fragrance_retention: 'Độ giữ mùi',
       sex: 'Giới tính',

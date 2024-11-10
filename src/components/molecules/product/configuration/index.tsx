@@ -53,7 +53,7 @@ export default function ProductConfiguration({
           >
             <CheckOutlined
               style={{
-                transform: variant?.slugs?.slug
+                transform: variant?.link
                   ? 'rotate(-45deg) translateX(-4px) translateY(5px)'
                   : 'rotate(-45deg) translateX(-15px) translateY(-3px)',
               }}
@@ -89,11 +89,11 @@ export default function ProductConfiguration({
                     key={index + '_' + index2}
                     className={'flex gap-3 flex-wrap'}
                   >
-                    {variant?.slugs &&
+                    {variant?.link &&
                     router.asPath !==
-                      generateSlugToHref(variant?.slugs?.slug) ? (
+                      generateSlugToHref(variant?.link) ? (
                       <Link
-                        href={generateSlugToHref(variant?.slugs?.slug)}
+                        href={generateSlugToHref(variant?.link)}
                         className={twMerge(
                           'rounded-[10px] p-2 lg:p-3 border border-gray-300 text-gray-500 relative overflow-hidden font-extrabold',
                           isActived ? 'border-primary' : '',

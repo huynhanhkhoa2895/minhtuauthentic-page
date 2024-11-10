@@ -131,7 +131,7 @@ export default function ContentFilter({
   const renderTitle = () => {
     if (ctx?.search) {
       return (
-        <h1 className={'mb-6'}>
+        <h1 className={'mb-3 lg:mb-6'}>
           <span className={'text-3xl text-primary font-semibold'}>
             Kết quả tìm kiếm cho:{' '}
           </span>
@@ -140,7 +140,7 @@ export default function ContentFilter({
       );
     } else if (title) {
       return (
-        <h1 className={'mb-6'}>
+        <h1 className={'mb-3 lg:mb-6'}>
           <span className={'text-3xl text-primary font-semibold'}>{title}</span>
         </h1>
       );
@@ -150,21 +150,28 @@ export default function ContentFilter({
   return (
     <div className={'p-3 w-full lg:col-span-5'}>
       {renderTitle()}
-      <Button
-        type={'link'}
-        className={'lg:hidden flex gap-1 p-0'}
-        onClick={() => {
-          ctx?.setIsOpenFilter && ctx.setIsOpenFilter(true);
-        }}
-      >
-        <Filter className={'w-6 h-6'} />
-        <span className={'font-semibold text-[16px] shrink-0 text-white'}>Bộ lọc</span>
-      </Button>
-      <div className={'mb-6'}>
+      <div className={'mb-3 lg:mb-6'}>
         <span className={'font-semibold text-[16px] shrink-0'}>Lọc theo:</span>
         <FilterBy />
       </div>
-      <div className={'flex flex-col mb-6'}>
+      <div className={'flex items-center gap-2 flex-wrap mb-3'}>
+        <Button
+          type={'link'}
+          className={'lg:hidden flex gap-1 p-0'}
+          onClick={() => {
+            ctx?.setIsOpenFilter && ctx.setIsOpenFilter(true);
+          }}
+        >
+          <Filter className={'w-6 h-6'} />
+          <span className={'font-semibold text-[14px] shrink-0 z'}>Bộ lọc | </span>
+        </Button>
+        <span className={'font-semibold text-[14px]'}>
+          Sắp xếp theo
+        </span>
+        <SortBy isNeedWrapper={false} />
+        <PageLimit />
+      </div>
+      <div className={'flex flex-col mb-3 lg:mb-6 max-lg:hidden'}>
         <span className={'font-semibold text-[16px] w-full mb-3'}>
           Sắp xếp theo
         </span>
@@ -173,7 +180,7 @@ export default function ContentFilter({
             'flex max-lg:flex-col lg:justify-between lg:items-center gap-3'
           }
         >
-          <SortBy />
+          <SortBy isNeedWrapper={true} />
           <PageLimit />
         </div>
       </div>

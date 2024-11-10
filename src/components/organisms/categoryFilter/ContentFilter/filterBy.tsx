@@ -4,8 +4,11 @@ import { ProductFilterOptionDto } from '@/dtos/ProductFilterSettingOption/Produc
 import CloseCircle from '@/components/icons/closeCircle';
 import { getModelEntity } from '@/utils';
 import { Entity } from '@/config/enum';
-
-export default function FilterBy() {
+import { twMerge } from 'tailwind-merge';
+type Props ={
+  className?: string;
+}
+export default function FilterBy({className}: Props) {
   const ctx = useContext(CategoryFilterContext);
   const _settings = ctx?.objFilterByValue;
   const handleClose = (key: string, id: string | number) => {
@@ -30,7 +33,7 @@ export default function FilterBy() {
             <div
               key={filter + '_' + item}
               className={
-                'border border-gray-300 p-2 rounded-[5px] flex gap-1 bg-primary text-white items-center'
+                'border border-gray-300 p-1 lg:p-2 rounded-[5px] flex gap-1 bg-primary text-white items-center'
               }
             >
               <button type={'button'} onClick={() => handleClose(filter, item)}>
@@ -46,7 +49,7 @@ export default function FilterBy() {
     return xhtml;
   };
   return (
-    <div className={'flex gap-3 items-center flex-wrap mt-3'}>
+    <div className={twMerge('flex gap-3 items-center flex-wrap mt-3', className)}>
       {renderItem()}
     </div>
   );
