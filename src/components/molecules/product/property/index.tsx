@@ -156,6 +156,7 @@ const ProductProperty = ({
             productConfigurations={productConfigurations}
             onChange={handleConfigurationChange}
             value={getConfigurationValue()}
+            variants={product?.variants || []}
             variantMap={variantConfigurationValueMap}
           />
         )}
