@@ -93,7 +93,7 @@ export default function NavMenu({ menu, className }: Props) {
             switch (item.type) {
               case POPUP_TYPE.CATEGORY:
                 onClick = () => {
-                  if (item?.data?.id !== itemDebounceMenu?.data?.id ) {
+                  if (_item?.id !== (itemDebounceMenu?.data as any)?.id ) {
                     setLoading(true);
                     setItemDebounceMenu(item);
                   }
