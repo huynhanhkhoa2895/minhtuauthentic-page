@@ -154,7 +154,7 @@ export default function ContentFilter({
         <span className={'font-semibold text-[16px] shrink-0'}>Lọc theo:</span>
         <FilterBy />
       </div>
-      <div className={'flex items-center gap-2 flex-wrap mb-3'}>
+      <div className={'flex items-center gap-2 flex-wrap mb-3 lg:hidden'}>
         <Button
           type={'link'}
           className={'lg:hidden flex gap-1 p-0'}
