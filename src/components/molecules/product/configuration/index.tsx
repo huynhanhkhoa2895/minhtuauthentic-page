@@ -43,7 +43,7 @@ export default function ProductConfiguration({
   useEffect(() => {
     const newObj: DisplayProps = {};
     productConfigurations.map((item) => {
-      newObj[item.id] = {
+      newObj[item?.id || 0] = {
         configuration: item,
         values: [],
       };
@@ -53,7 +53,7 @@ export default function ProductConfiguration({
         if (
           value.product_configuration_value &&
           !newObj[
-            value.product_configuration_value?.product_configuration_id
+            value?.product_configuration_value?.product_configuration_id || 0
           ].values.includes(value.product_configuration_value)
         ) {
           newObj[
