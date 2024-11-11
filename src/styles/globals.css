@@ -54,7 +54,7 @@ iframe {
 }
 .container-html {
   img {
-    @apply max-lg:w-full max-lg:h-auto m-auto !important;
+    @apply max-lg:w-full max-lg:h-auto m-[10px_auto] !important;
   }
   h1 {
     @apply text-[2em] leading-[1.2] my-[0.67em];
