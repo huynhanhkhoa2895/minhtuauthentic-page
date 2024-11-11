@@ -57,7 +57,7 @@ export default function ProductConfiguration({
           ].values.includes(value.product_configuration_value)
         ) {
           newObj[
-            value.product_configuration_value?.product_configuration_id
+            value.product_configuration_value?.product_configuration_id || 0
           ].values.push(value.product_configuration_value);
         }
       });
