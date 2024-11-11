@@ -168,7 +168,7 @@ export default function CheckoutTemplate({
                     currency: 'VND',
                     value: res?.data?.total_price,
                   },
-                  storeId: 'ST_S7SA7972',
+                  storeId: process.env.NEXT_PUBLIC_FUNDIN_STORE_ID || '',
                   requestType: 'installment',
                   paymentMethod: 'WEB',
                   description:
