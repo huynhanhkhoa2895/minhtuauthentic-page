@@ -1,5 +1,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Image from 'next/image';
+import Link from 'next/link';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import {
@@ -10,6 +11,7 @@ import {
 } from 'swiper/modules';
 import 'swiper/css/effect-fade';
 import { StaticContentsDto } from '@/dtos/StaticContents.dto';
+import { generateSlugToHref } from '@/utils';
 export const Banners = ({
   banners,
   className,
@@ -41,19 +43,21 @@ export const Banners = ({
         }
         return (
           <SwiperSlide key={index + '-' + isMobile && 'isMobile'}>
-            <Image
-              src={
-                isMobile
-                  ? imageDetail?.image?.thumbnail_url || ''
-                  : imageDetail?.image?.url || ''
-              }
-              alt={imageDetail?.image?.alt || 'minhtuauthentic'}
-              width={imageDetail?.image?.width || 0}
-              height={imageDetail?.image?.height || 0}
-              className={classNameImage || 'object-contain w-full'}
-              unoptimized={!isMobile}
-              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPs7u2tBwAFdgImpqLKKAAAAABJRU5ErkJggg=="
-            />
+            <Link href={generateSlugToHref(banner?.properties?.slug)}>
+              <Image
+                src={
+                  isMobile
+                    ? imageDetail?.image?.thumbnail_url || ''
+                    : imageDetail?.image?.url || ''
+                }
+                alt={imageDetail?.image?.alt || 'minhtuauthentic'}
+                width={imageDetail?.image?.width || 0}
+                height={imageDetail?.image?.height || 0}
+                className={classNameImage || 'object-contain w-full'}
+                unoptimized={!isMobile}
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPs7u2tBwAFdgImpqLKKAAAAABJRU5ErkJggg=="
+              />
+            </Link>
           </SwiperSlide>
         );
       })}
