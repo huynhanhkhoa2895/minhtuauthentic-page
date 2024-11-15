@@ -27,6 +27,14 @@ const nextConfig = withBundleAnalyzer({
     "rc-picker",
     "rc-tree",
     "rc-table",],
+  async rewrites() {
+    return [
+      {
+        source: '/iframe',
+        destination: '/iframe/index.html',
+      }
+    ]
+  }
 });
 
 export default nextConfig;

@@ -4,6 +4,7 @@ import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import { generateSlugToHref } from '@/utils';
 import { ResponseSlugPageDto } from '@/dtos/responseSlugPage.dto';
 import dynamic from 'next/dynamic';
+import Script from 'next/script';
 const CustomScript = dynamic(() => import('@/components/atoms/customScript'), {
   ssr: false,
 });
@@ -33,7 +34,14 @@ const ProductTemplate = ({
           settings={data?.settings || []}
         />
       )}
+      <div id="script-general-container"></div>
       <CustomScript />
+      <iframe src="/iframe?product_price=500000000" frameBorder="0" width="100%" />
+      {/*<Script*/}
+      {/*  data-partytown-config*/}
+      {/*  strategy={'afterInteractive'}*/}
+      {/*  src={process.env.NEXT_PUBLIC_FUNDIN_URL + `/merchants/productdetailjs/${process.env.NEXT_PUBLIC_FUNDIN_MERCHANT_ID}.js`}*/}
+      {/*/>*/}
     </>
   );
 };

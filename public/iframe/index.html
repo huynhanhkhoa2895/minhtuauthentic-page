@@ -1,0 +1,26 @@
+
+<html>
+  <head>
+    <style>
+
+    </style>
+  </head>
+  <body>
+    <div id="script-general-container"></div>
+    <script>
+      var urlSearchParams = new URLSearchParams(window.location.search);
+      var params = Object.fromEntries(urlSearchParams.entries());
+      var fundiinDetailConfig = {
+        data:{
+          amount: params.product_price
+        }
+      };
+    </script>
+    <script type="application/javascript"
+            crossorigin="anonymous"
+            src="https://gateway-sandbox.fundiin.vn/merchants/productdetailjs/FD7779994254.js">
+    </script>
+  </body>
+</html>
+
+

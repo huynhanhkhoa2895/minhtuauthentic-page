@@ -16,6 +16,7 @@ export default function CustomScript() {
         (
           <Script
             data-partytown-config
+            strategy={'afterInteractive'}
             src="https://pc.baokim.vn/js/bk_plus_v2.popup.js"
             onLoad={() => {
               const loadEvent = new Event('load');
