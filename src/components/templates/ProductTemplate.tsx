@@ -34,9 +34,7 @@ const ProductTemplate = ({
           settings={data?.settings || []}
         />
       )}
-      <div id="script-general-container"></div>
-      <CustomScript />
-      <iframe src="/iframe?product_price=500000000" frameBorder="0" width="100%" />
+      <CustomScript isHaveFudiin />
       {/*<Script*/}
       {/*  data-partytown-config*/}
       {/*  strategy={'afterInteractive'}*/}

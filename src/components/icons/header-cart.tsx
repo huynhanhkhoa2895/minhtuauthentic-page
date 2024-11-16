@@ -1,18 +1,23 @@
 import { twMerge } from 'tailwind-merge';
 import { useContext } from 'react';
 import OrderContext from '@/contexts/orderContext';
-import {
-  isMobile,
-} from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 import { useRouter } from 'next/router';
-const HeaderCart = ({ className, classNumber }: { className?: string, classNumber?: string }) => {
+const HeaderCart = ({
+  className,
+  classNumber,
+}: {
+  className?: string;
+  classNumber?: string;
+}) => {
   const cart = useContext(OrderContext);
   const router = useRouter();
   return (
-    <div className={twMerge(className, 'relative')}
-      onClick={()=>{
+    <div
+      className={twMerge(className, 'relative')}
+      onClick={() => {
         if (isMobile) {
-          router.push('/gio-hang/tom-tat')
+          router.push('/gio-hang/tom-tat');
         }
       }}
     >
@@ -45,7 +50,6 @@ const HeaderCart = ({ className, classNumber }: { className?: string, classNumbe
             ></path>
             <path
               d="M23.47,34.17h-18A4.58,4.58,0,0,1,.91,29.24L2.5,8.78A1.44,1.44,0,0,1,3.94,7.46H25a1.43,1.43,0,0,1,1.43,1.32L28,29.24A4.57,4.57,0,0,1,23.47,34.17Z"
-              className="cls-1"
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="1.8px"
