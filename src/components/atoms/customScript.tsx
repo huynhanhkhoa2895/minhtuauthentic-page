@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 type Props = {
-  isHaveFudiin: boolean;
+  isHaveFudiin?: boolean;
 };
 export default function CustomScript({ isHaveFudiin }: Props) {
   const router = useRouter();

@@ -34,7 +34,7 @@ const ProductTemplate = ({
           settings={data?.settings || []}
         />
       )}
-      <CustomScript isHaveFudiin />
+      <CustomScript isHaveFudiin={true} />
       {/*<Script*/}
       {/*  data-partytown-config*/}
       {/*  strategy={'afterInteractive'}*/}
