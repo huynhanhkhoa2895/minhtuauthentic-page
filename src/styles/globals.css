@@ -97,7 +97,7 @@ iframe {
   @apply w-full;
 }
 .bk-btn-box{
-  @apply flex max-lg:flex-col items-center justify-center;
+  @apply flex max-lg:flex-col items-center justify-center gap-3;
 }
 .cart-summary .bk-btn-box{
     @apply flex-col gap-3;
