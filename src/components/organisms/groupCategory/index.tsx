@@ -1,14 +1,13 @@
-import { CategoryDto } from '@/dtos/Category.dto';
 import ProductCard from '../product/card';
 import { TagLink } from '@/components/molecules/tagLink';
 import { StaticComponentDto } from '@/dtos/StaticComponent.dto';
-import { useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { TagLinkDto } from '@/dtos/tagLink.dto';
 import { generateSlugToHref } from '@/utils';
 import Link from 'next/link';
-import SectionSwiper from '@/components/organisms/sectionSwiper';
 import { IProductCategoryDto } from '@/dtos/IProductCategory.dto';
 import dynamic from 'next/dynamic';
+import SectionSwiperItem from '@/components/organisms/sectionSwiper/item';
 const TagLinkMobileView = dynamic(
   () => import('@/components/organisms/groupCategory/TagLinkMobileView'),
   {
@@ -37,7 +36,11 @@ const GroupCategory = ({
       className={'mt-3 mx-auto p-1 lg:p-3 rounded-[10px]'}
       style={{ backgroundColor: staticComponent?.properties?.backgroundColor }}
     >
-      <div className={'flex flex-col lg:flex-row justify-between mb-3 gap-2 items-center'}>
+      <div
+        className={
+          'flex flex-col lg:flex-row justify-between mb-3 gap-2 items-center'
+        }
+      >
         <div
           style={{ color: staticComponent?.properties?.textColor }}
           className={
@@ -93,22 +96,21 @@ const GroupCategory = ({
           />
         </div>
       </div>
-      <SectionSwiper
+      <SectionSwiperItem
         isGrid={true}
         slidesPerView={5}
         spaceBetween={5}
+        heightItem={478}
         isUseHeightWrapper={true}
         renderItem={(item: unknown) => {
           const iProduct = item as IProductCategoryDto;
           const variant = iProduct?.product?.variants?.[0];
           if (!variant) {
-            return;
+            return (<></>) as ReactNode;
           }
-          return (
-            iProduct.product && (
-              <ProductCard product={iProduct.product} variant={variant} />
-            )
-          );
+          return (iProduct.product && (
+            <ProductCard product={iProduct.product} variant={variant} />
+          )) as ReactNode;
         }}
         data={
           (staticComponent?.category?.products || [])?.filter(

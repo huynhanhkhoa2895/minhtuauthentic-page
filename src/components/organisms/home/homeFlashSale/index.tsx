@@ -1,11 +1,12 @@
 import { PromotionsDto } from '@/dtos/Promotions.dto';
 import { SettingOptionDto } from '@/dtos/SettingOption.dto';
 import ProductCard from '@/components/organisms/product/card';
-import SectionSwiper from '@/components/organisms/sectionSwiper';
 import CouponsDto from '@/dtos/Coupons.dto';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { isDesktop, isMobile } from 'react-device-detect';
+import { ReactNode } from 'react';
+import SectionSwiperItem from '@/components/organisms/sectionSwiper/item';
 const CountdownContainer = dynamic(
   () => import('@/components/organisms/home/homeFlashSale/countdownContainer'),
   {
@@ -49,33 +50,30 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
               endDate={endDate}
             />
           )}
-          <SectionSwiper
+          <SectionSwiperItem
             slidesPerView={5}
             spaceBetween={10}
-            auto={true}
             renderItem={(item: unknown) => {
               const coupon = item as CouponsDto;
               const variant = coupon?.coupon_details?.[0].variant;
               if (!variant || !variant.regular_price) {
-                return;
+                return (<></>) as ReactNode;
               }
 
-              return (
-                variant.product && (
-                  <ProductCard
-                    product={variant.product}
-                    variant={
-                      {
-                        ...variant,
-                        ...{ coupon },
-                      } as any
-                    }
-                    promotions={promotion && [promotion]}
-                    coupon={coupon}
-                    isShowConfiguration
-                  />
-                )
-              );
+              return (variant.product && (
+                <ProductCard
+                  product={variant.product}
+                  variant={
+                    {
+                      ...variant,
+                      ...{ coupon },
+                    } as any
+                  }
+                  promotions={promotion && [promotion]}
+                  coupon={coupon}
+                  isShowConfiguration
+                />
+              )) as ReactNode;
             }}
             data={
               (promotion?.coupons || [])?.filter(

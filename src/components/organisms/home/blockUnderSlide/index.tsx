@@ -1,8 +1,4 @@
 import { StaticContentsDto } from '@/dtos/StaticContents.dto';
-import dynamic from 'next/dynamic';
-import { Suspense, useEffect, useState } from 'react';
-import { Skeleton } from 'antd';
-import SkeletonMobile from '@/components/atoms/skeletonMobile';
 import BlockUnderSlideItem from '@/components/molecules/blockUnderSlide/item';
 import SectionSwiper from '@/components/organisms/sectionSwiper';
 type Props = {

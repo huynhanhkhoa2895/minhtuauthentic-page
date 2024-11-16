@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { JSX, ReactNode, useEffect, useMemo, useState } from 'react';
 import { Swiper as SwiperClass } from 'swiper/types';
 import { twMerge } from 'tailwind-merge';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons/lib/icons';

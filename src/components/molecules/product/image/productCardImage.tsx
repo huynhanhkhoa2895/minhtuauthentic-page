@@ -20,19 +20,21 @@ const ProductCardImage = ({
   return (
     <div className={'relative pt-[100%]'}>
       <Link
-        className={'block absolute w-full h-full inset-0 p-2 '}
+        className={twMerge(
+          'block absolute w-full h-full inset-0 p-2 ',
+          'w-full h-full overflow-hidden',
+          className,
+        )}
         href={`/${product.slugs?.slug}`}
       >
-        <div className={twMerge('w-full h-full overflow-hidden', className)}>
-          <ImageWithFallback
-            image={image}
-            className={
-              'object-contain w-full h-full hover:scale-105 transition-transform duration-300'
-            }
-            product={product}
-            unoptimized={!isMobile}
-          />
-        </div>
+        <ImageWithFallback
+          image={image}
+          className={
+            'object-contain w-full h-full hover:scale-105 transition-transform duration-300'
+          }
+          product={product}
+          unoptimized={!isMobile}
+        />
       </Link>
     </div>
   );
