@@ -21,6 +21,13 @@ const ProductRating = dynamic(
   },
 );
 
+const ProductRelationWrapper = dynamic(
+  () => import('@/components/organisms/product/productRelationWrapper'),
+  {
+    ssr: false,
+  },
+);
+
 const PopupImage = dynamic(
   () => import('@/components/molecules/product/image/popupImage'),
   {
@@ -98,11 +105,18 @@ const ProductDetailCard = ({
                 questions={product?.question_answers || []}
               />
               {product.id && <ProductRating product_id={product.id} />}
+              <ProductRelationWrapper
+                display={'mobile'}
+                products={relatedProducts}
+              />
             </div>
 
             <div>
               <ProductInformation product={product} />
-              <ProductRelation products={relatedProducts} />
+              <ProductRelationWrapper
+                display={'desktop'}
+                products={relatedProducts}
+              />
             </div>
           </div>
 

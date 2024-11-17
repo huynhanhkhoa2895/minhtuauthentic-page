@@ -58,7 +58,7 @@ export default function CategoryTemplate({
       >
         {data?.settings && (
           <SettingFilter
-            className={'hidden lg:block'}
+            className={'hidden lg:!block'}
             settings={data?.settings}
           />
         )}

@@ -7,13 +7,14 @@ import { STATIC_CONTENT_TYPE } from '@/config/enum';
 import Link from 'next/link';
 import { orderBy } from 'lodash';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
-import dynamic   from 'next/dynamic';
-const FooterContent = dynamic(() => import('@/components/organisms/footer/footerContent') , {
-  ssr: false,
-});
+import dynamic from 'next/dynamic';
+const FooterContent = dynamic(
+  () => import('@/components/organisms/footer/footerContent'),
+  {
+    ssr: false,
+  },
+);
 const Footer = ({ footerContent }: { footerContent?: ResponseFooterDto }) => {
-
-
   return (
     <footer className={'relative z-[2] max-lg:pb-[68px]'}>
       <div className={'bg-primaryGrey px-3'}>
@@ -23,9 +24,9 @@ const Footer = ({ footerContent }: { footerContent?: ResponseFooterDto }) => {
               'flex max-lg:flex-col justify-between w-full pt-[35px] max-lg:gap-y-3'
             }
           >
-            {orderBy(footerContent?.footer || [], 'sort').map((item, index) => {
-              return <FooterContent key={index} item={item} index={index} />;
-            })}
+            <FooterContent
+              items={orderBy(footerContent?.footer || [], 'sort')}
+            />
           </div>
           <div className={'grid grid-cols-1 lg:grid-cols-3 mt-3  '}>
             <Image
