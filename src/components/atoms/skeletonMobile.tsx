@@ -1,4 +1,4 @@
-import { Skeleton } from 'antd';
+import { Skeleton } from 'antd/lib';
 import { twMerge } from 'tailwind-merge';
 import { Fragment } from 'react';
 type Props = {

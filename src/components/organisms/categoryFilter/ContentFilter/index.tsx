@@ -9,7 +9,7 @@ import FilterBy from '@/components/organisms/categoryFilter/ContentFilter/filter
 import { ProductFilterOptionDto } from '@/dtos/ProductFilterSettingOption/ProductFilterOption.dto';
 import { ProductConfigurationValuesDto } from '@/dtos/productConfigurationValues.dto';
 import { SlugDto } from '@/dtos/Slug.dto';
-import { Pagination, Space, Skeleton, Button } from 'antd';
+import { Pagination, Space, Skeleton, Button } from 'antd/lib';
 import Filter from '@/components/icons/filter';
 import { CategoryDto } from '@/dtos/Category.dto';
 import { Entity } from '@/config/enum';

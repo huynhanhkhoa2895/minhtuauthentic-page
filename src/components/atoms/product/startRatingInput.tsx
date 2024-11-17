@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { Rate } from 'antd';
+import { Rate } from 'antd/lib';
 const desc = ['Kinh khủng', 'tệ', 'Bình thường', 'Tốt', 'Xuất sắc'];
 type Props = {
   value?: number;

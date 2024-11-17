@@ -10,7 +10,7 @@ import { twMerge } from 'tailwind-merge';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
-import { Button, Dropdown } from 'antd';
+import { Button, Dropdown } from 'antd/lib';
 import useUser from '@/hooks/useUser';
 import { useRouter } from 'next/router';
 import HeaderCart from '@/components/icons/header-cart';

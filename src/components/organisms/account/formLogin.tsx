@@ -1,7 +1,7 @@
 import { Form, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Button, Input, notification } from 'antd';
+import { Button, Input, notification } from 'antd/lib';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import GmailIcon from '@/components/icons/gmail';
 import FormControl from '@/components/molecules/form/FormControl';

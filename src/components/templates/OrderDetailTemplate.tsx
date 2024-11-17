@@ -1,7 +1,7 @@
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 import { OrdersDto } from '@/dtos/Orders.dto';
 import { Fragment, ReactNode, useEffect, useState } from 'react';
-import { Table } from 'antd';
+import { Table } from 'antd/lib';
 import dayjs from 'dayjs';
 import {
   calculatePriceMinus,

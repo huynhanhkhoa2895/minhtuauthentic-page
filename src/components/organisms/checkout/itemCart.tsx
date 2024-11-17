@@ -1,5 +1,5 @@
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
-import { Button, Input, InputNumber, Space } from 'antd';
+import { Button, Input, InputNumber, Space } from 'antd/lib';
 import PriceOnCart from '@/components/atoms/priceOnCart';
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 import { useContext, useState } from 'react';

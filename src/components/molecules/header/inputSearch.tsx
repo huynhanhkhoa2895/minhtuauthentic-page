@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ProductDto } from '@/dtos/Product.dto';
 import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
-import { Avatar, List, Skeleton } from 'antd';
+import { Avatar, List, Skeleton } from 'antd/lib';
 import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';

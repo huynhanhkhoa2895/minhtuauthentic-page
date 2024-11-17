@@ -1,4 +1,4 @@
-import { Skeleton } from 'antd';
+import { Skeleton } from 'antd/lib';
 
 export default function SwiperSkeleton() {
   return (

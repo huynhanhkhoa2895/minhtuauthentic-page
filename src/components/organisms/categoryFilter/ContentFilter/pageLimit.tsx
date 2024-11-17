@@ -1,4 +1,4 @@
-import { Select } from 'antd';
+import { Select } from 'antd/lib';
 import { useContext } from 'react';
 import CategoryFilterContext from '@/contexts/categoryFilterContext';
 export default function PageLimit() {

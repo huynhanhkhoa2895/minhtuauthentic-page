@@ -4,7 +4,7 @@ import { formatMoney } from '@/utils';
 import CheckItemCart from '@/components/organisms/checkout/itemCart';
 import CouponsDto from '@/dtos/Coupons.dto';
 import ItemCoupon from '@/components/atoms/coupons';
-import { Button, Input, Tag } from 'antd';
+import { Button, Input, Tag } from 'antd/lib';
 import { PAYMENT, PAYMENT_TYPE_ID } from '@/config/enum';
 import PaymentButton from '@/components/molecules/paymentButton';
 type Props = {

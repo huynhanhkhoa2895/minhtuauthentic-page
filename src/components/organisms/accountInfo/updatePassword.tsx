@@ -7,7 +7,7 @@ import { UserDto } from '@/dtos/User.dto';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import useUser from '@/hooks/useUser';
-import { Button } from 'antd';
+import { Button } from 'antd/lib';
 
 type DefaultFormProps = {
   password: string;

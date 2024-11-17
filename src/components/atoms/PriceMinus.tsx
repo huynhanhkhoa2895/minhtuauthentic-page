@@ -1,5 +1,5 @@
 import { calculatePriceMinus, formatMoney, promotionName } from '@/utils';
-import { Button, Tooltip } from 'antd';
+import { Button, Tooltip } from 'antd/lib';
 import CouponsDto from '@/dtos/Coupons.dto';
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 import { CloseCircleOutlined } from '@ant-design/icons';

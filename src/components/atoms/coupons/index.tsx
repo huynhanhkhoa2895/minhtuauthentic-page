@@ -1,7 +1,7 @@
 import CouponsDto from '@/dtos/Coupons.dto';
 import { formatMoney } from '@/utils';
 import { PROMOTION_PRICE_TYPE } from '@/config/enum';
-import { Button } from 'antd';
+import { Button } from 'antd/lib';
 
 type Props = {
   coupon: CouponsDto;

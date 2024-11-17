@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
-import { Button } from 'antd';
+import { Button } from 'antd/lib';
 
 const HeaderItem = ({
   icon,

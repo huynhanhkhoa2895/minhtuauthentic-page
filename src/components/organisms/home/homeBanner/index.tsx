@@ -2,7 +2,7 @@ import { StaticContentsDto } from '@/dtos/StaticContents.dto';
 import { isDesktop, isMobile } from 'react-device-detect';
 import Banners from '@/components/molecules/header/banners';
 import { useEffect, useState } from 'react';
-import { Skeleton } from 'antd';
+import { Skeleton } from 'antd/lib';
 import Image from 'next/image';
 
 type Props = {

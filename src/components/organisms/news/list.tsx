@@ -1,6 +1,6 @@
 import { NewsDto } from '@/dtos/News.dto';
 import NewsItem from '@/components/organisms/news/item';
-import { Pagination } from 'antd';
+import { Pagination } from 'antd/lib';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { ResponseNewsPageDto } from '@/dtos/ResponseNewsPage.dto';

@@ -4,7 +4,7 @@ import { Control } from 'react-hook-form';
 import FormControl from '@/components/molecules/form/FormControl';
 import { ProvinceDto } from '@/dtos/Province.dto';
 import { PROVINCE } from '@/config/enum';
-import { Radio } from 'antd';
+import { Radio } from 'antd/lib';
 import { UserDto } from '@/dtos/User.dto';
 import { PaymentsDto } from '@/dtos/Payments.dto';
 import OrderContext from '@/contexts/orderContext';

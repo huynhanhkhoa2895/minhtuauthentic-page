@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { PROMOTION_TYPE } from '@/config/enum';
 import { SettingsDto } from '@/dtos/Settings.dto';
-import { Skeleton } from 'antd';
+import { Skeleton } from 'antd/lib';
 
 type Props = {
   setting?: SettingsDto;

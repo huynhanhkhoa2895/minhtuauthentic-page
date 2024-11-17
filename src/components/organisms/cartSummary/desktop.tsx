@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { formatMoney, generateSlugToHref } from '@/utils';
 import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
 import PriceMinus from '@/components/atoms/PriceMinus';
-import { Button, InputNumber } from 'antd';
+import { Button, InputNumber } from 'antd/lib';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useContext } from 'react';
 import OrderContext from '@/contexts/orderContext';

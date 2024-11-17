@@ -1,4 +1,4 @@
-import { Checkbox, Input, Radio, Select } from 'antd';
+import { Checkbox, Input, Radio, Select } from 'antd/lib';
 import { Controller } from 'react-hook-form';
 import { ReactNode } from 'react';
 import { UserOutlined } from '@ant-design/icons';

@@ -1,5 +1,5 @@
 import { QuestionAnswerDto } from '@/dtos/QuestionAnswer.dto';
-import { Collapse } from 'antd';
+import { Collapse } from 'antd/lib';
 
 type Props = {
   questions: QuestionAnswerDto[];
