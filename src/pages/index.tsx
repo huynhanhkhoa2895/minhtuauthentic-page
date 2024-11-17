@@ -81,9 +81,7 @@ export default function Home({
           id={'main-home-page'}
           className={'lg:mt-[10px] lg:flex w-full gap-2 relative'}
         >
-          <div className={'lg:w-[220px] lg:basis-[220px] shrink-0'}>
-            {menu && <MenuWrapper menu={menu} className={'w-full'} />}
-          </div>
+          {menu && <MenuWrapper menu={menu} className={'w-[220px] h-[380px]'} />}
           <div
             className={
               'min-h-[140px] lg:h-[380px] w-full basis-[calc(100%-230px)] lg:w-[calc(100%-230px)] max-w-full'
@@ -120,7 +118,7 @@ export default function Home({
             setting={settingsHome[SETTING_KEY.BRAND_SECTION.KEY]}
           />
         )}
-        <HomeSupport />
+        {/*<HomeSupport />*/}
       </Layout>
       <Footer footerContent={footerContent} />
     </>

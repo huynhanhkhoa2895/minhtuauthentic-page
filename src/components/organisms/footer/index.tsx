@@ -7,52 +7,12 @@ import { STATIC_CONTENT_TYPE } from '@/config/enum';
 import Link from 'next/link';
 import { orderBy } from 'lodash';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
+import dynamic   from 'next/dynamic';
+const FooterContent = dynamic(() => import('@/components/organisms/footer/footerContent') , {
+  ssr: false,
+});
 const Footer = ({ footerContent }: { footerContent?: ResponseFooterDto }) => {
-  const renderFooter = (item: StaticContentsDto, index: number) => {
-    switch (index) {
-      case 0:
-        return (
-          <div key={item.id}>
-            <p
-              className={
-                'uppercase font-[700] lg:font-bold lg:mb-[10px] text-[16px]'
-              }
-            >
-              VỀ CHÚNG TÔI
-            </p>
-            <div
-              className={'lg:mt-[12px]'}
-              dangerouslySetInnerHTML={{ __html: item.content || '' }}
-            />
-          </div>
-        );
-      case 1:
-      case 2:
-        return (
-          <div key={item.id}>
-            <p className={'uppercase font-semibold text-[16px]'}>
-              {item.title}
-            </p>
-            <div
-              className={'lg:mt-[12px]'}
-              dangerouslySetInnerHTML={{ __html: item.content || '' }}
-            />
-          </div>
-        );
-      case 3:
-        return (
-          <div key={item.id}>
-            <p className={'uppercase font-semibold text-[16px]'}>
-              {item.title}
-            </p>
-            <div
-              className={'lg:mt-[12px]'}
-              dangerouslySetInnerHTML={{ __html: item.content || '' }}
-            />
-          </div>
-        );
-    }
-  };
+
 
   return (
     <footer className={'relative z-[2] max-lg:pb-[68px]'}>
@@ -64,7 +24,7 @@ const Footer = ({ footerContent }: { footerContent?: ResponseFooterDto }) => {
             }
           >
             {orderBy(footerContent?.footer || [], 'sort').map((item, index) => {
-              return renderFooter(item, index);
+              return <FooterContent key={index} item={item} index={index} />;
             })}
           </div>
           <div className={'grid grid-cols-1 lg:grid-cols-3 mt-3  '}>

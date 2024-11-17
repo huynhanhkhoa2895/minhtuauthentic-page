@@ -30,11 +30,6 @@ const Menu = ({
   const { menuDisplay } = useMenu(menu);
   const refTimeout = useRef<any>(null);
   const ref = useRef<HTMLDivElement | null>(null);
-  const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    setIsReady(true);
-  }, []);
 
   useEffect(() => {
     setMenuCategoryChildrenPosition({
@@ -42,7 +37,7 @@ const Menu = ({
       left: 20,
       height: ref.current?.clientHeight || 0,
     });
-  }, [isReady]);
+  }, []);
 
   const renderMenuItem = (item: MenuDisplay) => {
     const obj: Record<string, () => ReactNode> = {
@@ -74,7 +69,7 @@ const Menu = ({
               </div>
             </div>
           </Link>
-        );
+        ) as ReactNode;
       },
       [POPUP_TYPE.PRODUCT]: () => {
         return (
@@ -84,7 +79,7 @@ const Menu = ({
           >
             Sản phẩm
           </Link>
-        );
+        ) as ReactNode;
       },
       [POPUP_TYPE.NEWS]: () => {
         return (
@@ -94,7 +89,7 @@ const Menu = ({
           >
             Tin tức
           </Link>
-        );
+        ) as ReactNode;
       },
       [POPUP_TYPE.BRAND]: () => {
         return (
@@ -107,7 +102,7 @@ const Menu = ({
             </Link>
             <IconCheveronRight className={'w-[15px] h-[15px]'} />
           </div>
-        );
+        ) as ReactNode;
       },
     };
     return obj[item.type || '']();
@@ -144,9 +139,8 @@ const Menu = ({
       <div
         ref={ref}
         className={twMerge(
-          'hidden lg:block w-full rounded-[10px] shadow-custom py-1 shrink-0 z-[1] bg-white overflow-auto relative',
+          'hidden lg:block w-full rounded-[10px] shadow-custom py-1 shrink-0 z-[1] bg-white overflow-auto relative h-[380px]',
           className,
-          isReady ? 'h-[380px]' : 'h-auto',
         )}
       >
         <div className={'container mx-auto '}>
@@ -184,28 +178,24 @@ const Menu = ({
             height: `${menuCategoryChildrenPosition.height}px`,
           }}
         >
-          {isReady && (
-            <>
-              <MenuPopup
-                menu={menu}
-                data={dataDisplayPopup}
-                onMouseEnter={() => {
-                  if (refTimeout.current) {
-                    clearTimeout(refTimeout.current);
-                  }
-                }}
-                onMouseLeave={() => {
-                  refTimeout.current = setTimeout(() => {
-                    setDataDisplayPopup({
-                      type: '',
-                      display: false,
-                      data: [],
-                    });
-                  }, 50);
-                }}
-              />
-            </>
-          )}
+          <MenuPopup
+            menu={menu}
+            data={dataDisplayPopup}
+            onMouseEnter={() => {
+              if (refTimeout.current) {
+                clearTimeout(refTimeout.current);
+              }
+            }}
+            onMouseLeave={() => {
+              refTimeout.current = setTimeout(() => {
+                setDataDisplayPopup({
+                  type: '',
+                  display: false,
+                  data: [],
+                });
+              }, 50);
+            }}
+          />
         </div>
       )}
     </>

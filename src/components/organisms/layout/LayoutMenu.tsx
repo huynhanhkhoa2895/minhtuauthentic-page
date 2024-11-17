@@ -55,7 +55,8 @@ export default function LayoutMenu({menu} : Props) {
     {menu && (
       <div
         className={twMerge(
-          'absolute top-0 left-0 w-full h-full bg-[rgba(0,0,0,.53)] transition-all duration-500',
+          'absolute top-0 left-0 w-full h-full transition-all duration-500',
+          // 'bg-[rgba(0,0,0,.53)]',
           appCtx?.isOpenMenu
             ? 'opacity-100 visible z-50'
             : 'opacity-0 invisible z-0',
