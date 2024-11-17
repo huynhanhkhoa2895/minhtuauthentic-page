@@ -25,6 +25,8 @@ export type SwiperProps = {
   onLoad?: () => void;
   isMobile?: boolean;
   auto?: boolean;
+  slidePerViewMobile?: number;
+  spaceBetweenMobile?: number;
 };
 export default function SectionSwiperItem({
   classNameContainer,
@@ -42,6 +44,8 @@ export default function SectionSwiperItem({
   heightItem,
   onLoad,
   auto,
+                                            slidePerViewMobile,
+  spaceBetweenMobile,
 }: SwiperProps) {
   const rows = 2;
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
@@ -104,8 +108,8 @@ export default function SectionSwiperItem({
           centeredSlides={isCenter}
           breakpoints={{
             320: {
-              slidesPerView: slidesPerView,
-              spaceBetween: spaceBetween,
+              slidesPerView: slidePerViewMobile || slidesPerView,
+              spaceBetween: spaceBetween || spaceBetweenMobile,
             },
             1024: {
               slidesPerView: slidesPerView,

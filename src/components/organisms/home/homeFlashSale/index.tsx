@@ -52,6 +52,7 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
           )}
           <SectionSwiperItem
             slidesPerView={5}
+            slidePerViewMobile={2}
             spaceBetween={10}
             renderItem={(item: unknown) => {
               const coupon = item as CouponsDto;

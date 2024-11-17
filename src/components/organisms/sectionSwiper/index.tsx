@@ -10,13 +10,7 @@ import { isDesktop, isMobile } from 'react-device-detect';
 import { SwiperProps } from '@/components/organisms/sectionSwiper/item';
 import { useState } from 'react';
 
-type Props = {
-  slidePerViewMobile?: number;
-  slidesPerView?: number;
-  spaceBetween?: number;
-  spaceBetweenMobile?: number;
-} & SwiperProps;
-const SectionSwiper = (props: Props) => {
+const SectionSwiper = (props: SwiperProps) => {
   return (
     <>
       {isMobile && (

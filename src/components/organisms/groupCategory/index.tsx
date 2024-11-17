@@ -99,6 +99,7 @@ const GroupCategory = ({
       <SectionSwiperItem
         isGrid={true}
         slidesPerView={5}
+        slidePerViewMobile={2}
         spaceBetween={5}
         heightItem={478}
         isUseHeightWrapper={true}
