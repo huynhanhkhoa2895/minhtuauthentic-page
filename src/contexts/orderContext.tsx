@@ -100,7 +100,9 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
       currentVariantOnCart?.qty ? currentVariantOnCart?.qty + 1 : 1,
     );
     if (!newCartResponse?.data) {
-      toast('Không thể thêm vào giỏ hàng', { type: 'error' });
+      toast(newCartResponse?.message || 'Không thể thêm vào giỏ hàng', {
+        type: 'error',
+      });
       return;
     }
     setCart(newCartResponse?.data || []);

@@ -8,7 +8,7 @@ html, body {
   min-height: 100vh;
   width: 100%;
   background-color: #F8F9FA;
-  font-family: "Nunito Sans", sans-serif;
+  /*font-family: "Nunito Sans", sans-serif;*/
   font-optical-sizing: auto;
   @apply font-[500] lg:font-[400] text-[15px] lg:text-[14px] text-[#212529];
 }

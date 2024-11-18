@@ -35,11 +35,6 @@ const ProductTemplate = ({
         />
       )}
       <CustomScript isHaveFudiin={true} />
-      {/*<Script*/}
-      {/*  data-partytown-config*/}
-      {/*  strategy={'afterInteractive'}*/}
-      {/*  src={process.env.NEXT_PUBLIC_FUNDIN_URL + `/merchants/productdetailjs/${process.env.NEXT_PUBLIC_FUNDIN_MERCHANT_ID}.js`}*/}
-      {/*/>*/}
     </>
   );
 };

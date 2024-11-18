@@ -131,6 +131,7 @@ export default function ProductConfiguration({
                       className={'flex gap-3 flex-wrap'}
                     >
                       {variant?.link &&
+                      variant?.is_in_stock &&
                       router.asPath !== generateSlugToHref(variant?.link) ? (
                         <Link
                           href={generateSlugToHref(variant?.link)}
@@ -144,6 +145,7 @@ export default function ProductConfiguration({
                       ) : (
                         <button
                           type={'button'}
+                          disabled={!variant?.is_in_stock}
                           onClick={() => {
                             setValueActiveId(() => {
                               const indexConfiguration =
@@ -158,6 +160,8 @@ export default function ProductConfiguration({
                           className={twMerge(
                             'rounded-[10px] p-2 lg:p-3 border border-gray-300 text-gray-500 relative overflow-hidden font-extrabold',
                             isActived ? 'border-primary' : '',
+                            !variant?.is_in_stock &&
+                              'cursor-not-allowed relative before:content-[attr(data-content)] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-white before:z-10 before:opacity-50',
                           )}
                         >
                           {renderItem(value, isActived)}

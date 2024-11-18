@@ -125,10 +125,14 @@ const ProductProperty = ({
           <span
             className={twMerge(
               'font-semibold text-primary',
-              product?.is_in_stock ? 'text-green' : 'text-red-600',
+              product?.is_in_stock && variantActive?.is_in_stock
+                ? 'text-green'
+                : 'text-red-600',
             )}
           >
-            {product?.is_in_stock ? 'Còn hàng' : 'Hết Hàng'}
+            {product?.is_in_stock && variantActive?.is_in_stock
+              ? 'Còn hàng'
+              : 'Hết Hàng'}
           </span>
         </div>
         <div className={'flex gap-2'}>

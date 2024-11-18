@@ -11,6 +11,7 @@ export class VariantDto extends BaseDto {
   regular_price?: number;
   price?: number;
   is_default?: boolean;
+  is_in_stock?: boolean;
   product?: ProductDto;
   image?: ImageDto;
   images?: ImageDetailDto[];

@@ -12,6 +12,7 @@ import {
 import 'swiper/css/effect-fade';
 import { StaticContentsDto } from '@/dtos/StaticContents.dto';
 import { generateSlugToHref } from '@/utils';
+import { JSX } from 'react';
 export const Banners = ({
   banners,
   className,
@@ -54,12 +55,13 @@ export const Banners = ({
                 width={imageDetail?.image?.width || 0}
                 height={imageDetail?.image?.height || 0}
                 className={classNameImage || 'object-contain w-full'}
+                loading={'eager'}
                 unoptimized={!isMobile}
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPs7u2tBwAFdgImpqLKKAAAAABJRU5ErkJggg=="
               />
             </Link>
           </SwiperSlide>
-        );
+        ) as JSX.Element;
       })}
     </Swiper>
   );

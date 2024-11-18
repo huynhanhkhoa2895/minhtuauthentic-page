@@ -14,6 +14,7 @@ import HomeFlashSale from '@/components/organisms/home/homeFlashSale';
 import Layout from '@/components/templates/Layout';
 import useSettings from '@/hooks/useSettings';
 import dynamic from 'next/dynamic';
+import { ReactNode } from 'react';
 const HomeBanner = dynamic(
   () => import('@/components/organisms/home/homeBanner'),
 );
@@ -81,7 +82,9 @@ export default function Home({
           id={'main-home-page'}
           className={'lg:mt-[10px] lg:flex w-full gap-2 relative'}
         >
-          {menu && <MenuWrapper menu={menu} className={'w-[220px] h-[380px]'} />}
+          {menu && (
+            <MenuWrapper menu={menu} className={'w-[220px] h-[380px]'} />
+          )}
           <div
             className={
               'min-h-[140px] lg:h-[380px] w-full basis-[calc(100%-230px)] lg:w-[calc(100%-230px)] max-w-full'
@@ -92,12 +95,13 @@ export default function Home({
         </div>
         <BlockUnderSlide contents={homePage?.homeBlockUnderSlide || []} />
 
-        {homePage?.homeFlashSale && (
-          <HomeFlashSale
-            promotion={homePage?.homeFlashSale}
-            setting={settingsHome[SETTING_KEY.FLASH_SALE_SECTION.KEY]}
-          />
-        )}
+        {homePage?.homeFlashSale &&
+          ((
+            <HomeFlashSale
+              promotion={homePage?.homeFlashSale}
+              setting={settingsHome[SETTING_KEY.FLASH_SALE_SECTION.KEY]}
+            />
+          ) as ReactNode)}
 
         <HomeCategory
           homeBlockFeaturedCategory={homePage?.homeBlockFeaturedCategory || []}

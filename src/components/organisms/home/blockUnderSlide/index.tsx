@@ -1,6 +1,7 @@
 import { StaticContentsDto } from '@/dtos/StaticContents.dto';
 import BlockUnderSlideItem from '@/components/molecules/blockUnderSlide/item';
 import SectionSwiper from '@/components/organisms/sectionSwiper';
+import { ReactNode } from 'react';
 type Props = {
   contents: StaticContentsDto[];
 };
@@ -25,11 +26,15 @@ export default function BlockUnderSlide({ contents }: Props) {
         slidePerViewMobile={4}
         isUseHeightWrapper={true}
         isNotDisplayNavigation={true}
+        heightItem={160}
         renderItem={(item: unknown) => {
           const content = item as StaticContentsDto;
           return (
-            <BlockUnderSlideItem content={content} isUseImageFill={true} />
-          );
+            <BlockUnderSlideItem
+              content={content}
+              classImage={'w-[100px] h-[100px]'}
+            />
+          ) as ReactNode;
         }}
         data={contents}
       />
