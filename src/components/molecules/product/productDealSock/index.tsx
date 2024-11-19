@@ -2,11 +2,12 @@ import { PromotionsDto } from '@/dtos/Promotions.dto';
 import CouponsDto from '@/dtos/Coupons.dto';
 import ProductCard from '@/components/organisms/product/card';
 import SectionSwiper from '@/components/organisms/sectionSwiper';
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { PROMOTION_TYPE } from '@/config/enum';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import { Skeleton } from 'antd/lib';
+import { VariantDto } from '@/dtos/Variant.dto';
 
 type Props = {
   setting?: SettingsDto;
@@ -31,7 +32,7 @@ export default function ProductDealSock({ setting }: Props) {
         <div
           style={{ backgroundColor: setting?.value?.backgroundColor }}
           className={
-            'w-full shadow-custom bg-white my-1 lg:my-3 p-1 lg:p-3 overflow-hidden'
+            'w-full shadow-custom bg-white my-1 lg:my-3 p-1 lg:p-3 max-lg:overflow-hidden'
           }
         >
           <p className={'text-2xl font-[700] lg:font-bold text-primary mb-3'}>
@@ -47,24 +48,24 @@ export default function ProductDealSock({ setting }: Props) {
               const iCoupon = item as CouponsDto;
               const variant = iCoupon?.coupon_details?.[0].variant;
               if (!variant || !variant.regular_price) {
-                return;
+                return (<></>) as ReactNode;
               }
 
-              return (
-                variant.product && (
-                  <ProductCard
-                    product={variant.product}
-                    variant={{
+              return (variant.product && (
+                <ProductCard
+                  product={variant.product}
+                  variant={
+                    {
                       ...variant,
                       ...{ coupon: iCoupon },
-                    }}
-                    promotions={promotion && [promotion]}
-                    coupon={iCoupon}
-                    addText={'Chọn sản phẩm'}
-                    isShowConfiguration
-                  />
-                )
-              );
+                    } as VariantDto
+                  }
+                  promotions={promotion && [promotion]}
+                  coupon={iCoupon}
+                  addText={'Chọn sản phẩm'}
+                  isShowConfiguration
+                />
+              )) as ReactNode;
             }}
             data={
               promotion?.coupons?.filter(

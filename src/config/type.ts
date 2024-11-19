@@ -13,6 +13,10 @@ export type MenuDisplay = {
   type?: string;
   data: unknown;
 };
+export type TProductSeen = {
+  created: number;
+  data: number[];
+};
 export enum POPUP_TYPE {
   CATEGORY = 'category',
   PRODUCT = 'product',

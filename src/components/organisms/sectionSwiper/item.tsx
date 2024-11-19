@@ -44,7 +44,7 @@ export default function SectionSwiperItem({
   heightItem,
   onLoad,
   auto,
-                                            slidePerViewMobile,
+  slidePerViewMobile,
   spaceBetweenMobile,
 }: SwiperProps) {
   const rows = 2;
@@ -101,7 +101,7 @@ export default function SectionSwiperItem({
           style={{ height: heightWrapper || '100%' }}
           modules={isGrid ? [Grid, Autoplay] : [Pagination, Autoplay]}
           autoplay={auto}
-          loop={loop || false}
+          loop={loop}
           className={twMerge('mx-auto w-full')}
           wrapperClass={'mx-auto'}
           onSwiper={(swiper) => setSwiper(swiper)}
@@ -147,7 +147,7 @@ export default function SectionSwiperItem({
         )}
       </>
     );
-  }, [heightWrapper, ready]);
+  }, [heightWrapper, ready, swiper]);
 
   return (
     <>

@@ -58,11 +58,7 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
             renderItem={(item: unknown) => {
               const coupon = item as CouponsDto;
               const variant = coupon?.coupon_details?.[0].variant;
-              if (!variant || !variant.regular_price) {
-                return (<></>) as ReactNode;
-              }
-
-              return (variant.product && (
+              return (variant?.product && (
                 <ProductCard
                   product={variant.product}
                   variant={
@@ -79,7 +75,7 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
             }}
             data={
               (promotion?.coupons || [])?.filter(
-                (item: CouponsDto) => item?.coupon_details?.[0],
+                (item: CouponsDto) => item?.coupon_details?.[0]?.variant,
               ) || []
             }
           />

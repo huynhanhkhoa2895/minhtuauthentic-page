@@ -43,7 +43,7 @@ export const Banners = ({
           return null;
         }
         return (
-          <SwiperSlide key={index + '-' + isMobile && 'isMobile'}>
+          <SwiperSlide key={index + '-' + isMobile}>
             <Link href={generateSlugToHref(banner?.properties?.slug)}>
               <Image
                 src={

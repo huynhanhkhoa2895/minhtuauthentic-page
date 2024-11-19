@@ -1,7 +1,7 @@
 import { ProductDto } from '@/dtos/Product.dto';
 import ProductDetailImage from '@/components/molecules/product/image/productDetailImage';
 import ProductProperty from '@/components/molecules/product/property';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ImageDto } from '@/dtos/Image.dto';
 import { ProductConfigurationsDto } from '@/dtos/productConfigurations.dto';
 import { VariantDto } from '@/dtos/Variant.dto';
@@ -14,6 +14,7 @@ import ListKeyword from '@/components/organisms/product/listKeyword';
 import dynamic from 'next/dynamic';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import { SETTING_KEY } from '@/config/enum';
+import { TProductSeen } from '@/config/type';
 const ProductRating = dynamic(
   () => import('@/components/molecules/product/productRating'),
   {
@@ -30,6 +31,12 @@ const ProductRelationWrapper = dynamic(
 
 const PopupImage = dynamic(
   () => import('@/components/molecules/product/image/popupImage'),
+  {
+    ssr: false,
+  },
+);
+const ProductSeen = dynamic(
+  () => import('@/components/organisms/product/productSeen'),
   {
     ssr: false,
   },
@@ -61,6 +68,37 @@ const ProductDetailCard = ({
       (product?.variants || [])?.find((item: VariantDto) => item.is_default) ||
       product?.variants?.[0],
   );
+
+  useEffect(() => {
+    const resetItem = () => {
+      localStorage.setItem(
+        'product_seen',
+        JSON.stringify({
+          data: [product?.id || 0],
+          created: new Date().getTime(),
+        } as TProductSeen),
+      );
+    };
+    if (localStorage) {
+      const products = localStorage.getItem('product_seen');
+      if (products) {
+        const _product: TProductSeen = JSON.parse(products);
+        if (_product.created < new Date().getTime() - 24 * 60 * 60 * 1000) {
+          resetItem();
+          return;
+        }
+        const index = _product.data.findIndex((item) => item === product?.id);
+        if (index === -1) {
+          _product.data.unshift(product?.id || 0);
+          if (_product.data.length > 10) {
+            _product.data.pop();
+          }
+        }
+      } else {
+        resetItem();
+      }
+    }
+  }, []);
 
   return (
     <>
@@ -119,6 +157,7 @@ const ProductDetailCard = ({
               />
             </div>
           </div>
+          <ProductSeen product={product} />
 
           <PopupImage
             open={isOpen.display}
