@@ -1,5 +1,5 @@
 import { OrdersDto } from '@/dtos/Orders.dto';
-import { Table } from 'antd/lib';
+import { Table } from 'antd/es';
 
 type Props = {
   orders: OrdersDto[];

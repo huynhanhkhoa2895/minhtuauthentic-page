@@ -1,5 +1,5 @@
 import { calculatePriceMinus, formatMoney, promotionName } from '@/utils';
-import { Button, Tooltip } from 'antd/lib';
+import { Button, Tooltip } from 'antd/es';
 import CouponsDto from '@/dtos/Coupons.dto';
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 import { CloseCircleOutlined } from '@ant-design/icons';
@@ -13,7 +13,7 @@ type Props = {
   className?: string;
 };
 
-export default function PriceMinus({ item,className }: Props) {
+export default function PriceMinus({ item, className }: Props) {
   const orderCtx = useContext(OrderContext);
   return (
     <>
@@ -28,7 +28,12 @@ export default function PriceMinus({ item,className }: Props) {
                 : 'Mã giảm giá: ' + coupon.code
             }
           >
-            <div className={twMerge('flex items-center gap-1 justify-end', className)}>
+            <div
+              className={twMerge(
+                'flex items-center gap-1 justify-end',
+                className,
+              )}
+            >
               <span
                 className={'text-red-600 text-sm text-right cursor-pointer'}
               >

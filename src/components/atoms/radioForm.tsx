@@ -1,4 +1,4 @@
-import { Radio, RadioChangeEvent } from 'antd/lib';
+import { Radio, RadioChangeEvent } from 'antd/es';
 import { ChangeEvent, ReactNode, useEffect, useState } from 'react';
 
 type Props = {

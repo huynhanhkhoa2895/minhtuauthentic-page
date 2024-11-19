@@ -1,5 +1,5 @@
 import RatingDto from '@/dtos/Rating.dto';
-import { Avatar, Rate } from 'antd/lib';
+import { Avatar, Rate } from 'antd/es';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);

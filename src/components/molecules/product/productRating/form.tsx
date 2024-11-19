@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Input } from 'antd/lib';
+import { Button, Input } from 'antd/es';
 import StartRatingInput from '@/components/atoms/product/startRatingInput';
 
 const schema = yup.object({

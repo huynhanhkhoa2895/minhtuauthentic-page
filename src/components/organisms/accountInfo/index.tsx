@@ -1,5 +1,5 @@
-import { Tabs } from 'antd/lib';
-import type { TabsProps } from 'antd/lib';
+import { Tabs } from 'antd/es';
+import type { TabsProps } from 'antd/es';
 import AccountInfoUpdate from '@/components/organisms/accountInfo/updateInfo';
 import AccountUpdatePassword from '@/components/organisms/accountInfo/updatePassword';
 import { UserDto } from '@/dtos/User.dto';

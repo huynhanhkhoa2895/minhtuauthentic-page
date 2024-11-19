@@ -1,7 +1,7 @@
 import { isDesktop } from 'react-device-detect';
 import { StaticContentsDto } from '@/dtos/StaticContents.dto';
 import { JSX } from 'react';
-import { Collapse } from 'antd/lib';
+import { Collapse } from 'antd/es';
 type Props = {
   items: StaticContentsDto[];
 };

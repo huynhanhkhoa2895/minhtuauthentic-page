@@ -2,6 +2,10 @@
 const config = {
   plugins: {
     tailwindcss: {},
+    '@fullhuman/postcss-purgecss': {
+      content: ['./src/pages/**/*.tsx', './src/components/**/*.tsx'],
+      safelist: [/^ant-/],
+    },
   },
 };
 

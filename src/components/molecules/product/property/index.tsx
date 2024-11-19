@@ -11,7 +11,7 @@ import PromotionDescription from '@/components/molecules/product/promotionDescri
 import Link from 'next/link';
 import { generateSlugToHref, SexName } from '@/utils';
 import StartRating from '@/components/atoms/product/startRating';
-import { Rate } from 'antd/lib';
+import { Rate } from 'antd/es';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import { useRouter } from 'next/router';
 type Props = {

@@ -6,7 +6,7 @@ import { formatMoney, generateSlugToHref } from '@/utils';
 import Link from 'next/link';
 import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
 import PriceMinus from '@/components/atoms/PriceMinus';
-import { Button, InputNumber } from 'antd/lib';
+import { Button, InputNumber } from 'antd/es';
 import { DeleteOutlined } from '@ant-design/icons';
 export default function CartSummaryMobile() {
   const orderCtx = useContext(OrderContext);

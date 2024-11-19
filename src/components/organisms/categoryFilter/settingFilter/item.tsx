@@ -1,4 +1,4 @@
-import { Button, Checkbox, Tree } from 'antd/lib';
+import { Button, Checkbox, Tree } from 'antd/es';
 import {
   Fragment,
   useContext,

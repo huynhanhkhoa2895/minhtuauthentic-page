@@ -1,7 +1,9 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
+import  withLess from 'next-with-less';
 const nextConfig = withBundleAnalyzer({
     enabled: process.env.ANALYZE === 'true',
 })({
+  swcMinify: true,
   reactStrictMode: true,
   logging: {
     fetches: {
@@ -26,15 +28,13 @@ const nextConfig = withBundleAnalyzer({
     "rc-pagination",
     "rc-picker",
     "rc-tree",
+      "rc-input",
     "rc-table",],
-  async rewrites() {
-    return [
-      {
-        source: '/iframe',
-        destination: '/iframe/index.html',
-      }
-    ]
-  }
+    lessLoaderOptions: {
+        lessOptions: {
+            javascriptEnabled: true,
+        },
+    },
 });
 
 export default nextConfig;

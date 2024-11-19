@@ -10,7 +10,7 @@ import {
   PhoneOutlined,
   OrderedListOutlined,
 } from '@ant-design/icons';
-import { Button } from 'antd/lib';
+import { Button } from 'antd/es';
 import { useState } from 'react';
 import { OrdersDto } from '@/dtos/Orders.dto';
 import OrderDetailTemplate from '@/components/templates/OrderDetailTemplate';

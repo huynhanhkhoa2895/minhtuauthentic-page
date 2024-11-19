@@ -9,7 +9,7 @@ import FilterBy from '@/components/organisms/categoryFilter/ContentFilter/filter
 import { ProductFilterOptionDto } from '@/dtos/ProductFilterSettingOption/ProductFilterOption.dto';
 import { ProductConfigurationValuesDto } from '@/dtos/productConfigurationValues.dto';
 import { SlugDto } from '@/dtos/Slug.dto';
-import { Pagination, Space, Skeleton, Button } from 'antd/lib';
+import { Pagination, Space, Skeleton, Button } from 'antd/es';
 import Filter from '@/components/icons/filter';
 import { CategoryDto } from '@/dtos/Category.dto';
 import { Entity } from '@/config/enum';
@@ -163,11 +163,11 @@ export default function ContentFilter({
           }}
         >
           <Filter className={'w-6 h-6'} />
-          <span className={'font-semibold text-[14px] shrink-0 z'}>Bộ lọc | </span>
+          <span className={'font-semibold text-[14px] shrink-0 z'}>
+            Bộ lọc |{' '}
+          </span>
         </Button>
-        <span className={'font-semibold text-[14px]'}>
-          Sắp xếp theo
-        </span>
+        <span className={'font-semibold text-[14px]'}>Sắp xếp theo</span>
         <SortBy isNeedWrapper={false} />
         <PageLimit />
       </div>

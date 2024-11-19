@@ -7,7 +7,7 @@ import {
   PhoneOutlined,
   UsergroupAddOutlined,
 } from '@ant-design/icons';
-import { Button } from 'antd/lib';
+import { Button } from 'antd/es';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { UserDto } from '@/dtos/User.dto';
