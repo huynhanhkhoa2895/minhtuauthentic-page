@@ -12,38 +12,40 @@ type Props = {
   variant?: VariantDto;
   setIsOpen?: (item: { display: boolean; image: ImageDto | null }) => void;
   productConfigurations?: ProductConfigurationsDto[];
-  settings: SettingsDto[];
+  settings?: SettingsDto[];
   onChange?: (variant: VariantDto) => void;
-}
+};
 export default function ProductOverview({
   product,
   variant,
   setIsOpen,
   productConfigurations,
   settings,
-  onChange
+  onChange,
 }: Props) {
   const [_variantActive, setVariantActive] = useState<VariantDto | undefined>(
     variant ||
-    (product?.variants || [])?.find((item: VariantDto) => item.is_default) ||
-    product?.variants?.[0],
+      (product?.variants || [])?.find((item: VariantDto) => item.is_default) ||
+      product?.variants?.[0],
   );
-  return <div
-    className={
-      'p-3 grid grid-cols-1 lg:grid-cols-2 rounded-[10px] shadow-custom mt-3 bg-white gap-3'
-    }
-  >
-    <ProductDetailImage
-      product={product}
-      setIsOpen={setIsOpen}
-      variantActive={_variantActive}
-    />
-    <ProductProperty
-      product={product}
-      variantActive={_variantActive as VariantDto}
-      productConfigurations={productConfigurations || []}
-      settings={settings}
-      onChange={onChange}
-    />
-  </div>
+  return (
+    <div
+      className={
+        'p-3 grid grid-cols-1 lg:grid-cols-2 rounded-[10px] shadow-custom mt-3 bg-white gap-3'
+      }
+    >
+      <ProductDetailImage
+        product={product}
+        setIsOpen={setIsOpen}
+        variantActive={_variantActive}
+      />
+      <ProductProperty
+        product={product}
+        variantActive={_variantActive as VariantDto}
+        productConfigurations={productConfigurations || []}
+        settings={settings}
+        onChange={onChange}
+      />
+    </div>
+  );
 }

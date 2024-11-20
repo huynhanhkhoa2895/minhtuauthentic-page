@@ -15,6 +15,7 @@ import Layout from '@/components/templates/Layout';
 import useSettings from '@/hooks/useSettings';
 import dynamic from 'next/dynamic';
 import { ReactNode } from 'react';
+import { useReportWebVitals } from 'next/web-vitals';
 const HomeBanner = dynamic(
   () => import('@/components/organisms/home/homeBanner'),
 );
@@ -48,6 +49,7 @@ export default function Home({
   settingsHome: Record<string, SettingOptionDto | undefined>;
 }) {
   const { settings, menu, footerContent } = useSettings();
+
   return (
     <>
       <Header settings={settings} menu={menu} />

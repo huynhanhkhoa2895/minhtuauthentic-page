@@ -93,7 +93,7 @@ export default function NavMenu({ menu, className }: Props) {
             switch (item.type) {
               case POPUP_TYPE.CATEGORY:
                 onClick = () => {
-                  if (_item?.id !== (itemDebounceMenu?.data as any)?.id ) {
+                  if (_item?.id !== (itemDebounceMenu?.data as any)?.id) {
                     setLoading(true);
                     setItemDebounceMenu(item);
                   }
@@ -136,7 +136,7 @@ export default function NavMenu({ menu, className }: Props) {
               <div
                 key={index}
                 className={
-                  'flex flex-col gap-1 p-2 border-b border-b-white items-center text-center'
+                  'flex flex-col gap-1 p-2 border-b border-b-white items-center text-center last:border-b-0'
                 }
                 onClick={onClick}
               >

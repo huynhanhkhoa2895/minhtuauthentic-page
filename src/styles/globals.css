@@ -121,3 +121,19 @@ iframe {
 .breakcrumb-no-wrap ol > li{
     @apply shrink-0;
 }
+
+.ant-modal {
+    @apply max-lg:h-[calc(100%-70px)]
+}
+
+.ant-modal > div{
+    @apply max-lg:h-full;
+}
+
+.ant-modal > div > .ant-modal-content {
+    @apply max-lg:h-full;
+}
+
+.ant-modal > div > .ant-modal-content > .ant-modal-body {
+    @apply max-lg:h-[calc(100%-32px)] max-lg:overflow-auto;
+}
