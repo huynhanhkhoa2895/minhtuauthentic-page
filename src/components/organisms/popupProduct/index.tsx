@@ -25,6 +25,7 @@ export default function PopupProduct() {
       );
     } else {
       setData(null);
+      appCtx?.setIsOpenPopupProduct && appCtx.setIsOpenPopupProduct(null);
     }
   }, [isModalOpen]);
 
