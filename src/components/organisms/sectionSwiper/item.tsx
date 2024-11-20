@@ -1,8 +1,8 @@
 import { JSX, ReactNode, useEffect, useMemo, useState } from 'react';
 import { Swiper as SwiperClass } from 'swiper/types';
 import { twMerge } from 'tailwind-merge';
-import { LeftOutlined, RightOutlined } from '@ant-design/icons/lib/icons';
-
+import LeftOutlined from '@ant-design/icons/lib/icons/LeftOutlined';
+import RightOutlined from '@ant-design/icons/lib/icons/RightOutlined';
 import SectionSwiperSlide from '@/components/organisms/sectionSwiper/slide';
 import SkeletonMobile from '@/components/atoms/skeletonMobile';
 import { Grid, Pagination, Autoplay } from 'swiper/modules';
@@ -50,14 +50,12 @@ export default function SectionSwiperItem({
   const rows = 2;
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
   const [heightWrapper, setHeightWrapper] = useState<number>(heightItem || 0);
-  const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [ready, setReady] = useState<boolean>(false);
   useEffect(() => {
     setReady(true);
     if (heightItem) {
       handlerHeightWrapper(heightItem);
     }
-    setCurrentSlide(slidesPerView || 0);
     onLoad && onLoad();
   }, []);
   const renderNavigatorButton = (variant: string) => {

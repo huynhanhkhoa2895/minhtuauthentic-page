@@ -1,4 +1,4 @@
-import { ClockCircleOutlined } from '@ant-design/icons/lib/icons';
+import ClockCircleOutlined from '@ant-design/icons/lib/icons/ClockCircleOutlined';
 import dayjs from 'dayjs';
 import { NewsDto } from '@/dtos/News.dto';
 

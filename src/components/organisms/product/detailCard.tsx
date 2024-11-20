@@ -15,6 +15,7 @@ import dynamic from 'next/dynamic';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import { SETTING_KEY } from '@/config/enum';
 import { TProductSeen } from '@/config/type';
+import ProductOverview from '@/components/organisms/product/overview';
 const ProductRating = dynamic(
   () => import('@/components/molecules/product/productRating'),
   {
@@ -105,26 +106,16 @@ const ProductDetailCard = ({
       {product && (
         <>
           {_variantActive && (
-            <div
-              className={
-                'p-3 grid grid-cols-1 lg:grid-cols-2 rounded-[10px] shadow-custom mt-3 bg-white gap-3'
-              }
-            >
-              <ProductDetailImage
-                product={product}
-                setIsOpen={setIsOpen}
-                variantActive={_variantActive}
-              />
-              <ProductProperty
-                product={product}
-                variantActive={_variantActive}
-                productConfigurations={productConfigurations}
-                settings={settings}
-                onChange={(variant: VariantDto) => {
-                  setVariantActive(variant);
-                }}
-              />
-            </div>
+            <ProductOverview
+              product={product}
+              variant={_variantActive}
+              productConfigurations={productConfigurations}
+              settings={settings}
+              onChange={(variant: VariantDto) => {
+                setVariantActive(variant);
+              }}
+              setIsOpen={setIsOpen}
+            />
           )}
           <ProductDealSock
             setting={settings.find(

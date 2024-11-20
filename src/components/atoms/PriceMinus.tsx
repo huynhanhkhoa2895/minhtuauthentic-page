@@ -1,8 +1,8 @@
-import { calculatePriceMinus, formatMoney, promotionName } from '@/utils';
+import { formatMoney, promotionName } from '@/utils';
 import { Button, Tooltip } from 'antd/es';
 import CouponsDto from '@/dtos/Coupons.dto';
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';
-import { CloseCircleOutlined } from '@ant-design/icons';
+import CloseCircleOutlined from '@ant-design/icons/lib/icons/CloseCircleOutlined';
 import { useContext } from 'react';
 import OrderContext from '@/contexts/orderContext';
 import { twMerge } from 'tailwind-merge';

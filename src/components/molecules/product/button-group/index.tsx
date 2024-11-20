@@ -1,11 +1,11 @@
-import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons/lib/icons';
+import EyeOutlined from '@ant-design/icons/lib/icons/EyeOutlined';
+import ShoppingCartOutlined from '@ant-design/icons/lib/icons/ShoppingCartOutlined';
 import { twMerge } from 'tailwind-merge';
 import { VariantDto } from '@/dtos/Variant.dto';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import OrderContext from '@/contexts/orderContext';
 import { ProductDto } from '@/dtos/Product.dto';
-import Link from 'next/link';
-import { generateSlugToHref } from '@/utils';
+import { Modal } from 'antd/es';
 
 const ProductCardButtonGroup = ({
   product,
@@ -19,16 +19,18 @@ const ProductCardButtonGroup = ({
   addText?: string;
 }) => {
   const order = useContext(OrderContext);
+
   return (
-    <div className={twMerge('flex gap-2', className)}>
-      <Link
-        href={generateSlugToHref(product?.slugs?.slug)}
+    <div className={twMerge('flex gap-1 lg:gap-2', className)}>
+      <button
+        // href={generateSlugToHref(product?.slugs?.slug)}
         className={
-          'block bg-primary rounded-[8px] text-white p-[6px_5px] lg:p-[8px_10px] flex items-center justify-center'
+          'bg-primary rounded-[8px] text-white p-[6px_5px] lg:p-[8px_10px] flex items-center justify-center h-full'
         }
+        type={'button'}
       >
         <EyeOutlined />
-      </Link>
+      </button>
       <button
         type={'button'}
         className={

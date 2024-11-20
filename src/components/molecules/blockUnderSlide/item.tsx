@@ -30,7 +30,7 @@ const BlockUnderSlideItem = ({
           <ImageWithFallback
             image={image}
             className={twMerge(
-              'object-cover w-full h-full hover:scale-105 transition-transform duration-300',
+              'object-cover w-full h-full hover:scale-105 transition-transform duration-300 m-auto',
               classImage,
             )}
             isFill={isUseImageFill}
@@ -39,7 +39,7 @@ const BlockUnderSlideItem = ({
           />
         </Link>
       </div>
-      <p className={'text-center mt-3'}>{content.title || ''}</p>
+      <p className={'text-center lg:mt-3'}>{content.title || ''}</p>
     </>
   );
 };

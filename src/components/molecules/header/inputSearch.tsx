@@ -140,7 +140,7 @@ export const InputSearch = ({ classname, isMobile }: Props) => {
     <div className={twMerge('w-full relative z-[3]', classname)} ref={ref}>
       <input
         className={
-          'h-[40px] text-black rounded-[10px] border-0 p-[5px_45px_5px_25px] focus-visible:outline-none focus-visible:border-0 w-full'
+          'h-[40px] text-black rounded-[10px] border-0 p-[5px_10px] lg:p-[5px_45px_5px_25px] focus-visible:outline-none focus-visible:border-0 w-full'
         }
         type="text"
         placeholder="Tìm kiếm sản phẩm"

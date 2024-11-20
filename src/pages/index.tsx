@@ -18,26 +18,6 @@ import { ReactNode } from 'react';
 const HomeBanner = dynamic(
   () => import('@/components/organisms/home/homeBanner'),
 );
-// export const getServerSideProps = async () => {
-//   // Fetch data from external API
-//   const res = await fetch(process.env.BE_URL + '/api/pages/home').catch(
-//     (error) => {
-//       return null;
-//     },
-//   );
-//
-//   const data: { data: ResponseHomePageDto } = res ? await res.json() : null;
-//   const settingsHome: Record<string, SettingOptionDto | undefined> = {};
-//   (data?.data?.settings || [])?.map((item) => {
-//     settingsHome[item?.key || ''] = item?.value;
-//   });
-//   return {
-//     props: {
-//       homePage: data?.data,
-//       settingsHome,
-//     },
-//   };
-// };
 
 export async function getStaticProps() {
   const res = await fetch(process.env.BE_URL + '/api/pages/home').catch(

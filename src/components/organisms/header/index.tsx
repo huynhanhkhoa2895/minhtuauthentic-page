@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Logo from '@/static/images/logo.png';
 import HeaderItem from '@/components/molecules/header/item';
-import InputSearch from '@/components/molecules/header/inputSearch';
 import { IconPhone } from '@/components/icons/phone';
 import IconTruck from '@/components/icons/truck';
 import IconUser from '@/components/icons/user';
@@ -22,6 +21,10 @@ import IconWifi from '@/components/icons/wifi';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import { SETTING_KEY } from '@/config/enum';
 import dynamic from 'next/dynamic';
+const InputSearch = dynamic(() => import('@/components/molecules/header/inputSearch'),{
+  ssr: false,
+});
+
 import NavMenuHeader from '@/components/organisms/MobileMenu/navMenu/header';
 type Props = { menu: ResponseMenuDto | undefined; settings: SettingsDto[] };
 export const Header = ({ menu, settings }: Props) => {

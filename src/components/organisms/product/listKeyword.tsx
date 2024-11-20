@@ -1,4 +1,4 @@
-import { TagsOutlined } from '@ant-design/icons/lib/icons';
+import TagsOutlined from '@ant-design/icons/lib/icons/TagsOutlined';
 import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
 import { useState } from 'react';

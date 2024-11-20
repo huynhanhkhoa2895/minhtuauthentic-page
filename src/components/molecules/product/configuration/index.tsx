@@ -1,4 +1,4 @@
-import { CheckOutlined } from '@ant-design/icons/lib/icons';
+import CheckOutlined from '@ant-design/icons/lib/icons/CheckOutlined';
 import { ProductConfigurationsDto } from '@/dtos/productConfigurations.dto';
 import { ReactNode, useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';

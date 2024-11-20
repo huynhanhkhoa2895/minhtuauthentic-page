@@ -7,7 +7,7 @@ type Props = {
 };
 export default function BlockUnderSlide({ contents }: Props) {
   return (
-    <div className={'min-h-[295px] lg:h-auto mt-3'}>
+    <div className={'min-h-[285px] lg:h-auto mt-3'}>
       <div className={'grid grid-cols-10 gap-1  max-lg:hidden'}>
         {contents.map((content, index) => {
           return (
@@ -26,7 +26,7 @@ export default function BlockUnderSlide({ contents }: Props) {
         slidePerViewMobile={4}
         isUseHeightWrapper={true}
         isNotDisplayNavigation={true}
-        heightItem={160}
+        heightItem={165}
         renderItem={(item: unknown) => {
           const content = item as StaticContentsDto;
           return (

@@ -10,7 +10,8 @@ import { EffectFade, Pagination, Navigation } from 'swiper/modules';
 import { Swiper as SwiperClass } from 'swiper/types';
 import { VariantDto } from '@/dtos/Variant.dto';
 import PopupImageItem from '@/components/molecules/product/image/popupImageItem';
-import { LeftOutlined, RightOutlined } from '@ant-design/icons/lib/icons';
+import LeftOutlined from '@ant-design/icons/lib/icons/LeftOutlined';
+import RightOutlined from '@ant-design/icons/lib/icons/RightOutlined';
 type Props = {
   open: boolean;
   product: ProductDto;

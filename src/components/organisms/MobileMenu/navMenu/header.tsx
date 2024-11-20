@@ -1,10 +1,12 @@
 import Logo from '@/static/images/logo.png';
 import Image from 'next/image';
-import InputSearch from '@/components/molecules/header/inputSearch';
+const InputSearch = dynamic(() => import('@/components/molecules/header/inputSearch'),{
+  ssr: false,
+});
 import HeaderCart from '@/components/icons/header-cart';
 import { twMerge } from 'tailwind-merge';
-import { MobileView } from 'react-device-detect';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 type Props = {
   className?: string;
   isMobile?:boolean;

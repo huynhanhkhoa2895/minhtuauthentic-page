@@ -1,5 +1,4 @@
 import { Fragment, ReactNode, useContext } from 'react';
-import { HomeOutlined } from '@ant-design/icons/lib/icons';
 import HomeIconFooter from '@/components/icons/menuFooter/Home';
 import CategoryIcon from '@/components/icons/menuFooter/Category';
 import UserIconFooter from '@/components/icons/menuFooter/User';

@@ -7,6 +7,7 @@ import DefaultSeo from '@/components/molecules/seo';
 import { SEOProps } from '@/config/type';
 import dynamic from 'next/dynamic';
 import { isDesktop, isMobile } from 'react-device-detect';
+import PopupProduct from '@/components/organisms/popupProduct';
 type Props = {
   className?: string;
   children: ReactNode;
@@ -64,6 +65,7 @@ export default function Layout({
       {isMobile && menu && <NavMenu menu={menu} />}
       <Socials />
       <MenuFooter />
+      <PopupProduct />
       {/*<PageLoading />*/}
     </>
   );

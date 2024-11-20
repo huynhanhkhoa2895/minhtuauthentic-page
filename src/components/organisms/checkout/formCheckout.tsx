@@ -10,7 +10,7 @@ import { PaymentsDto } from '@/dtos/Payments.dto';
 import OrderContext from '@/contexts/orderContext';
 import { toast } from 'react-toastify';
 import Link from 'next/link';
-import { ArrowLeftOutlined } from '@ant-design/icons/lib/icons';
+import ArrowLeftOutlined from '@ant-design/icons/lib/icons/ArrowLeftOutlined';
 
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 

@@ -3,7 +3,6 @@ import  withLess from 'next-with-less';
 const nextConfig = withBundleAnalyzer({
     enabled: process.env.ANALYZE === 'true',
 })({
-  swcMinify: true,
   reactStrictMode: true,
   logging: {
     fetches: {
@@ -29,12 +28,7 @@ const nextConfig = withBundleAnalyzer({
     "rc-picker",
     "rc-tree",
       "rc-input",
-    "rc-table",],
-    lessLoaderOptions: {
-        lessOptions: {
-            javascriptEnabled: true,
-        },
-    },
+    "rc-table",]
 });
 
 export default nextConfig;

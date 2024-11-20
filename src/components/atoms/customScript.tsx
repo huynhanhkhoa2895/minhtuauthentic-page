@@ -13,16 +13,6 @@ export default function CustomScript({ isHaveFudiin }: Props) {
     window.dispatchEvent(loadEvent);
   }, [router.pathname]);
 
-  useEffect(() => {
-    if (isHaveFudiin) {
-      const script = document.createElement('script');
-      script.src = `${process.env.NEXT_PUBLIC_FUNDIN_URL}/merchants/productdetailjs/${process.env.NEXT_PUBLIC_FUNDIN_MERCHANT_ID}.js`;
-      script.type = 'application/javascript';
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, []);
-
   return (
     <>
       {createPortal(
@@ -37,6 +27,13 @@ export default function CustomScript({ isHaveFudiin }: Props) {
                 window.dispatchEvent(loadEvent);
               }}
             />
+            {isHaveFudiin && (
+              <Script
+                data-partytown-config
+                strategy={'afterInteractive'}
+                src={`${process.env.NEXT_PUBLIC_FUNDIN_URL}/merchants/productdetailjs/${process.env.NEXT_PUBLIC_FUNDIN_MERCHANT_ID}.js`}
+              />
+            )}
           </>
         ) as any,
         document.body,
