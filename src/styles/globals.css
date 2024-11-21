@@ -135,5 +135,5 @@ iframe {
 }
 
 .ant-modal > div > .ant-modal-content > .ant-modal-body {
-    @apply max-lg:h-[calc(100%-32px)] max-lg:overflow-auto;
+    @apply h-[calc(100%-32px)] max-lg:overflow-auto;
 }

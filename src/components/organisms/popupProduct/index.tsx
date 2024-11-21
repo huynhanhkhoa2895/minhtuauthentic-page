@@ -68,7 +68,7 @@ export default function PopupProduct() {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        className={'!w-[98%] lg:!w-[90%] top-0'}
+        className={'!w-[98%] lg:!w-[90%] max-lg:top-0'}
         destroyOnClose={true}
       >
         <div className={'py-3'}>

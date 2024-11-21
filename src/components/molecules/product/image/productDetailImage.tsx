@@ -68,7 +68,9 @@ const ProductDetailImage = ({
     <div className={twMerge(containerClassName)}>
       <ImageWithFallback
         image={imageActive}
-        className={'object-contain cursor-pointer bk-product-image'}
+        className={
+          'object-contain cursor-pointer bk-product-image lg:max-w-[500px] m-auto'
+        }
         onClick={(image: ImageDto | null) => {
           setIsOpen && setIsOpen({ display: true, image });
         }}
