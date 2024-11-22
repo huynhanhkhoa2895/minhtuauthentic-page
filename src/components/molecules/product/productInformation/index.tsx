@@ -1,5 +1,6 @@
 import { ProductDto } from '@/dtos/Product.dto';
-import { SexName } from '@/utils';
+import { generateSlugToHref, SexName } from '@/utils';
+import Link from 'next/link';
 
 type Props = {
   product: ProductDto;
@@ -9,9 +10,12 @@ export default function ProductInformation({ product }: Props) {
     {
       label: 'Thương hiệu',
       value: (
-        <span className={'text-primary font-[700] lg:font-bold'}>
+        <Link
+          href={generateSlugToHref(product?.brands?.[0]?.brand?.slugs?.slug)}
+          className={'text-primary font-[700] lg:font-bold'}
+        >
           {product?.brands?.[0]?.brand?.name || ''}
-        </span>
+        </Link>
       ),
       is_visible: !!product?.brands?.[0]?.brand?.name,
     },
