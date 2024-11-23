@@ -12,6 +12,7 @@ const schema = yup.object({
   point: yup.number().required('Trường này là bắt buộc'),
   content: yup.string().required('Trường này là bắt buộc'),
   product_id: yup.number().required('Trường này là bắt buộc'),
+  is_active: yup.boolean(),
 });
 
 type Props = {
@@ -34,6 +35,7 @@ export default function FormProductRating({ product_id, refreshData }: Props) {
       point: 5,
       content: '',
       product_id: product_id,
+      is_active: false,
     },
   });
   const { executeRecaptcha } = useGoogleReCaptcha();
