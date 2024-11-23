@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <AppProvider>
         <OrderProvider>
           <GoogleReCaptchaProvider
-            reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_SITE_KEY}
+            reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_SITE_KEY || ''}
           >
             <Component className={nunitoSans.className} {...pageProps} />
           </GoogleReCaptchaProvider>
