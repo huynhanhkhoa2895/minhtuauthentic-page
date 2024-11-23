@@ -37,25 +37,5 @@ export default function CustomScript({ isHaveFudiin }: Props) {
     }
   }, []);
 
-  return (
-    <>
-      {createPortal(
-        (
-          <>
-            <Script
-              data-partytown-config
-              strategy={'afterInteractive'}
-              src="https://pc.baokim.vn/js/bk_plus_v2.popup.js"
-              onLoad={() => {
-                const loadEvent = new Event('load');
-                window.dispatchEvent(loadEvent);
-              }}
-            />
-            {isHaveFudiin && <Script data-partytown-config />}
-          </>
-        ) as any,
-        document.body,
-      )}
-    </>
-  );
+  return <></>;
 }
