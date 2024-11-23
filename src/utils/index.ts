@@ -257,7 +257,9 @@ export function getTitleNews(content: string) {
 }
 
 export const validateGoogleRecaptcha = async (body: any) => {
-  console.log('validateGoogleRecaptcha body.token', body.token);
+  if (typeof body === 'string') {
+    body = JSON.parse(body);
+  }
   return fetch('https://www.google.com/recaptcha/api/siteverify', {
     method: 'POST',
     headers: {

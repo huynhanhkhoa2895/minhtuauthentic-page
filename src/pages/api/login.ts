@@ -8,6 +8,7 @@ export default async function handler(
 ) {
   if (req.method === 'POST') {
     const url = `${process.env.BE_URL}/api/users/login`;
+    console.log('req.body', req.body);
     const result: boolean = await validateGoogleRecaptcha(req.body);
     if (!result) {
       res.status(400).json({ message: 'Invalid reCAPTCHA' });
