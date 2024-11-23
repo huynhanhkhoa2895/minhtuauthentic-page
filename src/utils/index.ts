@@ -257,7 +257,6 @@ export function getTitleNews(content: string) {
 }
 
 export const validateGoogleRecaptcha = async (body: any) => {
-  console.log('process.env.GOOGLE_SECRET_KEY', process.env.GOOGLE_SECRET_KEY);
   return fetch('https://www.google.com/recaptcha/api/siteverify', {
     method: 'POST',
     headers: {
@@ -267,9 +266,11 @@ export const validateGoogleRecaptcha = async (body: any) => {
   })
     .then((reCaptchaRes) => reCaptchaRes.json())
     .then((reCaptchaRes) => {
+      console.log('reCaptchaRes?.score', reCaptchaRes?.score);
       return reCaptchaRes?.score > 0.5;
     })
     .catch((err) => {
+      console.log('err', err);
       return false;
     });
 };
