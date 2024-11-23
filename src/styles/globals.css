@@ -137,3 +137,7 @@ iframe {
 .ant-modal > div > .ant-modal-content > .ant-modal-body {
     @apply h-[calc(100%-32px)] max-lg:overflow-auto;
 }
+
+.grecaptcha-badge {
+    @apply hidden;
+}

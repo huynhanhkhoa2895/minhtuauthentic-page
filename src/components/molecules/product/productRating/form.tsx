@@ -3,6 +3,8 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Input } from 'antd/es';
 import StartRatingInput from '@/components/atoms/product/startRatingInput';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import { useCallback, useEffect, useState } from 'react';
 
 const schema = yup.object({
   name: yup.string().required('Trường này là bắt buộc'),
@@ -18,6 +20,7 @@ type Props = {
 };
 
 export default function FormProductRating({ product_id, refreshData }: Props) {
+  const [_token, setToken] = useState<string | null>(null);
   const {
     handleSubmit,
     control,
@@ -33,15 +36,33 @@ export default function FormProductRating({ product_id, refreshData }: Props) {
       product_id: product_id,
     },
   });
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  const handleReCaptchaVerify = useCallback(async () => {
+    if (!executeRecaptcha) {
+      console.log('Execute recaptcha not yet available');
+      return;
+    }
+
+    const token = await executeRecaptcha('minhturating');
+    setToken(token);
+    // Do whatever you want with the token
+  }, [executeRecaptcha]);
+  useEffect(() => {
+    handleReCaptchaVerify().catch();
+  }, [handleReCaptchaVerify]);
+
+  // Create an event handler so you can call the verification on button click event or form submit
+
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
+        data.is_active = false;
         const rs = await fetch('/api/product/rate/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify({ ...data, token: _token }),
         }).then((res) => res.json());
         reset();
         refreshData();

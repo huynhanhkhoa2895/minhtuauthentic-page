@@ -255,3 +255,20 @@ export function getTitleNews(content: string) {
   }
   return '';
 }
+
+export const validateGoogleRecaptcha = async (body: any) => {
+  return fetch('https://www.google.com/recaptcha/api/siteverify', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: `secret=${process.env.NEXT_PUBLIC_GOOGLE_SECRET_KEY}&response=${body.token}`,
+  })
+    .then((reCaptchaRes) => reCaptchaRes.json())
+    .then((reCaptchaRes) => {
+      return reCaptchaRes?.score > 0.5;
+    })
+    .catch((err) => {
+      return false;
+    });
+};
