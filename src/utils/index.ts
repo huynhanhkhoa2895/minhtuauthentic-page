@@ -257,15 +257,17 @@ export function getTitleNews(content: string) {
 }
 
 export const validateGoogleRecaptcha = async (body: any) => {
+  console.log('process.env.GOOGLE_SECRET_KEY', process.env.GOOGLE_SECRET_KEY);
   return fetch('https://www.google.com/recaptcha/api/siteverify', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: `secret=${process.env.NEXT_PUBLIC_GOOGLE_SECRET_KEY}&response=${body.token}`,
+    body: `secret=${process.env.GOOGLE_SECRET_KEY}&response=${body.token}`,
   })
     .then((reCaptchaRes) => reCaptchaRes.json())
     .then((reCaptchaRes) => {
+      console.log(reCaptchaRes);
       return reCaptchaRes?.score > 0.5;
     })
     .catch((err) => {
