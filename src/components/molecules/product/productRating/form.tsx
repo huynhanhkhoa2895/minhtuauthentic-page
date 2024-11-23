@@ -5,6 +5,8 @@ import { Button, Input } from 'antd/es';
 import StartRatingInput from '@/components/atoms/product/startRatingInput';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import useGoogleToken from '@/hooks/useGoogleToken';
 
 const schema = yup.object({
   name: yup.string().required('Trường này là bắt buộc'),
@@ -21,7 +23,7 @@ type Props = {
 };
 
 export default function FormProductRating({ product_id, refreshData }: Props) {
-  const [_token, setToken] = useState<string | null>(null);
+  const { token } = useGoogleToken('minhturating');
   const {
     handleSubmit,
     control,
@@ -38,23 +40,6 @@ export default function FormProductRating({ product_id, refreshData }: Props) {
       is_active: false,
     },
   });
-  const { executeRecaptcha } = useGoogleReCaptcha();
-  const handleReCaptchaVerify = useCallback(async () => {
-    if (!executeRecaptcha) {
-      console.log('Execute recaptcha not yet available');
-      return;
-    }
-
-    const token = await executeRecaptcha('minhturating');
-    setToken(token);
-    // Do whatever you want with the token
-  }, [executeRecaptcha]);
-  useEffect(() => {
-    handleReCaptchaVerify().catch();
-  }, [handleReCaptchaVerify]);
-
-  // Create an event handler so you can call the verification on button click event or form submit
-
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
@@ -64,8 +49,17 @@ export default function FormProductRating({ product_id, refreshData }: Props) {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ ...data, token: _token }),
-        }).then((res) => res.json());
+          body: JSON.stringify({ ...data, token }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            toast(
+              'Cảm ơn bạn đã đánh giá sản phẩm, đánh giá của bạn đang chờ duyệt',
+            );
+          })
+          .catch((e) => {
+            toast.error('Đánh giá thất bại');
+          });
         reset();
         refreshData();
       })}

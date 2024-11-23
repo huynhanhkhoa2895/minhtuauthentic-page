@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { handleDataFetch } from '@/utils/api';
+import { validateGoogleRecaptcha } from '@/utils';
 
 export default async function handler(
   req: NextApiRequest,
@@ -7,6 +8,11 @@ export default async function handler(
 ) {
   if (req.method === 'POST') {
     const url = `${process.env.BE_URL}/api/users/login`;
+    const result: boolean = await validateGoogleRecaptcha(req.body);
+    if (!result) {
+      res.status(400).json({ message: 'Invalid reCAPTCHA' });
+      return;
+    }
     fetch(url, {
       method: 'POST',
       body: req.body,

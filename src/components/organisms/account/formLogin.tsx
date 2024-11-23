@@ -12,6 +12,7 @@ import { handleDataFetch } from '@/utils/api';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import useGoogleToken from '@/hooks/useGoogleToken';
 const schema = yup
   .object({
     username: yup.string().required('Vui lòng nhập tên đăng nhập'),
@@ -19,6 +20,7 @@ const schema = yup
   })
   .required();
 export default function FormLogin() {
+  const { token } = useGoogleToken('minhtulogin');
   const router = useRouter();
   const {
     handleSubmit,
@@ -74,7 +76,7 @@ export default function FormLogin() {
       onSubmit={handleSubmit(async (data) => {
         const rs: { data: UserDto } | null = await fetch('/api/login', {
           method: 'POST',
-          body: JSON.stringify(data),
+          body: JSON.stringify({ ...data, token }),
         })
           .then((rs) => rs.json())
           .then((data) => handleDataFetch(data))

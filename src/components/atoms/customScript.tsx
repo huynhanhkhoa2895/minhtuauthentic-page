@@ -33,6 +33,10 @@ export default function CustomScript({ isHaveFudiin }: Props) {
       setTimeout(() => {
         setIsRender(true);
         document.body.appendChild(script);
+        setTimeout(() => {
+          const loadEvent = new Event('load');
+          window.dispatchEvent(loadEvent);
+        }, 500);
       }, 1000);
     }
   }, []);

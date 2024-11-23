@@ -267,7 +267,6 @@ export const validateGoogleRecaptcha = async (body: any) => {
   })
     .then((reCaptchaRes) => reCaptchaRes.json())
     .then((reCaptchaRes) => {
-      console.log(reCaptchaRes);
       return reCaptchaRes?.score > 0.5;
     })
     .catch((err) => {

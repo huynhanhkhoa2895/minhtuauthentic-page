@@ -11,11 +11,13 @@ import {
 import FormControl from '@/components/molecules/form/FormControl';
 import { UserDto } from '@/dtos/User.dto';
 import useUser from '@/hooks/useUser';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { handleDataFetch } from '@/utils/api';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import useGoogleToken from '@/hooks/useGoogleToken';
 
 let timeoutEmail: any = null;
 let timeoutPhone: any = null;
@@ -97,14 +99,14 @@ export default function FormRegister() {
     },
   });
   const { setCookieUser } = useUser();
-
   const [errorSubmit, setErrorSubmit] = useState<string | null>(null);
+  const { token } = useGoogleToken('minhturegister');
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
         const rs: { data: UserDto } | null = await fetch('/api/register', {
           method: 'POST',
-          body: JSON.stringify(data),
+          body: JSON.stringify({ ...data, token }),
         })
           .then((rs) => rs.json())
           .then((data) => handleDataFetch(data))
@@ -147,7 +149,7 @@ export default function FormRegister() {
           errors={errors}
           name={'phone'}
           type={'text'}
-          placeholder={'Số điện thoại'}
+          placeholder={'Số điện thoại *'}
           prefix={<PhoneOutlined />}
         />
         <FormControl
