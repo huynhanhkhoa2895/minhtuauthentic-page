@@ -25,7 +25,9 @@ export type TypeAppState = {
 const AppContext = createContext<TypeAppState | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isOpenPopupProduct, setIsOpenPopupProduct] = useState<string | null>(null);
+  const [isOpenPopupProduct, setIsOpenPopupProduct] = useState<string | null>(
+    null,
+  );
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [user, setUser] = useState<UserDto | undefined>();
   const [isOpenNavMenu, setIsOpenNavMenu] = useState(false);
@@ -34,6 +36,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     setIsOpenNavMenu(false);
     setIsOpenMenu(false);
+    setIsOpenPopupProduct(null);
   }, [router.pathname]);
 
   return (

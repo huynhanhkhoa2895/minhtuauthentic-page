@@ -260,6 +260,7 @@ export const validateGoogleRecaptcha = async (body: any) => {
   if (typeof body === 'string') {
     body = JSON.parse(body);
   }
+  console.log('body test', body);
   return fetch('https://www.google.com/recaptcha/api/siteverify', {
     method: 'POST',
     headers: {
