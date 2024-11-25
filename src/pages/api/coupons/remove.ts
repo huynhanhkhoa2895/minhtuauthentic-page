@@ -6,7 +6,7 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   if (req.method === 'POST') {
-    const url = `${process.env.BE_URL}/api/coupons/remove`;
+    const url = `${process.env.BE_URL}/api/pages/coupons/remove`;
     fetch(url, {
       method: 'POST',
       body: JSON.stringify(req.body),
