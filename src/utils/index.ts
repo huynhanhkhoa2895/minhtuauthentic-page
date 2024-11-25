@@ -257,6 +257,7 @@ export function getTitleNews(content: string) {
 }
 
 export const validateGoogleRecaptcha = async (body: any) => {
+  console.log('body test first', body);
   if (typeof body === 'string') {
     body = JSON.parse(body);
   }
