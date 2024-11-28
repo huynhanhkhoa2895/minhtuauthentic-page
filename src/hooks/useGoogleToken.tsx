@@ -12,8 +12,5 @@ export default function useGoogleToken(key: string) {
     const token = await executeRecaptcha(key);
     setToken(token);
   }, [executeRecaptcha]);
-  useEffect(() => {
-    handleReCaptchaVerify().catch();
-  }, [handleReCaptchaVerify]);
   return { token: _token };
 }
