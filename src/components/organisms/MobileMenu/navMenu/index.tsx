@@ -22,10 +22,6 @@ type Props = {
   menu: ResponseMenuDto;
   className?: string;
 };
-type DisplayNavMenuProps = {
-  type: string;
-  data: MenuDisplay | { label: string; onClick: () => void };
-};
 export default function NavMenu({ menu, className }: Props) {
   const router = useRouter();
   const appCtx = useContext(appContext);
@@ -83,8 +79,8 @@ export default function NavMenu({ menu, className }: Props) {
       )}
     >
       <NavMenuHeader />
-      <div className={'grid grid-cols-3 w-full h-full'}>
-        <div className={'h-[calc(100%-152px)] overflow-auto'}>
+      <div className={'flex w-full h-full'}>
+        <div className={'h-[calc(100svh-152px)] overflow-auto w-[100px]'}>
           {menuDisplay.map((item, index) => {
             let xhtml: ReactNode = null;
             const _item = item.data as StaticComponentDto;
@@ -104,8 +100,8 @@ export default function NavMenu({ menu, className }: Props) {
                       <Image
                         src={image.url}
                         alt={image.alt || ''}
-                        width={35}
-                        height={35}
+                        width={30}
+                        height={30}
                       />
                     )}
                     <span>{_item?.category?.name || ''}</span>
@@ -136,7 +132,7 @@ export default function NavMenu({ menu, className }: Props) {
               <div
                 key={index}
                 className={
-                  'flex flex-col gap-1 p-2 border-b border-b-white items-center text-center last:border-b-0'
+                  'flex flex-col gap-1 p-2 first:border-t border-b border-b-white items-center justify-center text-center last:border-b-0 text-[14px] w-[100px] h-[100px] shrink-0'
                 }
                 onClick={onClick}
               >
@@ -147,7 +143,7 @@ export default function NavMenu({ menu, className }: Props) {
         </div>
         <div
           className={
-            'pb-[calc(100%-63px-61px)] overflow-auto bg-white text-black w-full col-span-2'
+            'pb-[calc(100%-63px-61px)] overflow-auto bg-white text-black w-[calc(100%-100px)]'
           }
         >
           {loading ? (

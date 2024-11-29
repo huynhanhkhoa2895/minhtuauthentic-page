@@ -10,6 +10,7 @@ import { ImageDetailDto } from '@/dtos/ImageDetail.dto';
 import { SlugDto } from '@/dtos/Slug.dto';
 import { ProductConfigurationsDto } from '@/dtos/productConfigurations.dto';
 import { ProductConfigurationValuesDto } from '@/dtos/productConfigurationValues.dto';
+import { orderBy, sortBy } from 'lodash';
 type Props = {
   setting?: ProductFilterOptionDto;
   menu: MenuDisplay;
@@ -27,6 +28,7 @@ type FilterSettingItem = {
   label: string;
   name: string;
   data: DataValue[];
+  sort: number;
 };
 
 export default function NavMenuContent({ setting, menu, brands }: Props) {
@@ -156,10 +158,32 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
 
   const filtersSetting: FilterSettingItem[] = Object.keys(setting || {}).map(
     (key) => {
+      let sort = 0;
+      switch (key) {
+        case 'price_range':
+          sort = 1;
+          break;
+        case 'product_configurations':
+          sort = 3;
+          break;
+        case 'sex':
+          sort = 4;
+          break;
+        case 'concentration_gradients':
+          sort = 5;
+          break;
+        case 'fragrance_retention':
+          sort = 6;
+          break;
+        case 'brands':
+          sort = 7;
+          break;
+      }
       return {
         name: key,
         label: generateLabel(key),
         data: generateValue(key, (setting as any)[key]),
+        sort,
         // value: setting[key],
       };
     },
@@ -167,8 +191,8 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
 
   const renderItem = (item: FilterSettingItem) => {
     return (
-      <div className={'p-3'}>
-        <p className={'font-semibold text-md'}>{item.label}</p>
+      <div className={'p-2'}>
+        <p className={'font-semibold text-md pb-1'}>{item.label}</p>
         <div className={'flex flex-wrap gap-2'}>
           {(item.data || []).map((_item, index) => {
             const url =
@@ -202,7 +226,7 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
         </Link>
       </div>
       <div className={'flex flex-col'}>
-        {filtersSetting.map((item, index) => {
+        {sortBy(filtersSetting, 'sort').map((item, index) => {
           if (item.name === 'categories') {
             return null;
           }
