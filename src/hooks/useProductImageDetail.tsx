@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { ImageDto } from '@/dtos/Image.dto';
 import { ProductDto } from '@/dtos/Product.dto';
 import { VariantDto } from '@/dtos/Variant.dto';
-import { ImageDetailDto } from '@/dtos/ImageDetail.dto';
-import { orderBy } from 'lodash';
+import orderBy from 'lodash/orderBy';
 type Props = {
   product: ProductDto;
   variant?: VariantDto;

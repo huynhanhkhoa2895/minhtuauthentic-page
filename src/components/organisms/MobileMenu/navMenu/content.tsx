@@ -10,7 +10,7 @@ import { ImageDetailDto } from '@/dtos/ImageDetail.dto';
 import { SlugDto } from '@/dtos/Slug.dto';
 import { ProductConfigurationsDto } from '@/dtos/productConfigurations.dto';
 import { ProductConfigurationValuesDto } from '@/dtos/productConfigurationValues.dto';
-import { orderBy, sortBy } from 'lodash';
+import sortBy from 'lodash/sortBy';
 type Props = {
   setting?: ProductFilterOptionDto;
   menu: MenuDisplay;

@@ -26,9 +26,9 @@ export default function FilterBy({className}: Props) {
   const renderItem = () => {
     let xhtml: ReactNode[] = [];
     if (_settings) {
-      for (const filter in ctx?.filters) {
-        const value = ctx?.filters[filter];
-        value.map((item) => {
+      Object.keys(ctx?.filters || {}).map((filter) => {
+        const value = ctx?.filters?.[filter];
+        (value || []).map((item) => {
           xhtml.push(
             <div
               key={filter + '_' + item}
@@ -43,7 +43,7 @@ export default function FilterBy({className}: Props) {
             </div>,
           );
         });
-      }
+      })
     }
 
     return xhtml;

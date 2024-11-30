@@ -111,9 +111,9 @@ export function getPriceWithCoupon(
   if (!Array.isArray(coupons)) {
     coupons = [coupons];
   }
-  for (const coupon of coupons) {
+  coupons.map((coupon) => {
     price = price - calculatePriceMinus(price, coupon);
-  }
+  });
   return price;
 }
 

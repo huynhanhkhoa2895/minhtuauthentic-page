@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { StaticContentsDto } from '@/dtos/StaticContents.dto';
 import { STATIC_CONTENT_TYPE } from '@/config/enum';
 import Link from 'next/link';
-import { orderBy } from 'lodash';
+import orderBy from 'lodash/orderBy';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import dynamic from 'next/dynamic';
 const FooterContent = dynamic(

@@ -47,7 +47,7 @@ export default function ContentFilter({
       },
     };
     if (settings) {
-      for (const setting in settings) {
+      Object.keys(settings).map((setting) => {
         const value = (settings as any)[setting];
         if (Array.isArray(value)) {
           switch (setting) {
@@ -76,7 +76,7 @@ export default function ContentFilter({
               break;
           }
         }
-      }
+      });
     }
     return obj;
   };

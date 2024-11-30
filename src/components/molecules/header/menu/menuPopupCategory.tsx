@@ -30,61 +30,64 @@ export default function MenuPopupCategory({
       });
     }
 
-    for (const setting in filterSetting) {
-      switch (setting) {
-        case 'brands':
-          if (!listDisplay.brands) {
-            listDisplay.brands = {
-              label: 'Thương hiệu',
-              data: [],
-            };
-          }
-          listDisplay.brands.data = (filterSetting.brands || []).map(
-            (brand) => ({
-              slug: `/san-pham?brands=` + brand.id,
-              name: brand.name || '',
-            }),
-          );
-          break;
-        case 'concentration_gradients':
-          if (!listDisplay.concentration_gradients) {
-            listDisplay.concentration_gradients = {
-              label: 'Nồng độ',
-              data: [],
-            };
-          }
-          listDisplay.concentration_gradients.data = (
-            filterSetting.concentration_gradients || []
-          ).map((concentration, index2) => {
-            return {
-              slug:
-                `/san-pham?filter[${setting}][${index2}]=` + concentration.id,
-              name: concentration.name || '',
-            };
-          });
-          break;
-        case 'price_range':
-          if (!listDisplay.price_range) {
-            listDisplay.price_range = {
-              label: 'Mức giá',
-              data: [],
-            };
-          }
-          listDisplay.price_range.data = (filterSetting.price_range || []).map(
-            (price, index2) => {
+    if (filterSetting) {
+      Object.keys(filterSetting).forEach((setting) =>{
+        switch (setting) {
+          case 'brands':
+            if (!listDisplay.brands) {
+              listDisplay.brands = {
+                label: 'Thương hiệu',
+                data: [],
+              };
+            }
+            listDisplay.brands.data = (filterSetting?.brands || []).map(
+              (brand) => ({
+                slug: `/san-pham?brands=` + brand.id,
+                name: brand.name || '',
+              }),
+            );
+            break;
+          case 'concentration_gradients':
+            if (!listDisplay.concentration_gradients) {
+              listDisplay.concentration_gradients = {
+                label: 'Nồng độ',
+                data: [],
+              };
+            }
+            listDisplay.concentration_gradients.data = (
+              filterSetting?.concentration_gradients || []
+            ).map((concentration, index2) => {
               return {
                 slug:
-                  `/san-pham?filter[${setting}][${index2}]=` +
-                  price.min +
-                  '_' +
-                  price.max,
-                name: price.label || '',
+                  `/san-pham?filter[${setting}][${index2}]=` + concentration.id,
+                name: concentration.name || '',
               };
-            },
-          );
-          break;
-      }
+            });
+            break;
+          case 'price_range':
+            if (!listDisplay.price_range) {
+              listDisplay.price_range = {
+                label: 'Mức giá',
+                data: [],
+              };
+            }
+            listDisplay.price_range.data = (filterSetting?.price_range || []).map(
+              (price, index2) => {
+                return {
+                  slug:
+                    `/san-pham?filter[${setting}][${index2}]=` +
+                    price.min +
+                    '_' +
+                    price.max,
+                  name: price.label || '',
+                };
+              },
+            );
+            break;
+        }
+      })
     }
+
 
     return (
       <>

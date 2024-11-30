@@ -8,7 +8,7 @@ type Props = {
 export default function FooterContent({ items }: Props) {
   const renderFooterDesktop = () => {
     const xhtml: JSX.Element[] = [];
-    for (const [index, item] of items.entries()) {
+    items.forEach((item, index) => {
       switch (index) {
         case 0:
           xhtml.push(
@@ -55,7 +55,7 @@ export default function FooterContent({ items }: Props) {
           );
           break;
       }
-    }
+    })
 
     return <>{xhtml}</>;
   };

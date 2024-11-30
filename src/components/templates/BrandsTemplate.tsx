@@ -1,11 +1,7 @@
 import { BrandDto } from '@/dtos/Brand.dto';
 import { twMerge } from 'tailwind-merge';
-import FormRegister from '@/components/organisms/account/formRegister';
 import { useEffect, useState } from 'react';
-import { orderBy } from 'lodash';
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
-import Link from 'next/link';
-import { generateSlugToHref } from '@/utils';
+import orderBy from 'lodash/orderBy';
 import BrandWithImage from '@/components/atoms/brands/brandWithImage';
 
 type Props = {

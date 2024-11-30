@@ -88,12 +88,12 @@ export const CategoryFilterProvider = ({
     params.append('page', page.toString());
     params.append('search', search.toString());
 
-    for (const key in filters) {
-      for (const [index, value] of (filters[key] as any).entries()) {
+    Object.keys(filters).forEach((key) => {
+      filters[key].forEach((value, index) => {
         params.delete(`filter[${key}][${index}]`);
         params.append(`filter[${key}][${index}]`, value.toString());
-      }
-    }
+      })
+    })
 
     refTimerCount.current = setTimeout(() => {
       updateRouter(params.toString());
@@ -141,7 +141,7 @@ export const CategoryFilterProvider = ({
       }, 200);
     }
     return () => {
-      refTimer.current && clearTimeout(refTimer.current);
+      refTimer?.current && clearTimeout(refTimer.current as NodeJS.Timeout);
       if (loading) setLoading(false);
     };
   }, [count]);

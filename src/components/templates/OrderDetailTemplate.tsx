@@ -109,7 +109,7 @@ export default function OrderDetailTemplate({ order }: Props) {
       label: string;
       render: ReactNode;
     }[] = [];
-    for (const key in order) {
+    Object.keys(order).forEach((key) => {
       const value = (order as any)[key];
       switch (key) {
         case 'id':
@@ -163,7 +163,7 @@ export default function OrderDetailTemplate({ order }: Props) {
           break;
       }
       setOrderField(items);
-    }
+    })
   }, []);
 
   return (

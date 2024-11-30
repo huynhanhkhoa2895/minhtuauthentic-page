@@ -5,13 +5,12 @@ import querystring from 'qs';
 
 function sortObject(obj: Record<string, string>) {
   let sorted: Record<string, string> = {};
-  let str = [];
-  let key;
-  for (let key in obj) {
+  let str: string[] = [];
+  Object.keys(obj).forEach((key) => {
     if (obj.hasOwnProperty(key)) {
       str.push(encodeURIComponent(key));
     }
-  }
+  });
   str.sort();
   for (let key = 0; key < str.length; key++) {
     sorted[str[key]] = encodeURIComponent(obj[str[key]]).replace(/%20/g, '+');
