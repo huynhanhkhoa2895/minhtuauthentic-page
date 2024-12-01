@@ -63,7 +63,7 @@ export const CategoryFilterProvider = ({
   const [dataSlug, setDataSlug] = useState<SlugDto | null>(null);
 
   const [limit, setLimit] = useState<number>(
-    Number(queryString.get('limit')) || 10,
+    Number(queryString.get('limit')) || 12,
   );
   const [isOpenFilter, setIsOpenFilter] = useState<boolean>(false);
   const [products, setProducts] = useState<ProductDto[]>([]);
@@ -96,7 +96,11 @@ export const CategoryFilterProvider = ({
     })
 
     refTimerCount.current = setTimeout(() => {
-      updateRouter(params.toString());
+      if (count > 0) {
+        updateRouter(params.toString());
+      } else {
+        increaseCount();
+      }
     }, 500);
   }, [sortBy, limit, filters, page, search]);
   useEffect(() => {
@@ -108,8 +112,27 @@ export const CategoryFilterProvider = ({
     }
     setFilters(Object.assign(_filters, filters));
   }, [dataSlug]);
+
+  useEffect(() => {
+    const handleRouteComplete = () => {
+      if (!refTimer.current) {
+        setLoading(true)
+        refTimer.current = setTimeout(() => {
+          refreshData().catch();
+        }, 500);
+      }
+
+
+    };
+    router.events.on('routeChangeComplete', handleRouteComplete);
+    return () => {
+      router.events.on('routeChangeComplete', handleRouteComplete);
+      refTimer?.current && clearTimeout(refTimer.current as NodeJS.Timeout);
+      if (loading) setLoading(false);
+    };
+  }, []);
   const updateRouter = (params: string) => {
-    setCount(count + 1);
+    increaseCount();
     router.push(
       {
         pathname: router.pathname,
@@ -120,31 +143,33 @@ export const CategoryFilterProvider = ({
     );
   };
 
-  useEffect(() => {
-    if (count > 1) {
-      setLoading(true);
-      refTimer.current = setTimeout(() => {
-        const params = new URLSearchParams(window.location.search);
-        const url = isSearch
-          ? `/api/getProduct/filter/?`
-          : `/api/getProduct/${((router?.query?.slug as string[]) || []).join('/')}?`;
-        fetch(url + params.toString())
-          .then((res) => res.json())
-          .then((res: { data: { data: ResponseCategoryFilterPageDto } }) => {
-            setProducts(res?.data?.data?.products || []);
-            setLoading(false);
-            setTotal(res?.data?.data?.total || 0);
-          })
-          .catch((err) => {
-            setLoading(false);
-          });
-      }, 200);
-    }
-    return () => {
-      refTimer?.current && clearTimeout(refTimer.current as NodeJS.Timeout);
-      if (loading) setLoading(false);
-    };
-  }, [count]);
+
+  const increaseCount = () => {
+    setCount(count + 1);
+  }
+
+  const refreshData = async () => {
+    const params = new URLSearchParams(window.location.search);
+    const url = isSearch
+      ? `/api/getProduct/filter/?`
+      : `/api/getProduct/${((router?.query?.slug as string[]) || []).join('/')}?`;
+    fetch(url + params.toString())
+      .then((res) => res.json())
+      .then((res: { data: { data: ResponseCategoryFilterPageDto } }) => {
+        setProducts(res?.data?.data?.products || []);
+        setLoading(false);
+        setTotal(res?.data?.data?.total || 0);
+      })
+      .catch((err) => {
+        setLoading(false);
+      })
+      .finally(()=>{
+        setLoading(false);
+        if (refTimer.current) {
+          refTimer.current = null;
+        }
+      });
+  }
 
   return (
     <CategoryFilterContext.Provider

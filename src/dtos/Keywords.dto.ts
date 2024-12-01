@@ -1,5 +1,6 @@
 import KeywordDetailDto from '@/dtos/KeywordDetail.dto';
 import { SlugDto } from '@/dtos/Slug.dto';
+import { SeoDto } from '@/dtos/Seo.dto';
 
 export default class KeywordsDto {
   id?: number;
@@ -7,4 +8,5 @@ export default class KeywordsDto {
   type?: string;
   keyword_detail?: KeywordDetailDto[];
   slugs?: SlugDto;
+  seo?: SeoDto;
 }

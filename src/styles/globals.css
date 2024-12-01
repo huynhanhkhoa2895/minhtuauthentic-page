@@ -66,6 +66,8 @@ iframe {
     @apply text-[1.17em] leading-[1.2] my-[1em];
   }
   p{
+      margin-block-end: 1em;
+      margin-block-start: 1em;
     @apply leading-[1.6] break-words;
   }
   a{

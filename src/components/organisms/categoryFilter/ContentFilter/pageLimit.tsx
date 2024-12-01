@@ -4,9 +4,9 @@ import CategoryFilterContext from '@/contexts/categoryFilterContext';
 export default function PageLimit() {
   const ctx = useContext(CategoryFilterContext);
   const pages = [
-    { value: 10, label: '10' },
-    { value: 20, label: '20' },
-    { value: 40, label: '40' },
+    { value: 12, label: '12' },
+    { value: 24, label: '24' },
+    { value: 48, label: '48' },
     { value: -1, label: 'All' },
   ];
   return (

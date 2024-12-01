@@ -50,7 +50,8 @@ export const getServerSideProps = async (context: any) => {
     data?.data?.model === Entity.CATEGORIES ||
     data?.data?.model === Entity.BRANDS ||
     data?.data?.model === Entity.CATEGORY_NEWS ||
-    data?.data?.model === Entity.NEWS
+    data?.data?.model === Entity.NEWS ||
+    data?.data?.model === Entity.KEYWORDS
   ) {
     switch (data?.data?.model) {
       case Entity.PRODUCTS:
@@ -96,6 +97,14 @@ export const getServerSideProps = async (context: any) => {
         title = brand?.seo?.title || brand?.name;
         description = brand?.seo?.description;
         keyword = brand?.seo?.keyword;
+        break;
+      case Entity.KEYWORDS:
+        let keywordEntity = (
+          data?.data as ResponseSlugPageDto<ResponseCategoryFilterPageDto>
+        ).data?.keyword;
+        title = keywordEntity?.seo?.title || keywordEntity?.value;
+        description = keywordEntity?.seo?.description;
+        keyword = keywordEntity?.seo?.keyword;
         break;
     }
     context.res.setHeader(
