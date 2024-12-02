@@ -2,7 +2,6 @@ import { StaticContentsDto } from '@/dtos/StaticContents.dto';
 import BlockUnderSlideItem from '@/components/molecules/blockUnderSlide/item';
 import { MobileView } from 'react-device-detect';
 import SectionSwiper from '@/components/organisms/sectionSwiper';
-import { Skeleton } from 'antd/es';
 
 export default function SlideMobileView({
   contents,

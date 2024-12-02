@@ -4,7 +4,6 @@ import { twMerge } from 'tailwind-merge';
 import LeftOutlined from '@ant-design/icons/lib/icons/LeftOutlined';
 import RightOutlined from '@ant-design/icons/lib/icons/RightOutlined';
 import SectionSwiperSlide from '@/components/organisms/sectionSwiper/slide';
-import SkeletonMobile from '@/components/atoms/skeletonMobile';
 import { Grid, Pagination, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 export type SwiperProps = {
@@ -150,7 +149,7 @@ export default function SectionSwiperItem({
   return (
     <>
       {!ready ? (
-        <SkeletonMobile />
+        <></>
       ) : (
         <div className={twMerge('relative', classNameContainer)}>
           {renderSwiper}

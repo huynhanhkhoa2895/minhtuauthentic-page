@@ -9,11 +9,10 @@ import FilterBy from '@/components/organisms/categoryFilter/ContentFilter/filter
 import { ProductFilterOptionDto } from '@/dtos/ProductFilterSettingOption/ProductFilterOption.dto';
 import { ProductConfigurationValuesDto } from '@/dtos/productConfigurationValues.dto';
 import { SlugDto } from '@/dtos/Slug.dto';
-import { Pagination, Space, Skeleton, Button } from 'antd/es';
+import { Pagination, Button } from 'antd/es';
 import Filter from '@/components/icons/filter';
 import { CategoryDto } from '@/dtos/Category.dto';
-import { Entity } from '@/config/enum';
-import category from '@/components/icons/menuFooter/Category';
+import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 
 type Props = {
   settings?: ProductFilterOptionDto;
@@ -22,6 +21,7 @@ type Props = {
   total: number;
   title?: string;
   category?: CategoryDto;
+  menu?: ResponseMenuDto;
 };
 
 export default function ContentFilter({
@@ -29,7 +29,7 @@ export default function ContentFilter({
   settings,
   slugData,
   total,
-  category,
+  menu,
   title,
 }: Props) {
   const ctx = useContext(CategoryFilterContext);
@@ -150,6 +150,11 @@ export default function ContentFilter({
   return (
     <div className={'p-3 w-full lg:col-span-5'}>
       {renderTitle()}
+      <div className={'hidden'}>
+        {(menu?.homeMenuCategory || [])?.map((item, index) => {
+          return <h2 key={index}>{item?.category?.name}</h2>;
+        })}
+      </div>
       <div className={'mb-3 lg:mb-6'}>
         <span className={'font-semibold text-[16px] shrink-0'}>Lọc theo:</span>
         <FilterBy />
@@ -203,7 +208,7 @@ export default function ContentFilter({
               showQuickJumper={true}
               showSizeChanger={false}
               current={ctx?.page || 1}
-              pageSize={ctx?.limit || 10}
+              pageSize={ctx?.limit || 12}
               onChange={(page: number) => {
                 ctx?.setPage && ctx.setPage(page);
               }}

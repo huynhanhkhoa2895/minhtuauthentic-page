@@ -13,9 +13,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         res.status(200).json(data);
       })
       .catch((error) => {
+        console.log(error);
         res.status(500).json({ error });
       });
   } else {

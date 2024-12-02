@@ -88,12 +88,13 @@ const ProductDetailCard = ({
           resetItem();
           return;
         }
-        const index = _product.data.findIndex((item) => item === product?.id);
+        const index = _product.data.findIndex((item) => item == product?.id);
         if (index === -1) {
           _product.data.unshift(product?.id || 0);
           if (_product.data.length > 10) {
             _product.data.pop();
           }
+          localStorage.setItem('product_seen', JSON.stringify(_product));
         }
       } else {
         resetItem();

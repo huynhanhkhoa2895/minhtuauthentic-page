@@ -30,6 +30,7 @@ export default function CategoryTemplate({
   slug,
   breadcrumb,
   isSearch,
+  menu,
 }: Props) {
   const data = slug?.data as ResponseCategoryFilterPageDto;
   const renderLabelBreadcrumb: Record<string, string> = {
@@ -66,8 +67,8 @@ export default function CategoryTemplate({
           products={data?.products || []}
           settings={data?.settings}
           total={data?.total || 0}
-          category={data?.category}
           title={data?.title}
+          menu={menu}
           slugData={
             new SlugDto({
               model: slug?.model,

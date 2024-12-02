@@ -23,7 +23,7 @@ type Props = {
 };
 
 export default function FormProductRating({ product_id, refreshData }: Props) {
-  const { token } = useGoogleToken('minhturating');
+  const { handleReCaptchaVerify } = useGoogleToken('minhturating');
   const {
     handleSubmit,
     control,
@@ -44,6 +44,7 @@ export default function FormProductRating({ product_id, refreshData }: Props) {
     <form
       onSubmit={handleSubmit(async (data) => {
         data.is_active = false;
+        const token = await handleReCaptchaVerify();
         const rs = await fetch('/api/product/rate/', {
           method: 'POST',
           headers: {

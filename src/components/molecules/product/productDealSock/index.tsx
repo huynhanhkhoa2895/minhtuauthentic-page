@@ -6,7 +6,6 @@ import { ReactNode, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { PROMOTION_TYPE } from '@/config/enum';
 import { SettingsDto } from '@/dtos/Settings.dto';
-import { Skeleton } from 'antd/es';
 import { VariantDto } from '@/dtos/Variant.dto';
 
 type Props = {

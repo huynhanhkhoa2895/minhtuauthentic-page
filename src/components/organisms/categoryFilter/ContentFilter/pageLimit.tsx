@@ -13,7 +13,7 @@ export default function PageLimit() {
     <div className="flex lg:items-center">
       <Select
         className={'w-20'}
-        defaultValue={ctx?.limit || 10}
+        defaultValue={ctx?.limit || 12}
         options={pages}
         onChange={(value) => {
           ctx?.setLimit && ctx.setLimit(value);

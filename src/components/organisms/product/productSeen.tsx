@@ -28,8 +28,8 @@ export default function ProductSeen({ product }: Props) {
   }, []);
   const loadData = (ids: number[]) => {
     let query = '';
-    ids.forEach((id) => {
-      query += `ids[]=${id}&`;
+    ids.forEach((id, index) => {
+      query += `ids[${index}]=${id}&`;
     });
     return fetch(`/api/product/listWithId?${query}`, {
       method: 'GET',
