@@ -1,10 +1,10 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
@@ -19,17 +19,43 @@ const config: Config = {
           '3xl': '1240px',
         },
       },
+      keyframes: {
+        fadeUp: {
+          '0%': {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+          '100%': {
+            opacity: '0',
+            transform: 'translateY(-50px)',
+            height: '0',
+            overflow: 'hidden',
+          },
+        },
+        fadeDown: {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(-50px)',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+      },
       animation: {
         'spin-circle': 'spin 1s linear infinite',
+        'fade-up': 'fadeUp 1s ease-out',
+        'fade-down': 'fadeDown 1s ease-out',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
-            'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       fontWeight: {
         semibold: '500',
-        bold: '600'
+        bold: '600',
       },
       colors: {
         primary: '#C44812',
@@ -43,7 +69,7 @@ const config: Config = {
       },
       boxShadow: {
         custom:
-            '0 1px 2px 0 rgba(60,64,67,.1),0 2px 6px 2px rgba(60,64,67,.15)',
+          '0 1px 2px 0 rgba(60,64,67,.1),0 2px 6px 2px rgba(60,64,67,.15)',
       },
     },
   },

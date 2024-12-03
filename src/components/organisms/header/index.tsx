@@ -70,9 +70,7 @@ export const Header = ({ menu, settings }: Props) => {
       </div>
       <header
         id={'header'}
-        className={
-          'bg-primary lg:py-[10px] sticky top-0 left-0 z-[100] relative'
-        }
+        className={'bg-primary lg:py-[10px] sticky top-0 left-0 z-[100]'}
       >
         <NavMenuHeader className={'lg:hidden'} isMobile={true} />
         <div
