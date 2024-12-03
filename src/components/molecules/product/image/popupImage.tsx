@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { ProductDto } from '@/dtos/Product.dto';
 import { useProductImageDetail } from '@/hooks/useProductImageDetail';
@@ -12,25 +12,15 @@ import { VariantDto } from '@/dtos/Variant.dto';
 import PopupImageItem from '@/components/molecules/product/image/popupImageItem';
 import LeftOutlined from '@ant-design/icons/lib/icons/LeftOutlined';
 import RightOutlined from '@ant-design/icons/lib/icons/RightOutlined';
+import ProductDetailContext from '@/contexts/productDetailContext';
 type Props = {
   open: boolean;
   product: ProductDto;
   image: ImageDto | null;
   setIsOpen?: (item: { display: boolean; image: ImageDto | null }) => void;
-  variantActive?: VariantDto;
 };
-export default function PopupImage({
-  open,
-  product,
-  image,
-  setIsOpen,
-  variantActive,
-}: Props) {
-  const [isReady, setIsReady] = useState(false);
-  const { images, imageActive, setImageActive } = useProductImageDetail({
-    product,
-    variant: variantActive,
-  });
+export default function PopupImage({ open, product, image, setIsOpen }: Props) {
+  const { images, imageActive, setImageActive } = useProductImageDetail({});
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
   useEffect(() => {
     if (image) {
@@ -43,11 +33,6 @@ export default function PopupImage({
       swiper.slideTo(images.findIndex((item) => item.url === imageActive?.url));
     }
   }, [imageActive]);
-
-  useEffect(() => {
-    setIsReady(true);
-  }, []);
-
   const renderImage = useMemo(() => {
     return (
       <div className={'w-max mx-auto flex gap-3 h-full py-3 max-lg:px-3'}>

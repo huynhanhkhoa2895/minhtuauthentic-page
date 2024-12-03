@@ -21,9 +21,12 @@ import IconWifi from '@/components/icons/wifi';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import { SETTING_KEY } from '@/config/enum';
 import dynamic from 'next/dynamic';
-const InputSearch = dynamic(() => import('@/components/molecules/header/inputSearch'),{
-  ssr: false,
-});
+const InputSearch = dynamic(
+  () => import('@/components/molecules/header/inputSearch'),
+  {
+    ssr: false,
+  },
+);
 
 import NavMenuHeader from '@/components/organisms/MobileMenu/navMenu/header';
 type Props = { menu: ResponseMenuDto | undefined; settings: SettingsDto[] };
@@ -40,7 +43,7 @@ export const Header = ({ menu, settings }: Props) => {
     <>
       <div
         className={
-          ' hidden lg:grid  bg-primaryGrey relative z-[3] grid-cols-3 items-center p-3 h-[50px]'
+          ' hidden lg:!grid  bg-primaryGrey relative z-[3] grid-cols-3 items-center p-3 h-[50px]'
         }
       >
         {pageHeader?.value && (

@@ -1,7 +1,7 @@
 import { ProductDto } from '@/dtos/Product.dto';
 import ProductDetailImage from '@/components/molecules/product/image/productDetailImage';
 import ProductProperty from '@/components/molecules/product/property';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ImageDto } from '@/dtos/Image.dto';
 import { ProductConfigurationsDto } from '@/dtos/productConfigurations.dto';
 import { VariantDto } from '@/dtos/Variant.dto';
@@ -16,6 +16,7 @@ import { SettingsDto } from '@/dtos/Settings.dto';
 import { SETTING_KEY } from '@/config/enum';
 import { TProductSeen } from '@/config/type';
 import ProductOverview from '@/components/organisms/product/overview';
+import ProductDetailContext from '@/contexts/productDetailContext';
 const ProductRating = dynamic(
   () => import('@/components/molecules/product/productRating'),
   {
@@ -47,14 +48,12 @@ type Props = {
   relatedProducts: ProductDto[];
   productConfigurations: ProductConfigurationsDto[];
   settings: SettingsDto[];
-  variantActive: VariantDto | undefined;
 };
 const ProductDetailCard = ({
   product,
   productConfigurations,
   relatedProducts,
   settings,
-  variantActive,
 }: Props) => {
   const [isOpen, setIsOpen] = useState<{
     display: boolean;
@@ -63,14 +62,17 @@ const ProductDetailCard = ({
     display: false,
     image: null,
   });
-
-  const [_variantActive, setVariantActive] = useState<VariantDto | undefined>(
-    variantActive ||
-      (product?.variants || [])?.find((item: VariantDto) => item.is_default) ||
-      product?.variants?.[0],
-  );
+  const productContext = useContext(ProductDetailContext);
 
   useEffect(() => {
+    if (productContext?.setVariantActive && !productContext.variantActive) {
+      productContext.setVariantActive(
+        (product?.variants || [])?.find(
+          (item: VariantDto) => item.is_default,
+        ) || product?.variants?.[0],
+      );
+    }
+
     const resetItem = () => {
       localStorage.setItem(
         'product_seen',
@@ -106,15 +108,11 @@ const ProductDetailCard = ({
     <>
       {product && (
         <>
-          {_variantActive && (
+          {productContext?.variantActive && (
             <ProductOverview
               product={product}
-              variant={_variantActive}
               productConfigurations={productConfigurations}
               settings={settings}
-              onChange={(variant: VariantDto) => {
-                setVariantActive(variant);
-              }}
               setIsOpen={setIsOpen}
             />
           )}
@@ -156,7 +154,6 @@ const ProductDetailCard = ({
             setIsOpen={setIsOpen}
             image={isOpen.image}
             product={product}
-            variantActive={_variantActive}
           />
         </>
       )}

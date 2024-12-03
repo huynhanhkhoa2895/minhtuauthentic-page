@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { PAYMENT_TYPE_ID } from '@/config/enum';
 import PaymentButton from '@/components/molecules/paymentButton';
 type Props = {
-  variant: VariantDto;
+  variant?: VariantDto;
 };
 export default function ProductCartCheckout({ variant }: Props) {
   const router = useRouter();
@@ -16,12 +16,12 @@ export default function ProductCartCheckout({ variant }: Props) {
   const [indexCart, setIndexCart] = useState<number | null>(null);
   useEffect(() => {
     const index = (orderCtx?.cart?.items || [])?.findIndex(
-      (item) => item.variant_id === variant.id,
+      (item) => item.variant_id === variant?.id,
     );
     index && setIndexCart(index);
   }, [orderCtx?.cart]);
   const handleAddToCart = () => {
-    if (!indexCart) return;
+    if (!indexCart || !variant) return;
     if (indexCart > -1) {
       orderCtx?.updateCart && orderCtx.updateCart(indexCart, qty);
     } else {

@@ -12,18 +12,13 @@ type Props = {
   product: ProductDto;
   containerClassName?: string;
   setIsOpen?: (item: { display: boolean; image: ImageDto | null }) => void;
-  variantActive?: VariantDto;
 };
 const ProductDetailImage = ({
   product,
   containerClassName,
   setIsOpen,
-  variantActive,
 }: Props) => {
-  const { images, imageActive, setImageActive } = useProductImageDetail({
-    product,
-    variant: variantActive,
-  });
+  const { images, imageActive, setImageActive } = useProductImageDetail({});
 
   const handleClickImage = (image: ImageDto) => {
     if (image) {
@@ -36,7 +31,7 @@ const ProductDetailImage = ({
       <SectionSwiper
         classNameContainer={'mt-3'}
         slidePerViewMobile={4}
-        key={variantActive?.id}
+        key={JSON.stringify(images)}
         classNameItems={
           'p-1 lg:hover:shadow-md transition-shadow duration-300 lg:hover:border-primary border border-transparent'
         }
@@ -62,14 +57,14 @@ const ProductDetailImage = ({
         data={images}
       />
     );
-  }, [imageActive, variantActive]);
+  }, [imageActive, images]);
 
   return (
     <div className={twMerge(containerClassName)}>
       <ImageWithFallback
         image={imageActive}
         className={
-          'object-contain cursor-pointer bk-product-image lg:max-w-[600px] m-auto'
+          'object-contain cursor-pointer bk-product-image lg:max-w-[568px] m-auto'
         }
         onClick={(image: ImageDto | null) => {
           setIsOpen && setIsOpen({ display: true, image });

@@ -2,7 +2,7 @@ import { ProductDto } from '@/dtos/Product.dto';
 import { twMerge } from 'tailwind-merge';
 import ProductPrice from '@/components/molecules/product/price';
 import { Star } from '@/components/icons/star';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ProductConfigurationsDto } from '@/dtos/productConfigurations.dto';
 import { VariantDto } from '@/dtos/Variant.dto';
 import ProductConfiguration from '@/components/molecules/product/configuration';
@@ -14,31 +14,23 @@ import StartRating from '@/components/atoms/product/startRating';
 import { Rate } from 'antd/es';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import { useRouter } from 'next/router';
+import ProductDetailContext from '@/contexts/productDetailContext';
 type Props = {
   product: ProductDto;
   productConfigurations: ProductConfigurationsDto[];
-  variantActive: VariantDto;
-  onChange?: (variant: VariantDto) => void;
   settings?: SettingsDto[];
 };
 const ProductProperty = ({
   product,
   productConfigurations,
-  variantActive,
-  onChange,
   settings,
 }: Props) => {
+  const productContext = useContext(ProductDetailContext);
   const variantMap = new Map<number, VariantDto>(
     (product?.variants || []).map((variant) => [variant.id || 0, variant]),
   );
   const [variantConfigurationValueMap, setVariantConfigurationValueMap] =
     useState<Map<number, VariantDto> | null>(null);
-
-  const [_variantActive, setVariantActive] =
-    useState<VariantDto>(variantActive);
-  useEffect(() => {
-    onChange && onChange(_variantActive);
-  }, [_variantActive]);
 
   useEffect(() => {
     const _variantConfigurationValueMap = new Map<number, VariantDto>();
@@ -60,8 +52,8 @@ const ProductProperty = ({
   ) => {
     if (variantConfigurationValueMap) {
       const _variant = variantConfigurationValueMap.get(value[0].valueId);
-      if (_variant) {
-        setVariantActive(_variant);
+      if (_variant && productContext?.setVariantActive) {
+        productContext.setVariantActive(_variant);
       }
     }
   };
@@ -75,14 +67,16 @@ const ProductProperty = ({
       valueId: number;
       variant?: VariantDto;
     }[] = [];
-    _variantActive?.variant_product_configuration_values?.map((item) => {
-      value.push({
-        configurationId:
-          item.product_configuration_value?.product_configuration_id || 0,
-        valueId: item.product_configuration_value_id || 0,
-        variant: variantMap.get(item.variant_id || 0),
-      });
-    });
+    productContext?.variantActive?.variant_product_configuration_values?.map(
+      (item) => {
+        value.push({
+          configurationId:
+            item.product_configuration_value?.product_configuration_id || 0,
+          valueId: item.product_configuration_value_id || 0,
+          variant: variantMap.get(item.variant_id || 0),
+        });
+      },
+    );
     return value;
   };
 
@@ -125,12 +119,12 @@ const ProductProperty = ({
           <span
             className={twMerge(
               'font-semibold text-primary',
-              product?.is_in_stock && variantActive?.is_in_stock
+              product?.is_in_stock && productContext?.variantActive?.is_in_stock
                 ? 'text-green'
                 : 'text-red-600',
             )}
           >
-            {product?.is_in_stock && variantActive?.is_in_stock
+            {product?.is_in_stock && productContext?.variantActive?.is_in_stock
               ? 'Còn hàng'
               : 'Hết Hàng'}
           </span>
@@ -144,7 +138,7 @@ const ProductProperty = ({
       <div className={'mt-3 overflow-hidden'}>
         <ProductPrice
           prefix={'Giá'}
-          variant={_variantActive}
+          variant={productContext?.variantActive}
           classNameRegularPrice={
             'text-[24px] lg:text-[28px] font-[700] lg:font-bold'
           }
@@ -166,11 +160,13 @@ const ProductProperty = ({
         )}
       </div>
       <div className={'mt-3'}>
-        <ProductCartCheckout variant={_variantActive} />
+        {productContext?.variantActive && (
+          <ProductCartCheckout variant={productContext?.variantActive} />
+        )}
       </div>
       <PromotionDescription
         settings={settings}
-        variant_id={variantActive.id}
+        variant_id={productContext?.variantActive?.id}
         className={'mt-3'}
       />
       <div className={'mt-3'}>
