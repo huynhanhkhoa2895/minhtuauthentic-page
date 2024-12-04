@@ -96,7 +96,7 @@ export default function NavMenuHeader({ className, isMobile }: Props) {
       {isMobile && (
         <div
           className={
-            'p-3 absolute top-[65px] bg-primary left-0 w-screen transition-all duration-300'
+            'lg:hidden p-3 absolute top-[65px] bg-primary left-0 w-screen transition-all duration-300'
           }
           ref={ref}
         >
