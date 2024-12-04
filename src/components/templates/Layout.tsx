@@ -57,7 +57,10 @@ export default function Layout({
       <DefaultSeo settings={settings} seo={seo} />
       <div
         id={'main-body'}
-        className={twMerge('relative container mx-auto p-1 lg:p-3', className)}
+        className={twMerge(
+          'relative container mx-auto p-[70px_0.25rem_0.25rem_0.25rem] lg:p-3',
+          className,
+        )}
       >
         {children}
         {isDesktop && menu && <LayoutMenu menu={menu} />}

@@ -9,9 +9,10 @@ import { useRouter } from 'next/router';
 import { twMerge } from 'tailwind-merge';
 type Props = {
   classname?: string;
+  classNameInput?: string;
   isMobile?: boolean;
 };
-export const InputSearch = ({ classname, isMobile }: Props) => {
+export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
   const [debouceValue, setDebouceValue] = useState<string>('');
@@ -154,6 +155,7 @@ export const InputSearch = ({ classname, isMobile }: Props) => {
           className={twMerge(
             'absolute text-black top-[50px] bg-white w-[550px] rounded-[10px] shadow-custom left-0',
             isMobile && 'fixed w-[95vw] left-3 top-[60px]',
+            classNameInput,
           )}
         >
           <div className={'flex flex-col '}>

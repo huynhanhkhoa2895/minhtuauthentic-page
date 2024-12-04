@@ -38,7 +38,7 @@ export default function News({
         <BreadcrumbComponent label={'Tin tức'} link={'/tin-tuc'} />
         <NewsTemplate
           news={news?.news || []}
-          categoryNews={news.categoryNews || []}
+          categoryNews={news?.otherCategoryNews || []}
           newest={news.newest || []}
           total={news.total}
           isDetail={false}

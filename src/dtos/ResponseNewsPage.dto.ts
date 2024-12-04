@@ -3,8 +3,8 @@ import { CategoryNewsDto } from '@/dtos/CategoryNews.dto';
 
 export class ResponseNewsPageDto {
   news?: NewsDto[];
-  categoryNews?: CategoryNewsDto[];
+  otherCategoryNews?: CategoryNewsDto[];
   newest?: NewsDto[];
   total?: number;
-  title?: string;
+  categoryNews?: CategoryNewsDto;
 }

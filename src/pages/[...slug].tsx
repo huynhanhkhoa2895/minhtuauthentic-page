@@ -80,7 +80,14 @@ export const getServerSideProps = async (context: any) => {
       case Entity.CATEGORY_NEWS:
         let newsCategory =
           data?.data as ResponseSlugPageDto<ResponseNewsPageDto>;
-        title = newsCategory?.data?.title || null;
+        title =
+          newsCategory?.data?.categoryNews?.seo?.title ||
+          newsCategory?.data?.categoryNews?.name ||
+          null;
+        keyword = newsCategory?.data?.categoryNews?.seo?.keyword;
+        description =
+          newsCategory?.data?.categoryNews?.seo?.description ||
+          newsCategory?.data?.categoryNews?.name;
         break;
       case Entity.CATEGORIES:
         let category = (
@@ -166,17 +173,17 @@ export default function Page({
               label={'Tin tức'}
               link={'/tin-tuc'}
               current={{
-                label: _newsCategory?.title || '',
+                label: _newsCategory?.categoryNews?.name || '',
                 link: generateSlugToHref(slug.slug),
               }}
             />
             <NewsTemplate
               key={slug.slug}
               news={_newsCategory?.news || []}
-              categoryNews={_newsCategory?.categoryNews || []}
+              categoryNews={_newsCategory?.otherCategoryNews || []}
               newest={_newsCategory?.newest}
               total={_newsCategory?.total}
-              title={_newsCategory?.title}
+              title={_newsCategory?.categoryNews?.name}
             />
           </>
         );

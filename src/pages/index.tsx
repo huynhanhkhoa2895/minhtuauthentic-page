@@ -5,7 +5,6 @@ import BlockUnderSlide from '@/components/organisms/home/blockUnderSlide';
 import HomeCategory from '@/components/organisms/home/homeCategory';
 import HomeNews from '@/components/organisms/home/homeNews';
 import HomeBrand from '@/components/organisms/home/homeBrand';
-import HomeSupport from '@/components/organisms/home/homeSupport';
 import { SETTING_KEY } from '@/config/enum';
 import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';

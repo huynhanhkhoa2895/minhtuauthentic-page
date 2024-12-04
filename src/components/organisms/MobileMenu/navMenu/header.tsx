@@ -10,7 +10,10 @@ import HeaderCart from '@/components/icons/header-cart';
 import { twMerge } from 'tailwind-merge';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
+import IconBars from '@/components/icons/bars';
+import { BarsOutlined } from '@ant-design/icons';
+import AppContext from '@/contexts/appContext';
 type Props = {
   className?: string;
   isMobile?: boolean;
@@ -18,6 +21,7 @@ type Props = {
 export default function NavMenuHeader({ className, isMobile }: Props) {
   const ref = useRef<HTMLDivElement | null>(null);
   const refTimeOut = useRef<NodeJS.Timeout | null>(null);
+  const appCtx = useContext(AppContext);
   useEffect(() => {
     let lastScrollY = 0;
     let isScrollDown = false;
@@ -31,8 +35,6 @@ export default function NavMenuHeader({ className, isMobile }: Props) {
         if (refTimeOut.current) {
           clearTimeout(refTimeOut.current as NodeJS.Timeout);
         }
-
-        console.log('currentScrollY', currentScrollY, lastScrollY);
 
         if (currentScrollY > lastScrollY) {
           isScrollDown = true;
@@ -70,17 +72,27 @@ export default function NavMenuHeader({ className, isMobile }: Props) {
   const renderItem = () => {
     return (
       <>
-        <Link className={'shrink-0'} href={'/'}>
+        <button
+          type={'button'}
+          className={'w-[40px] lg:hidden'}
+          onClick={() => {
+            appCtx?.setIsOpenNavMenu &&
+              appCtx.setIsOpenNavMenu(!appCtx?.isOpenNavMenu);
+          }}
+        >
+          <IconBars className={'w-[40px] h-[40px] text-white'} />
+        </button>
+        <Link className={'grow lg:shrink-0'} href={'/'}>
           <Image
             src={Logo}
             width={161}
             height={30}
-            className={'object-contain h-z w-auto'}
+            className={'object-contain h-z w-auto m-auto'}
             alt={'Minhtuauhentic'}
           />
         </Link>
         {/*<InputSearch isMobile={true} />*/}
-        <div className={'w-full'}></div>
+
         <HeaderCart
           className={'w-[40px] h-[40px] shrink-0'}
           classNumber={'text-white'}
@@ -100,7 +112,7 @@ export default function NavMenuHeader({ className, isMobile }: Props) {
           }
           ref={ref}
         >
-          <InputSearch isMobile={true} />
+          <InputSearch classNameInput={'top-[120px]'} isMobile={true} />
         </div>
       )}
     </div>
