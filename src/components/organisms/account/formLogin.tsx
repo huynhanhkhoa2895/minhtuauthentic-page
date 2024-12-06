@@ -20,7 +20,7 @@ const schema = yup
   })
   .required();
 export default function FormLogin() {
-  const { token } = useGoogleToken('minhtulogin');
+  const { handleReCaptchaVerify } = useGoogleToken('minhtulogin');
   const router = useRouter();
   const {
     handleSubmit,
@@ -74,6 +74,7 @@ export default function FormLogin() {
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
+        const token = await handleReCaptchaVerify();
         const rs: { data: UserDto } | null = await fetch('/api/login', {
           method: 'POST',
           body: JSON.stringify({ ...data, token }),

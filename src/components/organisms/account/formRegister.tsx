@@ -100,10 +100,11 @@ export default function FormRegister() {
   });
   const { setCookieUser } = useUser();
   const [errorSubmit, setErrorSubmit] = useState<string | null>(null);
-  const { token } = useGoogleToken('minhturegister');
+  const { handleReCaptchaVerify } = useGoogleToken('minhturegister');
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
+        const token = await handleReCaptchaVerify();
         const rs: { data: UserDto } | null = await fetch('/api/register', {
           method: 'POST',
           body: JSON.stringify({ ...data, token }),
