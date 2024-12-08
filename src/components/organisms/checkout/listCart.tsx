@@ -7,6 +7,8 @@ import ItemCoupon from '@/components/atoms/coupons';
 import { Button, Input, Tag } from 'antd/es';
 import { PAYMENT, PAYMENT_TYPE_ID } from '@/config/enum';
 import PaymentButton from '@/components/molecules/paymentButton';
+import ArrowLeftOutlined from '@ant-design/icons/lib/icons/ArrowLeftOutlined';
+import Link from 'next/link';
 type Props = {
   paymentType?: string;
   setValue?: any;
@@ -241,6 +243,18 @@ export default function ListCart({ paymentType, setValue }: Props) {
             />
           </>
         )}
+      </div>
+      <div className={'flex justify-between items-center mt-6'}>
+        <div className={'flex text-primary gap-1'}>
+          <ArrowLeftOutlined />
+          <Link className={'font-semibold'} href={'/gio-hang/tom-tat'}>
+            Quay lại giỏ hàng
+          </Link>
+          <span> | </span>
+          <Link className={'font-semibold'} href={'/'}>
+            Tiếp tục mua sắm
+          </Link>
+        </div>
       </div>
     </div>
   );

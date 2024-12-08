@@ -1,16 +1,17 @@
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';
 import { OrdersDto } from '@/dtos/Orders.dto';
 import { Fragment, ReactNode, useEffect, useState } from 'react';
-import { Table } from 'antd/es';
+import { Table, TableColumnsType } from 'antd/es';
 import dayjs from 'dayjs';
 import {
   calculatePriceMinus,
   formatMoney,
   generateSlugToHref,
-  promotionName,
+  promotionName, statusOrder,
 } from '@/utils';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 import Link from 'next/link';
+import { DataType } from 'csstype';
 
 type Props = {
   order: OrdersDto;
@@ -26,18 +27,19 @@ export default function OrderDetailTemplate({ order }: Props) {
     useState<number>(0);
 
   useEffect(() => {
-    let totalPriceWithoutCoupon = 0;
+    let totalPriceWithoutCoupon: number = 0;
     order?.order_items?.forEach((item) => {
-      totalPriceWithoutCoupon += item.price || 0;
+      totalPriceWithoutCoupon += Number(item.price) || 0;
     });
     setTotalPriceWithoutCoupon(totalPriceWithoutCoupon);
   }, []);
 
-  const columns = [
+  const columns: TableColumnsType<DataType> = [
     {
       title: 'Tên sản phẩm',
       dataIndex: 'name',
       key: 'name',
+      width: 500,
       render: (_: unknown, item: OrderItemsDto) => (
         <Link
           href={generateSlugToHref(item?.variant?.product?.slugs?.slug)}
@@ -127,7 +129,7 @@ export default function OrderDetailTemplate({ order }: Props) {
         case 'status':
           items.push({
             label: 'Trạng thái',
-            render: value,
+            render: statusOrder(value),
           });
           break;
         case 'payment':
@@ -188,6 +190,7 @@ export default function OrderDetailTemplate({ order }: Props) {
               Sản phẩm
             </h2>
             <Table
+              className={'overflow-auto'}
               dataSource={order?.order_items || []}
               columns={columns}
               pagination={false}
@@ -195,8 +198,9 @@ export default function OrderDetailTemplate({ order }: Props) {
           </div>
           <div className={'mt-3 flex justify-end'}>
             <table className={''}>
+              <tbody>
               <tr>
-                <td className={'text-primary text-xl'}>Tạm Tính: </td>
+                <td className={'text-primary text-xl'}>Tạm Tính:</td>
                 <td className={'text-right pr-5'}>
                   {formatMoney(totalPriceWithoutCoupon)}
                 </td>
@@ -231,9 +235,10 @@ export default function OrderDetailTemplate({ order }: Props) {
                   );
                 })}
               <tr>
-                <td className={'text-primary text-xl'}>Tổng tiền: </td>
+                <td className={'text-primary text-xl'}>Tổng tiền:</td>
                 <td>{formatMoney(order.total_price || 0)}</td>
               </tr>
+              </tbody>
             </table>
           </div>
         </>

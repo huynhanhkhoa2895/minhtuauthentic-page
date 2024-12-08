@@ -219,7 +219,7 @@ export default function FormCheckout({
                     </span>
                     {item.description && (
                       <div
-                        className={'text-sm text-gray-500 container-html'}
+                        className={'text-sm container-html'}
                         dangerouslySetInnerHTML={{ __html: item.description }}
                       />
                     )}
@@ -250,14 +250,6 @@ export default function FormCheckout({
           placeholder={'Ghi chú'}
           className={'col-span-2'}
         />
-      </div>
-      <div className={'flex justify-between items-center mt-6'}>
-        <div className={'flex text-primary gap-1'}>
-          <ArrowLeftOutlined />
-          <Link className={'font-semibold'} href={'/gio-hang/tom-tat'}>
-            Quay lại giỏ hàng
-          </Link>
-        </div>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import { OrdersDto } from '@/dtos/Orders.dto';
+import { twMerge } from 'tailwind-merge';
 
 type Props = {
   orders: OrdersDto[];
@@ -14,8 +15,8 @@ export default function HistoryMobileView({ orders, column }: Props) {
               {column.map((col, i) => {
                 return (
                   <tr key={'table-' + i}>
-                    <td className={'border '}>{col.title}</td>
-                    <td className={'border w-[70%]'}>
+                    <td className={twMerge('border', i === 0 && 'font-bold')}>{col.title}</td>
+                    <td className={twMerge('border w-[70%]', i === 0 && 'font-bold')}>
                       {col.render(null, item)}
                     </td>
                   </tr>

@@ -1,5 +1,5 @@
 import { twMerge } from 'tailwind-merge';
-import { useContext, useState } from 'react';
+import { ReactNode, useContext, useState } from 'react';
 import AppContext from '@/contexts/appContext';
 import { SETTING_KEY } from '@/config/enum';
 import PromotionDescriptionCoupons from '@/components/molecules/product/promotionDescription/coupons';
@@ -52,9 +52,12 @@ export default function PromotionDescription({
       (item) =>
         item.key === SETTING_KEY.PRODUCT_DETAIL_OFFER_SPECIAL_CONTENT.KEY,
     );
+    // const active = index === indexDisplay;
+    let xhtml : ReactNode = <></>;
+    console.log('index', index)
     switch (index) {
       case 0:
-        return (
+        xhtml = (
           <div
             className={'container-html html-description'}
             dangerouslySetInnerHTML={{
@@ -62,13 +65,16 @@ export default function PromotionDescription({
             }}
           />
         );
+        break;
       case 1:
-        return (
+        xhtml =  <>{
           variant_id && <PromotionDescriptionCoupons variant_id={variant_id} />
-        );
+        }</>;
+        break;
       default:
-        return '';
+        xhtml = <></>;
     }
+    return xhtml;
   }
 
   return (
@@ -83,21 +89,8 @@ export default function PromotionDescription({
           return renderButtonHeader(index, item);
         })}
       </div>
-      <div className={'relative w-full h-[500px] overflow-auto'}>
-        {contents.map((item, index) => {
-          const active = index === indexDisplay;
-          return (
-            <div
-              key={index}
-              className={twMerge(
-                'p-3 opacity-0 invisible transition-opacity duration-500 absolute top-0 left-0 w-full h-full',
-                active && 'opacity-100 visible',
-              )}
-            >
-              {renderContent(index)}
-            </div>
-          );
-        })}
+      <div className={'relative w-full overflow-auto p-3'}>
+        {renderContent(indexDisplay)}
       </div>
     </div>
   );

@@ -13,6 +13,9 @@ import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import useGoogleToken from '@/hooks/useGoogleToken';
+import WelcomeText from '@/components/atoms/account/welcomeText';
+import LoginOptions from '@/components/atoms/account/LoginOptions';
+import LoginButtonGroup from '@/components/atoms/account/LoginButtonGroup';
 const schema = yup
   .object({
     username: yup.string().required('Vui lòng nhập tên đăng nhập'),
@@ -51,13 +54,7 @@ export default function FormLogin() {
       }
     };
   }, []);
-  const handleLoginWithGmail = () => {
-    window.open(
-      `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT}&scope=https://www.googleapis.com/auth/userinfo.email&include_granted_scopes=true&response_type=token`,
-      '_elfinder_',
-      'top=250;left=550;scrollbars=yes,resizable=yes,width=800,height=400',
-    );
-  };
+
 
   const afterLoginSuccess = (data: UserDto) => {
     toast.success('Đăng nhập thành công');
@@ -95,7 +92,8 @@ export default function FormLogin() {
       }}
       className={'p-4'}
     >
-      <h1 className={'text-primary font-semibold text-[24px] mb-6'}>
+      <WelcomeText />
+      <h1 className={'text-primary font-semibold text-[24px] mt-3 mb-3'}>
         Đăng Nhập
       </h1>
       {errorSubmit && (
@@ -118,34 +116,14 @@ export default function FormLogin() {
           placeholder={'Mật khẩu'}
           prefix={<LockOutlined />}
         />
-        <div className={'flex justify-between items-center'}>
-          <Button type="primary" htmlType={'submit'}>
-            Đăng nhập
-          </Button>
-          <Link className={'text-primary'} href={'/tai-khoan/dang-ky'}>
-            Đăng ký
-          </Link>
-        </div>
+        <LoginButtonGroup
+            mainTitle={'Đăng nhập'}
+            secondaryTitle={'Đăng ký'}
+            secondarySubTitle={'Bạn chưa có tài khoản?'}
+            secondaryHref={'/tai-khoan/dang-ky'}
+        />
       </div>
-      <div className={'login-options'}>
-        <div className={'login-options-title'}>
-          <span className={'relative bg-white px-4'}>
-            Đăng nhập bằng mạng xã hội
-          </span>
-        </div>
-        <div className={'w-full flex items-center justify-center'}>
-          <div
-            className={
-              'rounded-[100%] cursor-pointer p-2 border border-gray-200'
-            }
-          >
-            <GmailIcon
-              className={'w-[20px] h-[20px] '}
-              onClick={handleLoginWithGmail}
-            />
-          </div>
-        </div>
-      </div>
+      <LoginOptions title={'Đăng nhập với'} />
     </form>
   );
 }

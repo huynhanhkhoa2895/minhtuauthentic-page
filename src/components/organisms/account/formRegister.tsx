@@ -18,6 +18,9 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import useGoogleToken from '@/hooks/useGoogleToken';
+import WelcomeText from '@/components/atoms/account/welcomeText';
+import LoginOptions from '@/components/atoms/account/LoginOptions';
+import LoginButtonGroup from '@/components/atoms/account/LoginButtonGroup';
 
 let timeoutEmail: any = null;
 let timeoutPhone: any = null;
@@ -132,6 +135,7 @@ export default function FormRegister() {
       }}
       className={'p-4'}
     >
+      <WelcomeText />
       <h1 className={'text-primary font-semibold text-[24px] mb-6'}>Đăng Ký</h1>
       {errorSubmit && (
         <div className={'text-red-500 font-semibold mb-3'}>{errorSubmit}</div>
@@ -177,15 +181,14 @@ export default function FormRegister() {
           placeholder={'Nhập lại mật khẩu *'}
           prefix={<LockOutlined />}
         />
-        <div className={'flex justify-between'}>
-          <Button type={'link'} className={'text-primary hover:!text-primary'}>
-            <Link href={'/tai-khoan/dang-nhap'}>Đăng nhập</Link>
-          </Button>
-          <Button type="primary" htmlType={'submit'}>
-            Đăng ký
-          </Button>
-        </div>
+        <LoginButtonGroup
+          mainTitle={'Đăng ký'}
+          secondaryTitle={'Đăng nhập'}
+          secondarySubTitle={'Bạn đã có tài khoản?'}
+          secondaryHref={'/tai-khoan/dang-nhap'}
+        />
       </div>
+      <LoginOptions title={'Đăng ký với'} />
     </form>
   );
 }

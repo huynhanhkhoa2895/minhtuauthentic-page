@@ -176,3 +176,11 @@ export const PAYMENT_TYPE_ID = {
   TRA_GOP_BAO_KIM: 339,
   TRA_GOP_BAO_KIM_CREDIT_CARD: 296,
 };
+
+export enum OrderStatus {
+  APPROVED = 'approved',
+  PROCESSING = 'processing',
+  DONE = 'done',
+  NEW = 'new',
+  CLOSE = 'close',
+}

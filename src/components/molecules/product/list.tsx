@@ -35,7 +35,7 @@ export default function ProductList({
         slidePerViewMobile={2}
         spaceBetween={10}
         auto={true}
-        loop={true}
+        loop={false}
         renderItem={(item: unknown) => {
           const product = item as ProductDto;
           const variant = (product?.variants || [])?.find(

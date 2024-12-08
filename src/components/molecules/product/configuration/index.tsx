@@ -158,7 +158,7 @@ export default function ProductConfiguration({
                             });
                           }}
                           className={twMerge(
-                            'rounded-[10px] p-2 lg:p-3 border border-gray-300 text-gray-500 relative overflow-hidden font-extrabold',
+                            'rounded-[10px] p-2 lg:p-3 border border-gray-300 relative overflow-hidden font-extrabold',
                             isActived ? 'border-primary' : '',
                             !variant?.is_in_stock &&
                               'cursor-not-allowed relative before:content-[attr(data-content)] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-white before:z-10 before:opacity-50',

@@ -42,18 +42,19 @@ export default function NavMenuHeader({ className, isMobile }: Props) {
           isScrollDown = false;
         }
 
-        if (isScrollDown) {
-          ref.current.classList.add('invisible');
-          ref.current.classList.add('opacity-0');
-          ref.current.classList.remove('visible');
-          ref.current.classList.remove('opacity-100');
-          // ref.current.style.height = 'translateY(-100%)';
-        } else {
+        if (!isScrollDown || currentScrollY < 100) {
           ref.current.classList.remove('invisible');
           ref.current.classList.remove('opacity-0');
           ref.current.classList.add('visible');
           ref.current.classList.add('opacity-100');
           // ref.current.style.transform = 'translateY(0)';
+        } else {
+          ref.current.classList.add('invisible');
+          ref.current.classList.add('opacity-0');
+          ref.current.classList.remove('visible');
+          ref.current.classList.remove('opacity-100');
+          // ref.current.style.height = 'translateY(-100%)';
+
         }
 
         lastScrollY = currentScrollY;

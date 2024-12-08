@@ -1,4 +1,4 @@
-import { Entity, PROMOTION_PRICE_TYPE, PROMOTION_TYPE } from '@/config/enum';
+import { Entity, OrderStatus, PROMOTION_PRICE_TYPE, PROMOTION_TYPE } from '@/config/enum';
 import { VariantDto } from '@/dtos/Variant.dto';
 import { IVariantProductConfigurationValuesDto } from '@/dtos/iVariantProductConfigurationValues.dto';
 import CouponsDto from '@/dtos/Coupons.dto';
@@ -279,3 +279,20 @@ export const validateGoogleRecaptcha = async (body: any) => {
       return false;
     });
 };
+
+export function statusOrder(status?: string) {
+  switch (status) {
+    case OrderStatus.NEW:
+      return 'Đơn mới';
+    case OrderStatus.APPROVED:
+      return 'Đã xác nhận';
+    case OrderStatus.PROCESSING:
+      return 'Đang tiến hành';
+    case OrderStatus.DONE:
+      return 'Đã hoàn thành';
+    case OrderStatus.CLOSE:
+      return 'Đã Hủy';
+    default:
+      return '';
+  }
+}

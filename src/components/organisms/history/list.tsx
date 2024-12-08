@@ -1,7 +1,7 @@
 import { OrdersDto } from '@/dtos/Orders.dto';
 import Link from 'next/link';
 import dayjs from 'dayjs';
-import { formatMoney } from '@/utils';
+import { formatMoney, statusOrder } from '@/utils';
 import { isDesktop, isMobile, MobileView } from 'react-device-detect';
 import dynamic from 'next/dynamic';
 const HistoryMobileView = dynamic(
@@ -56,7 +56,7 @@ export default function HistoryList({ orders }: Props) {
       title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
-      render: (_: unknown, item: OrdersDto) => <span>{item.status}</span>,
+      render: (_: unknown, item: OrdersDto) => <span>{statusOrder(item.status)}</span>,
     },
     {
       title: 'Xem',

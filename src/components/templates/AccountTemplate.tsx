@@ -15,8 +15,11 @@ export default function AccountTemplate({ children }: { children: ReactNode }) {
             }
           >
             <div className={'p-3'}>
-              <Link className={'text-lg'} href={'/tai-khoan/lich-su'}>
-                Lịch sử mua hàng
+              <Link
+                className={'text-lg'}
+                href={'/tai-khoan/thong-tin-tai-khoan'}
+              >
+                Thông tin tài khoản
               </Link>
             </div>
           </li>
@@ -26,11 +29,8 @@ export default function AccountTemplate({ children }: { children: ReactNode }) {
             }
           >
             <div className={'p-3'}>
-              <Link
-                className={'text-lg'}
-                href={'/tai-khoan/thong-tin-tai-khoan'}
-              >
-                Thông tin tài khoản
+              <Link className={'text-lg'} href={'/tai-khoan/lich-su'}>
+                Lịch sử mua hàng
               </Link>
             </div>
           </li>
