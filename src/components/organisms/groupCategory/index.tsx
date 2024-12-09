@@ -110,7 +110,11 @@ const GroupCategory = ({
             return (<></>) as ReactNode;
           }
           return (iProduct.product && (
-            <ProductCard product={iProduct.product} variant={variant} />
+            <ProductCard
+              product={iProduct.product}
+              variant={variant}
+              isShowListVariant={true}
+            />
           )) as ReactNode;
         }}
         data={

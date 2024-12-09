@@ -11,7 +11,7 @@ type SortBy = {
 };
 type Props = {
   isNeedWrapper?: boolean;
-}
+};
 export default function SortBy({ isNeedWrapper }: Props) {
   const ctx = useContext(CategoryFilterContext);
   const sortBy: SortBy[] = [
@@ -41,34 +41,39 @@ export default function SortBy({ isNeedWrapper }: Props) {
     },
   ];
   const renderItem = () => {
-    return <>
-      {sortBy.map((sort, index) => {
-        return (
-          <button
-            type={'button'}
-            key={index}
-            onClick={() => ctx?.setSortBy && ctx.setSortBy(sort.value)}
-            className={twMerge(
-              'bg-[#f3f4f6] border border-[#e5e7eb] rounded-[10px] text-[12px] p-[5px_10px] transition-colors duration-300',
-              ctx?.sortBy === sort.value && 'bg-primary text-white',
-            )}
-          >
-            <span>{sort.name}</span>
-          </button>
-        );
-      })}
-    </>
-  }
+    return (
+      <>
+        {sortBy.map((sort, index) => {
+          return (
+            <button
+              type={'button'}
+              key={index}
+              onClick={() =>
+                ctx?.updateRouter &&
+                ctx.updateRouter(
+                  'sort',
+                  (sort.value.toString() || '') as string,
+                )
+              }
+              className={twMerge(
+                'bg-[#f3f4f6] border border-[#e5e7eb] rounded-[10px] text-[12px] p-[5px_10px] transition-colors duration-300',
+                ctx?.sortBy === sort.value && 'bg-primary text-white',
+              )}
+            >
+              <span>{sort.name}</span>
+            </button>
+          );
+        })}
+      </>
+    );
+  };
   return (
     <>
-      {isNeedWrapper ?
-        <div className={'flex gap-3 flex-wrap'}>
-          {renderItem()}
-        </div>
-        :
+      {isNeedWrapper ? (
+        <div className={'flex gap-3 flex-wrap'}>{renderItem()}</div>
+      ) : (
         renderItem()
-      }
+      )}
     </>
-
   );
 }

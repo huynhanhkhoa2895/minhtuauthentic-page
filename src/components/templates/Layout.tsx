@@ -7,7 +7,6 @@ import DefaultSeo from '@/components/molecules/seo';
 import { SEOProps } from '@/config/type';
 import dynamic from 'next/dynamic';
 import { isDesktop, isMobile } from 'react-device-detect';
-import PopupProduct from '@/components/organisms/popupProduct';
 type Props = {
   className?: string;
   children: ReactNode;
@@ -15,6 +14,13 @@ type Props = {
   settings: SettingsDto[];
   seo?: SEOProps;
 };
+
+const PopupProduct = dynamic(
+  () => import('@/components/organisms/popupProduct'),
+  {
+    ssr: false,
+  },
+);
 
 const MenuFooter = dynamic(
   () => import('@/components/organisms/MobileMenu/menuFooter'),

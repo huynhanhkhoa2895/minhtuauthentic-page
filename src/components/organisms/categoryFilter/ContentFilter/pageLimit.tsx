@@ -16,7 +16,8 @@ export default function PageLimit() {
         defaultValue={ctx?.limit || 12}
         options={pages}
         onChange={(value) => {
-          ctx?.setLimit && ctx.setLimit(value);
+          ctx?.updateRouter &&
+            ctx.updateRouter('limit', value.toString() as string);
         }}
       />
     </div>

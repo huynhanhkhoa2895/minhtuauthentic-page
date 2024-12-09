@@ -26,7 +26,7 @@ export default function PromotionDescriptionCoupons({ variant_id }: Props) {
       });
   };
   return (
-    <div className={'relative w-full h-full'}>
+    <div className={'relative w-full h-full min-h-[50px]'}>
       {loading && (
         <div
           className={

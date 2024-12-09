@@ -1,4 +1,9 @@
-import { Entity, OrderStatus, PROMOTION_PRICE_TYPE, PROMOTION_TYPE } from '@/config/enum';
+import {
+  Entity,
+  OrderStatus,
+  PROMOTION_PRICE_TYPE,
+  PROMOTION_TYPE,
+} from '@/config/enum';
 import { VariantDto } from '@/dtos/Variant.dto';
 import { IVariantProductConfigurationValuesDto } from '@/dtos/iVariantProductConfigurationValues.dto';
 import CouponsDto from '@/dtos/Coupons.dto';
@@ -295,4 +300,30 @@ export function statusOrder(status?: string) {
     default:
       return '';
   }
+}
+
+export function getFilterFromQuery(queryString: string) {
+  queryString = queryString.replaceAll('%5B', '[').replaceAll('%5D', ']');
+  const result: Record<string, any[]> = {};
+
+  // Tách từng cặp key=value
+  const pairs = queryString.match(/([^&]+)=([^&]*)/g);
+  if (!pairs) return result;
+
+  pairs.forEach((pair) => {
+    const [key, value] = pair.split('=');
+
+    // Kiểm tra nếu key có dạng mảng (filter[categories][])
+    const matchArray = key.match(/^filter\[([^\]]+)\]\[\]$/);
+    if (matchArray) {
+      const arrayKey = matchArray[1];
+      if (!result[arrayKey]) result[arrayKey] = [];
+      decodeURIComponent(value)
+        .split(',')
+        .forEach((item) => {
+          result[arrayKey].push(item);
+        });
+    }
+  });
+  return result;
 }

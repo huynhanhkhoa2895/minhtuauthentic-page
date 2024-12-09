@@ -1,22 +1,21 @@
 import { ProductDto } from '@/dtos/Product.dto';
 import { twMerge } from 'tailwind-merge';
-import Image from 'next/image';
-import noImage from '@/static/images/no-image.png';
 import { ImageDto } from '@/dtos/Image.dto';
 import Link from 'next/link';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 import { isMobile } from 'react-device-detect';
+import { VariantDto } from '@/dtos/Variant.dto';
 const ProductCardImage = ({
-  product,
+  variant,
   className,
+  product,
 }: {
+  variant: VariantDto;
   product: ProductDto;
   className?: string;
 }) => {
   const image: ImageDto | undefined =
-    product?.feature_image_detail?.image ||
-    product?.variants?.[0]?.images?.[0]?.image ||
-    undefined;
+    variant?.images?.[0]?.image || product?.feature_image_detail?.image;
   return (
     <div className={'relative pt-[100%]'}>
       <Link

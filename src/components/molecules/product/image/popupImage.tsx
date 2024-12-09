@@ -33,6 +33,18 @@ export default function PopupImage({ open, product, image, setIsOpen }: Props) {
       swiper.slideTo(images.findIndex((item) => item.url === imageActive?.url));
     }
   }, [imageActive]);
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [open]);
+
   const renderImage = useMemo(() => {
     return (
       <div className={'w-max mx-auto flex gap-3 h-full py-3 max-lg:px-3'}>

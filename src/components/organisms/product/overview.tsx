@@ -1,7 +1,7 @@
 import { ProductDto } from '@/dtos/Product.dto';
 import ProductDetailImage from '@/components/molecules/product/image/productDetailImage';
 import ProductProperty from '@/components/molecules/product/property';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ProductConfigurationsDto } from '@/dtos/productConfigurations.dto';
 import { ImageDto } from '@/dtos/Image.dto';
 import { SettingsDto } from '@/dtos/Settings.dto';
@@ -12,14 +12,27 @@ type Props = {
   setIsOpen?: (item: { display: boolean; image: ImageDto | null }) => void;
   productConfigurations?: ProductConfigurationsDto[];
   settings?: SettingsDto[];
+  isShouldSetProductActive?: boolean;
 };
 export default function ProductOverview({
   product,
   setIsOpen,
   productConfigurations,
   settings,
+  isShouldSetProductActive,
 }: Props) {
   const productContext = useContext(ProductDetailContext);
+
+  useEffect(() => {
+    if (isShouldSetProductActive) {
+      productContext?.setVariantActive &&
+        productContext.setVariantActive(
+          (product?.variants || [])?.find((item) => item.is_default) ||
+            product?.variants?.[0],
+        );
+    }
+  }, []);
+
   return (
     <div
       className={

@@ -5,10 +5,10 @@ import CloseCircle from '@/components/icons/closeCircle';
 import { getModelEntity } from '@/utils';
 import { Entity } from '@/config/enum';
 import { twMerge } from 'tailwind-merge';
-type Props ={
+type Props = {
   className?: string;
-}
-export default function FilterBy({className}: Props) {
+};
+export default function FilterBy({ className }: Props) {
   const ctx = useContext(CategoryFilterContext);
   const _settings = ctx?.objFilterByValue;
   const handleClose = (key: string, id: string | number) => {
@@ -22,6 +22,7 @@ export default function FilterBy({className}: Props) {
     }
     _filter[key] = value;
     ctx?.setFilters && ctx.setFilters(_filter);
+    ctx?.updateRouter && ctx.updateRouter('filter', _filter);
   };
   const renderItem = () => {
     let xhtml: ReactNode[] = [];
@@ -43,13 +44,15 @@ export default function FilterBy({className}: Props) {
             </div>,
           );
         });
-      })
+      });
     }
 
     return xhtml;
   };
   return (
-    <div className={twMerge('flex gap-3 items-center flex-wrap mt-3', className)}>
+    <div
+      className={twMerge('flex gap-3 items-center flex-wrap mt-3', className)}
+    >
       {renderItem()}
     </div>
   );

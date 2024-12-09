@@ -47,7 +47,7 @@ export default function SettingFilterItem({
       value.splice(indexValue, 1);
     }
     _filter[filterKey] = value;
-    ctx?.setFilters && ctx.setFilters(_filter);
+    ctx?.updateRouter && ctx.updateRouter('filter', _filter);
   };
   const renderValue = () => {
     return (

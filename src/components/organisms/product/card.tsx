@@ -12,10 +12,10 @@ import {
   formatMoney,
   promotionName,
 } from '@/utils';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { PromotionsDto } from '@/dtos/Promotions.dto';
 import CouponsDto from '@/dtos/Coupons.dto';
-
+import SelectVariant from '@/components/organisms/product/selectVariant';
 const ProductCard = ({
   product,
   variant,
@@ -23,6 +23,7 @@ const ProductCard = ({
   addText,
   coupon,
   isShowConfiguration,
+  isShowListVariant,
 }: {
   product: ProductDto;
   variant: VariantDto;
@@ -30,7 +31,9 @@ const ProductCard = ({
   addText?: string;
   coupon?: CouponsDto;
   isShowConfiguration?: boolean;
+  isShowListVariant?: boolean;
 }) => {
+  const [_variant, setVariant] = useState<VariantDto>(variant);
   return (
     <div
       className={twMerge(
@@ -40,11 +43,11 @@ const ProductCard = ({
       <div>
         <div className={'flex items-center justify-end gap-2 px-2'}>
           <Badge className={'bg-green'}>
-            Giảm {calculatePricePercent(variant)}%
+            Giảm {calculatePricePercent(_variant)}%
           </Badge>
           <Badge className={'bg-price'}>Trả góp 0%</Badge>
         </div>
-        <ProductCardImage product={product} />
+        <ProductCardImage product={product} variant={_variant} />
         <div className={'px-2 h-[110px] lg:h-[63px]'}>
           <h3 className={'font-[700] lg:font-bold'}>
             <Link className={'block'} href={`/${product?.slugs?.slug}`}>
@@ -54,7 +57,7 @@ const ProductCard = ({
         </div>
         <div className={'h-[50px] pt-2'}>
           {isShowConfiguration &&
-            variant?.variant_product_configuration_values?.map(
+            _variant?.variant_product_configuration_values?.map(
               (item, index) => {
                 return (
                   <p key={index} className={'text-sm px-2'}>
@@ -67,7 +70,18 @@ const ProductCard = ({
                 );
               },
             )}
-          {variant && <ProductPrice className={'px-2'} variant={variant} />}
+          {isShowListVariant && (
+            <SelectVariant
+              key={product.id}
+              product={product}
+              onChange={(rs) => {
+                if (rs) {
+                  setVariant(rs);
+                }
+              }}
+            />
+          )}
+          {_variant && <ProductPrice className={'px-2'} variant={_variant} />}
         </div>
       </div>
       <div className={'h-[50px] px-2 lg:px-[8px]'}>
@@ -103,7 +117,7 @@ const ProductCard = ({
       </div>
       <ProductCardButtonGroup
         className={'mt-[10px] px-2'}
-        variant={variant}
+        variant={_variant}
         product={product}
         addText={addText}
       />

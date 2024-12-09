@@ -5,6 +5,7 @@ import { ResponseSlugPageDto } from '@/dtos/responseSlugPage.dto';
 import { ResponseProductDetailPageDto } from '@/dtos/responseProductDetailPage.dto';
 import ProductOverview from '@/components/organisms/product/overview';
 import Loading from '@/components/atoms/loading';
+import { ProductDetailProvider } from '@/contexts/productDetailContext';
 
 export default function PopupProduct() {
   const appCtx = useContext(AppContext);
@@ -77,11 +78,14 @@ export default function PopupProduct() {
             !loading &&
             data?.product &&
             ((
-              <ProductOverview
-                product={data.product}
-                productConfigurations={data.productConfigurations}
-                settings={data?.settings || []}
-              />
+              <ProductDetailProvider>
+                <ProductOverview
+                  product={data.product}
+                  productConfigurations={data.productConfigurations}
+                  settings={data?.settings || []}
+                  isShouldSetProductActive={true}
+                />
+              </ProductDetailProvider>
             ) as ReactNode)}
         </div>
       </Modal>

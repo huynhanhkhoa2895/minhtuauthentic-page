@@ -10,10 +10,10 @@ const CategoryFilterContext = createContext<TypeAppState | undefined>(
   undefined,
 );
 import { useRouter } from 'next/router';
-import { parseQueryString } from '@/utils';
 import { ProductDto } from '@/dtos/Product.dto';
 import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage.dto';
 import { SlugDto } from '@/dtos/Slug.dto';
+import { getFilterFromQuery, parseQueryString } from '@/utils';
 
 export type TypeAppState = {
   objFilterByValue: Record<string, Record<string, string>>;
@@ -44,6 +44,7 @@ export type TypeAppState = {
     | undefined;
   isOpenFilter?: boolean;
   setIsOpenFilter?: Dispatch<SetStateAction<boolean>> | undefined;
+  updateRouter?: (key: string, value: string | object) => void;
 };
 
 export const CategoryFilterProvider = ({
@@ -79,30 +80,6 @@ export const CategoryFilterProvider = ({
   );
   const [count, setCount] = useState(0);
   const refTimer = React.useRef<NodeJS.Timeout | null>(null);
-  const refTimerCount = React.useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    const params = new URLSearchParams();
-    params.append('sort', sortBy);
-    params.append('limit', limit.toString());
-    params.append('page', page.toString());
-    params.append('search', search.toString());
-
-    Object.keys(filters).forEach((key) => {
-      filters[key].forEach((value, index) => {
-        params.delete(`filter[${key}][${index}]`);
-        params.append(`filter[${key}][${index}]`, value.toString());
-      })
-    })
-
-    refTimerCount.current = setTimeout(() => {
-      if (count > 0) {
-        updateRouter(params.toString());
-      } else {
-        increaseCount();
-      }
-    }, 500);
-  }, [sortBy, limit, filters, page, search]);
   useEffect(() => {
     const _filters: Record<string, (string | number)[]> = {};
     if (dataSlug?.model === Entity.CATEGORIES) {
@@ -115,14 +92,30 @@ export const CategoryFilterProvider = ({
 
   useEffect(() => {
     const handleRouteComplete = () => {
-      if (!refTimer.current) {
-        setLoading(true)
-        refTimer.current = setTimeout(() => {
-          refreshData().catch();
-        }, 500);
+      // setFilters(parseQueryString(params.toString()));
+
+      if (refTimer.current) {
+        clearTimeout(refTimer.current as NodeJS.Timeout);
+        refTimer.current = null;
       }
-
-
+      refTimer.current = setTimeout(() => {
+        const filter = getFilterFromQuery(queryString.toString());
+        setLoading(true);
+        setPage(Number(queryString.get('page')) || 1);
+        setSortBy(queryString.get('sort') || CATEGORY_FILTER.SORT_BY.DATE_DESC);
+        setLimit(Number(queryString.get('limit')) || 12);
+        setSearch(queryString.get('search') || '');
+        setFilters(filter);
+        // setFilters(filter);
+        refreshData()
+          .catch((err) => {})
+          .finally(() => {
+            if (refTimer.current) {
+              clearTimeout(refTimer.current as NodeJS.Timeout);
+              refTimer.current = null;
+            }
+          });
+      });
     };
     router.events.on('routeChangeComplete', handleRouteComplete);
     return () => {
@@ -130,23 +123,36 @@ export const CategoryFilterProvider = ({
       refTimer?.current && clearTimeout(refTimer.current as NodeJS.Timeout);
       if (loading) setLoading(false);
     };
-  }, []);
-  const updateRouter = (params: string) => {
-    increaseCount();
+  }, [router]);
+  const updateRouter = (key: string, value: string) => {
+    if (key === 'filter') {
+      const keysArray = Array.from(queryString.keys());
+      keysArray.map((key) => {
+        if (key.search('filter') !== -1) {
+          queryString.delete(key);
+        }
+      });
+      Object.keys(value).forEach((key) => {
+        value[key].forEach((item) => {
+          queryString.append(`filter[${key}][]`, item.toString());
+        });
+      });
+    } else {
+      if (queryString.has(key)) {
+        queryString.delete(key);
+      }
+      queryString.append(key, value);
+    }
+
     router.push(
       {
         pathname: router.pathname,
-        query: params.toString(),
+        query: queryString.toString(),
       },
-      router.asPath.split('?')[0] + '?' + params,
+      router.asPath.split('?')[0] + '?' + queryString,
       { shallow: true },
     );
   };
-
-
-  const increaseCount = () => {
-    setCount(count + 1);
-  }
 
   const refreshData = async () => {
     const params = new URLSearchParams(window.location.search);
@@ -163,13 +169,13 @@ export const CategoryFilterProvider = ({
       .catch((err) => {
         setLoading(false);
       })
-      .finally(()=>{
+      .finally(() => {
         setLoading(false);
         if (refTimer.current) {
           refTimer.current = null;
         }
       });
-  }
+  };
 
   return (
     <CategoryFilterContext.Provider
@@ -190,12 +196,13 @@ export const CategoryFilterProvider = ({
         setObjFilterByValue,
         dataSlug,
         setDataSlug,
-        page,
-        setPage,
         search,
         setSearch,
         isOpenFilter,
         setIsOpenFilter,
+        page,
+        setPage,
+        updateRouter,
       }}
     >
       {children}

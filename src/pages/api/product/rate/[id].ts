@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     const { id } = req.query;
-    const url = `${process.env.BE_URL}/api/pages/product/rate/${id}`;
+    const url = `${process.env.BE_URL}/api/pages/products/rate/${id}`;
     return fetch(url, {
       method: 'GET',
     })

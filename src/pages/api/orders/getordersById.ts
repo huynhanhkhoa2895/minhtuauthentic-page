@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   if (req.method === 'GET') {
     const query = req.query;
-    const url = `${process.env.BE_URL}/api/pages/order/getById/` + query.id;
+    const url = `${process.env.BE_URL}/api/pages/orders/getById/` + query.id;
     const rs = await fetch(url, {
       method: 'GET',
       headers: {

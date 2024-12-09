@@ -116,7 +116,12 @@ export default function ContentFilter({
                 return;
               }
               return (
-                <ProductCard key={index} product={product} variant={variant} />
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  variant={variant}
+                  isShowListVariant={true}
+                />
               );
             })}
           </div>
@@ -210,7 +215,8 @@ export default function ContentFilter({
               current={ctx?.page || 1}
               pageSize={ctx?.limit || 12}
               onChange={(page: number) => {
-                ctx?.setPage && ctx.setPage(page);
+                window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+                ctx?.updateRouter && ctx.updateRouter('page', page as string);
               }}
             />
           )}
