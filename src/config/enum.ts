@@ -128,7 +128,6 @@ export const SETTING_KEY = {
     LABEL: 'Vùng Deal Sock',
   },
 };
-export type OrderStatus = 'processing' | 'pending' | 'done' | 'new' | 'close';
 
 export const CATEGORY_FILTER = {
   SORT_BY: {

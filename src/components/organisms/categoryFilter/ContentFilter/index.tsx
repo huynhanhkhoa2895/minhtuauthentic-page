@@ -216,7 +216,8 @@ export default function ContentFilter({
               pageSize={ctx?.limit || 12}
               onChange={(page: number) => {
                 window.scroll({ top: 0, left: 0, behavior: 'smooth' });
-                ctx?.updateRouter && ctx.updateRouter('page', page as string);
+                ctx?.updateRouter &&
+                  ctx.updateRouter('page', page.toString() as string);
               }}
             />
           )}

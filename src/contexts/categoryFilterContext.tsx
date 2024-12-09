@@ -124,7 +124,7 @@ export const CategoryFilterProvider = ({
       if (loading) setLoading(false);
     };
   }, [router]);
-  const updateRouter = (key: string, value: string) => {
+  const updateRouter = (key: string, value: string | object) => {
     if (key === 'filter') {
       const keysArray = Array.from(queryString.keys());
       keysArray.map((key) => {
@@ -133,15 +133,15 @@ export const CategoryFilterProvider = ({
         }
       });
       Object.keys(value).forEach((key) => {
-        value[key].forEach((item) => {
-          queryString.append(`filter[${key}][]`, item.toString());
+        (value as any)[key].forEach((item: string) => {
+          queryString.append(`filter[${key}][]`, item.toString() as string);
         });
       });
     } else {
       if (queryString.has(key)) {
         queryString.delete(key);
       }
-      queryString.append(key, value);
+      queryString.append(key, value as string);
     }
 
     router.push(

@@ -7,7 +7,8 @@ import {
   calculatePriceMinus,
   formatMoney,
   generateSlugToHref,
-  promotionName, statusOrder,
+  promotionName,
+  statusOrder,
 } from '@/utils';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 import Link from 'next/link';
@@ -34,7 +35,7 @@ export default function OrderDetailTemplate({ order }: Props) {
     setTotalPriceWithoutCoupon(totalPriceWithoutCoupon);
   }, []);
 
-  const columns: TableColumnsType<DataType> = [
+  const columns: TableColumnsType = [
     {
       title: 'Tên sản phẩm',
       dataIndex: 'name',
@@ -165,7 +166,7 @@ export default function OrderDetailTemplate({ order }: Props) {
           break;
       }
       setOrderField(items);
-    })
+    });
   }, []);
 
   return (
@@ -199,45 +200,45 @@ export default function OrderDetailTemplate({ order }: Props) {
           <div className={'mt-3 flex justify-end'}>
             <table className={''}>
               <tbody>
-              <tr>
-                <td className={'text-primary text-xl'}>Tạm Tính:</td>
-                <td className={'text-right pr-5'}>
-                  {formatMoney(totalPriceWithoutCoupon)}
-                </td>
-              </tr>
+                <tr>
+                  <td className={'text-primary text-xl'}>Tạm Tính:</td>
+                  <td className={'text-right pr-5'}>
+                    {formatMoney(totalPriceWithoutCoupon)}
+                  </td>
+                </tr>
 
-              {order?.coupons &&
-                order?.coupons?.length > 0 &&
-                order?.coupons.map((couponDetail, index) => {
-                  return (
-                    <tr key={'OrderDetailTemplate-' + index}>
-                      <td className={'text-lg'}>
-                        <span className={'text-primary '}>Coupon {'  '}</span>
-                        <span
-                          className={
-                            'font-[700] lg:font-bold p-1 bg-[#efefef] rounded-[4px] text-sm'
-                          }
-                        >
-                          {couponDetail?.coupon?.code}
-                        </span>{' '}
-                        <span>: </span>
-                      </td>
-                      <td className={'text-right pr-5'}>
-                        -
-                        {formatMoney(
-                          calculatePriceMinus(
-                            order.total_price || 0,
-                            couponDetail?.coupon,
-                          ),
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
-              <tr>
-                <td className={'text-primary text-xl'}>Tổng tiền:</td>
-                <td>{formatMoney(order.total_price || 0)}</td>
-              </tr>
+                {order?.coupons &&
+                  order?.coupons?.length > 0 &&
+                  order?.coupons.map((couponDetail, index) => {
+                    return (
+                      <tr key={'OrderDetailTemplate-' + index}>
+                        <td className={'text-lg'}>
+                          <span className={'text-primary '}>Coupon {'  '}</span>
+                          <span
+                            className={
+                              'font-[700] lg:font-bold p-1 bg-[#efefef] rounded-[4px] text-sm'
+                            }
+                          >
+                            {couponDetail?.coupon?.code}
+                          </span>{' '}
+                          <span>: </span>
+                        </td>
+                        <td className={'text-right pr-5'}>
+                          -
+                          {formatMoney(
+                            calculatePriceMinus(
+                              order.total_price || 0,
+                              couponDetail?.coupon,
+                            ),
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                <tr>
+                  <td className={'text-primary text-xl'}>Tổng tiền:</td>
+                  <td>{formatMoney(order.total_price || 0)}</td>
+                </tr>
               </tbody>
             </table>
           </div>
