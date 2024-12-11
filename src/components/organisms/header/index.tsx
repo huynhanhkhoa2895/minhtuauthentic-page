@@ -38,6 +38,9 @@ export const Header = ({ menu, settings }: Props) => {
   const pageHeader = (settings || []).find(
     (item) => item?.key && item?.key === SETTING_KEY.GENERAL.PAGE_HEADER.KEY,
   );
+  const logo =
+    settings?.find((item) => item.key === SETTING_KEY.GENERAL.LOGO.KEY)?.value
+      ?.page_logo_header?.[0]?.image?.url || Logo;
 
   return (
     <>
@@ -72,7 +75,11 @@ export const Header = ({ menu, settings }: Props) => {
         id={'header'}
         className={'bg-primary lg:py-[10px] sticky top-0 left-0 z-[100]'}
       >
-        <NavMenuHeader className={'lg:hidden'} isMobile={true} />
+        <NavMenuHeader
+          className={'lg:hidden'}
+          isMobile={true}
+          settings={settings}
+        />
         <div
           className={
             'max-lg:hidden container mx-auto flex justify-between items-center gap-[10px]'
@@ -80,7 +87,7 @@ export const Header = ({ menu, settings }: Props) => {
         >
           <Link className={'shrink-0'} href={'/'}>
             <Image
-              src={Logo}
+              src={logo}
               height={54}
               width={227}
               className={'object-contain w-[230px]] h-[60px] '}

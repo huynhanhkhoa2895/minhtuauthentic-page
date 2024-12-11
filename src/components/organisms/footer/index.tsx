@@ -3,18 +3,28 @@ import LogoBCT from '@/static/images/icon-bct.png';
 import LogoGrn from '@/static/images/DMCA_logo-grn-btn100w.png';
 import Image from 'next/image';
 import { StaticContentsDto } from '@/dtos/StaticContents.dto';
-import { STATIC_CONTENT_TYPE } from '@/config/enum';
+import { SETTING_KEY, STATIC_CONTENT_TYPE } from '@/config/enum';
 import Link from 'next/link';
 import orderBy from 'lodash/orderBy';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import dynamic from 'next/dynamic';
+import { SettingsDto } from '@/dtos/Settings.dto';
 const FooterContent = dynamic(
   () => import('@/components/organisms/footer/footerContent'),
   {
     ssr: false,
   },
 );
-const Footer = ({ footerContent }: { footerContent?: ResponseFooterDto }) => {
+const Footer = ({
+  footerContent,
+  settings,
+}: {
+  footerContent?: ResponseFooterDto;
+  settings: SettingsDto[];
+}) => {
+  const logo =
+    settings?.find((item) => item.key === SETTING_KEY.GENERAL.LOGO.KEY)?.value
+      ?.page_logo_footer?.[0]?.image?.url || Logo;
   return (
     <footer className={'relative z-[2] max-lg:pb-[68px]'}>
       <div className={'bg-primaryGrey px-3'}>
@@ -30,10 +40,10 @@ const Footer = ({ footerContent }: { footerContent?: ResponseFooterDto }) => {
           </div>
           <div className={'grid grid-cols-1 lg:grid-cols-3 mt-3  '}>
             <Image
-              src={Logo}
+              src={logo}
               height={54}
               width={288}
-              className={'object-contain w-auto h-auto max-lg:hidden'}
+              className={'object-contain w-[384px] h-[291px] max-lg:hidden'}
               alt={
                 'Minh Tu Authentic, Nước hoa chính hãng Tphcm, Quận Tân Phú, Mỹ phẩm'
               }

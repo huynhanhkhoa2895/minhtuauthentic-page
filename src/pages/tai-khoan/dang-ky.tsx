@@ -24,7 +24,7 @@ export default function Register({
       <Layout settings={settings} menu={menu}>
         <RegisterTemplate />
       </Layout>
-      <Footer footerContent={footerContent} />
+      <Footer settings={settings} footerContent={footerContent} />
     </>
   );
 }

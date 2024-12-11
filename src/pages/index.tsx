@@ -1,4 +1,3 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { ResponseHomePageDto } from '@/dtos/responseHomePage.dto';
 import MenuWrapper from '@/components/molecules/header/menu/menuWrapper';
 import BlockUnderSlide from '@/components/organisms/home/blockUnderSlide';
@@ -14,9 +13,11 @@ import Layout from '@/components/templates/Layout';
 import useSettings from '@/hooks/useSettings';
 import dynamic from 'next/dynamic';
 import { ReactNode } from 'react';
-import { useReportWebVitals } from 'next/web-vitals';
 const HomeBanner = dynamic(
   () => import('@/components/organisms/home/homeBanner'),
+  {
+    ssr: false,
+  },
 );
 
 export async function getStaticProps() {
@@ -105,7 +106,7 @@ export default function Home({
         )}
         {/*<HomeSupport />*/}
       </Layout>
-      <Footer footerContent={footerContent} />
+      <Footer settings={settings} footerContent={footerContent} />
     </>
   );
 }

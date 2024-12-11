@@ -94,6 +94,10 @@ export const SETTING_KEY = {
       PAGE_TITLE_RIGHT: 'page_title_right',
       PAGE_TITLE_CENTER: 'page_title_center',
     },
+    LOGO: {
+      KEY: 'logo',
+      LABEL: 'Logo',
+    },
   },
   BRAND_SECTION: {
     KEY: 'brand_section',

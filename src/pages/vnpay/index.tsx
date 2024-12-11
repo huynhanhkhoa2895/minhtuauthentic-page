@@ -67,7 +67,7 @@ export default function VnPaySuccess({
       <Layout settings={settings} menu={menu}>
         {is_success ? <h1>VNPAY SUCCESS</h1> : <h1>Thanh toán thất bại</h1>}
       </Layout>
-      <Footer footerContent={footerContent} />
+      <Footer settings={settings} footerContent={footerContent} />
     </>
   );
 }

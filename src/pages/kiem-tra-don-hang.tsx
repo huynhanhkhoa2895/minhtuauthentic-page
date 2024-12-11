@@ -23,7 +23,7 @@ export default function CheckOrderPage({
       <Layout settings={settings} menu={menu}>
         <CheckOrderTemplate />
       </Layout>
-      <Footer footerContent={footerContent} />
+      <Footer settings={settings} footerContent={footerContent} />
     </>
   );
 }

@@ -47,10 +47,6 @@ const LayoutMenu = dynamic(
   },
 );
 
-const PageLoading = dynamic(() => import('@/components/atoms/PageLoading'), {
-  ssr: false,
-});
-
 export default function Layout({
   children,
   className,
@@ -71,7 +67,7 @@ export default function Layout({
         {children}
         {isDesktop && menu && <LayoutMenu menu={menu} />}
       </div>
-      {isMobile && menu && <NavMenu menu={menu} />}
+      {isMobile && menu && <NavMenu menu={menu} settings={settings} />}
       <Socials />
       <MenuFooter />
       <PopupProduct />

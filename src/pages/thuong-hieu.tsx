@@ -27,7 +27,7 @@ export default function BrandsPage({ brands }: { brands: BrandDto[] }) {
         <BreadcrumbComponent label={'Thương hiệu'} link={'/thuong-hieu'} />
         <BrandsTemplate brands={brands || []} />
       </Layout>
-      <Footer footerContent={footerContent} />
+      <Footer settings={settings} footerContent={footerContent} />
     </>
   );
 }

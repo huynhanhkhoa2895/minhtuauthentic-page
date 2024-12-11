@@ -3,6 +3,7 @@ import { Controller } from 'react-hook-form';
 import { ReactNode } from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import RadioForm from '@/components/atoms/radioForm';
+import { removeVietnameseAccents } from '@/utils';
 const { TextArea } = Input;
 type Props = {
   control: any;
@@ -63,14 +64,14 @@ const RenderField = ({
           showSearch
           filterOption={(input, option) => {
             return (
-              (option?.label || '')
-                ?.toString()
+              removeVietnameseAccents(option?.label?.toString() || '')
+                .toString()
                 .toLowerCase()
-                .search(input.toLowerCase()) >= 0 ||
+                .search(removeVietnameseAccents(input).toLowerCase()) >= 0 ||
               (option?.code_name || '')
                 ?.toString()
                 .toLowerCase()
-                .search(input.toLowerCase()) >= 0
+                .search(removeVietnameseAccents(input).toLowerCase()) >= 0
             );
           }}
         />

@@ -12,7 +12,7 @@ import { ServerSideProps } from '@/config/type';
 
 export const getServerSideProps = (async (context: any) => {
   const resDefault = await getDefaultSeverSide();
-  const cookie = getCookie('user', context.req.headers.cookie || '', true)
+  const cookie = getCookie('user', context.req.headers.cookie || '', true);
 
   if (!cookie) {
     return {
@@ -23,9 +23,7 @@ export const getServerSideProps = (async (context: any) => {
     };
   }
 
-  const user = JSON.parse(
-    cookie,
-  );
+  const user = JSON.parse(cookie);
   const rsHistory = await fetch(
     process.env.BE_URL + '/api/pages/orders/' + user?.id,
     {
@@ -67,7 +65,7 @@ export default function UserHistory({
           <HistoryList orders={data} />
         </AccountTemplate>
       </Layout>
-      <Footer footerContent={footerContent} />
+      <Footer settings={settings} footerContent={footerContent} />
     </>
   );
 }

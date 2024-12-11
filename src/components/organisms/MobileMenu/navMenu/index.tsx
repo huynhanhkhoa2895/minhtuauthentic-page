@@ -18,11 +18,13 @@ import NavMenuContent from '@/components/organisms/MobileMenu/navMenu/content';
 import Loading from '@/components/atoms/loading';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { SettingsDto } from '@/dtos/Settings.dto';
 type Props = {
   menu: ResponseMenuDto;
   className?: string;
+  settings?: SettingsDto[];
 };
-export default function NavMenu({ menu, className }: Props) {
+export default function NavMenu({ menu, className, settings }: Props) {
   const router = useRouter();
   const appCtx = useContext(appContext);
   const { menuDisplay } = useMenu(menu);
@@ -78,7 +80,7 @@ export default function NavMenu({ menu, className }: Props) {
         className,
       )}
     >
-      <NavMenuHeader />
+      <NavMenuHeader settings={settings} />
       <div className={'flex w-full h-full'}>
         <div className={'h-[calc(100svh-152px)] overflow-auto w-[100px]'}>
           {menuDisplay.map((item, index) => {

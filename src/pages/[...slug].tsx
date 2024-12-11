@@ -234,7 +234,7 @@ export default function Page({
       >
         {renderTemplate()}
       </Layout>
-      <Footer footerContent={footerContent} />
+      <Footer settings={settings} footerContent={footerContent} />
     </Fragment>
   );
 }

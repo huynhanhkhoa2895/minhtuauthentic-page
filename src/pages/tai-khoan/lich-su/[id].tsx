@@ -65,7 +65,7 @@ export default function UserHistoryDetail({
           <OrderDetailTemplate order={data?.order} />
         </AccountTemplate>
       </Layout>
-      <Footer footerContent={footerContent} />
+      <Footer settings={settings} footerContent={footerContent} />
     </>
   );
 }

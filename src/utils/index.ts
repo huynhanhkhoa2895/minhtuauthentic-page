@@ -327,3 +327,12 @@ export function getFilterFromQuery(queryString: string) {
   });
   return result;
 }
+
+export function removeVietnameseAccents(str: string): string {
+  return str
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'D')
+    .replace(/[^\w\s]/g, '');
+}

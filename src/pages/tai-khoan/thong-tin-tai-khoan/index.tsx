@@ -39,7 +39,7 @@ export default function AccountInfoPage({
           <AccountInfo profile={profile} />
         </AccountTemplate>
       </Layout>
-      <Footer footerContent={footerContent} />
+      <Footer settings={settings} footerContent={footerContent} />
     </>
   );
 }

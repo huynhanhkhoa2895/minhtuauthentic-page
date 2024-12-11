@@ -24,7 +24,7 @@ export default function LoginPage({
       <Layout settings={settings} menu={menu}>
         <LoginTemplate />
       </Layout>
-      <Footer footerContent={footerContent} />
+      <Footer settings={settings} footerContent={footerContent} />
     </>
   );
 }

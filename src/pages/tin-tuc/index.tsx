@@ -44,7 +44,7 @@ export default function News({
           isDetail={false}
         />
       </Layout>
-      <Footer footerContent={footerContent} />
+      <Footer settings={settings} footerContent={footerContent} />
     </>
   );
 }

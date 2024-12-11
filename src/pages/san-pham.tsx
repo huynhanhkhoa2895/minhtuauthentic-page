@@ -57,7 +57,7 @@ export default function ProductPage({
           isSearch={true}
         />
       </Layout>
-      <Footer footerContent={footerContent} />
+      <Footer settings={settings} footerContent={footerContent} />
     </>
   );
 }

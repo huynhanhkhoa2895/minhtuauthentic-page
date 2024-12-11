@@ -23,7 +23,7 @@ export default function OderSuccess({
       <Layout settings={settings} menu={menu}>
         <OrderSuccessTemplate />
       </Layout>
-      <Footer footerContent={footerContent} />
+      <Footer settings={settings} footerContent={footerContent} />
     </>
   );
 }

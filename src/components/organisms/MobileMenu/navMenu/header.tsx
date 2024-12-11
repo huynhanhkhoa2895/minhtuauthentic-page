@@ -14,14 +14,24 @@ import { useContext, useEffect, useRef } from 'react';
 import IconBars from '@/components/icons/bars';
 import { BarsOutlined } from '@ant-design/icons';
 import AppContext from '@/contexts/appContext';
+import { SettingsDto } from '@/dtos/Settings.dto';
+import { SETTING_KEY } from '@/config/enum';
 type Props = {
   className?: string;
   isMobile?: boolean;
+  settings?: SettingsDto[];
 };
-export default function NavMenuHeader({ className, isMobile }: Props) {
+export default function NavMenuHeader({
+  className,
+  isMobile,
+  settings,
+}: Props) {
   const ref = useRef<HTMLDivElement | null>(null);
   const refTimeOut = useRef<NodeJS.Timeout | null>(null);
   const appCtx = useContext(AppContext);
+  const logo =
+    settings?.find((item) => item.key === SETTING_KEY.GENERAL.LOGO.KEY)?.value
+      ?.page_logo_footer?.[0]?.image?.url || Logo;
   useEffect(() => {
     let lastScrollY = 0;
     let isScrollDown = false;
@@ -54,7 +64,6 @@ export default function NavMenuHeader({ className, isMobile }: Props) {
           ref.current.classList.remove('visible');
           ref.current.classList.remove('opacity-100');
           // ref.current.style.height = 'translateY(-100%)';
-
         }
 
         lastScrollY = currentScrollY;
@@ -85,10 +94,10 @@ export default function NavMenuHeader({ className, isMobile }: Props) {
         </button>
         <Link className={'grow lg:shrink-0'} href={'/'}>
           <Image
-            src={Logo}
+            src={logo}
             width={161}
             height={30}
-            className={'object-contain h-z w-auto m-auto'}
+            className={'object-contain h-[45px] w-auto m-auto'}
             alt={'Minhtuauhentic'}
           />
         </Link>
