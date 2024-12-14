@@ -7,7 +7,7 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   if (req.method === 'POST') {
-    const url = `${process.env.BE_URL}/api/users/login`;
+    const url = `${process.env.BE_URL}/api/pages/customers/login`;
     const result: boolean = await validateGoogleRecaptcha(req.body);
     if (!result && process.env.NODE_ENV === 'production') {
       res.status(400).json({ message: 'Invalid reCAPTCHA' });

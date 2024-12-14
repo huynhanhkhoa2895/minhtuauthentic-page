@@ -6,7 +6,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const url = `${process.env.BE_URL}/api/users/update-password`;
+  const url = `${process.env.BE_URL}/api/pages/customers/update-password`;
   const user = JSON.parse(getCookie('user', req.headers.cookie || '', true));
   if (req.method === 'PUT') {
     fetch(url, {
@@ -25,6 +25,6 @@ export default async function handler(
           .json(error);
       });
   } else {
-    res.status(400).json({ error: 'Only POST requests are allowed' });
+    res.status(400).json({ error: 'Only PUT requests are allowed' });
   }
 }

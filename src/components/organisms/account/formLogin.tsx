@@ -1,15 +1,13 @@
 import { Form, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Button, Input, notification } from 'antd/es';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import GmailIcon from '@/components/icons/gmail';
+import UserOutlined from '@ant-design/icons/UserOutlined';
+import LockOutlined from '@ant-design/icons/LockOutlined';
 import FormControl from '@/components/molecules/form/FormControl';
 import { UserDto } from '@/dtos/User.dto';
 import useUser from '@/hooks/useUser';
 import { useEffect, useState } from 'react';
 import { handleDataFetch } from '@/utils/api';
-import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import useGoogleToken from '@/hooks/useGoogleToken';
@@ -54,7 +52,6 @@ export default function FormLogin() {
       }
     };
   }, []);
-
 
   const afterLoginSuccess = (data: UserDto) => {
     toast.success('Đăng nhập thành công');
@@ -117,10 +114,10 @@ export default function FormLogin() {
           prefix={<LockOutlined />}
         />
         <LoginButtonGroup
-            mainTitle={'Đăng nhập'}
-            secondaryTitle={'Đăng ký'}
-            secondarySubTitle={'Bạn chưa có tài khoản?'}
-            secondaryHref={'/tai-khoan/dang-ky'}
+          mainTitle={'Đăng nhập'}
+          secondaryTitle={'Đăng ký'}
+          secondarySubTitle={'Bạn chưa có tài khoản?'}
+          secondaryHref={'/tai-khoan/dang-ky'}
         />
       </div>
       <LoginOptions title={'Đăng nhập với'} />

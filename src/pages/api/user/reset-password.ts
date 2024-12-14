@@ -1,16 +1,20 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { handleDataFetch } from '@/utils/api';
+import { handleDataFetch, handleHeader } from '@/utils/api';
+import { getCookie } from '@/utils';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  if (req.method === 'GET') {
-    const query: any = req.query;
-    const queryPram = new URLSearchParams(query).toString();
-    const url = `${process.env.BE_URL}/api/pages/customers/validate?${queryPram}`;
+  const url = `${process.env.BE_URL}/api/pages/customers/reset-password`;
+  if (req.method === 'POST') {
+    console.log('req.body', req.body);
     fetch(url, {
-      method: 'GET',
+      method: 'POST',
+      body: req.body,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -23,6 +27,6 @@ export default async function handler(
           .json(error);
       });
   } else {
-    res.status(400).json({ error: 'Only GET requests are allowed' });
+    res.status(400).json({ error: 'Only POST requests are allowed' });
   }
 }
