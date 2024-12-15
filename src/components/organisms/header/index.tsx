@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Logo from '@/static/images/logo.png';
 import HeaderItem from '@/components/molecules/header/item';
 import { IconPhone } from '@/components/icons/phone';
 import IconTruck from '@/components/icons/truck';
@@ -29,6 +28,8 @@ const InputSearch = dynamic(
 );
 
 import NavMenuHeader from '@/components/organisms/MobileMenu/navMenu/header';
+import LogoComponent from '@/components/atoms/logo';
+import { LogoProps } from '@/config/type';
 type Props = { menu: ResponseMenuDto | undefined; settings: SettingsDto[] };
 export const Header = ({ menu, settings }: Props) => {
   const pathname = usePathname();
@@ -38,9 +39,6 @@ export const Header = ({ menu, settings }: Props) => {
   const pageHeader = (settings || []).find(
     (item) => item?.key && item?.key === SETTING_KEY.GENERAL.PAGE_HEADER.KEY,
   );
-  const logo =
-    settings?.find((item) => item.key === SETTING_KEY.GENERAL.LOGO.KEY)?.value
-      ?.page_logo_header?.[0]?.image?.url || Logo;
 
   return (
     <>
@@ -86,15 +84,7 @@ export const Header = ({ menu, settings }: Props) => {
           }
         >
           <Link className={'shrink-0'} href={'/'}>
-            <Image
-              src={logo}
-              height={54}
-              width={227}
-              className={'object-contain w-[230px]] h-[60px] '}
-              alt={
-                'Minh Tu Authentic, Nước hoa chính hãng Tphcm, Quận Tân Phú, Mỹ phẩm'
-              }
-            />
+            <LogoComponent position={LogoProps.HEADER} settings={settings} className={'object-contain w-[230px] h-[60px] '} />
           </Link>
 
           <ButtonMenu menu={menu} />

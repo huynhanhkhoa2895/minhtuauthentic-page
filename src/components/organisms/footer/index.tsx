@@ -1,4 +1,3 @@
-import Logo from '@/static/images/logo.png';
 import LogoBCT from '@/static/images/icon-bct.png';
 import LogoGrn from '@/static/images/DMCA_logo-grn-btn100w.png';
 import Image from 'next/image';
@@ -9,6 +8,8 @@ import orderBy from 'lodash/orderBy';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import dynamic from 'next/dynamic';
 import { SettingsDto } from '@/dtos/Settings.dto';
+import { LogoProps } from '@/config/type';
+import LogoComponent from '@/components/atoms/logo';
 const FooterContent = dynamic(
   () => import('@/components/organisms/footer/footerContent'),
   {
@@ -22,96 +23,101 @@ const Footer = ({
   footerContent?: ResponseFooterDto;
   settings: SettingsDto[];
 }) => {
-  const logo =
-    settings?.find((item) => item.key === SETTING_KEY.GENERAL.LOGO.KEY)?.value
-      ?.page_logo_footer?.[0]?.image?.url || Logo;
+  const setting = settings?.find(
+    (item) => item.key === SETTING_KEY.GENERAL.FOOTER_COLOR.KEY,
+  )?.value?.backgroundColor;
   return (
     <footer className={'relative z-[2] max-lg:pb-[68px]'}>
-      <div className={'bg-primaryGrey px-3'}>
-        <div className={'container mx-auto '}>
+      <div
+        style={{
+          backgroundColor: setting || 'rgb(243 238 231/var(--tw-bg-opacity,1))',
+        }}
+        className={' px-3'}
+      >
+        <div className={'w-full pb-3'}>
           <div
             className={
-              'flex max-lg:flex-col justify-between w-full pt-[35px] max-lg:gap-y-3'
+              'container mx-auto flex max-lg:flex-col justify-between w-full pt-[35px] max-lg:gap-y-3'
             }
           >
             <FooterContent
               items={orderBy(footerContent?.footer || [], 'sort')}
             />
           </div>
-          <div className={'grid grid-cols-1 lg:grid-cols-3 mt-3  '}>
-            <Image
-              src={logo}
-              height={54}
-              width={288}
-              className={'object-contain w-[384px] h-[291px] max-lg:hidden'}
-              alt={
-                'Minh Tu Authentic, Nước hoa chính hãng Tphcm, Quận Tân Phú, Mỹ phẩm'
-              }
-            />
-            <div>
-              <p className={'uppercase font-[700] lg:font-bold mb-[10px]'}>
-                Kết nối với chúng tôi
-              </p>
-              <div className={'grid grid-cols-4 w-max gap-3'}>
-                {footerContent &&
-                  footerContent[STATIC_CONTENT_TYPE.FOOTER_LOGO_SOCIAL]?.map(
-                    (item: StaticContentsDto, index: number) => {
-                      const image = item?.images?.[0]?.image;
-                      if (!image) return null;
-                      return (
-                        <div
-                          key={index}
-                          className={'w-[42px] h-[42px] overflow-hidden'}
-                        >
-                          <Link href={item?.title || ''} target={'_blank'}>
-                            <Image
-                              src={image.url || ''}
-                              className={'object-contain w-full'}
-                              width={image.width}
-                              height={image.height}
-                              alt={image?.alt || 'minhtuauthentic'}
-                            />
-                          </Link>
-                        </div>
-                      );
-                    },
-                  )}
+        </div>
+        <div className={'w-full border border-t-[#333] pb-3'}>
+          <div className={'container mx-auto '}>
+            <div className={'grid grid-cols-1 lg:grid-cols-3 mt-3  '}>
+              <LogoComponent
+                className={'object-contain w-[384px] h-[91px] max-lg:hidden'}
+                settings={settings}
+                position={LogoProps.FOOTER}
+              />
+              <div>
+                <p className={'uppercase font-[700] lg:font-bold mb-[10px]'}>
+                  Kết nối với chúng tôi
+                </p>
+                <div className={'grid grid-cols-4 w-max gap-3'}>
+                  {footerContent &&
+                    footerContent[STATIC_CONTENT_TYPE.FOOTER_LOGO_SOCIAL]?.map(
+                      (item: StaticContentsDto, index: number) => {
+                        const image = item?.images?.[0]?.image;
+                        if (!image) return null;
+                        return (
+                          <div
+                            key={index}
+                            className={'w-[42px] h-[42px] overflow-hidden'}
+                          >
+                            <Link href={item?.title || ''} target={'_blank'}>
+                              <Image
+                                src={image.url || ''}
+                                className={'object-contain w-full'}
+                                width={image.width}
+                                height={image.height}
+                                alt={image?.alt || 'minhtuauthentic'}
+                              />
+                            </Link>
+                          </div>
+                        );
+                      },
+                    )}
+                </div>
               </div>
-            </div>
-            <div>
-              <p className={'uppercase font-[700] lg:font-bold mb-[10px]'}>
-                Hình thức thanh toán
-              </p>
-              <div className={'grid grid-cols-6 w-max gap-3'}>
-                {footerContent &&
-                  footerContent[STATIC_CONTENT_TYPE.FOOTER_LOGO_PAYMENT]?.map(
-                    (item: StaticContentsDto, index: number) => {
-                      const image = item?.images?.[0]?.image;
-                      if (!image) return null;
-                      return (
-                        <div
-                          key={index}
-                          className={'w-[42px] h-[42px] overflow-hidden'}
-                        >
-                          <Link href={item?.title || ''} target={'_blank'}>
-                            <Image
-                              src={image.url || ''}
-                              className={'object-contain w-full'}
-                              width={image.width}
-                              height={image.height}
-                              alt={image?.alt || 'minhtuauthentic'}
-                            />
-                          </Link>
-                        </div>
-                      );
-                    },
-                  )}
+              <div>
+                <p className={'uppercase font-[700] lg:font-bold mb-[10px]'}>
+                  Hình thức thanh toán
+                </p>
+                <div className={'grid grid-cols-6 w-max gap-3'}>
+                  {footerContent &&
+                    footerContent[STATIC_CONTENT_TYPE.FOOTER_LOGO_PAYMENT]?.map(
+                      (item: StaticContentsDto, index: number) => {
+                        const image = item?.images?.[0]?.image;
+                        if (!image) return null;
+                        return (
+                          <div
+                            key={index}
+                            className={'w-[42px] h-[42px] overflow-hidden'}
+                          >
+                            <Link href={item?.title || ''} target={'_blank'}>
+                              <Image
+                                src={image.url || ''}
+                                className={'object-contain w-full'}
+                                width={image.width}
+                                height={image.height}
+                                alt={image?.alt || 'minhtuauthentic'}
+                              />
+                            </Link>
+                          </div>
+                        );
+                      },
+                    )}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className={'bg-[#ededed]'}>
+      <div className={'bg-[#ededed] border border-t-[#333]'}>
         <div
           className={
             'container mx-auto flex max-lg:flex-col py-[14px] w-full justify-between items-center max-lg:px-3 max-lg:text-center'

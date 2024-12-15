@@ -17,9 +17,11 @@ export default function ListCart({ paymentType, setValue }: Props) {
   const order = useContext(OrderContext);
   const [couponInput, setCouponInput] = useState<string>('');
   const [coupons, setCoupons] = useState<CouponsDto[]>([]);
+  console.log('paymentType', paymentType);
   useEffect(() => {
     fetchCoupon().catch();
   }, []);
+
   const fetchCoupon = async () => {
     return fetch(`/api/coupons`)
       .then((response) => response.json())
@@ -219,30 +221,9 @@ export default function ListCart({ paymentType, setValue }: Props) {
           onClick={() => {
             setValue('payment_type_id', undefined);
           }}
-          type={1}
+          type={paymentType}
           htmlType={'submit'}
         />
-        {paymentType === PAYMENT.BAO_KIM && (
-          <>
-            <PaymentButton
-              onClick={() => {
-                setValue(
-                  'payment_type_id',
-                  PAYMENT_TYPE_ID.TRA_GOP_BAO_KIM_CREDIT_CARD,
-                );
-              }}
-              htmlType={'submit'}
-              type={3}
-            />
-            <PaymentButton
-              onClick={() => {
-                setValue('payment_type_id', PAYMENT_TYPE_ID.TRA_GOP_BAO_KIM);
-              }}
-              htmlType={'submit'}
-              type={2}
-            />
-          </>
-        )}
       </div>
       <div className={'flex justify-between items-center mt-6'}>
         <div className={'flex text-primary gap-1'}>

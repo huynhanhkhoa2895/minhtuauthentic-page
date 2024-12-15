@@ -39,3 +39,7 @@ export type SEOProps = {
   height?: number;
   keyword?: string;
 };
+export enum LogoProps {
+  HEADER = 'header',
+  FOOTER = 'footer',
+}

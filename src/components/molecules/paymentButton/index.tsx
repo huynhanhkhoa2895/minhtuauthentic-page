@@ -1,69 +1,88 @@
 import { twMerge } from 'tailwind-merge';
-import { PAYMENT_TYPE_ID } from '@/config/enum';
+import { PAYMENT, PAYMENT_TYPE_ID } from '@/config/enum';
 
 type Props = {
   onClick: () => void;
-  type: number;
+  type?: string;
   htmlType?: 'submit' | 'button';
-}
-export default function PaymentButton({onClick, type, htmlType}: Props) {
-  const classSubText = 'font-extrabold uppercase text-2xl text-center mx-auto'
-  const classText = 'flex-1 flex flex-col gap-1 text-center p-3 text-center rounded-[10px]'
+};
+export default function PaymentButton({ onClick, type, htmlType }: Props) {
+  const classSubText = 'font-extrabold uppercase text-2xl text-center mx-auto';
+  const classText =
+    'flex-1 flex flex-col gap-1 text-center p-3 text-center rounded-[10px]';
   const renderItem = () => {
-    if (type === 2) {
-      return (
-        <button
-          type={htmlType}
-          className={
-            twMerge(classText, 'bg-[#f1eb1f] text-[#235d97]')
-          }
-          onClick={onClick}
-        >
-          <span
-            className={classSubText}
+    switch (type) {
+      case PAYMENT.FUDIIN:
+        return (
+          <button
+            type={htmlType}
+            style={{
+              backgroundImage: `linear-gradient(#08D2CD, #6A61EE)`,
+            }}
+            className={twMerge(classText, 'text-white')}
+            onClick={onClick}
           >
-            Mua ngay - Trả sau
-          </span>
-          <span className={'flex items-center justify-center m-auto'}>
-            <img src="https://pc.baokim.vn/platform/img/home-paylater-ngang-small.svg" alt="Minh tu authentic" className={'ml-[5px] h-[20px]'} />
-            <img src="https://pc.baokim.vn/platform/img/icon-muadee.svg" alt="Minh tu authentic"  className={'ml-[5px] h-[20px]'}  />
-          </span>
-        </button>
-      );
-    } else if (type === 3) {
-      return <button
-        type={htmlType}
-        className={
-          twMerge(classText, 'bg-[#288ad6] text-white')
-        }
-        onClick={onClick}
-      >
-          <span
-            className={classSubText}
+            <span className={classSubText}>Thanh toán qua Fudiin</span>
+            <span className={'flex items-center justify-center m-auto'}>
+              Xài trước, trả sau
+            </span>
+          </button>
+        );
+      case PAYMENT.VN_PAY:
+        return (
+          <button
+            type={htmlType}
+            style={{
+              backgroundImage: `linear-gradient(#005BA9, #ED1C24)`,
+            }}
+            className={twMerge(classText, 'text-white')}
+            onClick={onClick}
           >
-            Trả góp qua thẻ
-          </span>
-        <span className={'flex items-center justify-center m-auto'}>
-            Visa, MasterCard, JCB
-          </span>
-      </button>;
+            <span className={classSubText}>Thanh toán qua VNPAY</span>
+            <span className={'flex items-center justify-center m-auto'}>
+              Thanh toán qua cổng VNPAY
+            </span>
+          </button>
+        );
+      case PAYMENT.MOMO:
+        return (
+          <button
+            type={htmlType}
+            style={{
+              background: `#AF126A`,
+            }}
+            className={twMerge(classText, 'text-white')}
+            onClick={onClick}
+          >
+            <span className={classSubText}>Ví trả sau momo</span>
+            <span className={'flex items-center justify-center m-auto'}>
+              Xài trước, trả sau
+            </span>
+          </button>
+        );
+      case PAYMENT.COD:
+        return (
+          <button
+            type={htmlType}
+            className={twMerge(classText, 'bg-primary text-white')}
+            onClick={onClick}
+          >
+            <span className={twMerge(classSubText)}>Thanh toán </span>
+            <span className={'mx-auto'}>Thanh toán COD, chuyển khoản</span>
+          </button>
+        );
+      default:
+        return (
+          <button
+            type={htmlType}
+            className={twMerge(classText, 'bg-primary text-white')}
+            onClick={onClick}
+          >
+            <span className={twMerge(classSubText)}>Thanh toán</span>
+            <span className={'mx-auto'}>Chuyển khoản qua ngân hàng</span>
+          </button>
+        );
     }
-    return <button
-      type={htmlType}
-      className={
-        twMerge(classText, 'bg-primary text-white')
-      }
-      onClick={onClick}
-    >
-        <span
-          className={twMerge(classSubText)}
-        >
-          Thanh toán
-        </span>
-      <span className={'mx-auto'}>(Qua ATM, QR Code, Thẻ ngân hàng ...)</span>
-    </button>
-  }
-  return <>
-    {renderItem()}
-  </>
+  };
+  return <>{renderItem()}</>;
 }

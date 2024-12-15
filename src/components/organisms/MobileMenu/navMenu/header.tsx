@@ -1,4 +1,3 @@
-import Logo from '@/static/images/logo.png';
 import Image from 'next/image';
 const InputSearch = dynamic(
   () => import('@/components/molecules/header/inputSearch'),
@@ -16,6 +15,8 @@ import { BarsOutlined } from '@ant-design/icons';
 import AppContext from '@/contexts/appContext';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import { SETTING_KEY } from '@/config/enum';
+import LogoComponent from '@/components/atoms/logo';
+import { LogoProps } from '@/config/type';
 type Props = {
   className?: string;
   isMobile?: boolean;
@@ -29,9 +30,6 @@ export default function NavMenuHeader({
   const ref = useRef<HTMLDivElement | null>(null);
   const refTimeOut = useRef<NodeJS.Timeout | null>(null);
   const appCtx = useContext(AppContext);
-  const logo =
-    settings?.find((item) => item.key === SETTING_KEY.GENERAL.LOGO.KEY)?.value
-      ?.page_logo_footer?.[0]?.image?.url || Logo;
   useEffect(() => {
     let lastScrollY = 0;
     let isScrollDown = false;
@@ -93,13 +91,13 @@ export default function NavMenuHeader({
           <IconBars className={'w-[40px] h-[40px] text-white'} />
         </button>
         <Link className={'grow lg:shrink-0'} href={'/'}>
-          <Image
-            src={logo}
-            width={161}
-            height={30}
-            className={'object-contain h-[45px] w-auto m-auto'}
-            alt={'Minhtuauhentic'}
-          />
+          {settings && (
+            <LogoComponent
+              position={LogoProps.HEADER}
+              settings={settings}
+              className={'object-contain h-[45px] w-auto m-auto'}
+            />
+          )}
         </Link>
         {/*<InputSearch isMobile={true} />*/}
 

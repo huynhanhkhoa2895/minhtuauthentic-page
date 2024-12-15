@@ -83,6 +83,10 @@ export const SETTING_KEY = {
       KEY: 'primary_color',
       LABEL: 'Màu chủ đạo',
     },
+    FOOTER_COLOR: {
+      KEY: 'footer_color',
+      LABEL: 'Màu chân trang',
+    },
     PAGE_INFORMATION: {
       KEY: 'page_information',
       LABEL: 'Thông tin trang',
