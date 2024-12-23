@@ -143,3 +143,14 @@ iframe {
 .grecaptcha-badge {
     @apply hidden;
 }
+
+.menu-select::after {
+    background-color: #e5e7eb;
+    content: "";
+    height: 20px;
+    position: absolute;
+    right: -12px;
+    top: 35px;
+    transform: rotate(45deg);
+    width: 20px;
+}

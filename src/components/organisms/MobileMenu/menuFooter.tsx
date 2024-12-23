@@ -86,7 +86,7 @@ export default function MenuFooter() {
         (
           <div
             className={
-              'lg:hidden fixed bottom-0 left-0 z-10 bg-white w-full shadow-custom rounded-tr-2xl rounded-tl-2xl z-[1001]'
+              'lg:hidden fixed bottom-0 left-0 z-10 bg-primary text-white w-full shadow-custom rounded-tr-2xl rounded-tl-2xl z-[1001]'
             }
           >
             <div className={'p-3 flex items-center justify-center'}>

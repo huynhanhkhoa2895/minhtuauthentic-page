@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { ProductFilterOptionDto } from '@/dtos/ProductFilterSettingOption/ProductFilterOption.dto';
 import { MenuDisplay } from '@/config/type';
 import { StaticComponentDto } from '@/dtos/StaticComponent.dto';
@@ -11,6 +11,7 @@ import { SlugDto } from '@/dtos/Slug.dto';
 import { ProductConfigurationsDto } from '@/dtos/productConfigurations.dto';
 import { ProductConfigurationValuesDto } from '@/dtos/productConfigurationValues.dto';
 import sortBy from 'lodash/sortBy';
+import AppContext from '@/contexts/appContext';
 type Props = {
   setting?: ProductFilterOptionDto;
   menu: MenuDisplay;
@@ -33,6 +34,8 @@ type FilterSettingItem = {
 
 export default function NavMenuContent({ setting, menu, brands }: Props) {
   const _menu = menu.data as StaticComponentDto;
+
+  const ctx = useContext(AppContext);
 
   const generateLabel = (label: string) => {
     const obj: Record<string, string> = {
@@ -149,6 +152,9 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
           <Link
             href={url}
             className={'border border-gray-200 p-2 rounded-[10px] block'}
+            onClick={() => {
+              ctx?.setIsOpenNavMenu && ctx?.setIsOpenNavMenu(false);
+            }}
           >
             {item.label}
           </Link>

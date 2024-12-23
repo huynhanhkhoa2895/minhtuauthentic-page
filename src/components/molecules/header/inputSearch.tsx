@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ProductDto } from '@/dtos/Product.dto';
 import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
-import { Avatar, List, Skeleton } from 'antd/es';
+import { Button, Input, List, Skeleton } from 'antd/es';
 import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
-import { useRouter } from 'next/router';
 import { twMerge } from 'tailwind-merge';
+import CloseCircle from '@/components/icons/closeCircle';
+import SearchOutlined from '@ant-design/icons/SearchOutlined';
 type Props = {
   classname?: string;
   classNameInput?: string;
@@ -139,9 +140,9 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
 
   return (
     <div className={twMerge('w-full relative z-[3]', classname)} ref={ref}>
-      <input
+      <Input
         className={
-          'h-[40px] text-black rounded-[10px] border-0 p-[5px_10px] lg:p-[5px_45px_5px_25px] focus-visible:outline-none focus-visible:border-0 w-full'
+          'h-[40px] text-black rounded-[10px] border-0 p-[5px_10px] focus-visible:outline-none focus-visible:border-0 w-full'
         }
         type="text"
         placeholder="Tìm kiếm sản phẩm"
@@ -149,6 +150,17 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
         onChange={(e) => {
           setValue(e.target.value);
         }}
+        prefix={<SearchOutlined className={'w-6 h-6'} />}
+        suffix={
+          <Button
+            icon={<CloseCircle className={'w-6 h-6'} />}
+            type={'link'}
+            onClick={() => {
+              setValue('');
+              setData([]);
+            }}
+          ></Button>
+        }
       />
       {isOpened && (
         <div
