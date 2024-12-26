@@ -49,28 +49,17 @@ export default function NewsTemplate({
             <>
               <NewsDetail news={news as NewsDto} />
               {(relationNews || [])?.length > 0 && (
-                <div
-                  className={
-                    'p-3 rounded-[10px] border bg-gray-200 border-gray-200 mt-3'
-                  }
-                >
-                  <h3 className={'font-[700] lg:font-bold text-xl '}>
+                <div className={'mt-3'}>
+                  <h3
+                    className={'font-[700] lg:font-bold text-2xl mb-1 lg:mb-3'}
+                  >
                     Xem thêm
                   </h3>
-                  <ul className={'flex flex-col gap-3'}>
+                  <div className={'grid  grid-cols-1 lg:grid-cols-4 gap-3'}>
                     {relationNews?.map((item, key) => {
-                      return (
-                        <li
-                          key={key}
-                          className={'py-3 border-b border-gray-200'}
-                        >
-                          <Link href={generateSlugToHref(item.slugs?.slug)}>
-                            {item?.name}
-                          </Link>
-                        </li>
-                      );
+                      return <NewsItem news={item} key={key} />;
                     })}
-                  </ul>
+                  </div>
                 </div>
               )}
             </>
