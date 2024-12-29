@@ -1,5 +1,3 @@
-import { twMerge } from 'tailwind-merge';
-import FormRegister from '@/components/organisms/account/formRegister';
 import NewsList from '@/components/organisms/news/list';
 import { NewsDto } from '@/dtos/News.dto';
 import { CategoryNewsDto } from '@/dtos/CategoryNews.dto';
@@ -11,6 +9,9 @@ import NewsClock from '@/components/atoms/news/clock';
 import Image from 'next/image';
 import ImageWithFallback from '@/components/atoms/ImageWithFallback';
 import NewsDetail from '@/components/organisms/news/detail';
+import NewsRelation from '@/components/organisms/news/relation';
+import LayoutNews from '@/components/organisms/news/layout';
+import { ReactNode } from 'react';
 
 type Props = {
   news: NewsDto | NewsDto[];
@@ -33,39 +34,26 @@ export default function NewsTemplate({
 }: Props) {
   return (
     <div className={'grid grid-cols-1 lg:grid-cols-6 gap-3'}>
-      <div
-        className={
-          'col-span-4 w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3'
-        }
-      >
-        <>
-          {!isDetail ? (
+      <>
+        {!isDetail ? (
+          <LayoutNews className={'col-span-4 '}>
             <NewsList
               title={title}
               news={news as NewsDto[]}
               total={total || 0}
             />
-          ) : (
-            <>
+          </LayoutNews>
+        ) : (
+          <div className={'flex flex-col col-span-4 gap-3'}>
+            <LayoutNews>
               <NewsDetail news={news as NewsDto} />
-              {(relationNews || [])?.length > 0 && (
-                <div className={'mt-3'}>
-                  <h3
-                    className={'font-[700] lg:font-bold text-2xl mb-1 lg:mb-3'}
-                  >
-                    Xem thêm
-                  </h3>
-                  <div className={'grid  grid-cols-1 lg:grid-cols-4 gap-3'}>
-                    {relationNews?.map((item, key) => {
-                      return <NewsItem news={item} key={key} />;
-                    })}
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-        </>
-      </div>
+            </LayoutNews>
+            <LayoutNews>
+              <NewsRelation news={relationNews || []} />
+            </LayoutNews>
+          </div>
+        )}
+      </>
       <div className={'col-span-2 flex flex-col gap-3'}>
         <div
           className={
