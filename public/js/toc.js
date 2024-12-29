@@ -34,6 +34,9 @@ function changeToSlug(e = '') {
 !(function (e) {
   'use strict';
   var t = function (t) {
+      if ($('.toc-list').find('li').length > 0) {
+        return;
+      }
       return this.each(function () {
         var n,
           i,
