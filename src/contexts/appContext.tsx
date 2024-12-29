@@ -34,10 +34,16 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [settings, setSettings] = useState({});
   const router = useRouter();
   useEffect(() => {
-    setIsOpenNavMenu(false);
-    setIsOpenMenu(false);
-    setIsOpenPopupProduct(null);
-  }, [router.pathname]);
+    const handleRouteComplete = () => {
+      setIsOpenNavMenu(false);
+      setIsOpenMenu(false);
+      setIsOpenPopupProduct(null);
+    };
+    router.events.on('routeChangeComplete', handleRouteComplete);
+    return () => {
+      router.events.on('routeChangeComplete', handleRouteComplete);
+    };
+  }, [router]);
 
   return (
     <AppContext.Provider
