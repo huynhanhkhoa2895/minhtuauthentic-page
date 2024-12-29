@@ -45,7 +45,7 @@ const Footer = ({
             />
           </div>
         </div>
-        <div className={'w-full border border-t-[#333] pb-3'}>
+        <div className={'w-full border-t border-t-[#333] pb-3'}>
           <div className={'container mx-auto '}>
             <div className={'grid grid-cols-1 lg:grid-cols-3 mt-3  '}>
               <LogoComponent
