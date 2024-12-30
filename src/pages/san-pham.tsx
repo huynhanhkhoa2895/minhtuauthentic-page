@@ -1,16 +1,12 @@
 import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
 import CategoryTemplate from '@/components/templates/CategoryTemplate';
-import getDefaultSeverSide from '@/utils/getDefaultServerSide';
-import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { ResponseSlugPageDto } from '@/dtos/responseSlugPage.dto';
 import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage.dto';
 
 import Layout from '@/components/templates/Layout';
-import { ServerSideProps } from '@/config/type';
+import { PageSetting } from '@/config/type';
 import { useRouter } from 'next/router';
-import useSettings from '@/hooks/useSettings';
 export const getServerSideProps = async (context: any) => {
   const res = await fetch(
     process.env.BE_URL +
@@ -31,9 +27,13 @@ export const getServerSideProps = async (context: any) => {
 };
 export default function ProductPage({
   slug,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  settings,
+  menu,
+  footerContent,
+}: {
+  slug: ResponseSlugPageDto<ResponseCategoryFilterPageDto>;
+} & PageSetting) {
   const router = useRouter();
-  const { settings, menu, footerContent } = useSettings();
   return (
     <>
       <Header settings={settings} menu={menu} />

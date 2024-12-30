@@ -1,16 +1,13 @@
 import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
-import getDefaultSeverSide from '@/utils/getDefaultServerSide';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import NewsTemplate from '@/components/templates/NewsTemplate';
 import { ResponseNewsPageDto } from '@/dtos/ResponseNewsPage.dto';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import Layout from '@/components/templates/Layout';
-import { ServerSideProps } from '@/config/type';
+import { PageSetting } from '@/config/type';
 
 export const getServerSideProps = async (context: any) => {
   const page = context.query.page;
-  const resDefault = await getDefaultSeverSide();
   const rsNews: { data: ResponseNewsPageDto } = await fetch(
     process.env.BE_URL + `/api/pages/news?page=${page || 1}`,
     {},
@@ -20,7 +17,6 @@ export const getServerSideProps = async (context: any) => {
   return {
     props: {
       news: rsNews?.data,
-      ...resDefault,
     },
   };
 };
@@ -30,7 +26,9 @@ export default function News({
   footerContent,
   news,
   settings,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: {
+  news: ResponseNewsPageDto;
+} & PageSetting) {
   return (
     <>
       <Header settings={settings} menu={menu} />

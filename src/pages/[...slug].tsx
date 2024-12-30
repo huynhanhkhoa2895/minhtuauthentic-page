@@ -8,15 +8,13 @@ import CategoryTemplate from '@/components/templates/CategoryTemplate';
 import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage.dto';
 import { ResponseNewsDetailPageDto } from '@/dtos/ResponseNewsDetailPage.dto';
 import Layout from '@/components/templates/Layout';
-import getDefaultSeverSide from '@/utils/getDefaultServerSide';
-import { ServerSideProps } from '@/config/type';
+import { PageSetting, ServerSideProps } from '@/config/type';
 import { redirect } from 'next/navigation';
 import { Fragment } from 'react';
 import NewsTemplate from '@/components/templates/NewsTemplate';
 import { generateSlugToHref } from '@/utils';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import { ResponseNewsPageDto } from '@/dtos/ResponseNewsPage.dto';
-import useSettings from '@/hooks/useSettings';
 
 export const getServerSideProps = async (context: any) => {
   const { slug } = context.query;
@@ -139,6 +137,9 @@ export default function Page({
   width,
   height,
   keyword,
+  settings,
+  menu,
+  footerContent,
 }: {
   slug: ResponseSlugPageDto<unknown>;
   title?: string | null;
@@ -147,8 +148,8 @@ export default function Page({
   width?: number;
   height?: number;
   keyword?: string;
-} & ServerSideProps) {
-  const { settings, menu, footerContent } = useSettings();
+} & ServerSideProps &
+  PageSetting) {
   const renderTemplate = () => {
     switch (slug?.model) {
       case Entity.VARIANTS:

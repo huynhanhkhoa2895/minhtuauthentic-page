@@ -10,9 +10,9 @@ import Footer from '@/components/organisms/footer';
 import { SettingOptionDto } from '@/dtos/SettingOption.dto';
 import HomeFlashSale from '@/components/organisms/home/homeFlashSale';
 import Layout from '@/components/templates/Layout';
-import useSettings from '@/hooks/useSettings';
 import dynamic from 'next/dynamic';
 import { ReactNode } from 'react';
+import { PageSetting } from '@/config/type';
 const HomeBanner = dynamic(
   () => import('@/components/organisms/home/homeBanner'),
   {
@@ -44,12 +44,13 @@ export async function getStaticProps() {
 export default function Home({
   homePage,
   settingsHome,
+  settings,
+  menu,
+  footerContent,
 }: {
   homePage: ResponseHomePageDto;
   settingsHome: Record<string, SettingOptionDto | undefined>;
-}) {
-  const { settings, menu, footerContent } = useSettings();
-
+} & PageSetting) {
   return (
     <>
       <Header settings={settings} menu={menu} />

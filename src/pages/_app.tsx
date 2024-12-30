@@ -12,7 +12,11 @@ const nunitoSans = Nunito_Sans({
   subsets: ['latin'],
 });
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+import useSettings from '@/hooks/useSettings';
+
 export default function App({ Component, pageProps }: AppProps) {
+  const settings = useSettings();
+  const _pageProps = { ...pageProps, ...settings };
   return (
     <>
       <Head>
@@ -20,13 +24,14 @@ export default function App({ Component, pageProps }: AppProps) {
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1"
         />
+        <style>{`:root { --primary-color: ${settings?.commonSettings?.primaryColor || '#C44812'}; }`}</style>
       </Head>
       <AppProvider>
         <OrderProvider>
           <GoogleReCaptchaProvider
             reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_SITE_KEY || ''}
           >
-            <Component className={nunitoSans.className} {...pageProps} />
+            <Component className={nunitoSans.className} {..._pageProps} />
           </GoogleReCaptchaProvider>
           <ToastContainer />
         </OrderProvider>

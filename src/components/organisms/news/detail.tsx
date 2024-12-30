@@ -3,8 +3,6 @@ import { NewsDto } from '@/dtos/News.dto';
 import Script from 'next/script';
 import NewsToc from '@/components/atoms/news/toc';
 import { useEffect, useMemo } from 'react';
-import { getFilterFromQuery } from '@/utils';
-import { CATEGORY_FILTER } from '@/config/enum';
 import { useRouter } from 'next/router';
 
 type Props = {

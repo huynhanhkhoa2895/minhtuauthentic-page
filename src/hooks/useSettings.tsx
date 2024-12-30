@@ -1,28 +1,24 @@
 import useSWR from 'swr';
-import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
-import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
-import { SettingsDto } from '@/dtos/Settings.dto';
 import { useEffect, useState } from 'react';
+import { PageSetting } from '@/config/type';
 const fetcher = () =>
   fetch(`/api/settings`, {
     method: 'GET',
   }).then((res) => res.json());
-export default function useSettings() {
+export default function useSettings(): PageSetting {
   const { data, error, isLoading, isValidating } = useSWR(
     'useSetting',
     fetcher,
   );
-  const [_data, setData] = useState<{
-    menu: ResponseMenuDto | undefined;
-    footerContent: ResponseFooterDto | undefined;
-    settings: SettingsDto[];
-  }>({
+  const [_data, setData] = useState<PageSetting>({
     menu: undefined,
     footerContent: undefined,
     settings: [],
+    commonSettings: undefined,
   });
   useEffect(() => {
     if (data) {
+      console.log('data', data);
       setData(data);
     }
   }, [data]);

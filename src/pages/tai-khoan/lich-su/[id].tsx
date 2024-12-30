@@ -1,6 +1,5 @@
 import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
-import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getCookie } from '@/utils';
 import { OrdersDto } from '@/dtos/Orders.dto';
@@ -9,10 +8,9 @@ import OrderDetailTemplate from '@/components/templates/OrderDetailTemplate';
 import AccountTemplate from '@/components/templates/AccountTemplate';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import Layout from '@/components/templates/Layout';
-import { ServerSideProps } from '@/config/type';
+import { PageSetting } from '@/config/type';
 
 export const getServerSideProps = async (context: any) => {
-  const resDefault = await getDefaultSeverSide();
   const order = context.query.id;
   const user = JSON.parse(
     getCookie('user', context.req.headers.cookie || '', true),
@@ -38,7 +36,6 @@ export const getServerSideProps = async (context: any) => {
   return {
     props: {
       data: dataOrderItems?.data,
-      ...resDefault,
     },
   };
 };
@@ -48,7 +45,9 @@ export default function UserHistoryDetail({
   footerContent,
   data,
   settings,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: {
+  data: { order: OrdersDto; order_items: OrderItemsDto[] };
+} & PageSetting) {
   return (
     <>
       <Header settings={settings} menu={menu} />

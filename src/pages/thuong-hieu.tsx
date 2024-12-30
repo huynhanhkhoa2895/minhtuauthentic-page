@@ -3,8 +3,8 @@ import Footer from '@/components/organisms/footer';
 import BrandsTemplate from '@/components/templates/BrandsTemplate';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import Layout from '@/components/templates/Layout';
-import useSettings from '@/hooks/useSettings';
 import { BrandDto } from '@/dtos/Brand.dto';
+import { PageSetting } from '@/config/type';
 export const getServerSideProps = async (context: any) => {
   const res = await fetch(process.env.BE_URL + '/api/pages/brands').catch(
     (error) => {
@@ -18,8 +18,12 @@ export const getServerSideProps = async (context: any) => {
     },
   };
 };
-export default function BrandsPage({ brands }: { brands: BrandDto[] }) {
-  const { settings, menu, footerContent } = useSettings();
+export default function BrandsPage({
+  brands,
+  settings,
+  menu,
+  footerContent,
+}: { brands: BrandDto[] } & PageSetting) {
   return (
     <>
       <Header settings={settings} menu={menu} />

@@ -58,7 +58,7 @@ const config: Config = {
         bold: '600',
       },
       colors: {
-        primary: '#C44812',
+        primary: 'var(--primary-color)',
         grey: '#f5f5f5',
         primaryGrey: '#f3eee7',
         lightYellow: '#ffe8d1',

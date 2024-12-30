@@ -1,6 +1,7 @@
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { SettingsDto } from '@/dtos/Settings.dto';
+import CommonSettingDto from '@/dtos/CommonSetting.dto';
 
 export type PopupDisplay = {
   title?: string;
@@ -17,7 +18,7 @@ export type TProductSeen = {
   created: number;
   data: number[];
 };
-export enum POPUP_TYPE {
+export const enum POPUP_TYPE {
   CATEGORY = 'category',
   PRODUCT = 'product',
   BRAND = 'brand',
@@ -43,3 +44,9 @@ export enum LogoProps {
   HEADER = 'header',
   FOOTER = 'footer',
 }
+export type PageSetting = {
+  menu: ResponseMenuDto | undefined;
+  footerContent: ResponseFooterDto | undefined;
+  settings: SettingsDto[];
+  commonSettings?: CommonSettingDto;
+};
