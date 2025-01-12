@@ -79,52 +79,48 @@ export default function FormProductRating({ product_id, refreshData }: Props) {
             render={({ field }) => <StartRatingInput {...field} />}
           />
         </div>
-        <div className={'flex flex-col gap-2'}>
-          <p>
-            Tên của bạn <span className={'text-red-600'}>*</span>
-          </p>
-          <Controller
-            name={'name'}
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                className={'border border-gray-200 p-2 rounded-[10px]'}
-              />
+        <div className={'flex max-lg:flex-col gap-2 w-full'}>
+          <div className={'flex flex-col gap-2 flex-1'}>
+            <Controller
+              name={'name'}
+              control={control}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  placeholder={'Tên của bạn *'}
+                  className={'border border-gray-200 p-2 rounded-[10px]'}
+                />
+              )}
+            />
+            {errors && errors.name && errors?.name?.message && (
+              <p className={'text-sm text-red-600'}>{errors?.name?.message}</p>
             )}
-          />
-          {errors && errors.name && errors?.name?.message && (
-            <p className={'text-sm text-red-600'}>{errors?.name?.message}</p>
-          )}
+          </div>
+          <div className={'flex flex-col gap-2 flex-1'}>
+            <Controller
+              name={'phone'}
+              control={control}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  placeholder={'Số điện thoại *'}
+                  className={'border border-gray-200 p-2 rounded-[10px]'}
+                />
+              )}
+            />
+            {errors && errors.phone && errors?.phone?.message && (
+              <p className={'text-red-600 text-sm'}>{errors?.phone?.message}</p>
+            )}
+          </div>
         </div>
         <div className={'flex flex-col gap-2'}>
-          <p>
-            Số điện thoại <span className={'text-red-600'}>*</span>
-          </p>
-          <Controller
-            name={'phone'}
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                className={'border border-gray-200 p-2 rounded-[10px]'}
-              />
-            )}
-          />
-          {errors && errors.phone && errors?.phone?.message && (
-            <p className={'text-red-600 text-sm'}>{errors?.phone?.message}</p>
-          )}
-        </div>
-        <div className={'flex flex-col gap-2'}>
-          <p>
-            Đánh giá <span className={'text-red-600'}>*</span>
-          </p>
           <Controller
             name={'content'}
             control={control}
             render={({ field }) => (
               <Input.TextArea
                 {...field}
+                placeholder={'Đánh giá *'}
                 className={'border border-gray-200 p-2 rounded-[10px]'}
                 rows={4}
               />

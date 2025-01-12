@@ -32,17 +32,17 @@ export default function CartInput({ value, onChange, className }: Props) {
   return (
     <div
       className={twMerge(
-        'flex items-center gap-2 justify-center border rounded-[10px] border-grey',
+        'flex items-center gap-2 justify-center border rounded-[10px] border-primary',
         className,
       )}
     >
       <button
-        className="text-[16px] font-extrabold block text-[#d3d3d3]"
+        className="text-[16px] font-extrabold block text-primary"
         onClick={() => {
           setValue((_value) => (_value - 1 < 0 ? 0 : _value - 1));
         }}
       >
-        <MinusIcon className={'w-6 h-6 text-[#d3d3d3]'} />
+        <MinusIcon className={'w-6 h-6 text-primary'} />
       </button>
       <input
         type="text"
@@ -53,12 +53,12 @@ export default function CartInput({ value, onChange, className }: Props) {
         }}
       />
       <button
-        className="text-[16px] font-extrabold block text-[#d3d3d3]"
+        className="text-[16px] font-extrabold block text-primary"
         onClick={() => {
           setValue((_value) => _value + 1);
         }}
       >
-        <PlusIcon className={'w-6 h-6 text-[#d3d3d3]'} />
+        <PlusIcon className={'w-6 h-6 text-primary'} />
       </button>
     </div>
   );

@@ -34,33 +34,33 @@ const Footer = ({
         }}
         className={' px-3'}
       >
-        <div className={'w-full pb-3'}>
+        <div className={'container mx-auto'}>
           <div
             className={
-              'container mx-auto flex max-lg:flex-col justify-between w-full pt-[35px] max-lg:gap-y-3'
+              'flex max-lg:flex-col justify-between w-full pt-[35px] max-lg:gap-y-3 pb-3'
             }
           >
             <FooterContent
               items={orderBy(footerContent?.footer || [], 'sort')}
             />
           </div>
-        </div>
-        <div className={'w-full border-t border-t-[#333] pb-3'}>
-          <div className={'container mx-auto '}>
-            <div className={'grid grid-cols-1 lg:grid-cols-3 mt-3  '}>
-              <LogoComponent
-                className={'object-contain w-[384px] h-[91px] max-lg:hidden'}
-                settings={settings}
-                position={LogoProps.FOOTER}
-              />
-              <div>
-                <p className={'uppercase font-[700] lg:font-bold mb-[10px]'}>
-                  Kết nối với chúng tôi
-                </p>
-                <div className={'grid grid-cols-4 w-max gap-3'}>
-                  {footerContent &&
-                    footerContent[STATIC_CONTENT_TYPE.FOOTER_LOGO_SOCIAL]?.map(
-                      (item: StaticContentsDto, index: number) => {
+          <div className={'w-full border-t border-t-[rgb(202_199_199)] pb-3'}>
+            <div className={'container mx-auto '}>
+              <div className={'grid grid-cols-1 lg:grid-cols-3 mt-3  '}>
+                <LogoComponent
+                  className={'object-contain w-[384px] h-[91px] max-lg:hidden'}
+                  settings={settings}
+                  position={LogoProps.FOOTER}
+                />
+                <div>
+                  <p className={'uppercase font-[700] lg:font-bold mb-[10px]'}>
+                    Kết nối với chúng tôi
+                  </p>
+                  <div className={'grid grid-cols-4 w-max gap-3'}>
+                    {footerContent &&
+                      footerContent[
+                        STATIC_CONTENT_TYPE.FOOTER_LOGO_SOCIAL
+                      ]?.map((item: StaticContentsDto, index: number) => {
                         const image = item?.images?.[0]?.image;
                         if (!image) return null;
                         return (
@@ -79,18 +79,18 @@ const Footer = ({
                             </Link>
                           </div>
                         );
-                      },
-                    )}
+                      })}
+                  </div>
                 </div>
-              </div>
-              <div>
-                <p className={'uppercase font-[700] lg:font-bold mb-[10px]'}>
-                  Hình thức thanh toán
-                </p>
-                <div className={'grid grid-cols-6 w-max gap-3'}>
-                  {footerContent &&
-                    footerContent[STATIC_CONTENT_TYPE.FOOTER_LOGO_PAYMENT]?.map(
-                      (item: StaticContentsDto, index: number) => {
+                <div>
+                  <p className={'uppercase font-[700] lg:font-bold mb-[10px]'}>
+                    Hình thức thanh toán
+                  </p>
+                  <div className={'grid grid-cols-6 w-max gap-3'}>
+                    {footerContent &&
+                      footerContent[
+                        STATIC_CONTENT_TYPE.FOOTER_LOGO_PAYMENT
+                      ]?.map((item: StaticContentsDto, index: number) => {
                         const image = item?.images?.[0]?.image;
                         if (!image) return null;
                         return (
@@ -109,8 +109,8 @@ const Footer = ({
                             </Link>
                           </div>
                         );
-                      },
-                    )}
+                      })}
+                  </div>
                 </div>
               </div>
             </div>

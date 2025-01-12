@@ -2,6 +2,7 @@ import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import CommonSettingDto from '@/dtos/CommonSetting.dto';
+import { PaymentsDto } from '@/dtos/Payments.dto';
 
 export type PopupDisplay = {
   title?: string;
@@ -49,4 +50,8 @@ export type PageSetting = {
   footerContent: ResponseFooterDto | undefined;
   settings: SettingsDto[];
   commonSettings?: CommonSettingDto;
+};
+export type OptionProps = {
+  label: string;
+  value: string;
 };

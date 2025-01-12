@@ -7,7 +7,6 @@ import { ProductConfigurationsDto } from '@/dtos/productConfigurations.dto';
 import { VariantDto } from '@/dtos/Variant.dto';
 import ProductDescription from '@/components/molecules/product/productDescription';
 import ProductInformation from '@/components/molecules/product/productInformation';
-import ProductRelation from '@/components/molecules/product/productRelation';
 import ProductQuestionAnswer from '@/components/molecules/product/productQuestionAnswer';
 import ProductDealSock from '@/components/molecules/product/productDealSock';
 import ListKeyword from '@/components/organisms/product/listKeyword';

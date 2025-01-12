@@ -20,12 +20,9 @@ const fetcher = () =>
   }).then((res) => res.json());
 
 export default function FormCheckout({
-  user,
   payments,
-  ip,
   watch,
   setValue,
-  setError,
   control,
   errors,
   setFullAddress,
@@ -209,6 +206,7 @@ export default function FormCheckout({
         <FormControl
           control={control}
           errors={errors}
+          options={payments}
           radioOptions={payments.map((item) => {
             return {
               label: (
@@ -235,7 +233,7 @@ export default function FormCheckout({
             };
           })}
           name={'payment_id'}
-          type={'radio'}
+          type={'collapse'}
           placeholder={'Chọn phương thức thanh toán'}
           className={'col-span-2'}
         />

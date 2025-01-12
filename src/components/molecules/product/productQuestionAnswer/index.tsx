@@ -17,7 +17,7 @@ export default function ProductQuestionAnswer({ questions }: Props) {
         <h3 className={'uppercase'}>Câu hỏi thường gặp</h3>
       </div>
       <div className={'p-3'}>
-        <Collapse defaultActiveKey={['1']}>
+        <Collapse accordion>
           {questions.map((item, index) => {
             return (
               <Collapse.Panel

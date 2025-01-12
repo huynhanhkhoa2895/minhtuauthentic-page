@@ -1,9 +1,10 @@
-import { Checkbox, Input, Radio, Select } from 'antd/es';
+import { Checkbox, Input, Select } from 'antd/es';
 import { Controller } from 'react-hook-form';
 import { ReactNode } from 'react';
-import { UserOutlined } from '@ant-design/icons';
-import RadioForm from '@/components/atoms/radioForm';
+import RadioForm from '@/components/atoms/forms/radioForm';
 import { removeVietnameseAccents } from '@/utils';
+import { CollapseForm } from '@/components/atoms/forms/collapseForm';
+import { PaymentsDto } from '@/dtos/Payments.dto';
 const { TextArea } = Input;
 type Props = {
   control: any;
@@ -20,6 +21,7 @@ type Props = {
     code_name?: string;
   }[];
   radioOptions?: { label: string | ReactNode; value: string }[];
+  options?: PaymentsDto[];
 };
 type RenderFieldProps = Omit<Props, 'control' | 'errors' | 'name'> & {
   onChange: (value: string) => void;
@@ -32,6 +34,7 @@ const RenderField = ({
   onChange,
   selectOptions,
   radioOptions,
+  options,
 }: RenderFieldProps) => {
   switch (type) {
     case 'password':
@@ -42,6 +45,14 @@ const RenderField = ({
           {...field}
           prefix={prefix}
           onChange={(e) => onChange(e.target.value)}
+        />
+      );
+    case 'collapse':
+      return (
+        <CollapseForm
+          options={options || []}
+          value={field.value}
+          onChange={(value) => onChange(value)}
         />
       );
     case 'checkbox':
@@ -106,6 +117,7 @@ export default function FormControl({
   className,
   selectOptions,
   radioOptions,
+  options,
 }: Props) {
   return (
     <div className={className}>
@@ -121,6 +133,7 @@ export default function FormControl({
             selectOptions={selectOptions}
             radioOptions={radioOptions}
             field={field}
+            options={options}
             onChange={(value: string) => {
               field.onChange(value);
             }}
