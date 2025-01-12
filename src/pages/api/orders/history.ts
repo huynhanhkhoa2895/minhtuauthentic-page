@@ -5,14 +5,17 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   if (req.method === 'GET') {
-    const query = req.query;
-    const url = `${process.env.BE_URL}/api/orders/history`;
+    const queryString = new URLSearchParams(
+      (req?.url || '').split('?')[1] || '',
+    ).toString();
+    const url = `${process.env.BE_URL}/api/pages/orders/history?` + queryString;
+    const token = JSON.parse(req?.cookies?.['user'] || '{}')?.token;
 
     const rs = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + req.cookies['token'] || '',
+        Authorization: 'Bearer ' + token || '',
       },
     })
       .then((response) => response.json())
