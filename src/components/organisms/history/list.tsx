@@ -19,11 +19,13 @@ const HistoryDesktopView = dynamic(
     ssr: false,
   },
 );
-const { RangePicker } = DatePicker;
 
 export default function HistoryList() {
   const [orders, setOrder] = useState<OrdersDto[]>([]);
-  const [date, setDate] = useState<string[]>([]);
+  const [date, setDate] = useState<string[]>([
+    dayjs().format('YYYY-MM-DD'),
+    dayjs().add(1, 'd').format('YYYY-MM-DD'),
+  ]);
   const [loading, setLoading] = useState<boolean>(false);
   const column = [
     {
@@ -106,24 +108,49 @@ export default function HistoryList() {
 
   return (
     <>
-      <div className={'flex justify-between mb-3'}>
+      <div className={'flex max-lg:flex-col justify-between mb-3 gap-2'}>
         <h1 className={'text-2xl font-[700] lg:font-bold mb-3 text-primary'}>
           Lịch sử
         </h1>
-        <RangePicker
-          placeholder={['Từ ngày', 'Tới ngày']}
-          format={'DD/MM/YYYY'}
-          defaultPickerValue={[dayjs(), dayjs()]}
-          defaultValue={[dayjs(), dayjs()]}
-          lang={'vi'}
-          onChange={(date) => {
-            if (date) {
-              const fromDate = dayjs(date[0]).format('YYYY-MM-DD');
-              const toDate = dayjs(date[1]).format('YYYY-MM-DD');
-              setDate([fromDate, toDate]);
-            }
-          }}
-        />
+        <div className={'flex gap-3'}>
+          <div className={'flex-col'}>
+            <p>Từ Ngày</p>
+            <DatePicker
+              placeholder={'Từ ngày'}
+              format={'DD/MM/YYYY'}
+              defaultPickerValue={dayjs()}
+              defaultValue={dayjs()}
+              lang={'vi'}
+              onChange={(item) => {
+                if (item) {
+                  const fromDate = dayjs(item).format('YYYY-MM-DD');
+                  const toDate = date[1];
+                  setDate([fromDate, toDate]);
+                }
+              }}
+            />
+          </div>
+          <div className={'flex-col'}>
+            <p>Tới Ngày</p>
+            <DatePicker
+              placeholder={'Tới ngày'}
+              format={'DD/MM/YYYY'}
+              defaultPickerValue={dayjs()}
+              defaultValue={dayjs()}
+              lang={'vi'}
+              onChange={(item) => {
+                if (item) {
+                  const fromDate = date[0];
+                  let toDate = dayjs(item).format('YYYY-MM-DD');
+                  if (dayjs(item).isBefore(fromDate)) {
+                    toDate = dayjs(fromDate).add(1, 'd').format('YYYY-MM-DD');
+                  }
+                  setDate([fromDate, toDate]);
+                }
+              }}
+            />
+          </div>
+        </div>
       </div>
       <div className={'relative'}>
         {loading ? (
