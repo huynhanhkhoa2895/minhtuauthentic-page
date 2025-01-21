@@ -17,7 +17,6 @@ export default function ListCart({ paymentType, setValue }: Props) {
   const order = useContext(OrderContext);
   const [couponInput, setCouponInput] = useState<string>('');
   const [coupons, setCoupons] = useState<CouponsDto[]>([]);
-  console.log('paymentType', paymentType);
   useEffect(() => {
     fetchCoupon().catch();
   }, []);

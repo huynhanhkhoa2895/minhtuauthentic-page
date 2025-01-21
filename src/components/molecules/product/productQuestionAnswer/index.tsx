@@ -25,7 +25,7 @@ export default function ProductQuestionAnswer({ questions }: Props) {
                 key={index.toString()}
                 className={'border-b border-gray-500'}
               >
-                <p>{item.answer}</p>
+                <div dangerouslySetInnerHTML={{ __html: item.answer || '' }} />
               </Collapse.Panel>
             );
           })}
