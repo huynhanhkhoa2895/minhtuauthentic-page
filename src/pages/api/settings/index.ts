@@ -40,7 +40,6 @@ export default async function handler(
           break;
       }
     });
-    console.log('commonSettings', commonSettings);
     res.status(200).json({
       menu: resMenu?.data || undefined,
       footerContent: resFooter?.data || undefined,

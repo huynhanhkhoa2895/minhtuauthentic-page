@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
 import { ProductConfigurationValuesDto } from '@/dtos/productConfigurationValues.dto';
 import { useRouter } from 'next/router';
+import orderBy from 'lodash/orderBy';
 type Props = {
   productConfigurations: ProductConfigurationsDto[];
   onChange?: (value: StateProps[]) => void;
@@ -48,7 +49,7 @@ export default function ProductConfiguration({
         values: [],
       };
     });
-    variants?.map((item) => {
+    orderBy(variants || [], 'sort')?.map((item) => {
       (item?.variant_product_configuration_values || []).map((value) => {
         if (
           value.product_configuration_value &&
