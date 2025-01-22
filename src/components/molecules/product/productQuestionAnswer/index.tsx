@@ -21,11 +21,14 @@ export default function ProductQuestionAnswer({ questions }: Props) {
           {questions.map((item, index) => {
             return (
               <Collapse.Panel
-                header={item.question}
+                header={<span className={'font-bold'}>{item.question}</span>}
                 key={index.toString()}
-                className={'border-b border-gray-500'}
+                className={' border-b border-gray-500'}
               >
-                <div dangerouslySetInnerHTML={{ __html: item.answer || '' }} />
+                <div
+                  className={'container-html'}
+                  dangerouslySetInnerHTML={{ __html: item.answer || '' }}
+                />
               </Collapse.Panel>
             );
           })}

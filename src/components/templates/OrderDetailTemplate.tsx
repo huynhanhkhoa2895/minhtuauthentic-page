@@ -130,7 +130,7 @@ export default function OrderDetailTemplate({ order }: Props) {
         case 'status':
           items.push({
             label: 'Trạng thái',
-            render: statusOrder(value),
+            render: <span className={'text-red-500'}>statusOrder(value)</span>,
           });
           break;
         case 'payment':

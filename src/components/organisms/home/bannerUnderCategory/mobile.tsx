@@ -29,7 +29,9 @@ export default function BannerUnderCategoryMobile({
                   <Link href={generateSlugToHref(content?.properties?.slug)}>
                     <Image
                       src={imageDisplay}
-                      className={'w-full h-auto object-cover'}
+                      className={
+                        'w-full !h-auto object-cover items-center m-auto'
+                      }
                       alt={item?.image?.alt || 'image'}
                       fill={true}
                       sizes="(max-width: 768px) 100vw, 33vw"

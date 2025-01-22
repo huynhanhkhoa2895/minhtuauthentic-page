@@ -23,7 +23,7 @@ const HistoryDesktopView = dynamic(
 export default function HistoryList() {
   const [orders, setOrder] = useState<OrdersDto[]>([]);
   const [date, setDate] = useState<string[]>([
-    dayjs().format('YYYY-MM-DD'),
+    dayjs().subtract(1, 'M').format('YYYY-MM-DD'),
     dayjs().add(1, 'd').format('YYYY-MM-DD'),
   ]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -94,7 +94,7 @@ export default function HistoryList() {
       search.append('from', date[0]);
       search.append('to', date[1]);
     } else {
-      search.append('from', dayjs().format('YYYY-MM-DD'));
+      search.append('from', dayjs().subtract(1, 'M').format('YYYY-MM-DD'));
       search.append('to', dayjs().format('YYYY-MM-DD'));
     }
     fetch('/api/orders/history?' + search.toString())
@@ -118,8 +118,8 @@ export default function HistoryList() {
             <DatePicker
               placeholder={'Từ ngày'}
               format={'DD/MM/YYYY'}
-              defaultPickerValue={dayjs()}
-              defaultValue={dayjs()}
+              defaultPickerValue={dayjs().subtract(1, 'M')}
+              defaultValue={dayjs().subtract(1, 'M')}
               lang={'vi'}
               onChange={(item) => {
                 if (item) {

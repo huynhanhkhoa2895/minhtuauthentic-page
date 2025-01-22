@@ -29,13 +29,13 @@ export default function HomeFlashSale({ promotion, setting }: Props) {
         >
           <div
             className={
-              'flex justify-end mb-3 items-center h-[80px] lg:h-[120px] w-full relative px-3'
+              'flex justify-end mb-3 items-center h-[36px] lg:h-[120px] w-full relative px-3'
             }
           >
             {promotion?.images?.[0]?.image?.url && (
               <Image
                 src={promotion?.images?.[0]?.image?.url || ''}
-                className={'object-cover w-full h-full'}
+                className={'object-cover w-full !h-auto'}
                 alt={'Khuyến mãi flash sale'}
                 unoptimized
                 fill
