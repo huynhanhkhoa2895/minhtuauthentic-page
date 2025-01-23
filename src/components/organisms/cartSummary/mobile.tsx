@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import OrderContext from '@/contexts/orderContext';
 import { isMobile } from 'react-device-detect';
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import { formatMoney, generateSlugToHref } from '@/utils';
 import Link from 'next/link';
 import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';

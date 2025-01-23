@@ -13,7 +13,7 @@ import { PageSetting } from '@/config/type';
 export const getServerSideProps = async (context: any) => {
   const order = context.query.id;
   const user = JSON.parse(
-    getCookie('user', context.req.headers.cookie || '', true),
+    getCookie('user', context.req.headers.cookie || '', true) || '{}',
   );
   const rsOrderItems = await fetch(
     process.env.BE_URL + '/api/pages/orders/items/' + order,

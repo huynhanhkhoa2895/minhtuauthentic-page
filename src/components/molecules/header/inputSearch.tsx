@@ -4,7 +4,7 @@ import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
 import { Button, Input, List, Skeleton } from 'antd/es';
 import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import { twMerge } from 'tailwind-merge';
 import CloseCircle from '@/components/icons/closeCircle';
 import SearchOutlined from '@ant-design/icons/SearchOutlined';

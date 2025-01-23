@@ -5,6 +5,14 @@ import { ResponseNewsPageDto } from '@/dtos/ResponseNewsPage.dto';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import Layout from '@/components/templates/Layout';
 import { PageSetting } from '@/config/type';
+import dynamic from 'next/dynamic';
+
+const NewsCategoryMobile = dynamic(
+  () => import('@/components/organisms/news/categoryMobile'),
+  {
+    ssr: false,
+  },
+);
 
 export const getServerSideProps = async (context: any) => {
   const page = context.query.page;
@@ -33,6 +41,7 @@ export default function News({
     <>
       <Header settings={settings} menu={menu} />
       <Layout settings={settings} menu={menu}>
+        <NewsCategoryMobile categoryNews={news?.otherCategoryNews || []} />
         <BreadcrumbComponent label={'Tin tức'} link={'/tin-tuc'} />
         <NewsTemplate
           news={news?.news || []}

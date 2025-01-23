@@ -1,5 +1,5 @@
 import { twMerge } from 'tailwind-merge';
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import { ImageDto } from '@/dtos/Image.dto';
 import { useEffect, useMemo, useState } from 'react';
 type Props = {

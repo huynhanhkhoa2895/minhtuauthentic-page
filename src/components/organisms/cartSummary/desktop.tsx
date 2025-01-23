@@ -1,4 +1,4 @@
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import Link from 'next/link';
 import { formatMoney, generateSlugToHref } from '@/utils';
 import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';

@@ -1,5 +1,5 @@
 import { Collapse } from 'antd';
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import { useEffect, useState } from 'react';
 import { OptionProps } from '@/config/type';
 import { Radio } from 'antd/es';

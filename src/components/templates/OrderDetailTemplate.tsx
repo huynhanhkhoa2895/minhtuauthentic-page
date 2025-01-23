@@ -10,7 +10,7 @@ import {
   promotionName,
   statusOrder,
 } from '@/utils';
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import Link from 'next/link';
 import { DataType } from 'csstype';
 
@@ -41,18 +41,20 @@ export default function OrderDetailTemplate({ order }: Props) {
       dataIndex: 'name',
       key: 'name',
       width: 500,
-      render: (_: unknown, item: OrderItemsDto) => (
-        <Link
-          href={generateSlugToHref(item?.variant?.product?.slugs?.slug)}
-          className={'flex gap-3'}
-        >
-          <ImageWithFallback
-            image={item?.variant?.images?.[0]?.image}
-            className={'w-[50px] h-[50px] object-contain'}
-          />
-          <span>{item.variant_name}</span>
-        </Link>
-      ),
+      render: (_: unknown, item: OrderItemsDto) => {
+        return (
+          <Link
+            href={generateSlugToHref(item?.variant?.product?.slugs?.slug)}
+            className={'flex gap-3'}
+          >
+            <ImageWithFallback
+              image={item?.variant?.images?.[0]?.image}
+              className={'w-[50px] h-[50px] object-contain'}
+            />
+            <span>{item.variant_name}</span>
+          </Link>
+        );
+      },
     },
     {
       title: 'Đơn giá',
@@ -130,7 +132,9 @@ export default function OrderDetailTemplate({ order }: Props) {
         case 'status':
           items.push({
             label: 'Trạng thái',
-            render: <span className={'text-red-500'}>statusOrder(value)</span>,
+            render: (
+              <span className={'text-red-500'}>{statusOrder(value)}</span>
+            ),
           });
           break;
         case 'payment':

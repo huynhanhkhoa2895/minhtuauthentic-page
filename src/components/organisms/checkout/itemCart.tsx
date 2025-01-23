@@ -1,4 +1,4 @@
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import { Button, Input, InputNumber, Space } from 'antd/es';
 import PriceOnCart from '@/components/atoms/priceOnCart';
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';

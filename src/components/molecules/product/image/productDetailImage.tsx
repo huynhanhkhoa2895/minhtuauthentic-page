@@ -1,11 +1,11 @@
 import { ProductDto } from '@/dtos/Product.dto';
 import { ImageDto } from '@/dtos/Image.dto';
 import { VariantDto } from '@/dtos/Variant.dto';
-import ImageMagnifier from '@/components/atoms/imageMaginifier';
+import ImageMagnifier from '@/components/atoms/images/imageMaginifier';
 import SectionSwiper from '@/components/organisms/sectionSwiper';
 import { twMerge } from 'tailwind-merge';
 import { useProductImageDetail } from '@/hooks/useProductImageDetail';
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import { useMemo } from 'react';
 import { isMobile } from 'react-device-detect';
 type Props = {

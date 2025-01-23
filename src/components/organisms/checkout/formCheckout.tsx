@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import Link from 'next/link';
 import ArrowLeftOutlined from '@ant-design/icons/lib/icons/ArrowLeftOutlined';
 
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 
 const fetcher = () =>
   fetch(`/api/orders/province`, {

@@ -2,7 +2,7 @@ import { ProductDto } from '@/dtos/Product.dto';
 import { twMerge } from 'tailwind-merge';
 import { ImageDto } from '@/dtos/Image.dto';
 import Link from 'next/link';
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import { isMobile } from 'react-device-detect';
 import { VariantDto } from '@/dtos/Variant.dto';
 const ProductCardImage = ({
