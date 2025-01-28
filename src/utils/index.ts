@@ -310,7 +310,7 @@ export function getFilterFromQuery(queryString: string) {
     const [key, value] = pair.split('=');
 
     // Kiểm tra nếu key có dạng mảng (filter[categories][])
-    const matchArray = key.match(/^filter\[([^\]]+)\]\[\]$/);
+    const matchArray = key.match(/^filter\[([^\]]+)\]\[(\d+)\]$/);
     if (matchArray) {
       const arrayKey = matchArray[1];
       if (!result[arrayKey]) result[arrayKey] = [];

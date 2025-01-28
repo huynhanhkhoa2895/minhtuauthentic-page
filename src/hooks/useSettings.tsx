@@ -18,7 +18,6 @@ export default function useSettings(): PageSetting {
   });
   useEffect(() => {
     if (data) {
-      console.log('data', data);
       setData(data);
     }
   }, [data]);

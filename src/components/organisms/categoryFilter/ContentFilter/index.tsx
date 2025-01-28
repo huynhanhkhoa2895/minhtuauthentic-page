@@ -215,9 +215,9 @@ export default function ContentFilter({
               current={ctx?.page || 1}
               pageSize={ctx?.limit || 12}
               onChange={(page: number) => {
-                window.scroll({ top: 0, left: 0, behavior: 'smooth' });
-                ctx?.updateRouter &&
-                  ctx.updateRouter('page', page.toString() as string);
+                const params = new URLSearchParams(window.location.search);
+                params.set('page', page.toString());
+                window.location.href = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
               }}
             />
           )}
