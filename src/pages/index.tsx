@@ -54,6 +54,11 @@ export default function Home({
   return (
     <>
       <Header settings={settings} menu={menu} />
+      <HomeBanner
+        settings={settings}
+        banners={homePage?.banners || []}
+        menu={menu}
+      />
       <Layout
         seo={homePage?.seo}
         settings={settings}
@@ -61,23 +66,7 @@ export default function Home({
         className={'overflow-hidden'}
       >
         <h1 className={'hidden'}>{homePage?.seo?.title}</h1>
-        <div
-          id={'main-home-page'}
-          className={'lg:mt-[10px] lg:flex w-full gap-2 relative'}
-        >
-          {menu && (
-            <MenuWrapper menu={menu} className={'w-[220px] h-[380px]'} />
-          )}
-          <div
-            className={
-              'min-h-[140px] lg:h-[380px] w-full basis-[calc(100%-230px)] lg:w-[calc(100%-230px)] max-w-full'
-            }
-          >
-            <HomeBanner banners={homePage?.banners || []} />
-          </div>
-        </div>
         <BlockUnderSlide contents={homePage?.homeBlockUnderSlide || []} />
-
         {homePage?.homeFlashSale &&
           ((
             <HomeFlashSale

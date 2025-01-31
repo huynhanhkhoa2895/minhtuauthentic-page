@@ -302,7 +302,6 @@ export function getFilterFromQuery(queryString: string) {
   queryString = queryString.replaceAll('%5B', '[').replaceAll('%5D', ']');
   const result: Record<string, any[]> = {};
 
-  // Tách từng cặp key=value
   const pairs = queryString.match(/([^&]+)=([^&]*)/g);
   if (!pairs) return result;
 

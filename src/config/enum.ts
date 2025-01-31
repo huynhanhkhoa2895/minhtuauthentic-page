@@ -103,6 +103,10 @@ export const SETTING_KEY = {
       LABEL: 'Logo',
     },
   },
+  BANNER_SECTION: {
+    KEY: 'banner_section',
+    LABEL: 'Vùng banner',
+  },
   BRAND_SECTION: {
     KEY: 'brand_section',
     LABEL: 'Vùng thương hiệu nổi bật',

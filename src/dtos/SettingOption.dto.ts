@@ -18,4 +18,5 @@ export class SettingOptionDto {
     image: ImageDto;
     sort: number;
   }[];
+  isBannerFull?: boolean;
 }

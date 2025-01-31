@@ -39,6 +39,7 @@ export const Banners = ({
     >
       {banners.map((banner, index) => {
         const imageDetail = banner?.images?.[0];
+        console.log('imageDetail', imageDetail);
         if (!imageDetail) {
           return null;
         }
