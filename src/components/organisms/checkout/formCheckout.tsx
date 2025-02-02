@@ -14,11 +14,6 @@ import ArrowLeftOutlined from '@ant-design/icons/lib/icons/ArrowLeftOutlined';
 
 import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 
-const fetcher = () =>
-  fetch(`/api/orders/province`, {
-    method: 'GET',
-  }).then((res) => res.json());
-
 export default function FormCheckout({
   payments,
   watch,
@@ -37,10 +32,7 @@ export default function FormCheckout({
   errors: any;
   setFullAddress: any;
 }) {
-  const { data: provinceData, error } = useSWR('/api/orders/province', fetcher);
   const orderCtx = useContext(OrderContext);
-  const [districts, setDistricts] = useState<ProvinceDto[]>([]);
-  const [wards, setWards] = useState<ProvinceDto[]>([]);
 
   useEffect(() => {
     if (!orderCtx?.cart) {
@@ -48,68 +40,6 @@ export default function FormCheckout({
       window.location.href = '/';
     }
   }, []);
-
-  useEffect(() => {
-    if (watch('shipping_city')) {
-      fetchDataProvince(PROVINCE.DISTRICT, watch('shipping_city')).then(
-        (rs) => {
-          setDistricts(rs?.data || []);
-          setWards([]);
-          setValue('shipping_ward', '');
-          setValue('shipping_district', '');
-        },
-      );
-    }
-  }, [watch('shipping_city')]);
-  useEffect(() => {
-    if (watch('shipping_district')) {
-      fetchDataProvince(PROVINCE.WARD, watch('shipping_district')).then(
-        (rs) => {
-          setWards(rs?.data || []);
-          setValue('shipping_ward', '');
-        },
-      );
-    }
-  }, [watch('shipping_district')]);
-
-  useEffect(() => {
-    if (
-      watch('shipping_city') &&
-      watch('shipping_district') &&
-      watch('shipping_ward')
-    ) {
-      const city = (provinceData?.data || []).find(
-        (item: ProvinceDto) => item.code === watch('shipping_city'),
-      );
-      const district = districts.find(
-        (item: ProvinceDto) => item.code === watch('shipping_district'),
-      );
-      const ward = wards.find(
-        (item: ProvinceDto) => item.code === watch('shipping_ward'),
-      );
-      const fullAddress = ` ${ward?.full_name}, ${district?.full_name}, ${city?.full_name}`;
-      setFullAddress({
-        city: city?.full_name || '',
-        district: district?.full_name || '',
-        ward: ward?.full_name || '',
-        fullAddress,
-      });
-    }
-  }, [
-    watch('shipping_city'),
-    watch('shipping_district'),
-    watch('shipping_ward'),
-  ]);
-
-  const fetchDataProvince = async (parent_key: string, parent_id: string) => {
-    const query = new URLSearchParams();
-    query.append('parent_key', parent_key);
-    query.append('parent_id', parent_id);
-    const rs = await fetch('/api/orders/province?' + query.toString(), {
-      method: 'GET',
-    }).then((rs) => rs.json());
-    return rs;
-  };
 
   return (
     <div className={'flex-1'}>
@@ -138,57 +68,6 @@ export default function FormCheckout({
           name={'phone'}
           type={'text'}
           placeholder={'Số điện thoại'}
-        />
-        <FormControl
-          control={control}
-          errors={errors}
-          className={'col-span-2'}
-          selectOptions={((provinceData as any)?.data || []).map(
-            (item: ProvinceDto) => {
-              return {
-                label: item?.full_name,
-                value: item?.code,
-                code_name: item?.code_name,
-              };
-            },
-          )}
-          name={'shipping_city'}
-          type={'select'}
-          placeholder={'Tỉnh/ Thành phố'}
-        />
-        <FormControl
-          control={control}
-          errors={errors}
-          selectOptions={(districts || []).map((item: any) => {
-            return {
-              label: item?.full_name,
-              value: item?.code,
-            };
-          })}
-          name={'shipping_district'}
-          type={'select'}
-          placeholder={'Quận/ Huyện'}
-        />
-        <FormControl
-          control={control}
-          errors={errors}
-          selectOptions={(wards || []).map((item: any) => {
-            return {
-              label: item?.full_name,
-              value: item?.code,
-            };
-          })}
-          name={'shipping_ward'}
-          type={'select'}
-          placeholder={'Phường/ Xã'}
-        />
-        <FormControl
-          control={control}
-          errors={errors}
-          name={'address'}
-          type={'text'}
-          placeholder={'Địa chỉ'}
-          className={'col-span-2'}
         />
       </div>
       <h3 className={'text-3xl font-[700] lg:font-bold my-6'}>

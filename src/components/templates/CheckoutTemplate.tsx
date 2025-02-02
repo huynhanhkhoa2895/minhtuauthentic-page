@@ -18,7 +18,6 @@ import ResponseSendTransactionDto from '@/dtos/Fudiin/responseSendTransaction.dt
 import { useContext, useEffect, useState } from 'react';
 import OrderContext from '@/contexts/orderContext';
 import { useRouter } from 'next/router';
-import SendTransactionExtensionItemDto from '@/dtos/sendTransactionExtensionItem.dto';
 import SendTransactionFudiinDto from '@/dtos/Fudiin/sendTransaction.dto';
 import ItemFudiinDto from '@/dtos/Fudiin/item.dto';
 import CustomerFudiinDto from '@/dtos/Fudiin/customer.dto';
@@ -35,10 +34,6 @@ const schema = yup
           return arr.length >= 2;
         },
       } as any),
-    shipping_city: yup.string().required('Vui lòng chọn tỉnh/thành phố'),
-    shipping_district: yup.string().required('Vui lòng chọn quận/huyện'),
-    shipping_ward: yup.string().required('Vui lòng chọn phường/xã'),
-    address: yup.string().required('Vui lòng nhập địa chỉ'),
     note: yup.string(),
     payment_id: yup.number().required('Vui lòng chọn phương thức thanh toán'),
     email: yup
@@ -52,10 +47,6 @@ export type FormData = {
   name: string;
   email: string;
   phone: string;
-  shipping_city: string;
-  shipping_district: string;
-  shipping_ward: string;
-  address: string;
   payment_id: number;
   note?: string;
   status?: string;
@@ -93,10 +84,6 @@ export default function CheckoutTemplate({
     defaultValues: {
       name: user?.name || '',
       email: user?.email || '',
-      shipping_district: '',
-      shipping_city: '',
-      shipping_ward: '',
-      address: '',
       payment_id: payments[0]?.id || 0,
       note: '',
       phone: user?.phone || '',
@@ -119,8 +106,6 @@ export default function CheckoutTemplate({
     if (!orderCtx?.cart) {
       return;
     }
-
-    const paymentTypeId = data?.payment_type_id;
 
     const order: FormData & {
       user_id: number;
@@ -191,7 +176,7 @@ export default function CheckoutTemplate({
                     city: fullAddress?.city || '',
                     district: fullAddress?.district || '',
                     ward: fullAddress?.ward || '',
-                    street: data?.address,
+                    // street: data?.address,
                     houseNumber: data?.phone,
                     country: 'VN',
                   }),

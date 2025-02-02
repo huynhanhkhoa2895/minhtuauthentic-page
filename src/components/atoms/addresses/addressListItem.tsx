@@ -1,0 +1,46 @@
+import { Card } from 'antd';
+import { AddressesDto } from '@/dtos/Addresses.dto';
+import Button from 'antd/es/button/button';
+import CloseCircleOutlined from '@ant-design/icons/CloseCircleOutlined';
+import BookOutlined from '@ant-design/icons/BookOutlined';
+import PhoneFilled from '@ant-design/icons/PhoneFilled';
+import { toast } from 'react-toastify';
+type Props = {
+  address: AddressesDto;
+  refresh?: () => void;
+};
+export default function AddressListItem({ address, refresh }: Props) {
+  const handleDelete = () => {
+    const rs = fetch(`/api/orders/addresses?id=${address?.id}`, {
+      method: 'DELETE',
+    }).then((res) => res.json());
+    toast.success('Đã xóa địa chỉ');
+    refresh && refresh();
+  };
+
+  return (
+    <Card
+      title={address.title}
+      extra={
+        <Button
+          icon={<CloseCircleOutlined />}
+          type={'link'}
+          danger
+          onClick={handleDelete}
+        />
+      }
+    >
+      <p className={'flex gap-3'}>
+        <BookOutlined />
+        <span>
+          {address.shipping_address}, {address.ward?.full_name},{' '}
+          {address.district?.full_name}, {address.city?.full_name},
+        </span>
+      </p>
+      <p className={'flex gap-3'}>
+        <PhoneFilled />
+        <span>{address.phone}</span>
+      </p>
+    </Card>
+  );
+}

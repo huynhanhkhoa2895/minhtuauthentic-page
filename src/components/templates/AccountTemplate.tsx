@@ -44,6 +44,17 @@ export default function AccountTemplate({ children }: { children: ReactNode }) {
             }
           >
             <div className={'p-3'}>
+              <Link className={'text-lg'} href={'/tai-khoan/dia-chi'}>
+                Địa chỉ
+              </Link>
+            </div>
+          </li>
+          <li
+            className={
+              'transition-colors duration-500 font-semibold hover:bg-primary hover:text-white border-b border-gray-200'
+            }
+          >
+            <div className={'p-3'}>
               <button
                 type={'button'}
                 onClick={() => {

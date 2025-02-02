@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useTransition,
+} from 'react';
 import { ProductDto } from '@/dtos/Product.dto';
 import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
 import { Button, Input, List, Skeleton } from 'antd/es';
@@ -14,7 +21,6 @@ type Props = {
   isMobile?: boolean;
 };
 export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
-  const [loading, setLoading] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
   const [debouceValue, setDebouceValue] = useState<string>('');
   const [isOpened, setIsOpened] = useState<boolean>(false);
@@ -22,6 +28,7 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [ready, setReady] = useState<boolean>(false);
   const [urlSearch, setUrlSearch] = useState<string>('');
+  const [loading, startTransition] = useTransition();
   useEffect(() => {
     setReady(true);
   }, []);
@@ -75,15 +82,15 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
 
   const searchProduct = useCallback(() => {
     if (debouceValue.length < 1) return;
-    setLoading(true);
-    fetch(`/api/search/product?search=${debouceValue}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data?.data || []);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    startTransition(async () => {
+      console.log('startTransition');
+      fetch(`/api/search/product?search=${debouceValue}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setData(data?.data || []);
+        })
+        .finally(() => {});
+    });
   }, [debouceValue]);
 
   const renderItemList = useMemo(() => {
