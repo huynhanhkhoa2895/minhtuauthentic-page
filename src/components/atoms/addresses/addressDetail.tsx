@@ -8,7 +8,7 @@ export default function AddressDetail({ address }: Props) {
     <div className={'w-full p-3 border-dashed'}>
       <p className={'text-md font-bold'}>{address.title}</p>
       <p>
-        {address.shipping_address}, {address.ward}
+        {address.shipping_address}, {address.ward?.full_name}
       </p>
     </div>
   );

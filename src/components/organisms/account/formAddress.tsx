@@ -9,6 +9,7 @@ import useUser from '@/hooks/useUser';
 import FormControl from '@/components/molecules/form/FormControl';
 import Button from 'antd/es/button/button';
 import { toast } from 'react-toastify';
+import { AddressesDto } from '@/dtos/Addresses.dto';
 
 const fetcher = () =>
   fetch(`/api/orders/province`, {
@@ -111,7 +112,7 @@ export default function FormAddress({ onDone }: Props) {
       },
       body: JSON.stringify(data),
     })
-      .then((rs) => {
+      .then((rs: any) => {
         if (rs?.data) {
           toast.success('Đã thêm địa chỉ');
         }
