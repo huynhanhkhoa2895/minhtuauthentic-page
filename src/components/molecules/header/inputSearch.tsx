@@ -83,7 +83,6 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
   const searchProduct = useCallback(() => {
     if (debouceValue.length < 1) return;
     startTransition(async () => {
-      console.log('startTransition');
       fetch(`/api/search/product?search=${debouceValue}`)
         .then((res) => res.json())
         .then((data) => {

@@ -8,7 +8,6 @@ export default async function handler(
 ) {
   const url = `${process.env.BE_URL}/api/pages/customers/reset-password`;
   if (req.method === 'POST') {
-    console.log('req.body', req.body);
     fetch(url, {
       method: 'POST',
       body: req.body,

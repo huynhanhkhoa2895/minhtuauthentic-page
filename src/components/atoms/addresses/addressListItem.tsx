@@ -5,6 +5,8 @@ import CloseCircleOutlined from '@ant-design/icons/CloseCircleOutlined';
 import BookOutlined from '@ant-design/icons/BookOutlined';
 import PhoneFilled from '@ant-design/icons/PhoneFilled';
 import { toast } from 'react-toastify';
+import UserOutlined from '@ant-design/icons/UserOutlined';
+import { MailOutlined } from '@ant-design/icons';
 type Props = {
   address: AddressesDto;
   refresh?: () => void;
@@ -38,8 +40,16 @@ export default function AddressListItem({ address, refresh }: Props) {
         </span>
       </p>
       <p className={'flex gap-3'}>
+        <UserOutlined />
+        <span>{address.name}</span>
+      </p>
+      <p className={'flex gap-3'}>
         <PhoneFilled />
         <span>{address.phone}</span>
+      </p>
+      <p className={'flex gap-3'}>
+        <MailOutlined />
+        <span>{address.email}</span>
       </p>
     </Card>
   );

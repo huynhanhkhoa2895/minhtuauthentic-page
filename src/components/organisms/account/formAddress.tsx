@@ -18,6 +18,7 @@ const fetcher = () =>
 export type FormData = {
   title: string;
   email: string;
+  name: string;
   phone: string;
   shipping_city: string;
   shipping_district: string;
@@ -28,6 +29,16 @@ export type FormData = {
 const schema = yup
   .object({
     title: yup.string().required('Vui lòng nhập tiêu đề'),
+    name: yup
+      .string()
+      .required('Vui lòng nhập tên người nhận')
+      .test({
+        message: () => 'Tên phải ít nhất 2 chữ',
+        test: async (values: string) => {
+          const arr = values.split(' ');
+          return arr.length >= 2;
+        },
+      } as any),
     phone: yup.string().required('Vui lòng nhập số điện thoại'),
     email: yup
       .string()
@@ -104,7 +115,6 @@ export default function FormAddress({ onDone }: Props) {
     [],
   );
   const onSubmit = async (data: FormData) => {
-    console.log('data onSubmit', data);
     fetch('/api/orders/addresses', {
       method: 'POST',
       headers: {
@@ -133,6 +143,14 @@ export default function FormAddress({ onDone }: Props) {
         name={'title'}
         type={'text'}
         placeholder={'Tiêu đề'}
+        className={'col-span-2'}
+      />
+      <FormControl
+        control={control}
+        errors={errors}
+        name={'name'}
+        type={'text'}
+        placeholder={'Tên người nhận'}
         className={'col-span-2'}
       />
       <FormControl

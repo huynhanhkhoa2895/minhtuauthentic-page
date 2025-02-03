@@ -4,7 +4,7 @@ import { Control } from 'react-hook-form';
 import FormControl from '@/components/molecules/form/FormControl';
 import { ProvinceDto } from '@/dtos/Province.dto';
 import { PROVINCE } from '@/config/enum';
-import { Radio } from 'antd/es';
+import { Button, Radio } from 'antd/es';
 import { UserDto } from '@/dtos/User.dto';
 import { PaymentsDto } from '@/dtos/Payments.dto';
 import OrderContext from '@/contexts/orderContext';
@@ -13,6 +13,9 @@ import Link from 'next/link';
 import ArrowLeftOutlined from '@ant-design/icons/lib/icons/ArrowLeftOutlined';
 
 import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
+import PlusOutlined from '@ant-design/icons/PlusOutlined';
+import { AddressesDto } from '@/dtos/Addresses.dto';
+import CheckoutAddress from '@/components/organisms/checkout/address';
 
 export default function FormCheckout({
   payments,
@@ -43,33 +46,7 @@ export default function FormCheckout({
 
   return (
     <div className={'flex-1'}>
-      <h3 className={'text-3xl font-[700] lg:font-bold mb-6'}>
-        Thông tin vận chuyển
-      </h3>
-      <div className={'grid grid-cols-2 gap-3'}>
-        <FormControl
-          control={control}
-          errors={errors}
-          name={'name'}
-          type={'text'}
-          placeholder={'Ho và tên'}
-          className={'col-span-2'}
-        />
-        <FormControl
-          control={control}
-          errors={errors}
-          name={'email'}
-          type={'text'}
-          placeholder={'Email'}
-        />
-        <FormControl
-          control={control}
-          errors={errors}
-          name={'phone'}
-          type={'text'}
-          placeholder={'Số điện thoại'}
-        />
-      </div>
+      <CheckoutAddress setValue={setValue} setFullAddress={setFullAddress} />
       <h3 className={'text-3xl font-[700] lg:font-bold my-6'}>
         Phương thức vận chuyển
       </h3>

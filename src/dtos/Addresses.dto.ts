@@ -7,6 +7,7 @@ import { CouponDetailDto } from '@/dtos/CouponDetail.dto';
 
 export class AddressesDto extends BaseDto {
   title?: string;
+  name?: string;
   user_id?: number;
   shipping_address?: string;
   city?: {

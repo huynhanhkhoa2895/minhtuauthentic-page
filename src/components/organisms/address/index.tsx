@@ -1,12 +1,10 @@
-import Modal from 'antd/es/modal/Modal';
 import Button from 'antd/es/button/button';
 import PlusOutlined from '@ant-design/icons/PlusOutlined';
 import { useEffect, useState } from 'react';
-import FormAddress from '@/components/organisms/account/formAddress';
-import { PROMOTION_TYPE } from '@/config/enum';
 import useSWR from 'swr';
 import { AddressesDto } from '@/dtos/Addresses.dto';
 import AddressListItem from '@/components/atoms/addresses/addressListItem';
+import AddressPopup from '@/components/molecules/addresses/popup';
 const fetcher = () =>
   fetch('/api/orders/addresses', {
     method: 'GET',
@@ -14,8 +12,7 @@ const fetcher = () =>
 export default function Addresses() {
   const { data, error, mutate } = useSWR('list-adddress', fetcher);
   const [addresses, setAddresses] = useState<AddressesDto[]>([]);
-  const [open, setOpen] = useState(false);
-
+  const [open, setOpen] = useState<boolean>(false);
   useEffect(() => {
     if (data) {
       setAddresses(data?.data || []);
@@ -46,22 +43,12 @@ export default function Addresses() {
           })}
         </div>
       </div>
-      <Modal
-        destroyOnClose={true}
-        title="Thêm địa chỉ"
+      <AddressPopup
         open={open}
-        footer={null}
-        onCancel={() => {
-          setOpen(false);
+        refresh={() => {
+          mutate().catch();
         }}
-      >
-        <FormAddress
-          onDone={() => {
-            setOpen(false);
-            mutate().catch();
-          }}
-        />
-      </Modal>
+      />
     </>
   );
 }
