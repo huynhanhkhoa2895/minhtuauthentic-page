@@ -10,12 +10,18 @@ import useSWR from 'swr';
 import { StaticContentsDto } from '@/dtos/StaticContents.dto';
 import { BrandDto } from '@/dtos/Brand.dto';
 import Loading from '@/components/atoms/loading';
+import { SEARCH_KEYWORD } from '@/config/enum';
+import Tag from 'antd/es/tag';
+import { NewsDto } from '@/dtos/News.dto';
+import { createPortal } from 'react-dom';
+
 type Props = {
   isMobile?: boolean;
   classNameInput?: string;
   data: ProductDto[];
   loading: boolean;
   urlSearch?: string;
+  setIsOpened: (value: boolean) => void;
 };
 
 export default function SearchContainer({
@@ -24,6 +30,7 @@ export default function SearchContainer({
   data,
   loading,
   urlSearch,
+  setIsOpened,
 }: Props) {
   const fetcherBrand = () =>
     fetch(`/api/pages/feature-brand`, {
@@ -31,6 +38,10 @@ export default function SearchContainer({
     }).then((res) => res.json());
   const fetcherFeatureCategory = () =>
     fetch(`/api/pages/feature-category`, {
+      method: 'GET',
+    }).then((res) => res.json());
+  const fetcherNews = () =>
+    fetch(`/api/news/`, {
       method: 'GET',
     }).then((res) => res.json());
   const { data: dataFeatureCategory, isLoading: isLoadingFeatureCategory } =
@@ -42,68 +53,121 @@ export default function SearchContainer({
     data: { brands: BrandDto[] };
   }>(`brandSearch`, fetcherBrand);
 
-  console.log(
-    'dataFeatureCategory',
-    dataFeatureCategory?.data?.homeBlockFeaturedCategory,
-    dataFeatureBrand?.data?.brands,
-  );
+  const { data: dataNews, isLoading: isLoadingnews } = useSWR<{
+    data: { news: NewsDto[] };
+  }>(`newsSearch`, fetcherNews);
+
+  const handleClick = () => {
+    setIsOpened(false);
+  };
 
   const renderItemList = useMemo(() => {
     return (
-      <>
+      <div className={'flex flex-col lg:col-span-2 gap-2'}>
         {data.length || loading ? (
-          <List
-            loading={loading}
-            itemLayout="horizontal"
-            key={Math.random()}
-            dataSource={data}
-            renderItem={(item: ProductDto) => {
-              const variant = (item?.variants || [])?.find(
-                (variant) => variant.is_default,
-              );
+          <ul className={'grid grid-cols-3 lg:grid-cols-6'}>
+            {data.map((item, index) => {
+              const variant = item?.variants?.[0];
               return (
-                <List.Item>
-                  <Skeleton avatar title={false} loading={loading} active>
-                    <List.Item.Meta
-                      avatar={
-                        <ImageWithFallback
-                          image={item?.feature_image_detail?.image}
-                          className={'w-[50px] h-[50px]'}
-                          unoptimized={true}
-                        />
-                      }
-                      title={
-                        <Link href={generateSlugToHref(item?.slugs?.slug)}>
-                          {item.title || item.name}
-                        </Link>
-                      }
-                      description={
-                        !variant ? (
-                          'Không có sản phẩm'
-                        ) : (
-                          <PriceWithLineThrough
-                            regularPrice={variant.regular_price}
-                            price={variant.price}
-                          />
-                        )
-                      }
+                <li
+                  key={index}
+                  className={'shadow-[-1px_1px_#e1e1e1] p-[10px]'}
+                >
+                  <Link
+                    onClick={handleClick}
+                    className={'flex flex-col gap-3'}
+                    href={generateSlugToHref(item?.slugs?.slug)}
+                  >
+                    <ImageWithFallback
+                      image={item?.feature_image_detail?.image}
+                      className={'object-contain h-[100px]'}
+                      unoptimized={true}
                     />
-                  </Skeleton>
-                </List.Item>
+                    <div className={'flex flex-col'}>
+                      <p className={'h-[65px] overflow-hidden'}>{item?.name}</p>
+                      <PriceWithLineThrough
+                        price={variant?.price}
+                        regularPrice={variant?.regular_price}
+                        classNameRegularPrice={'text-[12px] lg:text-[15px]'}
+                      />
+                    </div>
+                  </Link>
+                </li>
               );
-            }}
-          />
+            })}
+          </ul>
         ) : (
           <p>Không tìm thấy sản phẩm</p>
         )}
-      </>
+        <Link
+          onClick={handleClick}
+          className={'w-full text-center text-primary font-bold p-1'}
+          href={generateSlugToHref(urlSearch)}
+        >
+          Xem toàn bộ sản phẩm
+        </Link>
+      </div>
     );
   }, [data, loading]);
 
+  const renderNews = useMemo(() => {
+    return (
+      <div className={'flex flex-col'}>
+        <p className={'font-bold text-xl border-b mb-3'}>Tin tức</p>
+        {isLoadingnews ? (
+          <Loading center />
+        ) : (
+          <div className={'flex flex-col gap-3'}>
+            {dataNews?.data?.news.map((item, index) => {
+              return (
+                <Link
+                  onClick={handleClick}
+                  href={generateSlugToHref(item?.slugs?.slug)}
+                  key={index}
+                >
+                  <p>{item?.name}</p>
+                </Link>
+              );
+            })}
+          </div>
+        )}
+        <Link
+          onClick={handleClick}
+          className={'w-full text-center text-primary font-bold p-1'}
+          href={generateSlugToHref('/tin-tuc')}
+        >
+          Xem toàn bộ tin tức
+        </Link>
+      </div>
+    );
+  }, [dataNews, isLoadingnews]);
+
   const renderOldKeyword = () => {
+    const keyword: string | null = localStorage.getItem(SEARCH_KEYWORD);
+    const keywordList: string[] = keyword ? keyword.toString().split(',') : [];
     return (
       <>
-        <p className={'font-bold text-md'}>Bạn đã tìm kiếm</p>
+        {keywordList.length > 0 && (
+          <>
+            <p className={'font-bold text-md'}>Bạn đã tìm kiếm</p>
+            {
+              <div className={'flex flex-wrap gap-2'}>
+                {keywordList.map((item, index) => {
+                  return (
+                    <Tag key={index}>
+                      <Link
+                        onClick={handleClick}
+                        href={'/san-pham?search=' + item}
+                      >
+                        {item}
+                      </Link>
+                    </Tag>
+                  );
+                })}
+              </div>
+            }
+          </>
+        )}
       </>
     );
   };
@@ -112,13 +176,14 @@ export default function SearchContainer({
     return (
       <>
         <p className={'font-bold text-md'}>Thương hiệu nổi bật</p>
-        {isLoadingFeatureCategory ? (
+        {isLoadingBrand ? (
           <Loading center />
         ) : (
           <div className={'grid grid-cols-6'}>
             {dataFeatureBrand?.data?.brands.map((item, index) => {
               return (
                 <Link
+                  onClick={handleClick}
                   href={generateSlugToHref(item?.slugs?.slug)}
                   key={index}
                   className={'flex items-center justofy-center'}
@@ -144,21 +209,24 @@ export default function SearchContainer({
         {isLoadingFeatureCategory ? (
           <Loading center />
         ) : (
-          <div className={'grid grid-cols-6 gap-3'}>
+          <div className={'grid grid-cols-3 lg:grid-cols-6 gap-3'}>
             {dataFeatureCategory?.data?.homeBlockFeaturedCategory.map(
               (item, index) => {
                 return (
                   <Link
+                    onClick={handleClick}
                     href={generateSlugToHref(item?.properties?.slug)}
                     key={index}
-                    className={'flex items-center bg-[#f1f1f1]'}
+                    className={
+                      'flex flex-col lg:flex-row items-center bg-[#f1f1f1]'
+                    }
                   >
                     <ImageWithFallback
                       image={item?.images?.[0].image}
-                      className={'w-[50px] h-[50px]'}
+                      className={'w-[70px] h-[70px]'}
                       unoptimized={true}
                     />
-                    <p>{item?.title}</p>
+                    <p className={'text-center'}>{item?.title}</p>
                   </Link>
                 );
               },
@@ -179,31 +247,50 @@ export default function SearchContainer({
     );
   };
 
-  return (
-    <div
-      className={twMerge(
-        'absolute text-black top-[50px] bg-white w-screen max-w-[1140px] rounded-[10px] shadow-custom left-0 shadow-custom2',
-        isMobile && 'fixed w-[95vw] left-3 top-[60px]',
-        classNameInput,
-      )}
-    >
-      <div className={'flex flex-col gap-3 p-6'}>
+  const renderContent = () => {
+    return (
+      <div
+        className={
+          'flex flex-col gap-3 p-[140px_1rem_1.5rem_1rem] lg:p-6 max-lg:h-[calc(100%-67px)] overflow-auto'
+        }
+      >
         {urlSearch ? (
           <>
-            <div className={'max-h-[50vh] overflow-y-auto'}>
-              {renderItemList}
-            </div>
-            <a
-              className={'w-full text-center text-primary font-semibold p-1'}
-              href={urlSearch}
+            <div
+              className={'max-h-[550px] overflow-y-auto lg:grid lg:grid-cols-3'}
             >
-              Xem tất cả
-            </a>
+              {renderItemList}
+              {renderNews}
+            </div>
           </>
         ) : (
           renderPreSearch()
         )}
       </div>
-    </div>
+    );
+  };
+
+  return (
+    <>
+      {isMobile ? (
+        <>
+          {createPortal(
+            <div className={'fixed bg-white inset-0 w-screen h-screen '}>
+              {renderContent()}
+            </div>,
+            document.body,
+          )}
+        </>
+      ) : (
+        <div
+          className={twMerge(
+            'absolute text-black top-[50px] bg-white w-[65vw] max-w-[1140px] rounded-[10px] left-0 shadow-custom2',
+            classNameInput,
+          )}
+        >
+          {renderContent()}
+        </div>
+      )}
+    </>
   );
 }

@@ -195,3 +195,5 @@ export enum OrderStatus {
   NEW = 'new',
   CLOSE = 'close',
 }
+
+export const SEARCH_KEYWORD = 'search-keyword';

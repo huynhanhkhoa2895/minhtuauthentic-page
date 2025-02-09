@@ -13,6 +13,7 @@ import { twMerge } from 'tailwind-merge';
 import CloseCircle from '@/components/icons/closeCircle';
 import SearchOutlined from '@ant-design/icons/SearchOutlined';
 import SearchContainer from '@/components/molecules/search/seachContainer';
+import { SEARCH_KEYWORD } from '@/config/enum';
 type Props = {
   classname?: string;
   classNameInput?: string;
@@ -70,6 +71,16 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
   }, [value]);
 
   useEffect(() => {
+    if (isMobile) {
+      if (isOpened) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = 'auto';
+      }
+    }
+  }, [isOpened]);
+
+  useEffect(() => {
     searchProduct();
     if (debouceValue) {
       setUrlSearch(`/san-pham?search=${debouceValue}`);
@@ -81,7 +92,18 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
   const searchProduct = useCallback(() => {
     if (debouceValue.length < 1) return;
     startTransition(async () => {
-      fetch(`/api/search/product?search=${debouceValue}`)
+      const keyword: string | null = localStorage.getItem(SEARCH_KEYWORD);
+      const keywordList: string[] = keyword
+        ? keyword.toString().split(',')
+        : [];
+      if (!keywordList.includes(debouceValue)) {
+        if (keywordList.length >= 10) {
+          keywordList.pop();
+        }
+        keywordList.unshift(debouceValue);
+        localStorage.setItem(SEARCH_KEYWORD, keywordList.join(','));
+      }
+      fetch(`/api/search/product?search=${debouceValue}&limit=12`)
         .then((res) => res.json())
         .then((data) => {
           setData(data?.data || []);
@@ -110,6 +132,7 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
             onClick={() => {
               setValue('');
               setData([]);
+              setIsOpened(false);
             }}
           ></Button>
         }
@@ -123,6 +146,7 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
           data={data}
           loading={loading}
           urlSearch={urlSearch}
+          setIsOpened={setIsOpened}
         />
       )}
     </div>
