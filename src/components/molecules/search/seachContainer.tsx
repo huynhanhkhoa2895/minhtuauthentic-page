@@ -257,7 +257,9 @@ export default function SearchContainer({
         {urlSearch ? (
           <>
             <div
-              className={'max-h-[550px] overflow-y-auto lg:grid lg:grid-cols-3'}
+              className={
+                'lg:max-h-[550px] overflow-y-auto lg:grid lg:grid-cols-3'
+              }
             >
               {renderItemList}
               {renderNews}
@@ -275,7 +277,7 @@ export default function SearchContainer({
       {isMobile ? (
         <>
           {createPortal(
-            <div className={'fixed bg-white inset-0 w-screen h-screen '}>
+            <div className={'fixed bg-white inset-0 w-screen h-screen z-[3]'}>
               {renderContent()}
             </div>,
             document.body,
