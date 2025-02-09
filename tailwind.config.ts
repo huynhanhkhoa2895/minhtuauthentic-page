@@ -70,6 +70,8 @@ const config: Config = {
       boxShadow: {
         custom:
           '0 1px 2px 0 rgba(60,64,67,.1),0 2px 6px 2px rgba(60,64,67,.15)',
+        custom2:
+          '0 8px 10px -5px #0003,0 var(--gap16) 24px 2px #00000024,0 6px 30px 5px #0000001a',
       },
     },
   },

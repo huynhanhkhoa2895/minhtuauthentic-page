@@ -9,12 +9,10 @@ import {
 import { ProductDto } from '@/dtos/Product.dto';
 import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
 import { Button, Input, List, Skeleton } from 'antd/es';
-import Link from 'next/link';
-import { generateSlugToHref } from '@/utils';
-import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import { twMerge } from 'tailwind-merge';
 import CloseCircle from '@/components/icons/closeCircle';
 import SearchOutlined from '@ant-design/icons/SearchOutlined';
+import SearchContainer from '@/components/molecules/search/seachContainer';
 type Props = {
   classname?: string;
   classNameInput?: string;
@@ -92,58 +90,6 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
     });
   }, [debouceValue]);
 
-  const renderItemList = useMemo(() => {
-    return (
-      <>
-        {data.length || loading ? (
-          <List
-            loading={loading}
-            itemLayout="horizontal"
-            key={Math.random()}
-            dataSource={data}
-            renderItem={(item: ProductDto) => {
-              const variant = (item?.variants || [])?.find(
-                (variant) => variant.is_default,
-              );
-              return (
-                <List.Item>
-                  <Skeleton avatar title={false} loading={loading} active>
-                    <List.Item.Meta
-                      avatar={
-                        <ImageWithFallback
-                          image={item?.feature_image_detail?.image}
-                          className={'w-[50px] h-[50px]'}
-                          unoptimized={true}
-                        />
-                      }
-                      title={
-                        <Link href={generateSlugToHref(item?.slugs?.slug)}>
-                          {item.title || item.name}
-                        </Link>
-                      }
-                      description={
-                        !variant ? (
-                          'Không có sản phẩm'
-                        ) : (
-                          <PriceWithLineThrough
-                            regularPrice={variant.regular_price}
-                            price={variant.price}
-                          />
-                        )
-                      }
-                    />
-                  </Skeleton>
-                </List.Item>
-              );
-            }}
-          />
-        ) : (
-          <p>Không tìm thấy sản phẩm</p>
-        )}
-      </>
-    );
-  }, [data, loading]);
-
   return (
     <div className={twMerge('w-full relative z-[3]', classname)} ref={ref}>
       <Input
@@ -167,29 +113,17 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
             }}
           ></Button>
         }
+        onClick={() => {
+          setIsOpened(true);
+        }}
       />
       {isOpened && (
-        <div
-          className={twMerge(
-            'absolute text-black top-[50px] bg-white w-[550px] rounded-[10px] shadow-custom left-0',
-            isMobile && 'fixed w-[95vw] left-3 top-[60px]',
-            classNameInput,
-          )}
-        >
-          <div className={'flex flex-col '}>
-            <div className={'max-h-[50vh] overflow-y-auto p-6'}>
-              {renderItemList}
-            </div>
-            {urlSearch && (
-              <a
-                className={'w-full text-center text-primary font-semibold p-3'}
-                href={urlSearch}
-              >
-                Xem tất cả
-              </a>
-            )}
-          </div>
-        </div>
+        <SearchContainer
+          isMobile={isMobile}
+          data={data}
+          loading={loading}
+          urlSearch={urlSearch}
+        />
       )}
     </div>
   );
