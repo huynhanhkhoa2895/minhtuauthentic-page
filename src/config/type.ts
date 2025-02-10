@@ -3,6 +3,8 @@ import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import CommonSettingDto from '@/dtos/CommonSetting.dto';
 import { PaymentsDto } from '@/dtos/Payments.dto';
+import { ProductDto } from '@/dtos/Product.dto';
+import { NewsDto } from '@/dtos/News.dto';
 
 export type PopupDisplay = {
   title?: string;
@@ -54,4 +56,8 @@ export type PageSetting = {
 export type OptionProps = {
   label: string;
   value: string;
+};
+export type SearchData = {
+  products: ProductDto[];
+  news: NewsDto[];
 };

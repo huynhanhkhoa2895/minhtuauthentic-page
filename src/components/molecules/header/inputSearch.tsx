@@ -14,6 +14,7 @@ import CloseCircle from '@/components/icons/closeCircle';
 import SearchOutlined from '@ant-design/icons/SearchOutlined';
 import SearchContainer from '@/components/molecules/search/seachContainer';
 import { SEARCH_KEYWORD } from '@/config/enum';
+import { SearchData } from '@/config/type';
 type Props = {
   classname?: string;
   classNameInput?: string;
@@ -23,7 +24,7 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
   const [value, setValue] = useState<string>('');
   const [debouceValue, setDebouceValue] = useState<string>('');
   const [isOpened, setIsOpened] = useState<boolean>(false);
-  const [data, setData] = useState<ProductDto[]>([]);
+  const [data, setData] = useState<SearchData>();
   const ref = useRef<HTMLDivElement | null>(null);
   const [ready, setReady] = useState<boolean>(false);
   const [urlSearch, setUrlSearch] = useState<string>('');
@@ -48,7 +49,7 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
     function handleClickOutside(event: any) {
       if (ref.current && !ref.current.contains(event.target)) {
         setIsOpened(false);
-        setData([]);
+        setData(undefined);
         setValue('');
       }
     }

@@ -1,7 +1,5 @@
 import { twMerge } from 'tailwind-merge';
 import { useMemo } from 'react';
-import { List, Skeleton } from 'antd';
-import { ProductDto } from '@/dtos/Product.dto';
 import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
@@ -14,11 +12,12 @@ import { SEARCH_KEYWORD } from '@/config/enum';
 import Tag from 'antd/es/tag';
 import { NewsDto } from '@/dtos/News.dto';
 import { createPortal } from 'react-dom';
+import { SearchData } from '@/config/type';
 
 type Props = {
   isMobile?: boolean;
   classNameInput?: string;
-  data: ProductDto[];
+  data?: SearchData;
   loading: boolean;
   urlSearch?: string;
   setIsOpened: (value: boolean) => void;
@@ -40,10 +39,6 @@ export default function SearchContainer({
     fetch(`/api/pages/feature-category`, {
       method: 'GET',
     }).then((res) => res.json());
-  const fetcherNews = () =>
-    fetch(`/api/news/`, {
-      method: 'GET',
-    }).then((res) => res.json());
   const { data: dataFeatureCategory, isLoading: isLoadingFeatureCategory } =
     useSWR<{
       data: { homeBlockFeaturedCategory: StaticContentsDto[] };
@@ -53,28 +48,19 @@ export default function SearchContainer({
     data: { brands: BrandDto[] };
   }>(`brandSearch`, fetcherBrand);
 
-  const { data: dataNews, isLoading: isLoadingnews } = useSWR<{
-    data: { news: NewsDto[] };
-  }>(`newsSearch`, fetcherNews);
-
-  const handleClick = () => {
-    setIsOpened(false);
-  };
-
   const renderItemList = useMemo(() => {
     return (
       <div className={'flex flex-col lg:col-span-2 gap-2'}>
-        {data.length || loading ? (
+        {data?.products.length || loading ? (
           <ul className={'grid grid-cols-3 lg:grid-cols-6'}>
-            {data.map((item, index) => {
+            {(data?.products || []).map((item, index) => {
               const variant = item?.variants?.[0];
               return (
                 <li
                   key={index}
                   className={'shadow-[-1px_1px_#e1e1e1] p-[10px]'}
                 >
-                  <Link
-                    onClick={handleClick}
+                  <a
                     className={'flex flex-col gap-3'}
                     href={generateSlugToHref(item?.slugs?.slug)}
                   >
@@ -91,7 +77,7 @@ export default function SearchContainer({
                         classNameRegularPrice={'text-[12px] lg:text-[15px]'}
                       />
                     </div>
-                  </Link>
+                  </a>
                 </li>
               );
             })}
@@ -99,13 +85,12 @@ export default function SearchContainer({
         ) : (
           <p>Không tìm thấy sản phẩm</p>
         )}
-        <Link
-          onClick={handleClick}
+        <a
           className={'w-full text-center text-primary font-bold p-1'}
           href={generateSlugToHref(urlSearch)}
         >
           Xem toàn bộ sản phẩm
-        </Link>
+        </a>
       </div>
     );
   }, [data, loading]);
@@ -114,33 +99,24 @@ export default function SearchContainer({
     return (
       <div className={'flex flex-col'}>
         <p className={'font-bold text-xl border-b mb-3'}>Tin tức</p>
-        {isLoadingnews ? (
-          <Loading center />
-        ) : (
-          <div className={'flex flex-col gap-3'}>
-            {dataNews?.data?.news.map((item, index) => {
-              return (
-                <Link
-                  onClick={handleClick}
-                  href={generateSlugToHref(item?.slugs?.slug)}
-                  key={index}
-                >
-                  <p>{item?.name}</p>
-                </Link>
-              );
-            })}
-          </div>
-        )}
-        <Link
-          onClick={handleClick}
+        <div className={'flex flex-col gap-3'}>
+          {data?.news.map((item, index) => {
+            return (
+              <a href={generateSlugToHref(item?.slugs?.slug)} key={index}>
+                <p>{item?.name}</p>
+              </a>
+            );
+          })}
+        </div>
+        <a
           className={'w-full text-center text-primary font-bold p-1'}
           href={generateSlugToHref('/tin-tuc')}
         >
           Xem toàn bộ tin tức
-        </Link>
+        </a>
       </div>
     );
-  }, [dataNews, isLoadingnews]);
+  }, [data]);
 
   const renderOldKeyword = () => {
     const keyword: string | null = localStorage.getItem(SEARCH_KEYWORD);
@@ -155,12 +131,7 @@ export default function SearchContainer({
                 {keywordList.map((item, index) => {
                   return (
                     <Tag key={index}>
-                      <Link
-                        onClick={handleClick}
-                        href={'/san-pham?search=' + item}
-                      >
-                        {item}
-                      </Link>
+                      <a href={'/san-pham?search=' + item}>{item}</a>
                     </Tag>
                   );
                 })}
@@ -182,8 +153,7 @@ export default function SearchContainer({
           <div className={'grid grid-cols-6'}>
             {dataFeatureBrand?.data?.brands.map((item, index) => {
               return (
-                <Link
-                  onClick={handleClick}
+                <a
                   href={generateSlugToHref(item?.slugs?.slug)}
                   key={index}
                   className={'flex items-center justofy-center'}
@@ -193,7 +163,7 @@ export default function SearchContainer({
                     className={'w-full'}
                     unoptimized={true}
                   />
-                </Link>
+                </a>
               );
             })}
           </div>
@@ -213,8 +183,7 @@ export default function SearchContainer({
             {dataFeatureCategory?.data?.homeBlockFeaturedCategory.map(
               (item, index) => {
                 return (
-                  <Link
-                    onClick={handleClick}
+                  <a
                     href={generateSlugToHref(item?.properties?.slug)}
                     key={index}
                     className={
@@ -227,7 +196,7 @@ export default function SearchContainer({
                       unoptimized={true}
                     />
                     <p className={'text-center'}>{item?.title}</p>
-                  </Link>
+                  </a>
                 );
               },
             )}
