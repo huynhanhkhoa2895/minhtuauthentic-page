@@ -132,7 +132,7 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
             type={'link'}
             onClick={() => {
               setValue('');
-              setData([]);
+              setData(undefined);
               setIsOpened(false);
             }}
           ></Button>
