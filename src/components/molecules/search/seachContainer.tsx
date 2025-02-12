@@ -220,7 +220,7 @@ export default function SearchContainer({
     return (
       <div
         className={
-          'flex flex-col gap-3 p-[140px_1rem_1.5rem_1rem] lg:p-6 max-lg:h-[calc(100%-67px)] overflow-auto'
+          'flex flex-col gap-3 p-[140px_1rem_1.5rem_1rem] lg:p-6 max-lg:h-[calc(100dvh-67px)] overflow-auto'
         }
       >
         {urlSearch ? (
