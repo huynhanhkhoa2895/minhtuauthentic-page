@@ -97,11 +97,6 @@ export const CategoryFilterProvider = ({
       const queryString = new URLSearchParams(
         router.query as Record<string, string>,
       );
-      console.log(
-        'handleRouteComplete vao day',
-        queryString.toString(),
-        router.query,
-      );
       const filter = getFinalFilter(getFilterFromQuery(queryString.toString()));
 
       if (refTimer.current) {

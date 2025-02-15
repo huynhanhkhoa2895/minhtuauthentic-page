@@ -12,6 +12,8 @@ import Loading from '@/components/atoms/loading';
 export type TypeAppState = {
   isOpenMenu: boolean;
   setIsOpenMenu: Dispatch<SetStateAction<boolean>> | undefined;
+  isOpenSearch: boolean;
+  setIsOpenSearch: Dispatch<SetStateAction<boolean>> | undefined;
   isOpenPopupProduct: string | null;
   setIsOpenPopupProduct: Dispatch<SetStateAction<string | null>> | undefined;
   isOpenNavMenu: boolean;
@@ -29,6 +31,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     null,
   );
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [isOpenSearch, setIsOpenSearch] = useState(false);
   const [user, setUser] = useState<UserDto | undefined>();
   const [isOpenNavMenu, setIsOpenNavMenu] = useState(false);
   const [settings, setSettings] = useState({});
@@ -58,6 +61,8 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         setIsOpenMenu,
         settings,
         setSettings,
+        isOpenSearch,
+        setIsOpenSearch,
       }}
     >
       {children}

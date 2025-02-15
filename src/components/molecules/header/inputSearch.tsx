@@ -1,5 +1,6 @@
 import {
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -15,6 +16,7 @@ import SearchOutlined from '@ant-design/icons/SearchOutlined';
 import SearchContainer from '@/components/molecules/search/seachContainer';
 import { SEARCH_KEYWORD } from '@/config/enum';
 import { SearchData } from '@/config/type';
+import appContext from '@/contexts/appContext';
 type Props = {
   classname?: string;
   classNameInput?: string;
@@ -23,7 +25,7 @@ type Props = {
 export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
   const [value, setValue] = useState<string>('');
   const [debouceValue, setDebouceValue] = useState<string>('');
-  const [isOpened, setIsOpened] = useState<boolean>(false);
+  const ctx = useContext(appContext);
   const [data, setData] = useState<SearchData>();
   const ref = useRef<HTMLDivElement | null>(null);
   const [ready, setReady] = useState<boolean>(false);
@@ -47,8 +49,12 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
 
   useEffect(() => {
     function handleClickOutside(event: any) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setIsOpened(false);
+      if (
+        ref.current &&
+        !ref.current.contains(event.target) &&
+        ctx?.setIsOpenSearch
+      ) {
+        ctx.setIsOpenSearch(false);
         setData(undefined);
         setValue('');
       }
@@ -60,8 +66,8 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
   }, [ref]);
 
   useEffect(() => {
-    if (!isOpened && ready && value) {
-      setIsOpened(true);
+    if (!ctx?.isOpenSearch && ready && value && ctx?.setIsOpenSearch) {
+      ctx.setIsOpenSearch(true);
     }
     const timeout = setTimeout(() => {
       setDebouceValue(value);
@@ -73,13 +79,13 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
 
   useEffect(() => {
     if (isMobile) {
-      if (isOpened) {
+      if (ctx?.isOpenSearch) {
         document.body.style.overflow = 'hidden';
       } else {
         document.body.style.overflow = 'auto';
       }
     }
-  }, [isOpened]);
+  }, [ctx?.isOpenSearch]);
 
   useEffect(() => {
     searchProduct();
@@ -133,21 +139,20 @@ export const InputSearch = ({ classname, isMobile, classNameInput }: Props) => {
             onClick={() => {
               setValue('');
               setData(undefined);
-              setIsOpened(false);
+              ctx?.setIsOpenSearch && ctx.setIsOpenSearch(false);
             }}
           ></Button>
         }
         onClick={() => {
-          setIsOpened(true);
+          ctx?.setIsOpenSearch && ctx.setIsOpenSearch(true);
         }}
       />
-      {isOpened && (
+      {ctx?.isOpenSearch && (
         <SearchContainer
           isMobile={isMobile}
           data={data}
           loading={loading}
           urlSearch={urlSearch}
-          setIsOpened={setIsOpened}
         />
       )}
     </div>

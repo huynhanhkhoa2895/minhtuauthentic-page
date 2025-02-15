@@ -1,5 +1,5 @@
 import { twMerge } from 'tailwind-merge';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
@@ -10,7 +10,6 @@ import { BrandDto } from '@/dtos/Brand.dto';
 import Loading from '@/components/atoms/loading';
 import { SEARCH_KEYWORD } from '@/config/enum';
 import Tag from 'antd/es/tag';
-import { NewsDto } from '@/dtos/News.dto';
 import { createPortal } from 'react-dom';
 import { SearchData } from '@/config/type';
 
@@ -20,7 +19,6 @@ type Props = {
   data?: SearchData;
   loading: boolean;
   urlSearch?: string;
-  setIsOpened: (value: boolean) => void;
 };
 
 export default function SearchContainer({
@@ -29,8 +27,8 @@ export default function SearchContainer({
   data,
   loading,
   urlSearch,
-  setIsOpened,
 }: Props) {
+  const [height, setHeight] = useState<number>(0);
   const fetcherBrand = () =>
     fetch(`/api/pages/feature-brand`, {
       method: 'GET',
@@ -47,6 +45,22 @@ export default function SearchContainer({
   const { data: dataFeatureBrand, isLoading: isLoadingBrand } = useSWR<{
     data: { brands: BrandDto[] };
   }>(`brandSearch`, fetcherBrand);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window?.visualViewport?.height) {
+        setHeight(window.visualViewport.height);
+      }
+    };
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleResize);
+    }
+    return () => {
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', handleResize);
+      }
+    };
+  }, []);
 
   const renderItemList = useMemo(() => {
     return (
@@ -150,7 +164,7 @@ export default function SearchContainer({
         {isLoadingBrand ? (
           <Loading center />
         ) : (
-          <div className={'grid grid-cols-6'}>
+          <div className={'grid grid-cols-3 max-lg:gap-x1 lg:grid-cols-6'}>
             {dataFeatureBrand?.data?.brands.map((item, index) => {
               return (
                 <a
@@ -220,8 +234,9 @@ export default function SearchContainer({
     return (
       <div
         className={
-          'flex flex-col gap-3 p-[140px_1rem_1.5rem_1rem] lg:p-6 max-lg:h-[calc(100dvh-67px)] overflow-auto'
+          'flex flex-col gap-3 p-[140px_1rem_1.5rem_1rem] lg:p-6 overflow-auto'
         }
+        style={{ height: isMobile ? `${height}px` : 'auto' }}
       >
         {urlSearch ? (
           <>
