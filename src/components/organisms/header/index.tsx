@@ -19,8 +19,8 @@ import IconWifi from '@/components/icons/wifi';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import { SETTING_KEY } from '@/config/enum';
 import dynamic from 'next/dynamic';
-const InputSearchWrapper = dynamic(
-  () => import('@/components/molecules/header/InputSearch'),
+const InputSearchDesktop = dynamic(
+  () => import('@/components/molecules/header/InputSearch/desktop'),
   {
     ssr: false,
   },
@@ -29,12 +29,12 @@ const InputSearchWrapper = dynamic(
 import NavMenuHeader from '@/components/organisms/MobileMenu/navMenu/header';
 import LogoComponent from '@/components/atoms/logo';
 import { LogoProps } from '@/config/type';
+import { isDesktop } from 'react-device-detect';
 type Props = {
   menu?: ResponseMenuDto | undefined;
   settings?: SettingsDto[];
-  isNoNeedSearch?: boolean;
 };
-export const Header = ({ menu, settings, isNoNeedSearch }: Props) => {
+export const Header = ({ menu, settings }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useUser();
@@ -95,9 +95,7 @@ export const Header = ({ menu, settings, isNoNeedSearch }: Props) => {
           </Link>
 
           <ButtonMenu menu={menu} />
-          {!isNoNeedSearch && (
-            <InputSearchWrapper key={'input-search-mobile'} />
-          )}
+          {isDesktop && <InputSearchDesktop key={'input-search-desktop'} />}
           <HeaderItem
             className={'w-max'}
             icon={<IconPhone className={'w-[24px] h-[24px]'} />}

@@ -2,15 +2,18 @@ import React, {
   createContext,
   Dispatch,
   SetStateAction,
+  useCallback,
   useEffect,
   useState,
 } from 'react';
+import { SEARCH_KEYWORD } from '@/config/enum';
 
 export type TypeSearchState = {
   isOpenSearch: boolean;
   setIsOpenSearch: Dispatch<SetStateAction<boolean>> | undefined;
   setSearchValue: Dispatch<SetStateAction<string>> | undefined;
   debounceValue: string;
+  saveKeyword: () => void;
 };
 const SearchContext = createContext<TypeSearchState | undefined>(undefined);
 export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
@@ -35,6 +38,18 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [isOpenSearch]);
 
+  const saveKeyword = useCallback(() => {
+    const keyword: string | null = localStorage.getItem(SEARCH_KEYWORD);
+    const keywordList: string[] = keyword ? keyword.toString().split(',') : [];
+    if (!keywordList.includes(debounceValue)) {
+      if (keywordList.length >= 10) {
+        keywordList.pop();
+      }
+      keywordList.unshift(debounceValue);
+      localStorage.setItem(SEARCH_KEYWORD, keywordList.join(','));
+    }
+  }, [debounceValue]);
+
   return (
     <SearchContext.Provider
       value={{
@@ -42,6 +57,7 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
         setIsOpenSearch,
         setSearchValue,
         debounceValue,
+        saveKeyword,
       }}
     >
       {children}

@@ -17,25 +17,17 @@ import { isDesktop, isMobile } from 'react-device-detect';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import InputSearch from '@/components/molecules/header/InputSearch/input';
 import searchContext from '@/contexts/searchContext';
+import SearchContainer from '@/components/molecules/search/seachContainer';
 type Props = {
   classname?: string;
   classNameInput?: string;
   isForMobile?: boolean;
   settings?: SettingsDto[];
 };
-export const InputSearchWrapper = ({
-  classname,
-  isForMobile,
-  classNameInput,
-  settings,
-}: Props) => {
-  const [value, setValue] = useState<string>('');
-  const [debouceValue, setDebouceValue] = useState<string>('');
+export const InputSearchDesktop = ({ classname, isForMobile }: Props) => {
   const ctx = useContext(searchContext);
   const ref = useRef<HTMLDivElement | null>(null);
   const [ready, setReady] = useState<boolean>(false);
-
-  const [loading, startTransition] = useTransition();
   useEffect(() => {
     setReady(true);
   }, []);
@@ -49,7 +41,6 @@ export const InputSearchWrapper = ({
         isDesktop
       ) {
         ctx.setIsOpenSearch(false);
-        setValue('');
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
@@ -68,28 +59,16 @@ export const InputSearchWrapper = ({
     }
   }, [ctx?.isOpenSearch]);
 
-  const saveKeyword = useCallback(() => {
-    const keyword: string | null = localStorage.getItem(SEARCH_KEYWORD);
-    const keywordList: string[] = keyword ? keyword.toString().split(',') : [];
-    if (!keywordList.includes(debouceValue)) {
-      if (keywordList.length >= 10) {
-        keywordList.pop();
-      }
-      keywordList.unshift(debouceValue);
-      localStorage.setItem(SEARCH_KEYWORD, keywordList.join(','));
-    }
-  }, [debouceValue]);
-
   const renderContent = () => {
     return (
-      <div className={twMerge('w-full relative z-[3]', classname)} ref={ref}>
+      <div className={twMerge('w-full relative z-[3]', classname)}>
         <InputSearch
           onChange={(value) => {
-            setValue(value);
+            ctx?.setSearchValue && ctx.setSearchValue(value);
           }}
           onCloseClick={() => {
+            ctx?.saveKeyword && ctx.saveKeyword();
             ctx?.setIsOpenSearch && ctx.setIsOpenSearch(false);
-            saveKeyword();
           }}
           onClick={() => {
             ctx?.setIsOpenSearch && ctx.setIsOpenSearch(true);
@@ -103,6 +82,13 @@ export const InputSearchWrapper = ({
     return null;
   }
 
-  return <>{renderContent()}</>;
+  return (
+    <div className={'relative'}>
+      {renderContent()}
+      <div ref={ref}>
+        <SearchContainer />
+      </div>
+    </div>
+  );
 };
-export default InputSearchWrapper;
+export default InputSearchDesktop;

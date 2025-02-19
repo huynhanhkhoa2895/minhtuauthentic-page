@@ -1,12 +1,12 @@
 import { twMerge } from 'tailwind-merge';
 import {
-  startTransition,
   useCallback,
   useContext,
   useEffect,
   useMemo,
   useRef,
   useState,
+  useTransition,
 } from 'react';
 import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import { generateSlugToHref } from '@/utils';
@@ -38,7 +38,7 @@ export default function SearchContainer({ classNameInput, settings }: Props) {
   const [data, setData] = useState<SearchData>();
   const [urlSearch, setUrlSearch] = useState<string>('');
   const [height, setHeight] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, startTransition] = useTransition();
   const ref = useRef<HTMLDivElement | null>(null);
   const fetcherBrand = () =>
     fetch(`/api/pages/feature-brand`, {
@@ -71,16 +71,13 @@ export default function SearchContainer({ classNameInput, settings }: Props) {
   const searchProduct = useCallback(() => {
     const debouceValue = ctx?.debounceValue;
     if (!debouceValue || debouceValue.length < 1) return;
-    setLoading(true);
     startTransition(async () => {
       fetch(`/api/search/product?search=${debouceValue}&limit=12`)
         .then((res) => res.json())
         .then((data) => {
           setData(data?.data || []);
         })
-        .finally(() => {
-          setLoading(false);
-        });
+        .finally(() => {});
     });
   }, [ctx?.debounceValue]);
 
@@ -280,7 +277,6 @@ export default function SearchContainer({ classNameInput, settings }: Props) {
         className={
           'flex flex-col gap-3 p-[1.5rem_1rem_1.5rem_1rem] lg:p-6 overflow-auto'
         }
-        style={{ height: isMobile ? `${height}px` : 'auto' }}
       >
         {urlSearch ? (
           <>
@@ -309,28 +305,33 @@ export default function SearchContainer({ classNameInput, settings }: Props) {
               {createPortal(
                 <div
                   className={
-                    'fixed bg-white inset-0 w-[100dvw] h-[100dvh] z-[10000] flex flex-col'
+                    'fixed bg-white inset-0 w-[100dvw] h-[100dvh] z-[10000] flex flex-col overflow-hidden'
                   }
                 >
-                  <div className={'bg-primary'}>
-                    <NavbarMenuListButton settings={settings} />
-                    <div
-                      className={twMerge('w-full relative z-[3] p-3')}
-                      ref={ref}
-                    >
-                      <InputSearch
-                        onChange={(value) => {
-                          console.log('value', value);
-                          ctx?.setSearchValue && ctx.setSearchValue(value);
-                        }}
-                        onCloseClick={() => {
-                          ctx?.setIsOpenSearch && ctx.setIsOpenSearch(false);
-                        }}
-                      />
+                  <div
+                    className={'overflow-auto'}
+                    style={{ height: isMobile ? `${height}px` : 'auto' }}
+                  >
+                    <div className={'bg-primary'}>
+                      <NavbarMenuListButton settings={settings} />
+                      <div
+                        className={twMerge('w-full relative z-[3] p-3')}
+                        ref={ref}
+                      >
+                        <InputSearch
+                          onChange={(value) => {
+                            console.log('value', value);
+                            ctx?.setSearchValue && ctx.setSearchValue(value);
+                          }}
+                          onCloseClick={() => {
+                            ctx?.setIsOpenSearch && ctx.setIsOpenSearch(false);
+                          }}
+                        />
+                      </div>
                     </div>
+                    {renderContent()}
+                    <MenuFooter isNoNeedFix={true} />
                   </div>
-                  {renderContent()}
-                  <MenuFooter isNoNeedFix={true} />
                 </div>,
                 document.body,
               )}
@@ -338,7 +339,7 @@ export default function SearchContainer({ classNameInput, settings }: Props) {
           ) : (
             <div
               className={twMerge(
-                'absolute text-black top-[50px] bg-white w-[65vw] max-w-[1140px] rounded-[10px] left-0 shadow-custom2',
+                'absolute text-black top-[50px] bg-white w-[65vw] max-w-[1140px] rounded-[10px] left-0 shadow-custom2 z-[100]',
                 classNameInput,
               )}
             >
