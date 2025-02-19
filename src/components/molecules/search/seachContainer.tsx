@@ -1,7 +1,14 @@
 import { twMerge } from 'tailwind-merge';
-import { useEffect, useMemo, useState } from 'react';
+import {
+  startTransition,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
-import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
 import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
 import useSWR from 'swr';
@@ -12,23 +19,27 @@ import { SEARCH_KEYWORD } from '@/config/enum';
 import Tag from 'antd/es/tag';
 import { createPortal } from 'react-dom';
 import { SearchData } from '@/config/type';
+import { isMobile } from 'react-device-detect';
+import MenuFooter from '@/components/organisms/MobileMenu/menuFooter';
+import { SettingsDto } from '@/dtos/Settings.dto';
+import NavbarMenuListButton from '@/components/organisms/MobileMenu/navMenu/header/listHeaderButton';
+import SearchContext from '@/contexts/searchContext';
+import { NewsDto } from '@/dtos/News.dto';
+import { ProductDto } from '@/dtos/Product.dto';
+import InputSearch from '@/components/molecules/header/InputSearch/input';
 
 type Props = {
-  isMobile?: boolean;
   classNameInput?: string;
-  data?: SearchData;
-  loading: boolean;
-  urlSearch?: string;
+  settings?: SettingsDto[];
 };
 
-export default function SearchContainer({
-  isMobile,
-  classNameInput,
-  data,
-  loading,
-  urlSearch,
-}: Props) {
+export default function SearchContainer({ classNameInput, settings }: Props) {
+  const ctx = useContext(SearchContext);
+  const [data, setData] = useState<SearchData>();
+  const [urlSearch, setUrlSearch] = useState<string>('');
   const [height, setHeight] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
+  const ref = useRef<HTMLDivElement | null>(null);
   const fetcherBrand = () =>
     fetch(`/api/pages/feature-brand`, {
       method: 'GET',
@@ -47,11 +58,43 @@ export default function SearchContainer({
   }>(`brandSearch`, fetcherBrand);
 
   useEffect(() => {
+    searchProduct();
+    const debouceValue = ctx?.debounceValue;
+    console.log('debouceValue', debouceValue);
+    if (debouceValue) {
+      setUrlSearch(`/san-pham?search=${debouceValue}`);
+    } else {
+      setUrlSearch('');
+    }
+  }, [ctx?.debounceValue]);
+
+  const searchProduct = useCallback(() => {
+    const debouceValue = ctx?.debounceValue;
+    if (!debouceValue || debouceValue.length < 1) return;
+    setLoading(true);
+    startTransition(async () => {
+      fetch(`/api/search/product?search=${debouceValue}&limit=12`)
+        .then((res) => res.json())
+        .then((data) => {
+          setData(data?.data || []);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    });
+  }, [ctx?.debounceValue]);
+
+  useEffect(() => {
     const handleResize = () => {
       if (window?.visualViewport?.height) {
-        setHeight(window.visualViewport.height);
+        if (window.innerHeight - 68 < window.visualViewport.height) {
+          setHeight(window.innerHeight - 68);
+        } else {
+          setHeight(window.visualViewport.height);
+        }
       }
     };
+    handleResize();
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', handleResize);
     }
@@ -64,10 +107,10 @@ export default function SearchContainer({
 
   const renderItemList = useMemo(() => {
     return (
-      <div className={'flex flex-col lg:col-span-2 gap-2'}>
+      <div className={'flex flex-col lg:col-span-2 gap-3'}>
         {data?.products.length || loading ? (
           <ul className={'grid grid-cols-3 lg:grid-cols-6'}>
-            {(data?.products || []).map((item, index) => {
+            {(data?.products || []).map((item: ProductDto, index: number) => {
               const variant = item?.variants?.[0];
               return (
                 <li
@@ -100,7 +143,7 @@ export default function SearchContainer({
           <p>Không tìm thấy sản phẩm</p>
         )}
         <a
-          className={'w-full text-center text-primary font-bold p-1'}
+          className={'w-full text-center text-primary font-bold p-1 block'}
           href={generateSlugToHref(urlSearch)}
         >
           Xem toàn bộ sản phẩm
@@ -114,7 +157,7 @@ export default function SearchContainer({
       <div className={'flex flex-col'}>
         <p className={'font-bold text-xl border-b mb-3'}>Tin tức</p>
         <div className={'flex flex-col gap-3'}>
-          {data?.news.map((item, index) => {
+          {data?.news.map((item: NewsDto, index: number) => {
             return (
               <a href={generateSlugToHref(item?.slugs?.slug)} key={index}>
                 <p>{item?.name}</p>
@@ -233,8 +276,9 @@ export default function SearchContainer({
   const renderContent = () => {
     return (
       <div
+        key={'search-container'}
         className={
-          'flex flex-col gap-3 p-[140px_1rem_1.5rem_1rem] lg:p-6 overflow-auto'
+          'flex flex-col gap-3 p-[1.5rem_1rem_1.5rem_1rem] lg:p-6 overflow-auto'
         }
         style={{ height: isMobile ? `${height}px` : 'auto' }}
       >
@@ -258,24 +302,50 @@ export default function SearchContainer({
 
   return (
     <>
-      {isMobile ? (
+      {ctx?.isOpenSearch && (
         <>
-          {createPortal(
-            <div className={'fixed bg-white inset-0 w-screen h-screen z-[3]'}>
+          {isMobile ? (
+            <>
+              {createPortal(
+                <div
+                  className={
+                    'fixed bg-white inset-0 w-[100dvw] h-[100dvh] z-[10000] flex flex-col'
+                  }
+                >
+                  <div className={'bg-primary'}>
+                    <NavbarMenuListButton settings={settings} />
+                    <div
+                      className={twMerge('w-full relative z-[3] p-3')}
+                      ref={ref}
+                    >
+                      <InputSearch
+                        onChange={(value) => {
+                          console.log('value', value);
+                          ctx?.setSearchValue && ctx.setSearchValue(value);
+                        }}
+                        onCloseClick={() => {
+                          ctx?.setIsOpenSearch && ctx.setIsOpenSearch(false);
+                        }}
+                      />
+                    </div>
+                  </div>
+                  {renderContent()}
+                  <MenuFooter isNoNeedFix={true} />
+                </div>,
+                document.body,
+              )}
+            </>
+          ) : (
+            <div
+              className={twMerge(
+                'absolute text-black top-[50px] bg-white w-[65vw] max-w-[1140px] rounded-[10px] left-0 shadow-custom2',
+                classNameInput,
+              )}
+            >
               {renderContent()}
-            </div>,
-            document.body,
+            </div>
           )}
         </>
-      ) : (
-        <div
-          className={twMerge(
-            'absolute text-black top-[50px] bg-white w-[65vw] max-w-[1140px] rounded-[10px] left-0 shadow-custom2',
-            classNameInput,
-          )}
-        >
-          {renderContent()}
-        </div>
       )}
     </>
   );

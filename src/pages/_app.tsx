@@ -13,6 +13,7 @@ const nunitoSans = Nunito_Sans({
 });
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import useSettings from '@/hooks/useSettings';
+import { SearchProvider } from '@/contexts/searchContext';
 
 export default function App({ Component, pageProps }: AppProps) {
   const settings = useSettings();
@@ -28,12 +29,14 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <AppProvider>
         <OrderProvider>
-          <GoogleReCaptchaProvider
-            reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_SITE_KEY || ''}
-          >
-            <Component className={nunitoSans.className} {..._pageProps} />
-          </GoogleReCaptchaProvider>
-          <ToastContainer />
+          <SearchProvider>
+            <GoogleReCaptchaProvider
+              reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_SITE_KEY || ''}
+            >
+              <Component className={nunitoSans.className} {..._pageProps} />
+            </GoogleReCaptchaProvider>
+            <ToastContainer />
+          </SearchProvider>
         </OrderProvider>
       </AppProvider>
     </>

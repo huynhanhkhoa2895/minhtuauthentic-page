@@ -8,8 +8,12 @@ import { useRouter } from 'next/router';
 import MapIconFooter from '@/components/icons/menuFooter/Map';
 import AppContext from '@/contexts/appContext';
 import { createPortal } from 'react-dom';
-
-export default function MenuFooter() {
+import { twMerge } from 'tailwind-merge';
+type Props = {
+  isNoNeedFix?: boolean;
+  className?: string;
+};
+export default function MenuFooter({ isNoNeedFix, className }: Props) {
   const user = useUser();
   const appCtx = useContext(AppContext);
   const router = useRouter();
@@ -80,28 +84,31 @@ export default function MenuFooter() {
     ) as ReactNode;
   };
 
+  const renderFooter = () => {
+    return (
+      <div
+        className={twMerge(
+          'lg:hidden bg-primary text-white w-full shadow-custom rounded-tr-2xl rounded-tl-2xl z-[1001]',
+          !isNoNeedFix && 'fixed bottom-0 left-0 z-10',
+          className,
+        )}
+      >
+        <div className={'p-3 flex items-center justify-center'}>
+          {elementFooter.map((item, index) => {
+            return (
+              <Fragment key={'menufooter' + index}>{ItemMenu(item)}</Fragment>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
-      {createPortal(
-        (
-          <div
-            className={
-              'lg:hidden fixed bottom-0 left-0 z-10 bg-primary text-white w-full shadow-custom rounded-tr-2xl rounded-tl-2xl z-[1001]'
-            }
-          >
-            <div className={'p-3 flex items-center justify-center'}>
-              {elementFooter.map((item, index) => {
-                return (
-                  <Fragment key={'menufooter' + index}>
-                    {ItemMenu(item)}
-                  </Fragment>
-                );
-              })}
-            </div>
-          </div>
-        ) as ReactNode,
-        document.body,
-      )}
+      {isNoNeedFix
+        ? renderFooter()
+        : createPortal(renderFooter() as ReactNode, document.body)}
     </>
   );
 }
