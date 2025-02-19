@@ -142,7 +142,7 @@ export default function FormAddress({ onDone }: Props) {
         errors={errors}
         name={'title'}
         type={'text'}
-        placeholder={'Tiêu đề'}
+        placeholder={'Tên gợi nhớ'}
         className={'col-span-2'}
       />
       <FormControl

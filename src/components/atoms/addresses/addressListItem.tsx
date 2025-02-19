@@ -33,16 +33,17 @@ export default function AddressListItem({ address, refresh }: Props) {
       }
     >
       <p className={'flex gap-3'}>
+        <UserOutlined />
+        <span>{address.name}</span>
+      </p>
+      <p className={'flex gap-3'}>
         <BookOutlined />
         <span>
           {address.shipping_address}, {address.ward?.full_name},{' '}
           {address.district?.full_name}, {address.city?.full_name},
         </span>
       </p>
-      <p className={'flex gap-3'}>
-        <UserOutlined />
-        <span>{address.name}</span>
-      </p>
+
       <p className={'flex gap-3'}>
         <PhoneFilled />
         <span>{address.phone}</span>

@@ -45,7 +45,7 @@ export default function AccountTemplate({ children }: { children: ReactNode }) {
           >
             <div className={'p-3'}>
               <Link className={'text-lg'} href={'/tai-khoan/dia-chi'}>
-                Địa chỉ
+                Sổ địa chỉ
               </Link>
             </div>
           </li>
