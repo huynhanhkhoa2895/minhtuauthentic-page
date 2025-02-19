@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import HeaderItem from '@/components/molecules/header/item';
 import { IconPhone } from '@/components/icons/phone';
 import IconTruck from '@/components/icons/truck';
@@ -20,8 +19,8 @@ import IconWifi from '@/components/icons/wifi';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import { SETTING_KEY } from '@/config/enum';
 import dynamic from 'next/dynamic';
-const InputSearch = dynamic(
-  () => import('@/components/molecules/header/inputSearch'),
+const InputSearchWrapper = dynamic(
+  () => import('@/components/molecules/header/InputSearch'),
   {
     ssr: false,
   },
@@ -30,8 +29,12 @@ const InputSearch = dynamic(
 import NavMenuHeader from '@/components/organisms/MobileMenu/navMenu/header';
 import LogoComponent from '@/components/atoms/logo';
 import { LogoProps } from '@/config/type';
-type Props = { menu: ResponseMenuDto | undefined; settings: SettingsDto[] };
-export const Header = ({ menu, settings }: Props) => {
+type Props = {
+  menu?: ResponseMenuDto | undefined;
+  settings?: SettingsDto[];
+  isNoNeedSearch?: boolean;
+};
+export const Header = ({ menu, settings, isNoNeedSearch }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useUser();
@@ -84,11 +87,17 @@ export const Header = ({ menu, settings }: Props) => {
           }
         >
           <Link className={'shrink-0'} href={'/'}>
-            <LogoComponent position={LogoProps.HEADER} settings={settings} className={'object-contain w-[230px] h-[60px] '} />
+            <LogoComponent
+              position={LogoProps.HEADER}
+              settings={settings || []}
+              className={'object-contain w-[230px] h-[60px] '}
+            />
           </Link>
 
           <ButtonMenu menu={menu} />
-          <InputSearch />
+          {!isNoNeedSearch && (
+            <InputSearchWrapper key={'input-search-mobile'} />
+          )}
           <HeaderItem
             className={'w-max'}
             icon={<IconPhone className={'w-[24px] h-[24px]'} />}

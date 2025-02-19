@@ -16,7 +16,6 @@ import Image from 'next/image';
 import NavMenuHeader from '@/components/organisms/MobileMenu/navMenu/header';
 import NavMenuContent from '@/components/organisms/MobileMenu/navMenu/content';
 import Loading from '@/components/atoms/loading';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { SettingsDto } from '@/dtos/Settings.dto';
 type Props = {

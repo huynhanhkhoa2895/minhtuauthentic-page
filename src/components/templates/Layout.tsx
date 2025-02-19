@@ -47,6 +47,13 @@ const LayoutMenu = dynamic(
   },
 );
 
+const SearchContainer = dynamic(
+  () => import('@/components/molecules/search/seachContainer'),
+  {
+    ssr: false,
+  },
+);
+
 export default function Layout({
   children,
   className,
@@ -71,6 +78,9 @@ export default function Layout({
       <Socials />
       <MenuFooter />
       <PopupProduct />
+      {isMobile && (
+        <SearchContainer key={'search-container-wrapper'} settings={settings} />
+      )}
       {/*<PageLoading />*/}
     </>
   );
