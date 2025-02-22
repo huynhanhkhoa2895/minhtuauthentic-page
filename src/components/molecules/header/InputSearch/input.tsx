@@ -1,20 +1,24 @@
 import SearchOutlined from '@ant-design/icons/SearchOutlined';
-import { Button, Input } from 'antd';
+import { Button, Input, InputRef } from 'antd';
 import CloseCircle from '@/components/icons/closeCircle';
-import { useEffect, useState } from 'react';
+import { KeyboardEventHandler, RefObject, useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 type Props = {
   className?: string;
   onChange?: (value: string) => void;
-  onClick?: () => void;
+  onClick?: (e: unknown) => void;
+  onKeyUp?: (e: unknown) => void;
   onCloseClick?: () => void;
+  ref?: RefObject<InputRef | undefined>;
 };
 export default function InputSearch({
   className,
   onChange,
   onClick,
+  onKeyUp,
   onCloseClick,
+  ref,
 }: Props) {
   const [value, setValue] = useState<string>('');
 
@@ -30,6 +34,7 @@ export default function InputSearch({
         'h-[40px] text-black rounded-[10px] border-0 p-[5px_10px] focus-visible:outline-none focus-visible:border-0 w-full',
         className,
       )}
+      ref={ref as RefObject<InputRef>}
       type="text"
       placeholder="Tìm kiếm sản phẩm"
       value={value}
@@ -37,6 +42,9 @@ export default function InputSearch({
         setValue(e.target.value);
       }}
       prefix={<SearchOutlined className={'w-6 h-6'} />}
+      onKeyUp={(e: unknown) => {
+        onKeyUp && onKeyUp(e);
+      }}
       suffix={
         <Button
           icon={<CloseCircle className={'w-6 h-6'} />}
@@ -47,8 +55,8 @@ export default function InputSearch({
           }}
         ></Button>
       }
-      onClick={() => {
-        onClick && onClick();
+      onClick={(e) => {
+        onClick && onClick(e);
         // ctx?.setIsOpenSearch && ctx.setIsOpenSearch(true);
       }}
     />

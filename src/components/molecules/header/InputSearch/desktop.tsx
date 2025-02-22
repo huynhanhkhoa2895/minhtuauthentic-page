@@ -9,7 +9,7 @@ import {
 } from 'react';
 import { Button, Input, List, Skeleton } from 'antd/es';
 import { twMerge } from 'tailwind-merge';
-import { SEARCH_KEYWORD } from '@/config/enum';
+import { KEYCODE, SEARCH_KEYWORD } from '@/config/enum';
 import { SearchData } from '@/config/type';
 import appContext from '@/contexts/appContext';
 import dynamic from 'next/dynamic';
@@ -58,6 +58,20 @@ export const InputSearchDesktop = ({ classname, isForMobile }: Props) => {
       }
     }
   }, [ctx?.isOpenSearch]);
+
+  useEffect(() => {
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (ctx?.isOpenSearch && ctx?.debounceValue && e.key === KEYCODE.ENTER) {
+        ctx.saveKeyword && ctx.saveKeyword();
+        ctx.setIsOpenSearch && ctx.setIsOpenSearch(false);
+        window.location.href = `/san-pham?search=${ctx?.debounceValue}`;
+      }
+    };
+    document.addEventListener('keyup', handleKeyUp);
+    return () => {
+      document.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [ctx?.isOpenSearch, ctx?.debounceValue]);
 
   const renderContent = () => {
     return (

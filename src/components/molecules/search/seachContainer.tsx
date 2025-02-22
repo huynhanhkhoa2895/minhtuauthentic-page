@@ -15,7 +15,7 @@ import useSWR from 'swr';
 import { StaticContentsDto } from '@/dtos/StaticContents.dto';
 import { BrandDto } from '@/dtos/Brand.dto';
 import Loading from '@/components/atoms/loading';
-import { SEARCH_KEYWORD } from '@/config/enum';
+import { KEYCODE, SEARCH_KEYWORD } from '@/config/enum';
 import Tag from 'antd/es/tag';
 import { createPortal } from 'react-dom';
 import { SearchData } from '@/config/type';
@@ -27,6 +27,7 @@ import SearchContext from '@/contexts/searchContext';
 import { NewsDto } from '@/dtos/News.dto';
 import { ProductDto } from '@/dtos/Product.dto';
 import InputSearch from '@/components/molecules/header/InputSearch/input';
+import { type InputRef } from 'antd';
 
 type Props = {
   classNameInput?: string;
@@ -57,16 +58,23 @@ export default function SearchContainer({ classNameInput, settings }: Props) {
     data: { brands: BrandDto[] };
   }>(`brandSearch`, fetcherBrand);
 
+  const inputRef = useRef<InputRef>(undefined);
+
   useEffect(() => {
     searchProduct();
     const debouceValue = ctx?.debounceValue;
-    console.log('debouceValue', debouceValue);
     if (debouceValue) {
       setUrlSearch(`/san-pham?search=${debouceValue}`);
     } else {
       setUrlSearch('');
     }
   }, [ctx?.debounceValue]);
+
+  useEffect(() => {
+    if (ctx?.isOpenSearch && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [ctx?.isOpenSearch]);
 
   const searchProduct = useCallback(() => {
     const debouceValue = ctx?.debounceValue;
@@ -95,6 +103,7 @@ export default function SearchContainer({ classNameInput, settings }: Props) {
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', handleResize);
     }
+
     return () => {
       if (window.visualViewport) {
         window.visualViewport.removeEventListener('resize', handleResize);
@@ -319,12 +328,22 @@ export default function SearchContainer({ classNameInput, settings }: Props) {
                         ref={ref}
                       >
                         <InputSearch
+                          ref={inputRef}
                           onChange={(value) => {
                             console.log('value', value);
                             ctx?.setSearchValue && ctx.setSearchValue(value);
                           }}
                           onCloseClick={() => {
                             ctx?.setIsOpenSearch && ctx.setIsOpenSearch(false);
+                          }}
+                          onKeyUp={(e: unknown) => {
+                            if ((e as KeyboardEvent).key === KEYCODE.ENTER) {
+                              ctx?.saveKeyword && ctx.saveKeyword();
+                              if (inputRef.current) {
+                                inputRef.current.blur();
+                              }
+                              window.location.href = `/san-pham?search=${ctx?.debounceValue}`;
+                            }
                           }}
                         />
                       </div>

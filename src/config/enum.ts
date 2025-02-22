@@ -5,6 +5,9 @@ export enum SUBMIT_TYPE {
   STAY = 'stay',
   BACK = 'back',
 }
+export const enum KEYCODE {
+  ENTER = 'Enter',
+}
 export enum FIELD_TYPE {
   SORT = 'sort',
   STRING = 'string',
