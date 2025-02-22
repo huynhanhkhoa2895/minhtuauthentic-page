@@ -46,7 +46,13 @@ export default function FormCheckout({
 
   return (
     <div className={'flex-1'}>
-      <CheckoutAddress setValue={setValue} setFullAddress={setFullAddress} />
+      <CheckoutAddress
+        control={control}
+        watch={watch}
+        setValue={setValue}
+        errors={errors}
+        setFullAddress={setFullAddress}
+      />
       <h3 className={'text-3xl font-[700] lg:font-bold my-6'}>
         Phương thức vận chuyển
       </h3>

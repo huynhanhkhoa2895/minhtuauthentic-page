@@ -1,10 +1,11 @@
-import { Checkbox, Input, Select } from 'antd/es';
+import { Checkbox, Input, Select, Switch } from 'antd/es';
 import { Controller } from 'react-hook-form';
 import { ReactNode } from 'react';
 import RadioForm from '@/components/atoms/forms/radioForm';
 import { removeVietnameseAccents } from '@/utils';
 import { CollapseForm } from '@/components/atoms/forms/collapseForm';
 import { PaymentsDto } from '@/dtos/Payments.dto';
+import SelectField from '@/components/atoms/selectField';
 const { TextArea } = Input;
 type Props = {
   control: any;
@@ -57,6 +58,13 @@ const RenderField = ({
       );
     case 'checkbox':
       return <Checkbox {...field} />;
+    case 'switch':
+      return (
+        <div className={'flex gap-1'}>
+          <span>{placeholder}</span>
+          <Switch {...field} title={placeholder} />
+        </div>
+      );
     case 'radio':
       return (
         <RadioForm
@@ -67,24 +75,11 @@ const RenderField = ({
       );
     case 'select':
       return (
-        <Select
-          className={'w-full'}
-          options={selectOptions || []}
-          onChange={(value) => onChange(value)}
-          placeholder={placeholder}
-          showSearch
-          filterOption={(input, option) => {
-            return (
-              removeVietnameseAccents(option?.label?.toString() || '')
-                .toString()
-                .toLowerCase()
-                .search(removeVietnameseAccents(input).toLowerCase()) >= 0 ||
-              (option?.code_name || '')
-                ?.toString()
-                .toLowerCase()
-                .search(removeVietnameseAccents(input).toLowerCase()) >= 0
-            );
-          }}
+        <SelectField
+          selectOptions={selectOptions || []}
+          placeholder={placeholder || ''}
+          onChange={onChange}
+          value={field.value}
         />
       );
     case 'textarea':

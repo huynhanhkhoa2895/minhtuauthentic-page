@@ -26,4 +26,5 @@ export class AddressesDto extends BaseDto {
   email?: string;
   phone?: string;
   user?: UserDto;
+  is_default?: boolean;
 }

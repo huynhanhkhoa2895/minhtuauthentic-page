@@ -1,18 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { AddressesDto } from '@/dtos/Addresses.dto';
 import { Button, Radio } from 'antd';
 import PlusOutlined from '@ant-design/icons/PlusOutlined';
 import Select from 'antd/es/select';
 import AddressDetail from '@/components/atoms/addresses/addressDetail';
 import AddressPopup from '@/components/molecules/addresses/popup';
+import { Control } from 'react-hook-form';
+import ListFieldFormAddress from '@/components/organisms/address/listField';
+import { twMerge } from 'tailwind-merge';
+import FormControl from '@/components/molecules/form/FormControl';
 type Props = {
   setValue: any;
   setFullAddress: any;
+  errors: any;
+  control: Control<any>;
+  watch: any;
 };
-export default function CheckoutAddress({ setValue, setFullAddress }: Props) {
+export default function CheckoutAddress({
+  setValue,
+  setFullAddress,
+  control,
+  watch,
+  errors,
+}: Props) {
   const [addresses, setAddresses] = useState<AddressesDto[]>([]);
   const [address, setAddress] = useState<AddressesDto | undefined>();
-  const [open, setOpen] = useState<boolean>(false);
   useEffect(() => {
     getListAddress().catch();
   }, []);
@@ -35,28 +47,20 @@ export default function CheckoutAddress({ setValue, setFullAddress }: Props) {
       method: 'GET',
     }).then((res) => res.json());
     setAddresses(rs?.data || []);
-    if (rs?.data?.length && (!address || isGetLast)) {
-      setAddress(rs?.data[rs?.data?.length - 1]);
+    if (rs?.data?.length && !address) {
+      const address = rs?.data.find((i) => i.is_default);
+      if (!address) {
+        if (isGetLast) setAddress(rs?.data[rs?.data?.length - 1]);
+        else setAddress(rs?.data[0]);
+      } else {
+        setAddress(address);
+      }
     }
   };
-  return (
-    <>
-      <div className={'flex flex-col'}>
-        <div className={'flex justify-between'}>
-          <h3 className={'text-3xl font-[700] lg:font-bold mb-6'}>
-            Thông tin vận chuyển
-          </h3>
-          <Button
-            htmlType={'button'}
-            onClick={() => {
-              setOpen(true);
-            }}
-            type={'link'}
-            icon={<PlusOutlined />}
-          >
-            Thêm địa chỉ
-          </Button>
-        </div>
+
+  const renderSelectAddress = () => {
+    return (
+      <div>
         <Select
           value={address?.id}
           options={addresses.map((item) => ({
@@ -72,14 +76,43 @@ export default function CheckoutAddress({ setValue, setFullAddress }: Props) {
           }))}
           onChange={(item) => setAddress(addresses.find((i) => i.id === item))}
         />
-        {address && <AddressDetail address={address} className={'mt-3'} />}
       </div>
-      <AddressPopup
-        open={open}
-        refresh={() => {
-          getListAddress(true).catch();
-        }}
-      />
+    );
+  };
+
+  return (
+    <>
+      <div className={'flex flex-col'}>
+        <div className={'flex justify-between'}>
+          <h3 className={'text-3xl font-[700] lg:font-bold mb-6'}>
+            Thông tin vận chuyển
+          </h3>
+        </div>
+
+        {renderSelectAddress()}
+        <div
+          className={twMerge(
+            'grid grid-col-1 lg:grid-col-2 gap-1 lg:gap-3 mt-3',
+          )}
+        >
+          <ListFieldFormAddress
+            key={address?.id}
+            watch={watch}
+            control={control}
+            setValue={setValue}
+            errors={errors}
+            isWaitForInit={true}
+          />
+          <FormControl
+            control={control}
+            errors={errors}
+            name={'address'}
+            type={'text'}
+            placeholder={'Tên đường, số nhà'}
+            className={'col-span-2'}
+          />
+        </div>
+      </div>
     </>
   );
 }

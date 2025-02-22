@@ -1,4 +1,4 @@
-import { Card } from 'antd';
+import { Card, Tag } from 'antd/es';
 import { AddressesDto } from '@/dtos/Addresses.dto';
 import Button from 'antd/es/button/button';
 import CloseCircleOutlined from '@ant-design/icons/CloseCircleOutlined';
@@ -22,7 +22,12 @@ export default function AddressListItem({ address, refresh }: Props) {
 
   return (
     <Card
-      title={address.title}
+      title={
+        <div className={'flex gap-1'}>
+          <span>{address.title}</span>
+          {address.is_default && <Tag color={'green'}>Mặc định</Tag>}
+        </div>
+      }
       extra={
         <Button
           icon={<CloseCircleOutlined />}

@@ -35,7 +35,7 @@ export default function Addresses() {
             Thêm địa chỉ
           </Button>
         </div>
-        <div className={'grid grid-cols-1 lg:grid-cols-2'}>
+        <div className={'grid grid-cols-1 lg:grid-cols-2 gap-1 lg:gap-3'}>
           {(addresses || []).map((item: AddressesDto) => {
             return (
               <AddressListItem key={item.id} address={item} refresh={mutate} />
@@ -47,6 +47,9 @@ export default function Addresses() {
         open={open}
         refresh={() => {
           mutate().catch();
+        }}
+        onClose={() => {
+          setOpen(false);
         }}
       />
     </>
