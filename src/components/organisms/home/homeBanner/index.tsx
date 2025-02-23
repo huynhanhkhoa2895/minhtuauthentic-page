@@ -10,7 +10,8 @@ type Props = {
   menu?: ResponseMenuDto;
   settings?: SettingsDto[];
 };
-export default function HomeBanner({ banners, menu }: Props) {
+export default function HomeBanner({ banners, menu, settings }: Props) {
+  console.log('settings', settings);
   return (
     <>
       {/*<div*/}
