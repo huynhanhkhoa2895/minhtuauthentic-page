@@ -13,6 +13,7 @@ import Layout from '@/components/templates/Layout';
 import dynamic from 'next/dynamic';
 import { ReactNode } from 'react';
 import { PageSetting } from '@/config/type';
+import { SettingsDto } from '@/dtos/Settings.dto';
 const HomeBanner = dynamic(
   () => import('@/components/organisms/home/homeBanner'),
   {
@@ -55,7 +56,7 @@ export default function Home({
     <>
       <Header settings={settings} menu={menu} />
       <HomeBanner
-        settings={settings}
+        setting={settingsHome[SETTING_KEY.BANNER_SECTION.KEY]}
         banners={homePage?.banners || []}
         menu={menu}
       />
