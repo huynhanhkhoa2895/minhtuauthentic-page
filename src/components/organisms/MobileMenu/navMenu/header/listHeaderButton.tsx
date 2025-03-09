@@ -27,7 +27,7 @@ export default function NavbarMenuListButton({ settings, className }: Props) {
       >
         <IconBars className={'w-[40px] h-[40px] text-white'} />
       </button>
-      <Link className={'grow lg:shrink-0'} href={'/src/static'}>
+      <Link className={'grow lg:shrink-0'} href={'/'}>
         {settings && (
           <LogoComponent
             position={LogoProps.HEADER}

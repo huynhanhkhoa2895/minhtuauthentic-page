@@ -71,7 +71,7 @@ export default function NavMenuHeader({
     };
   }, []);
   return (
-    <div className={'relative'}>
+    <div className={'relative h-[128px]'}>
       <NavbarMenuListButton className={className} settings={settings} />
       {isMobile && (
         <div
