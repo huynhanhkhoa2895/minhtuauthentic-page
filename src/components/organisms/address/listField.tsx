@@ -28,8 +28,6 @@ export default function ListFieldFormAddress({
   const [wards, setWards] = useState<ProvinceDto[]>([]);
   const [ready, setReady] = useState<boolean>(false);
 
-  console.log('test', watch('shipping_address'));
-
   useEffect(() => {
     if (!isWaitForInit) {
       setReady(true);

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useState } from 'react';
 import { AddressesDto } from '@/dtos/Addresses.dto';
 import { Button, Radio } from 'antd';
 import PlusOutlined from '@ant-design/icons/PlusOutlined';
@@ -23,6 +23,7 @@ export default function CheckoutAddress({
   watch,
   errors,
 }: Props) {
+  const id = useId();
   const [addresses, setAddresses] = useState<AddressesDto[]>([]);
   const [address, setAddress] = useState<AddressesDto | undefined>();
   useEffect(() => {
@@ -62,7 +63,7 @@ export default function CheckoutAddress({
     return (
       <div>
         <Select
-          value={address?.id}
+          value={address?.id || id}
           options={addresses.map((item) => ({
             label:
               item?.shipping_address +
@@ -96,12 +97,12 @@ export default function CheckoutAddress({
           )}
         >
           <ListFieldFormAddress
-            key={address?.id}
+            key={address?.id || id}
             watch={watch}
             control={control}
             setValue={setValue}
             errors={errors}
-            isWaitForInit={true}
+            isWaitForInit={!!address}
           />
           <FormControl
             control={control}

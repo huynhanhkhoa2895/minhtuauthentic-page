@@ -25,6 +25,7 @@ export function ProductRatingList({ ratings }: Props) {
               </p>
               <Rate disabled defaultValue={rating.point} />
               <div
+                className={'whitespace-pre-line'}
                 dangerouslySetInnerHTML={{ __html: rating?.content || '' }}
               />
             </div>
