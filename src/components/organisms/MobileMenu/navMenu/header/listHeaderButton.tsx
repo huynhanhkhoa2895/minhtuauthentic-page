@@ -2,11 +2,14 @@ import IconBars from '@/components/icons/bars';
 import Link from 'next/link';
 import LogoComponent from '@/components/atoms/logo';
 import { LogoProps } from '@/config/type';
-import HeaderCart from '@/components/icons/header-cart';
 import { useContext } from 'react';
 import appContext from '@/contexts/appContext';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import { twMerge } from 'tailwind-merge';
+import dynamic from 'next/dynamic';
+const HeaderCart = dynamic(() => import('@/components/icons/header-cart'), {
+  ssr: false,
+});
 
 type Props = {
   settings?: SettingsDto[];

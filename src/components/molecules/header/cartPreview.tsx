@@ -7,7 +7,8 @@ import { Button } from 'antd/es';
 import { DeleteOutlined } from '@ant-design/icons';
 import { formatMoney, generateSlugToHref } from '@/utils';
 import Link from 'next/link';
-import PriceOnCart from '@/components/atoms/priceOnCart';
+import PriceOnCart from '@/components/atoms/price/priceOnCart';
+import PriceInput from "@/components/atoms/price/priceInput";
 
 export default function CartPreview() {
   const order = useContext(OrderContext);
@@ -73,11 +74,7 @@ export default function CartPreview() {
                     );
                   })}
                   <div className={'flex justify-between items-center'}>
-                    <InputNumber
-                      min={1}
-                      value={item.qty}
-                      onChange={(value) => onChange(value, key)}
-                    />
+                    <PriceInput qty={item.qty || 1} item={item} />
                     <PriceOnCart item={item} isDisplayTotal={true} />
                   </div>
                 </div>

@@ -20,6 +20,7 @@ html, body {
 }
 .ant-input-number-handler-wrap {
   opacity: 1 !important;
+  width: 22px !important;
 }
 .ant-tabs-content.ant-tabs-content-top {
   @apply h-full;

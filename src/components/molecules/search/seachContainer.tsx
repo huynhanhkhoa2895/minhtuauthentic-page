@@ -10,7 +10,7 @@ import {
 } from 'react';
 import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import { generateSlugToHref } from '@/utils';
-import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
+import PriceWithLineThrough from '@/components/atoms/price/priceWithLineThrough';
 import useSWR from 'swr';
 import { StaticContentsDto } from '@/dtos/StaticContents.dto';
 import { BrandDto } from '@/dtos/Brand.dto';

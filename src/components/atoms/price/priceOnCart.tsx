@@ -1,6 +1,6 @@
 import { formatMoney } from '@/utils';
 import { OrderItemsDto } from '@/dtos/OrderItems.dto';
-import PriceMinus from '@/components/atoms/PriceMinus';
+import PriceMinus from '@/components/atoms/price/PriceMinus';
 type Props = {
   item: OrderItemsDto;
   isDisplayTotal?: boolean;

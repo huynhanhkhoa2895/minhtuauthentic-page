@@ -10,7 +10,6 @@ import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { Button, Dropdown } from 'antd/es';
 import useUser from '@/hooks/useUser';
 import { useRouter } from 'next/router';
-import HeaderCart from '@/components/icons/header-cart';
 import CartPreview from '@/components/molecules/header/cartPreview';
 import { CloseCircleOutlined, BarsOutlined } from '@ant-design/icons';
 import OrderContext from '@/contexts/orderContext';
@@ -19,17 +18,20 @@ import IconWifi from '@/components/icons/wifi';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import { SETTING_KEY } from '@/config/enum';
 import dynamic from 'next/dynamic';
-const InputSearchDesktop = dynamic(
-  () => import('@/components/molecules/header/InputSearch/desktop'),
-  {
-    ssr: false,
-  },
-);
 
 import NavMenuHeader from '@/components/organisms/MobileMenu/navMenu/header';
 import LogoComponent from '@/components/atoms/logo';
 import { LogoProps } from '@/config/type';
 import { isDesktop } from 'react-device-detect';
+const InputSearchDesktop = dynamic(
+    () => import('@/components/molecules/header/InputSearch/desktop'),
+    {
+        ssr: false,
+    },
+);
+const HeaderCart = dynamic(() => import('@/components/icons/header-cart'), {
+    ssr: false,
+});
 type Props = {
   menu?: ResponseMenuDto | undefined;
   settings?: SettingsDto[];
