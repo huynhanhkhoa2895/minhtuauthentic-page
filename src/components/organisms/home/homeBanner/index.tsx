@@ -46,7 +46,7 @@ export default function HomeBanner({ banners, menu, setting }: Props) {
           )}
           <div
             className={
-              'mt-3 min-h-[140px] lg:h-[380px] w-full basis-[calc(100%-230px)] lg:w-[calc(100%-230px)] max-w-full'
+              'mt-24 lg:mt-3 min-h-[140px] lg:h-[380px] w-full basis-[calc(100%-230px)] lg:w-[calc(100%-230px)] max-w-full'
             }
           >
             <Banners

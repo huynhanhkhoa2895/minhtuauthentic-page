@@ -1,14 +1,11 @@
 import { useEffect, useId, useMemo, useState } from 'react';
 import { AddressesDto } from '@/dtos/Addresses.dto';
-import { Button, Radio } from 'antd';
-import PlusOutlined from '@ant-design/icons/PlusOutlined';
 import Select from 'antd/es/select';
-import AddressDetail from '@/components/atoms/addresses/addressDetail';
-import AddressPopup from '@/components/molecules/addresses/popup';
 import { Control } from 'react-hook-form';
 import ListFieldFormAddress from '@/components/organisms/address/listField';
 import { twMerge } from 'tailwind-merge';
 import FormControl from '@/components/molecules/form/FormControl';
+import useUser from "@/hooks/useUser";
 type Props = {
   setValue: any;
   setFullAddress: any;
@@ -24,6 +21,7 @@ export default function CheckoutAddress({
   errors,
 }: Props) {
   const id = useId();
+  const user = useUser();
   const [addresses, setAddresses] = useState<AddressesDto[]>([]);
   const [address, setAddress] = useState<AddressesDto | undefined>();
   useEffect(() => {
@@ -31,7 +29,7 @@ export default function CheckoutAddress({
   }, []);
 
   useEffect(() => {
-    if (setValue) {
+    if (setValue && address) {
       setValue('address', address?.shipping_address);
       setValue('email', address?.email);
       setValue('name', address?.name);
@@ -62,21 +60,21 @@ export default function CheckoutAddress({
   const renderSelectAddress = () => {
     return (
       <div>
-        <Select
-          value={address?.id || id}
-          options={addresses.map((item) => ({
-            label:
-              item?.shipping_address +
-              ', ' +
-              item?.ward?.full_name +
-              ', ' +
-              item?.district?.full_name +
-              ', ' +
-              item?.city?.full_name,
-            value: item?.id,
-          }))}
-          onChange={(item) => setAddress(addresses.find((i) => i.id === item))}
-        />
+          {addresses?.length > 0 && <Select
+              value={address?.id || id}
+              options={addresses.map((item) => ({
+                  label:
+                      item?.shipping_address +
+                      ', ' +
+                      item?.ward?.full_name +
+                      ', ' +
+                      item?.district?.full_name +
+                      ', ' +
+                      item?.city?.full_name,
+                  value: item?.id,
+              }))}
+              onChange={(item) => setAddress(addresses.find((i) => i.id === item))}
+          />}
       </div>
     );
   };

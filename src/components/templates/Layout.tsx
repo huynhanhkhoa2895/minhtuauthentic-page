@@ -79,7 +79,7 @@ export default function Layout({
       <MenuFooter />
       <PopupProduct />
       {isMobile && (
-        <SearchContainer key={'search-container-wrapper'} settings={settings} />
+        <SearchContainer key={'search-container-wrapper'} isMobile={true} settings={settings} />
       )}
       {/*<PageLoading />*/}
     </>

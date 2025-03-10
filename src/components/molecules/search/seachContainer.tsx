@@ -32,9 +32,10 @@ import { type InputRef } from 'antd';
 type Props = {
   classNameInput?: string;
   settings?: SettingsDto[];
+  isMobile?: boolean;
 };
 
-export default function SearchContainer({ classNameInput, settings }: Props) {
+export default function SearchContainer({ classNameInput, settings, isMobile }: Props) {
   const ctx = useContext(SearchContext);
   const [data, setData] = useState<SearchData>();
   const [urlSearch, setUrlSearch] = useState<string>('');
@@ -80,7 +81,7 @@ export default function SearchContainer({ classNameInput, settings }: Props) {
     const debouceValue = ctx?.debounceValue;
     if (!debouceValue || debouceValue.length < 1) return;
     startTransition(async () => {
-      fetch(`/api/search/product?search=${debouceValue}&limit=12`)
+      fetch(`/api/search/product?search=${debouceValue}&limit=${isMobile ? 12 : 10}`)
         .then((res) => res.json())
         .then((data) => {
           setData(data?.data || []);
@@ -115,7 +116,7 @@ export default function SearchContainer({ classNameInput, settings }: Props) {
     return (
       <div className={'flex flex-col lg:col-span-2 gap-3'}>
         {data?.products.length || loading ? (
-          <ul className={'grid grid-cols-3 lg:grid-cols-6'}>
+          <ul className={'grid grid-cols-3 lg:grid-cols-5'}>
             {(data?.products || []).map((item: ProductDto, index: number) => {
               const variant = item?.variants?.[0];
               return (
@@ -194,7 +195,7 @@ export default function SearchContainer({ classNameInput, settings }: Props) {
                 {keywordList.map((item, index) => {
                   return (
                     <Tag key={index}>
-                      <a href={'/san-pham?search=' + item}>{item}</a>
+                      <a className={'lg:text-[14px]'} href={'/san-pham?search=' + item}>{item}</a>
                     </Tag>
                   );
                 })}

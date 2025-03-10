@@ -5,11 +5,12 @@ type Props = {
   onClick: () => void;
   type?: string;
   htmlType?: 'submit' | 'button';
+  className?: string;
 };
-export default function PaymentButton({ onClick, type, htmlType }: Props) {
+export default function PaymentButton({ onClick, type, htmlType, className }: Props) {
   const classSubText = 'font-extrabold uppercase text-2xl text-center mx-auto';
   const classText =
-    'flex-1 flex flex-col gap-1 text-center p-3 text-center rounded-[10px]';
+    'flex-1 flex flex-col gap-1 text-center p-3 text-center rounded-[10px] '+className;
   const renderItem = () => {
     switch (type) {
       case PAYMENT.FUDIIN:

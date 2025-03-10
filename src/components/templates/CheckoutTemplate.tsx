@@ -91,6 +91,7 @@ export default function CheckoutTemplate({
     },
   });
 
+
   const paymentType = (payment_id?: number) => {
     const payment = paymentMap.get(Number(payment_id));
     return (payment || '')?.toLowerCase();
