@@ -67,7 +67,7 @@ export default function Layout({
       <div
         id={'main-body'}
         className={twMerge(
-          'relative container mx-auto p-[70px_0.25rem_0.25rem_0.25rem] lg:p-3',
+          'relative container mx-auto p-[15px_0.25rem_0.25rem_0.25rem]   lg:p-[70px_0.25rem_0.25rem_0.25rem] lg:p-3',
           className,
         )}
       >
@@ -79,7 +79,11 @@ export default function Layout({
       <MenuFooter />
       <PopupProduct />
       {isMobile && (
-        <SearchContainer key={'search-container-wrapper'} isMobile={true} settings={settings} />
+        <SearchContainer
+          key={'search-container-wrapper'}
+          isMobile={true}
+          settings={settings}
+        />
       )}
       {/*<PageLoading />*/}
     </>

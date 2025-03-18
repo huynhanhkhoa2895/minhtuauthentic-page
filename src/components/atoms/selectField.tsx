@@ -30,13 +30,14 @@ export default function SelectField({
   useEffect(() => {
     onChange && onChange(_value || '');
   }, [_value]);
+
   return (
     <Select
       className={'w-full'}
       options={selectOptions || []}
       onChange={(value) => setValue(value)}
       placeholder={placeholder}
-      value={_value}
+      defaultValue={_value}
       showSearch
       filterOption={(input, option) => {
         return (
