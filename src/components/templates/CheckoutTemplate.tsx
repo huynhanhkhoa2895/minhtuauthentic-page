@@ -23,6 +23,7 @@ import ItemFudiinDto from '@/dtos/Fudiin/item.dto';
 import CustomerFudiinDto from '@/dtos/Fudiin/customer.dto';
 import ShippingFudiinDto from '@/dtos/Fudiin/shipping.dto';
 import { AddressesDto } from '@/dtos/Addresses.dto';
+
 const schema = yup
   .object({
     name: yup.string().required(),
@@ -90,7 +91,6 @@ export default function CheckoutTemplate({
       address: '',
     },
   });
-
 
   const paymentType = (payment_id?: number) => {
     const payment = paymentMap.get(Number(payment_id));
@@ -220,6 +220,7 @@ export default function CheckoutTemplate({
     <>
       <BreadcrumbComponent label={'Giỏ hàng'} link={'/gio-hang/tom-tat'} />
       <form
+        id={'checkout-form'}
         className={twMerge(
           'w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3 ',
         )}
