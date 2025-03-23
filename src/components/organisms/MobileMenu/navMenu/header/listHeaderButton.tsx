@@ -30,7 +30,7 @@ export default function NavbarMenuListButton({ settings, className }: Props) {
       >
         <IconBars className={'w-[40px] h-[40px] text-white'} />
       </button>
-      <Link className={'grow lg:shrink-0'} href={'/'}>
+      <a className={'grow lg:shrink-0'} href={'/'}>
         {settings && (
           <LogoComponent
             position={LogoProps.HEADER}
@@ -38,7 +38,7 @@ export default function NavbarMenuListButton({ settings, className }: Props) {
             className={'object-contain h-[45px] w-auto m-auto'}
           />
         )}
-      </Link>
+      </a>
       <HeaderCart
         className={'w-[40px] h-[40px] shrink-0'}
         classNumber={'text-white'}

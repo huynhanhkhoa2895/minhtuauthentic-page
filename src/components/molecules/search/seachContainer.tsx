@@ -35,7 +35,11 @@ type Props = {
   isMobile?: boolean;
 };
 
-export default function SearchContainer({ classNameInput, settings, isMobile }: Props) {
+export default function SearchContainer({
+  classNameInput,
+  settings,
+  isMobile,
+}: Props) {
   const ctx = useContext(SearchContext);
   const [data, setData] = useState<SearchData>();
   const [urlSearch, setUrlSearch] = useState<string>('');
@@ -81,7 +85,9 @@ export default function SearchContainer({ classNameInput, settings, isMobile }: 
     const debouceValue = ctx?.debounceValue;
     if (!debouceValue || debouceValue.length < 1) return;
     startTransition(async () => {
-      fetch(`/api/search/product?search=${debouceValue}&limit=${isMobile ? 12 : 10}`)
+      fetch(
+        `/api/search/product?search=${debouceValue}&limit=${isMobile ? 12 : 10}`,
+      )
         .then((res) => res.json())
         .then((data) => {
           setData(data?.data || []);
@@ -134,7 +140,9 @@ export default function SearchContainer({ classNameInput, settings, isMobile }: 
                       unoptimized={true}
                     />
                     <div className={'flex flex-col'}>
-                      <p className={'h-[65px] overflow-hidden'}>{item?.name}</p>
+                      <p className={'h-[65px] overflow-hidden'}>
+                        {item?.title}
+                      </p>
                       <PriceWithLineThrough
                         price={variant?.price}
                         regularPrice={variant?.regular_price}
@@ -195,7 +203,12 @@ export default function SearchContainer({ classNameInput, settings, isMobile }: 
                 {keywordList.map((item, index) => {
                   return (
                     <Tag key={index}>
-                      <a className={'lg:text-[14px]'} href={'/san-pham?search=' + item}>{item}</a>
+                      <a
+                        className={'lg:text-[14px]'}
+                        href={'/san-pham?search=' + item}
+                      >
+                        {item}
+                      </a>
                     </Tag>
                   );
                 })}
