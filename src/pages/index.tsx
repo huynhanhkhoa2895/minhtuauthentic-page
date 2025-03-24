@@ -14,6 +14,8 @@ import dynamic from 'next/dynamic';
 import { ReactNode } from 'react';
 import { PageSetting } from '@/config/type';
 import { SettingsDto } from '@/dtos/Settings.dto';
+import HomeSupport from '@/components/organisms/home/homeSupport';
+
 const HomeBanner = dynamic(
   () => import('@/components/organisms/home/homeBanner'),
   {
@@ -95,7 +97,10 @@ export default function Home({
             setting={settingsHome[SETTING_KEY.BRAND_SECTION.KEY]}
           />
         )}
-        {/*<HomeSupport />*/}
+
+        {homePage?.homeSupport && (
+          <HomeSupport contents={homePage?.homeSupport} />
+        )}
       </Layout>
       <Footer settings={settings} footerContent={footerContent} />
     </>

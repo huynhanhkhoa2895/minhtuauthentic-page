@@ -6,6 +6,7 @@ import RightOutlined from '@ant-design/icons/lib/icons/RightOutlined';
 import SectionSwiperSlide from '@/components/organisms/sectionSwiper/slide';
 import { Grid, Pagination, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
 export type SwiperProps = {
   classNameContainer?: string;
   classNameItems?: string;
@@ -26,6 +27,8 @@ export type SwiperProps = {
   auto?: boolean;
   slidePerViewMobile?: number;
   spaceBetweenMobile?: number;
+  classNameLeft?: string;
+  classNameRight?: string;
 };
 export default function SectionSwiperItem({
   classNameContainer,
@@ -45,6 +48,8 @@ export default function SectionSwiperItem({
   auto,
   slidePerViewMobile,
   spaceBetweenMobile,
+  classNameLeft,
+  classNameRight,
 }: SwiperProps) {
   const rows = 2;
   const [swiper, setSwiper] = useState<SwiperClass | null>(null);
@@ -74,6 +79,7 @@ export default function SectionSwiperItem({
           variant === 'next'
             ? 'right-[-10px] lg:right-[-16px]'
             : 'left-[-10px] lg:left-[-16px]',
+          variant === 'next' ? classNameRight : classNameLeft,
         )}
       >
         {variant === 'next' ? (

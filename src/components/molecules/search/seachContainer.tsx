@@ -344,7 +344,6 @@ export default function SearchContainer({
                         <InputSearch
                           ref={inputRef}
                           onChange={(value) => {
-                            console.log('value', value);
                             ctx?.setSearchValue && ctx.setSearchValue(value);
                           }}
                           onCloseClick={() => {
