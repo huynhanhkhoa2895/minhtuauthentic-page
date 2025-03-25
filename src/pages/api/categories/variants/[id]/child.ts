@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { CategoryDto } from '@/dtos/Category.dto';
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,7 +17,7 @@ export default async function handler(
     const response = await fetch(
       `${process.env.BE_URL}/api/pages/category/${id}/children`,
     );
-    const data = await response.json();
+    const data: { data: CategoryDto[] } = await response.json();
 
     return res.status(200).json(data);
   } catch (error) {

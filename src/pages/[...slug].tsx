@@ -17,6 +17,7 @@ import { generateSlugToHref } from '@/utils';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import { ResponseNewsPageDto } from '@/dtos/ResponseNewsPage.dto';
 import useSettings from '@/hooks/useSettings';
+import { CategoryDto } from '@/dtos/Category.dto';
 
 export const getServerSideProps = async (context: any) => {
   const { slug } = context.query;
@@ -44,7 +45,6 @@ export const getServerSideProps = async (context: any) => {
   }
 
   let keyword = undefined;
-  let childCategories = [];
 
   if (
     data?.data?.model === Entity.PRODUCTS ||
@@ -97,17 +97,6 @@ export const getServerSideProps = async (context: any) => {
         title = category?.seo?.title || category?.name;
         description = category?.seo?.description;
         keyword = category?.seo?.keyword;
-        if (category?.id) {
-          try {
-            const childCategoriesRes = await fetch(
-              `${process.env.BE_URL}/api/pages/category/${category.id}/children`,
-            );
-            const childCategoriesData = await childCategoriesRes.json();
-            childCategories = childCategoriesData.data || [];
-          } catch (error) {
-            console.error('Error fetching child categories:', error);
-          }
-        }
         break;
       case Entity.BRANDS:
         let brand = (
@@ -140,10 +129,10 @@ export const getServerSideProps = async (context: any) => {
       width,
       height,
       image,
-      childCategories,
     },
   };
 };
+
 export default function Page({
   slug,
   title,
@@ -152,7 +141,6 @@ export default function Page({
   width,
   height,
   keyword,
-  childCategories,
 }: {
   slug: ResponseSlugPageDto<unknown>;
   title?: string | null;
@@ -161,7 +149,6 @@ export default function Page({
   width?: number;
   height?: number;
   keyword?: string;
-  childCategories?: any[];
 } & ServerSideProps) {
   const { settings, menu, footerContent } = useSettings();
   const renderTemplate = () => {
@@ -178,7 +165,6 @@ export default function Page({
           <CategoryTemplate
             slug={slug as ResponseSlugPageDto<ResponseCategoryFilterPageDto>}
             menu={menu}
-            childCategories={childCategories}
           />
         );
       case Entity.CATEGORY_NEWS:

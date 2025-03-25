@@ -25,14 +25,13 @@ type Props = {
     link: string;
   };
   isSearch?: boolean;
-  childCategories?: any[];
 };
+
 export default function CategoryTemplate({
   slug,
   breadcrumb,
   isSearch,
   menu,
-  childCategories,
 }: Props) {
   const data = slug?.data as ResponseCategoryFilterPageDto;
   const renderLabelBreadcrumb: Record<string, string> = {
@@ -79,7 +78,6 @@ export default function CategoryTemplate({
               title={data?.title}
               category={data?.category}
               menu={menu}
-              childCategories={childCategories}
             />
           </div>
         </div>

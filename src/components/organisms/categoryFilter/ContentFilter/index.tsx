@@ -23,7 +23,6 @@ type Props = {
   title?: string;
   category?: CategoryDto;
   menu?: ResponseMenuDto;
-  childCategories?: CategoryDto[];
 };
 
 export default function ContentFilter({
@@ -34,7 +33,6 @@ export default function ContentFilter({
   menu,
   title,
   category,
-  childCategories = [],
 }: Props) {
   const ctx = useContext(CategoryFilterContext);
   const [_products, setProducts] = useState<ProductDto[]>(products);
@@ -158,9 +156,9 @@ export default function ContentFilter({
             </span>
           </h1>
 
-          {childCategories.length > 0 && (
+          {category?.children && category?.children?.length > 0 && (
             <div className="flex flex-wrap gap-2 mt-2">
-              {childCategories.map((child) => (
+              {category.children.map((child) => (
                 <Link
                   key={child.id}
                   href={`/${child.slugs?.slug || ''}`}
@@ -240,7 +238,7 @@ export default function ContentFilter({
               pageSize={ctx?.limit || 12}
               onChange={(page: number) => {
                 window.scroll({ top: 0, left: 0, behavior: 'smooth' });
-                ctx?.updateRouter && ctx.updateRouter('page', String(page));
+                ctx?.updateRouter && ctx.updateRouter('page', page.toString());
               }}
             />
           )}
