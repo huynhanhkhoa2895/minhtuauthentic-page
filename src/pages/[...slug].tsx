@@ -17,7 +17,6 @@ import { generateSlugToHref } from '@/utils';
 import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import { ResponseNewsPageDto } from '@/dtos/ResponseNewsPage.dto';
 import useSettings from '@/hooks/useSettings';
-import { CategoryDto } from '@/dtos/Category.dto';
 
 export const getServerSideProps = async (context: any) => {
   const { slug } = context.query;
