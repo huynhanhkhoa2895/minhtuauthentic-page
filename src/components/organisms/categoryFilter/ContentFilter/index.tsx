@@ -13,6 +13,7 @@ import { Pagination, Button } from 'antd/es';
 import Filter from '@/components/icons/filter';
 import { CategoryDto } from '@/dtos/Category.dto';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
+import Link from 'next/link';
 
 type Props = {
   settings?: ProductFilterOptionDto;
@@ -22,6 +23,7 @@ type Props = {
   title?: string;
   category?: CategoryDto;
   menu?: ResponseMenuDto;
+  childCategories?: CategoryDto[];
 };
 
 export default function ContentFilter({
@@ -31,13 +33,17 @@ export default function ContentFilter({
   total,
   menu,
   title,
+  category,
+  childCategories = [],
 }: Props) {
   const ctx = useContext(CategoryFilterContext);
   const [_products, setProducts] = useState<ProductDto[]>(products);
   const [isReady, setIsReady] = useState(false);
+
   useEffect(() => {
     ctx?.setTotal && ctx.setTotal(total);
   }, []);
+
   const convertSettingToObject = () => {
     let obj: Record<string, Record<string, string>> = {
       sex: {
@@ -145,9 +151,27 @@ export default function ContentFilter({
       );
     } else if (title) {
       return (
-        <h1 className={'mb-3 lg:mb-6'}>
-          <span className={'text-3xl text-primary font-semibold'}>{title}</span>
-        </h1>
+        <div className="mb-3 lg:mb-6">
+          <h1 className={'mb-2'}>
+            <span className={'text-3xl text-primary font-semibold'}>
+              {title}
+            </span>
+          </h1>
+
+          {childCategories.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-2">
+              {childCategories.map((child) => (
+                <Link
+                  key={child.id}
+                  href={`/${child.slugs?.slug || ''}`}
+                  className="px-3 py-1 bg-gray-100 hover:bg-primary hover:text-white rounded-md text-sm transition-colors"
+                >
+                  {child.name}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
       );
     }
     return null;
@@ -216,7 +240,7 @@ export default function ContentFilter({
               pageSize={ctx?.limit || 12}
               onChange={(page: number) => {
                 window.scroll({ top: 0, left: 0, behavior: 'smooth' });
-                ctx?.updateRouter && ctx.updateRouter('page', page as string);
+                ctx?.updateRouter && ctx.updateRouter('page', String(page));
               }}
             />
           )}
