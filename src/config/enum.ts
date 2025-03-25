@@ -5,6 +5,9 @@ export enum SUBMIT_TYPE {
   STAY = 'stay',
   BACK = 'back',
 }
+export const enum KEYCODE {
+  ENTER = 'Enter',
+}
 export enum FIELD_TYPE {
   SORT = 'sort',
   STRING = 'string',
@@ -83,6 +86,10 @@ export const SETTING_KEY = {
       KEY: 'primary_color',
       LABEL: 'Màu chủ đạo',
     },
+    FOOTER_COLOR: {
+      KEY: 'footer_color',
+      LABEL: 'Màu chân trang',
+    },
     PAGE_INFORMATION: {
       KEY: 'page_information',
       LABEL: 'Thông tin trang',
@@ -94,6 +101,14 @@ export const SETTING_KEY = {
       PAGE_TITLE_RIGHT: 'page_title_right',
       PAGE_TITLE_CENTER: 'page_title_center',
     },
+    LOGO: {
+      KEY: 'logo',
+      LABEL: 'Logo',
+    },
+  },
+  BANNER_SECTION: {
+    KEY: 'banner_section',
+    LABEL: 'Vùng banner',
   },
   BRAND_SECTION: {
     KEY: 'brand_section',
@@ -128,7 +143,6 @@ export const SETTING_KEY = {
     LABEL: 'Vùng Deal Sock',
   },
 };
-export type OrderStatus = 'processing' | 'pending' | 'done' | 'new' | 'close';
 
 export const CATEGORY_FILTER = {
   SORT_BY: {
@@ -184,3 +198,5 @@ export enum OrderStatus {
   NEW = 'new',
   CLOSE = 'close',
 }
+
+export const SEARCH_KEYWORD = 'search-keyword';

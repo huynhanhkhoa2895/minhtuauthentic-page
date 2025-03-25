@@ -15,30 +15,18 @@ import CartDto from '@/dtos/Cart.dto';
 import { toast } from 'react-toastify';
 import { createVNPayUrl } from '@/utils/vnpay';
 import ResponseSendTransactionDto from '@/dtos/Fudiin/responseSendTransaction.dto';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import OrderContext from '@/contexts/orderContext';
 import { useRouter } from 'next/router';
-import SendTransactionExtensionItemDto from '@/dtos/sendTransactionExtensionItem.dto';
 import SendTransactionFudiinDto from '@/dtos/Fudiin/sendTransaction.dto';
 import ItemFudiinDto from '@/dtos/Fudiin/item.dto';
 import CustomerFudiinDto from '@/dtos/Fudiin/customer.dto';
 import ShippingFudiinDto from '@/dtos/Fudiin/shipping.dto';
+import { AddressesDto } from '@/dtos/Addresses.dto';
+
 const schema = yup
   .object({
-    name: yup
-      .string()
-      .required('Vui lòng nhập tên')
-      .test({
-        message: () => 'Tên phải ít nhất 2 chữ',
-        test: async (values: string) => {
-          const arr = values.split(' ');
-          return arr.length >= 2;
-        },
-      } as any),
-    shipping_city: yup.string().required('Vui lòng chọn tỉnh/thành phố'),
-    shipping_district: yup.string().required('Vui lòng chọn quận/huyện'),
-    shipping_ward: yup.string().required('Vui lòng chọn phường/xã'),
-    address: yup.string().required('Vui lòng nhập địa chỉ'),
+    name: yup.string().required(),
     note: yup.string(),
     payment_id: yup.number().required('Vui lòng chọn phương thức thanh toán'),
     email: yup
@@ -46,21 +34,25 @@ const schema = yup
       .email('Vui lòng nhập đúng dạng email')
       .required('Vui lòng nhập email'),
     phone: yup.string().required('Vui lòng nhập số điện thoại'),
+    shipping_city: yup.string().required('Vui lòng chọn tỉnh/thành phố'),
+    shipping_district: yup.string().required('Vui lòng chọn quận/huyện'),
+    shipping_ward: yup.string().required('Vui lòng chọn phường/xã'),
+    address: yup.string().required('Vui lòng nhập địa chỉ'),
   })
   .required();
 export type FormData = {
   name: string;
   email: string;
   phone: string;
-  shipping_city: string;
-  shipping_district: string;
-  shipping_ward: string;
-  address: string;
   payment_id: number;
   note?: string;
   status?: string;
   payment_type_id?: string;
   order_external_id?: string;
+  shipping_city: string;
+  shipping_district: string;
+  shipping_ward: string;
+  address: string;
 };
 export default function CheckoutTemplate({
   payments,
@@ -72,12 +64,7 @@ export default function CheckoutTemplate({
   const { user } = useUser();
   const orderCtx = useContext(OrderContext);
   const router = useRouter();
-  const [fullAddress, setFullAddress] = useState<{
-    city?: string;
-    district?: string;
-    ward?: string;
-    fullAddress?: string;
-  }>();
+  const [fullAddress, setFullAddress] = useState<AddressesDto | undefined>();
   const paymentMap = new Map(
     payments.map((item) => [item.id, item.name?.toLowerCase()]),
   );
@@ -93,15 +80,15 @@ export default function CheckoutTemplate({
     defaultValues: {
       name: user?.name || '',
       email: user?.email || '',
-      shipping_district: '',
-      shipping_city: '',
-      shipping_ward: '',
-      address: '',
       payment_id: payments[0]?.id || 0,
       note: '',
       phone: user?.phone || '',
       status: ORDER_STATUS.NEW as string,
       order_external_id: '',
+      shipping_city: '',
+      shipping_district: '',
+      shipping_ward: '',
+      address: '',
     },
   });
 
@@ -119,8 +106,6 @@ export default function CheckoutTemplate({
     if (!orderCtx?.cart) {
       return;
     }
-
-    const paymentTypeId = data?.payment_type_id;
 
     const order: FormData & {
       user_id: number;
@@ -188,9 +173,9 @@ export default function CheckoutTemplate({
                     lastName: data?.name.split(' ')[1],
                   }),
                   shipping: new ShippingFudiinDto({
-                    city: fullAddress?.city || '',
-                    district: fullAddress?.district || '',
-                    ward: fullAddress?.ward || '',
+                    city: fullAddress?.city?.full_name || '',
+                    district: fullAddress?.district?.full_name || '',
+                    ward: fullAddress?.ward?.full_name || '',
                     street: data?.address,
                     houseNumber: data?.phone,
                     country: 'VN',
@@ -235,6 +220,7 @@ export default function CheckoutTemplate({
     <>
       <BreadcrumbComponent label={'Giỏ hàng'} link={'/gio-hang/tom-tat'} />
       <form
+        id={'checkout-form'}
         className={twMerge(
           'w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3 ',
         )}

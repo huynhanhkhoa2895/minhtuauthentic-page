@@ -12,6 +12,7 @@ import Loading from '@/components/atoms/loading';
 export type TypeAppState = {
   isOpenMenu: boolean;
   setIsOpenMenu: Dispatch<SetStateAction<boolean>> | undefined;
+
   isOpenPopupProduct: string | null;
   setIsOpenPopupProduct: Dispatch<SetStateAction<string | null>> | undefined;
   isOpenNavMenu: boolean;
@@ -29,15 +30,22 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     null,
   );
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+
   const [user, setUser] = useState<UserDto | undefined>();
   const [isOpenNavMenu, setIsOpenNavMenu] = useState(false);
   const [settings, setSettings] = useState({});
   const router = useRouter();
   useEffect(() => {
-    setIsOpenNavMenu(false);
-    setIsOpenMenu(false);
-    setIsOpenPopupProduct(null);
-  }, [router.pathname]);
+    const handleRouteComplete = () => {
+      setIsOpenNavMenu(false);
+      setIsOpenMenu(false);
+      setIsOpenPopupProduct(null);
+    };
+    router.events.on('routeChangeComplete', handleRouteComplete);
+    return () => {
+      router.events.on('routeChangeComplete', handleRouteComplete);
+    };
+  }, [router]);
 
   return (
     <AppContext.Provider

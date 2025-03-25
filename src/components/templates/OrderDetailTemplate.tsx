@@ -7,9 +7,10 @@ import {
   calculatePriceMinus,
   formatMoney,
   generateSlugToHref,
-  promotionName, statusOrder,
+  promotionName,
+  statusOrder,
 } from '@/utils';
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import Link from 'next/link';
 import { DataType } from 'csstype';
 
@@ -34,24 +35,26 @@ export default function OrderDetailTemplate({ order }: Props) {
     setTotalPriceWithoutCoupon(totalPriceWithoutCoupon);
   }, []);
 
-  const columns: TableColumnsType<DataType> = [
+  const columns: TableColumnsType = [
     {
       title: 'Tên sản phẩm',
       dataIndex: 'name',
       key: 'name',
       width: 500,
-      render: (_: unknown, item: OrderItemsDto) => (
-        <Link
-          href={generateSlugToHref(item?.variant?.product?.slugs?.slug)}
-          className={'flex gap-3'}
-        >
-          <ImageWithFallback
-            image={item?.variant?.images?.[0]?.image}
-            className={'w-[50px] h-[50px] object-contain'}
-          />
-          <span>{item.variant_name}</span>
-        </Link>
-      ),
+      render: (_: unknown, item: OrderItemsDto) => {
+        return (
+          <Link
+            href={generateSlugToHref(item?.variant?.product?.slugs?.slug)}
+            className={'flex gap-3'}
+          >
+            <ImageWithFallback
+              image={item?.variant?.images?.[0]?.image}
+              className={'w-[50px] h-[50px] object-contain'}
+            />
+            <span>{item.variant_name}</span>
+          </Link>
+        );
+      },
     },
     {
       title: 'Đơn giá',
@@ -129,7 +132,9 @@ export default function OrderDetailTemplate({ order }: Props) {
         case 'status':
           items.push({
             label: 'Trạng thái',
-            render: statusOrder(value),
+            render: (
+              <span className={'text-red-500'}>{statusOrder(value)}</span>
+            ),
           });
           break;
         case 'payment':
@@ -165,7 +170,7 @@ export default function OrderDetailTemplate({ order }: Props) {
           break;
       }
       setOrderField(items);
-    })
+    });
   }, []);
 
   return (
@@ -199,45 +204,45 @@ export default function OrderDetailTemplate({ order }: Props) {
           <div className={'mt-3 flex justify-end'}>
             <table className={''}>
               <tbody>
-              <tr>
-                <td className={'text-primary text-xl'}>Tạm Tính:</td>
-                <td className={'text-right pr-5'}>
-                  {formatMoney(totalPriceWithoutCoupon)}
-                </td>
-              </tr>
+                <tr>
+                  <td className={'text-primary text-xl'}>Tạm Tính:</td>
+                  <td className={'text-right pr-5'}>
+                    {formatMoney(totalPriceWithoutCoupon)}
+                  </td>
+                </tr>
 
-              {order?.coupons &&
-                order?.coupons?.length > 0 &&
-                order?.coupons.map((couponDetail, index) => {
-                  return (
-                    <tr key={'OrderDetailTemplate-' + index}>
-                      <td className={'text-lg'}>
-                        <span className={'text-primary '}>Coupon {'  '}</span>
-                        <span
-                          className={
-                            'font-[700] lg:font-bold p-1 bg-[#efefef] rounded-[4px] text-sm'
-                          }
-                        >
-                          {couponDetail?.coupon?.code}
-                        </span>{' '}
-                        <span>: </span>
-                      </td>
-                      <td className={'text-right pr-5'}>
-                        -
-                        {formatMoney(
-                          calculatePriceMinus(
-                            order.total_price || 0,
-                            couponDetail?.coupon,
-                          ),
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
-              <tr>
-                <td className={'text-primary text-xl'}>Tổng tiền:</td>
-                <td>{formatMoney(order.total_price || 0)}</td>
-              </tr>
+                {order?.coupons &&
+                  order?.coupons?.length > 0 &&
+                  order?.coupons.map((couponDetail, index) => {
+                    return (
+                      <tr key={'OrderDetailTemplate-' + index}>
+                        <td className={'text-lg'}>
+                          <span className={'text-primary '}>Coupon {'  '}</span>
+                          <span
+                            className={
+                              'font-[700] lg:font-bold p-1 bg-[#efefef] rounded-[4px] text-sm'
+                            }
+                          >
+                            {couponDetail?.coupon?.code}
+                          </span>{' '}
+                          <span>: </span>
+                        </td>
+                        <td className={'text-right pr-5'}>
+                          -
+                          {formatMoney(
+                            calculatePriceMinus(
+                              order.total_price || 0,
+                              couponDetail?.coupon,
+                            ),
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                <tr>
+                  <td className={'text-primary text-xl'}>Tổng tiền:</td>
+                  <td>{formatMoney(order.total_price || 0)}</td>
+                </tr>
               </tbody>
             </table>
           </div>

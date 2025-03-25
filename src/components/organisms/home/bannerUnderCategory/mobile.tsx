@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { ImageDto } from '@/dtos/Image.dto';
 import { ReactNode, useMemo } from 'react';
 import { ImageDetailDto } from '@/dtos/ImageDetail.dto';
+import ImageWithRatio from '@/components/atoms/images/imageWithRatio';
 
 export default function BannerUnderCategoryMobile({
   contents,
@@ -21,21 +22,11 @@ export default function BannerUnderCategoryMobile({
           const imageDisplay = item?.image?.url;
           xhtml.push(
             <SwiperSlide key={index + '_' + index2}>
-              {imageDisplay && item ? (
-                <div
-                  style={{ height: 80 }}
-                  className={'w-full h-full relative'}
-                >
-                  <Link href={generateSlugToHref(content?.properties?.slug)}>
-                    <Image
-                      src={imageDisplay}
-                      className={'w-full h-auto object-cover'}
-                      alt={item?.image?.alt || 'image'}
-                      fill={true}
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  </Link>
-                </div>
+              {imageDisplay && item.image ? (
+                <ImageWithRatio
+                  image={item.image}
+                  href={generateSlugToHref(content?.properties?.slug)}
+                />
               ) : (
                 <></>
               )}

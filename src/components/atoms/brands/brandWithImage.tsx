@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import { BrandDto } from '@/dtos/Brand.dto';
 import { twMerge } from 'tailwind-merge';
 

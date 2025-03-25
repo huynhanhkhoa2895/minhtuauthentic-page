@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { StaticContentsDto } from '@/dtos/StaticContents.dto';
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import { twMerge } from 'tailwind-merge';
 import { isMobile } from 'react-device-detect';
 

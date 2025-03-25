@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ProductDto } from '@/dtos/Product.dto';
 import ProductList from '@/components/molecules/product/list';
+import Button from 'antd/es/button';
 type Props = {
   product: ProductDto;
 };
@@ -46,7 +47,24 @@ export default function ProductSeen({ product }: Props) {
   return (
     <>
       {products?.length > 0 && (
-        <ProductList products={products} title="Sản phẩm đã xem" />
+        <ProductList
+          products={products}
+          title="Sản phẩm đã xem"
+          rightTitle={
+            <Button
+              type={'link'}
+              onClick={() => {
+                localStorage.setItem(
+                  'product_seen',
+                  JSON.stringify({ data: [], created: new Date().getTime() }),
+                );
+                setProducts([]);
+              }}
+            >
+              Xóa tất cả
+            </Button>
+          }
+        />
       )}
     </>
   );

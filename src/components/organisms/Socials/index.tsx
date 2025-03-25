@@ -4,7 +4,7 @@ import {
   STATIC_COMPONENT_TYPE,
 } from '@/config/enum';
 import Link from 'next/link';
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import { StaticContentsDto } from '@/dtos/StaticContents.dto';
 import useSWR from 'swr';
 import { useEffect, useState } from 'react';

@@ -1,27 +1,28 @@
-import Logo from '@/static/images/logo.png';
-import Image from 'next/image';
+import NavbarMenuListButton from '@/components/organisms/MobileMenu/navMenu/header/listHeaderButton';
+import dynamic from 'next/dynamic';
+import { useContext, useEffect, useRef } from 'react';
+import { SettingsDto } from '@/dtos/Settings.dto';
+import SearchContext from '@/contexts/searchContext';
 const InputSearch = dynamic(
-  () => import('@/components/molecules/header/inputSearch'),
+  () => import('@/components/molecules/header/InputSearch/input'),
   {
     ssr: false,
   },
 );
-import HeaderCart from '@/components/icons/header-cart';
-import { twMerge } from 'tailwind-merge';
-import Link from 'next/link';
-import dynamic from 'next/dynamic';
-import { useContext, useEffect, useRef } from 'react';
-import IconBars from '@/components/icons/bars';
-import { BarsOutlined } from '@ant-design/icons';
-import AppContext from '@/contexts/appContext';
+
 type Props = {
   className?: string;
   isMobile?: boolean;
+  settings?: SettingsDto[];
 };
-export default function NavMenuHeader({ className, isMobile }: Props) {
+export default function NavMenuHeader({
+  className,
+  isMobile,
+  settings,
+}: Props) {
   const ref = useRef<HTMLDivElement | null>(null);
   const refTimeOut = useRef<NodeJS.Timeout | null>(null);
-  const appCtx = useContext(AppContext);
+  const ctx = useContext(SearchContext);
   useEffect(() => {
     let lastScrollY = 0;
     let isScrollDown = false;
@@ -54,7 +55,6 @@ export default function NavMenuHeader({ className, isMobile }: Props) {
           ref.current.classList.remove('visible');
           ref.current.classList.remove('opacity-100');
           // ref.current.style.height = 'translateY(-100%)';
-
         }
 
         lastScrollY = currentScrollY;
@@ -70,42 +70,9 @@ export default function NavMenuHeader({ className, isMobile }: Props) {
       }
     };
   }, []);
-  const renderItem = () => {
-    return (
-      <>
-        <button
-          type={'button'}
-          className={'w-[40px] lg:hidden'}
-          onClick={() => {
-            appCtx?.setIsOpenNavMenu &&
-              appCtx.setIsOpenNavMenu(!appCtx?.isOpenNavMenu);
-          }}
-        >
-          <IconBars className={'w-[40px] h-[40px] text-white'} />
-        </button>
-        <Link className={'grow lg:shrink-0'} href={'/'}>
-          <Image
-            src={Logo}
-            width={161}
-            height={30}
-            className={'object-contain h-z w-auto m-auto'}
-            alt={'Minhtuauhentic'}
-          />
-        </Link>
-        {/*<InputSearch isMobile={true} />*/}
-
-        <HeaderCart
-          className={'w-[40px] h-[40px] shrink-0'}
-          classNumber={'text-white'}
-        />
-      </>
-    );
-  };
   return (
     <div className={'relative'}>
-      <div className={twMerge('flex p-3 gap-2 items-center', className)}>
-        {renderItem()}
-      </div>
+      <NavbarMenuListButton className={className} settings={settings} />
       {isMobile && (
         <div
           className={
@@ -113,7 +80,17 @@ export default function NavMenuHeader({ className, isMobile }: Props) {
           }
           ref={ref}
         >
-          <InputSearch classNameInput={'top-[120px]'} isMobile={true} />
+          {/*<InputSearchWrapper*/}
+          {/*  key={'input-search-mobile'}*/}
+          {/*  classNameInput={'top-[120px]'}*/}
+          {/*  isForMobile={true}*/}
+          {/*  settings={settings}*/}
+          {/*/>*/}
+          <InputSearch
+            onClick={() => {
+              ctx?.setIsOpenSearch && ctx.setIsOpenSearch(true);
+            }}
+          />
         </div>
       )}
     </div>

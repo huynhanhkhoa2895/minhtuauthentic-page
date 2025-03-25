@@ -47,9 +47,12 @@ const LayoutMenu = dynamic(
   },
 );
 
-const PageLoading = dynamic(() => import('@/components/atoms/PageLoading'), {
-  ssr: false,
-});
+const SearchContainer = dynamic(
+  () => import('@/components/molecules/search/seachContainer'),
+  {
+    ssr: false,
+  },
+);
 
 export default function Layout({
   children,
@@ -64,17 +67,24 @@ export default function Layout({
       <div
         id={'main-body'}
         className={twMerge(
-          'relative container mx-auto p-[70px_0.25rem_0.25rem_0.25rem] lg:p-3',
+          'relative container mx-auto p-[15px_0.25rem_0.25rem_0.25rem]   lg:p-[70px_0.25rem_0.25rem_0.25rem] lg:p-3',
           className,
         )}
       >
         {children}
         {isDesktop && menu && <LayoutMenu menu={menu} />}
       </div>
-      {isMobile && menu && <NavMenu menu={menu} />}
+      {isMobile && menu && <NavMenu menu={menu} settings={settings} />}
       <Socials />
       <MenuFooter />
       <PopupProduct />
+      {isMobile && (
+        <SearchContainer
+          key={'search-container-wrapper'}
+          isMobile={true}
+          settings={settings}
+        />
+      )}
       {/*<PageLoading />*/}
     </>
   );

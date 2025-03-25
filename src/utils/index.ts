@@ -262,11 +262,9 @@ export function getTitleNews(content: string) {
 }
 
 export const validateGoogleRecaptcha = async (body: any) => {
-  console.log('body test first', body);
   if (typeof body === 'string') {
     body = JSON.parse(body);
   }
-  console.log('body test', body);
   return fetch('https://www.google.com/recaptcha/api/siteverify', {
     method: 'POST',
     headers: {
@@ -276,11 +274,9 @@ export const validateGoogleRecaptcha = async (body: any) => {
   })
     .then((reCaptchaRes) => reCaptchaRes.json())
     .then((reCaptchaRes) => {
-      console.log('reCaptchaRes?.score', reCaptchaRes?.score);
       return reCaptchaRes?.score > 0.5;
     })
     .catch((err) => {
-      console.log('err', err);
       return false;
     });
 };
@@ -306,7 +302,6 @@ export function getFilterFromQuery(queryString: string) {
   queryString = queryString.replaceAll('%5B', '[').replaceAll('%5D', ']');
   const result: Record<string, any[]> = {};
 
-  // Tách từng cặp key=value
   const pairs = queryString.match(/([^&]+)=([^&]*)/g);
   if (!pairs) return result;
 
@@ -314,7 +309,7 @@ export function getFilterFromQuery(queryString: string) {
     const [key, value] = pair.split('=');
 
     // Kiểm tra nếu key có dạng mảng (filter[categories][])
-    const matchArray = key.match(/^filter\[([^\]]+)\]\[\]$/);
+    const matchArray = key.match(/^filter\[([^\]]+)\]\[(\d+)\]$/);
     if (matchArray) {
       const arrayKey = matchArray[1];
       if (!result[arrayKey]) result[arrayKey] = [];
@@ -326,4 +321,13 @@ export function getFilterFromQuery(queryString: string) {
     }
   });
   return result;
+}
+
+export function removeVietnameseAccents(str: string): string {
+  return str
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'D')
+    .replace(/[^\w\s]/g, '');
 }

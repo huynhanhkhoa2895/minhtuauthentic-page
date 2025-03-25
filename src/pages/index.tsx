@@ -1,4 +1,3 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { ResponseHomePageDto } from '@/dtos/responseHomePage.dto';
 import MenuWrapper from '@/components/molecules/header/menu/menuWrapper';
 import BlockUnderSlide from '@/components/organisms/home/blockUnderSlide';
@@ -11,12 +10,17 @@ import Footer from '@/components/organisms/footer';
 import { SettingOptionDto } from '@/dtos/SettingOption.dto';
 import HomeFlashSale from '@/components/organisms/home/homeFlashSale';
 import Layout from '@/components/templates/Layout';
-import useSettings from '@/hooks/useSettings';
 import dynamic from 'next/dynamic';
 import { ReactNode } from 'react';
-import { useReportWebVitals } from 'next/web-vitals';
+import { PageSetting } from '@/config/type';
+import { SettingsDto } from '@/dtos/Settings.dto';
+import HomeSupport from '@/components/organisms/home/homeSupport';
+
 const HomeBanner = dynamic(
   () => import('@/components/organisms/home/homeBanner'),
+  {
+    ssr: false,
+  },
 );
 
 export async function getStaticProps() {
@@ -43,15 +47,21 @@ export async function getStaticProps() {
 export default function Home({
   homePage,
   settingsHome,
+  settings,
+  menu,
+  footerContent,
 }: {
   homePage: ResponseHomePageDto;
   settingsHome: Record<string, SettingOptionDto | undefined>;
-}) {
-  const { settings, menu, footerContent } = useSettings();
-
+} & PageSetting) {
   return (
     <>
       <Header settings={settings} menu={menu} />
+      <HomeBanner
+        setting={settingsHome[SETTING_KEY.BANNER_SECTION.KEY]}
+        banners={homePage?.banners || []}
+        menu={menu}
+      />
       <Layout
         seo={homePage?.seo}
         settings={settings}
@@ -59,23 +69,7 @@ export default function Home({
         className={'overflow-hidden'}
       >
         <h1 className={'hidden'}>{homePage?.seo?.title}</h1>
-        <div
-          id={'main-home-page'}
-          className={'lg:mt-[10px] lg:flex w-full gap-2 relative'}
-        >
-          {menu && (
-            <MenuWrapper menu={menu} className={'w-[220px] h-[380px]'} />
-          )}
-          <div
-            className={
-              'min-h-[140px] lg:h-[380px] w-full basis-[calc(100%-230px)] lg:w-[calc(100%-230px)] max-w-full'
-            }
-          >
-            <HomeBanner banners={homePage?.banners || []} />
-          </div>
-        </div>
         <BlockUnderSlide contents={homePage?.homeBlockUnderSlide || []} />
-
         {homePage?.homeFlashSale &&
           ((
             <HomeFlashSale
@@ -103,9 +97,12 @@ export default function Home({
             setting={settingsHome[SETTING_KEY.BRAND_SECTION.KEY]}
           />
         )}
-        {/*<HomeSupport />*/}
+
+        {homePage?.homeSupport && (
+          <HomeSupport contents={homePage?.homeSupport} />
+        )}
       </Layout>
-      <Footer footerContent={footerContent} />
+      <Footer settings={settings} footerContent={footerContent} />
     </>
   );
 }

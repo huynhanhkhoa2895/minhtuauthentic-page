@@ -1,13 +1,14 @@
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import Link from 'next/link';
 import { formatMoney, generateSlugToHref } from '@/utils';
-import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
-import PriceMinus from '@/components/atoms/PriceMinus';
+import PriceWithLineThrough from '@/components/atoms/price/priceWithLineThrough';
+import PriceMinus from '@/components/atoms/price/PriceMinus';
 import { Button, InputNumber } from 'antd/es';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useContext } from 'react';
 import OrderContext from '@/contexts/orderContext';
 import { isDesktop } from 'react-device-detect';
+import PriceInput from "@/components/atoms/price/priceInput";
 export default function CartSummaryDesktop() {
   const orderCtx = useContext(OrderContext);
   return (
@@ -69,14 +70,7 @@ export default function CartSummaryDesktop() {
                     </div>
                   </td>
                   <td className={'border-y border-gray-200 text-center'}>
-                    <InputNumber
-                      min={1}
-                      value={item.qty}
-                      onChange={(value) => {
-                        orderCtx?.updateCart &&
-                          orderCtx.updateCart(index, Number(value) || 1);
-                      }}
-                    />
+                    <PriceInput qty={item.qty || 1} item={item} />
                     <input
                       type={'hidden'}
                       className={'hidden bk-product-qty'}

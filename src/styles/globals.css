@@ -2,18 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --gap8: 8px;
+    --gap16: calc(var(--gap8)* 2);
+}
+
 html, body {
   padding: 0;
   margin: 0;
   min-height: 100vh;
   width: 100%;
   background-color: #F8F9FA;
-  /*font-family: "Nunito Sans", sans-serif;*/
+    overscroll-behavior: contain;
+    /*font-family: "Nunito Sans", sans-serif;*/
   font-optical-sizing: auto;
   @apply font-[500] lg:font-[400] text-[15px] lg:text-[14px] text-[#212529];
 }
 .ant-input-number-handler-wrap {
   opacity: 1 !important;
+  width: 22px !important;
 }
 .ant-tabs-content.ant-tabs-content-top {
   @apply h-full;
@@ -142,4 +149,15 @@ iframe {
 
 .grecaptcha-badge {
     @apply hidden;
+}
+
+.menu-select::after {
+    background-color: #e5e7eb;
+    content: "";
+    height: 20px;
+    position: absolute;
+    right: -12px;
+    top: 35px;
+    transform: rotate(45deg);
+    width: 20px;
 }

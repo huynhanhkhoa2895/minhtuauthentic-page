@@ -6,7 +6,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const url = `${process.env.BE_URL}/api/users/profile`;
+  const url = `${process.env.BE_URL}/api/pages/customers/profile`;
   const user = JSON.parse(getCookie('user', req.headers.cookie || '', true));
   if (req.method === 'PUT') {
     fetch(url, {

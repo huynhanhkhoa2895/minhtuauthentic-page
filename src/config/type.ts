@@ -1,6 +1,10 @@
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { ResponseFooterDto } from '@/dtos/responseFooter.dto';
 import { SettingsDto } from '@/dtos/Settings.dto';
+import CommonSettingDto from '@/dtos/CommonSetting.dto';
+import { PaymentsDto } from '@/dtos/Payments.dto';
+import { ProductDto } from '@/dtos/Product.dto';
+import { NewsDto } from '@/dtos/News.dto';
 
 export type PopupDisplay = {
   title?: string;
@@ -17,7 +21,7 @@ export type TProductSeen = {
   created: number;
   data: number[];
 };
-export enum POPUP_TYPE {
+export const enum POPUP_TYPE {
   CATEGORY = 'category',
   PRODUCT = 'product',
   BRAND = 'brand',
@@ -38,4 +42,22 @@ export type SEOProps = {
   width?: number;
   height?: number;
   keyword?: string;
+};
+export enum LogoProps {
+  HEADER = 'header',
+  FOOTER = 'footer',
+}
+export type PageSetting = {
+  menu: ResponseMenuDto | undefined;
+  footerContent: ResponseFooterDto | undefined;
+  settings: SettingsDto[];
+  commonSettings?: CommonSettingDto;
+};
+export type OptionProps = {
+  label: string;
+  value: string;
+};
+export type SearchData = {
+  products: ProductDto[];
+  news: NewsDto[];
 };

@@ -9,7 +9,7 @@ type Props = {
 export default function PromotionDescriptionCoupons({ variant_id }: Props) {
   const [loading, setLoading] = useState(false);
   const [coupons, setCoupons] = useState<CouponsDto[]>([]);
-
+  const [indexClick, setIndexClick] = useState<number>();
   useEffect(() => {
     fetchCoupon().catch();
   }, [variant_id]);
@@ -38,7 +38,17 @@ export default function PromotionDescriptionCoupons({ variant_id }: Props) {
       )}
       <div className={'w-full h-full flex flex-col gap-3 bg-white'}>
         {coupons?.map((coupon, index) => {
-          return <ItemCoupon coupon={coupon} key={index} />;
+          return (
+            <ItemCoupon
+              coupon={coupon}
+              key={index}
+              isClick={indexClick === index}
+              isForCopy
+              onClick={() => {
+                setIndexClick(index);
+              }}
+            />
+          );
         })}
       </div>
     </div>

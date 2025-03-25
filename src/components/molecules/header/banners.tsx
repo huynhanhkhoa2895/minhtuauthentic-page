@@ -13,17 +13,38 @@ import 'swiper/css/effect-fade';
 import { StaticContentsDto } from '@/dtos/StaticContents.dto';
 import { generateSlugToHref } from '@/utils';
 import { JSX } from 'react';
+import { ImageDetailDto } from '@/dtos/ImageDetail.dto';
 export const Banners = ({
   banners,
   className,
   classNameImage,
   isMobile,
+  isFull,
 }: {
   banners: StaticContentsDto[];
   className?: string;
   classNameImage?: string;
   isMobile?: boolean;
+  isFull?: boolean;
 }) => {
+  const renderImage = (imageDetail: ImageDetailDto) => {
+    return (
+      <Image
+        src={
+          isMobile
+            ? imageDetail?.image?.thumbnail_url || ''
+            : imageDetail?.image?.url || ''
+        }
+        alt={imageDetail?.image?.alt || 'minhtuauthentic'}
+        width={imageDetail?.image?.width || 0}
+        height={imageDetail?.image?.height || 0}
+        className={classNameImage || 'object-contain w-full'}
+        loading={'eager'}
+        unoptimized={!isMobile}
+        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPs7u2tBwAFdgImpqLKKAAAAABJRU5ErkJggg=="
+      />
+    );
+  };
   return (
     <Swiper
       className={className}
@@ -44,22 +65,13 @@ export const Banners = ({
         }
         return (
           <SwiperSlide key={index + '-' + isMobile}>
-            <Link href={generateSlugToHref(banner?.properties?.slug)}>
-              <Image
-                src={
-                  isMobile
-                    ? imageDetail?.image?.thumbnail_url || ''
-                    : imageDetail?.image?.url || ''
-                }
-                alt={imageDetail?.image?.alt || 'minhtuauthentic'}
-                width={imageDetail?.image?.width || 0}
-                height={imageDetail?.image?.height || 0}
-                className={classNameImage || 'object-contain w-full'}
-                loading={'eager'}
-                unoptimized={!isMobile}
-                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPs7u2tBwAFdgImpqLKKAAAAABJRU5ErkJggg=="
-              />
-            </Link>
+            {isFull ? (
+              renderImage(imageDetail)
+            ) : (
+              <Link href={generateSlugToHref(banner?.properties?.slug)}>
+                {renderImage(imageDetail)}
+              </Link>
+            )}
           </SwiperSlide>
         ) as JSX.Element;
       })}
