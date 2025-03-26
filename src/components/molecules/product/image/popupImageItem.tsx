@@ -13,6 +13,7 @@ export default function PopupImageItem({
   setImageActive,
 }: Props) {
   const [active, setActive] = useState<boolean>(isActive);
+  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   useEffect(() => {
     setActive(isActive);
   }, [isActive]);
@@ -22,7 +23,17 @@ export default function PopupImageItem({
         // onClick={() => handleClickImage(imageItem)}
         image={imageItem}
         onMouseEnter={() => {
-          setImageActive(imageItem);
+          const timeout = setTimeout(() => {
+            console.log('setImageActive');
+            setImageActive(imageItem);
+          }, 70);
+          setHoverTimeout(timeout);
+        }}
+        onMouseLeave={() => {
+          if (hoverTimeout) {
+            clearTimeout(hoverTimeout);
+            console.log('clearTimeout');
+          }
         }}
         alt={imageItem.alt || ''}
         className={
@@ -30,7 +41,7 @@ export default function PopupImageItem({
         }
       />
     );
-  }, []);
+  }, [hoverTimeout]);
 
   return (
     <div

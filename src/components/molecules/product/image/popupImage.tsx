@@ -158,7 +158,9 @@ export default function PopupImage({ open, product, image, setIsOpen }: Props) {
           <div className={'h-[120px] w-full overflow-auto'}>{renderImage}</div>
           <button
             type="button"
-            className={'w-6 h-6 absolute top-3 right-3 cursor-pointer'}
+            className={
+              'w-8 h-8 absolute top-3 right-3 grid place-items-center cursor-pointer bg-white rounded-full'
+            }
             onClick={() => {
               setIsOpen && setIsOpen({ display: false, image: null });
             }}

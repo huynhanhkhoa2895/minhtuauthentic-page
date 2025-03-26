@@ -14,6 +14,7 @@ import Filter from '@/components/icons/filter';
 import { CategoryDto } from '@/dtos/Category.dto';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import Link from 'next/link';
+import { generateSlugToHref } from '@/utils';
 
 type Props = {
   settings?: ProductFilterOptionDto;
@@ -161,7 +162,7 @@ export default function ContentFilter({
               {category.children.map((child) => (
                 <Link
                   key={child.id}
-                  href={`/${child.slugs?.slug || ''}`}
+                  href={generateSlugToHref(child.slugs?.slug)}
                   className="px-3 py-1 bg-gray-100 hover:bg-primary hover:text-white rounded-md text-sm transition-colors"
                 >
                   {child.name}
@@ -237,8 +238,11 @@ export default function ContentFilter({
               current={ctx?.page || 1}
               pageSize={ctx?.limit || 12}
               onChange={(page: number) => {
-                window.scroll({ top: 0, left: 0, behavior: 'smooth' });
-                ctx?.updateRouter && ctx.updateRouter('page', page.toString());
+                const params = new URLSearchParams(window.location.search);
+                params.set('page', page.toString());
+                window.location.href = `${window.location.origin}${
+                  window.location.pathname
+                }?${params.toString()}`;
               }}
             />
           )}
