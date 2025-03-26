@@ -66,7 +66,7 @@ export default function SelectVariant({ product, onChange }: Props) {
           }
         }}
       >
-        <option value="0">Mời chọn biến thể</option>
+        <option value="0">Mời chọn size</option>
         {options.map((item) => (
           <option key={item.value} value={item.value}>
             {item.label}

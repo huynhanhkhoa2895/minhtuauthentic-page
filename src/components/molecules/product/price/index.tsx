@@ -2,7 +2,7 @@ import { ProductDto } from '@/dtos/Product.dto';
 import { twMerge } from 'tailwind-merge';
 import { formatMoney } from '@/utils';
 import { VariantDto } from '@/dtos/Variant.dto';
-import PriceWithLineThrough from '@/components/atoms/priceWithLineThrough';
+import PriceWithLineThrough from '@/components/atoms/price/priceWithLineThrough';
 
 const ProductPrice = ({
   variant,

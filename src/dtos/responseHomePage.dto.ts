@@ -12,6 +12,7 @@ export class ResponseHomePageDto {
   homeBlockUnderSlide?: StaticContentsDto[];
   homeBlockFeaturedCategory?: StaticContentsDto[];
   homeBrand?: BrandDto[];
+  homeSupport?: StaticComponentDto[];
   homeFlashSale?: PromotionsDto;
   homeNews?: {
     featured: NewsDto[];
@@ -20,6 +21,7 @@ export class ResponseHomePageDto {
   bannerUnderCategory?: StaticContentsDto[];
   settings?: SettingsDto[];
   seo?: SeoDto;
+
   constructor(init?: Partial<ResponseHomePageDto>) {
     Object.assign(this, init);
   }

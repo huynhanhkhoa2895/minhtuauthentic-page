@@ -1,16 +1,18 @@
-import { twMerge } from 'tailwind-merge';
-import FormRegister from '@/components/organisms/account/formRegister';
 import NewsList from '@/components/organisms/news/list';
 import { NewsDto } from '@/dtos/News.dto';
 import { CategoryNewsDto } from '@/dtos/CategoryNews.dto';
-import NewsItem from '@/components/organisms/news/item';
-import Link from 'next/link';
-import { generateSlugToHref } from '@/utils';
+import dynamic from 'next/dynamic';
 import NewsSmallList from '@/components/organisms/news/smallList';
-import NewsClock from '@/components/atoms/news/clock';
-import Image from 'next/image';
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import NewsRelation from '@/components/organisms/news/relation';
+import LayoutNews from '@/components/organisms/news/layout';
 import NewsDetail from '@/components/organisms/news/detail';
+
+const NewsCategory = dynamic(
+  () => import('@/components/organisms/news/category'),
+  {
+    ssr: false,
+  },
+);
 
 type Props = {
   news: NewsDto | NewsDto[];
@@ -32,75 +34,29 @@ export default function NewsTemplate({
   total,
 }: Props) {
   return (
-    <div className={'grid grid-cols-1 lg:grid-cols-6 gap-3'}>
-      <div
-        className={
-          'col-span-4 w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3'
-        }
-      >
-        <>
-          {!isDetail ? (
+    <div className={'grid grid-cols-1 lg:grid-cols-6 gap-1 lg:gap-3'}>
+      <>
+        {!isDetail ? (
+          <LayoutNews className={'col-span-4 '}>
             <NewsList
               title={title}
               news={news as NewsDto[]}
               total={total || 0}
             />
-          ) : (
-            <>
+          </LayoutNews>
+        ) : (
+          <div className={'flex flex-col col-span-4 gap-3'}>
+            <LayoutNews>
               <NewsDetail news={news as NewsDto} />
-              {(relationNews || [])?.length > 0 && (
-                <div
-                  className={
-                    'p-3 rounded-[10px] border bg-gray-200 border-gray-200 mt-3'
-                  }
-                >
-                  <h3 className={'font-[700] lg:font-bold text-xl '}>
-                    Xem thêm
-                  </h3>
-                  <ul className={'flex flex-col gap-3'}>
-                    {relationNews?.map((item, key) => {
-                      return (
-                        <li
-                          key={key}
-                          className={'py-3 border-b border-gray-200'}
-                        >
-                          <Link href={generateSlugToHref(item.slugs?.slug)}>
-                            {item?.name}
-                          </Link>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              )}
-            </>
-          )}
-        </>
-      </div>
+            </LayoutNews>
+            <LayoutNews>
+              <NewsRelation news={relationNews || []} />
+            </LayoutNews>
+          </div>
+        )}
+      </>
       <div className={'col-span-2 flex flex-col gap-3'}>
-        <div
-          className={
-            'w-full rounded-[10px] shadow-custom bg-white overflow-hidden relative mx-auto p-3'
-          }
-        >
-          <h2 className={'text-3xl text-primary font-[700] lg:font-bold mb-3'}>
-            Danh mục tin tức
-          </h2>
-          <ul className={'flex flex-col gap-3'}>
-            {categoryNews.map((item: CategoryNewsDto, key: number) => {
-              return (
-                <li
-                  key={key}
-                  className={'p-3 border border-gray-100 text-lg font-semibold'}
-                >
-                  <Link href={generateSlugToHref(item?.slugs?.slug)}>
-                    {item.name}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        <NewsCategory categoryNews={categoryNews} />
         {newest && (
           <div
             className={

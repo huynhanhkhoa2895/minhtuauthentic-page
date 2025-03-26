@@ -6,7 +6,7 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   if (req.method === 'POST') {
-    const url = `${process.env.BE_URL}/api/users/login-google`;
+    const url = `${process.env.BE_URL}/api/pages/customers/login-google`;
     fetch(url, {
       method: 'POST',
       body: JSON.stringify(req.body),

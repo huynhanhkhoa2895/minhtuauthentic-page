@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge';
 import { ProductDto } from '@/dtos/Product.dto';
 import { useProductImageDetail } from '@/hooks/useProductImageDetail';
 import { ImageDto } from '@/dtos/Image.dto';
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import Close from '@/components/icons/close';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectFade, Pagination, Navigation } from 'swiper/modules';

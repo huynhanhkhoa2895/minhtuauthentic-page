@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { generateSlugToHref } from '@/utils';
 import { ProductConfigurationValuesDto } from '@/dtos/productConfigurationValues.dto';
 import { useRouter } from 'next/router';
+import orderBy from 'lodash/orderBy';
 type Props = {
   productConfigurations: ProductConfigurationsDto[];
   onChange?: (value: StateProps[]) => void;
@@ -48,7 +49,7 @@ export default function ProductConfiguration({
         values: [],
       };
     });
-    variants?.map((item) => {
+    orderBy(variants || [], 'sort')?.map((item) => {
       (item?.variant_product_configuration_values || []).map((value) => {
         if (
           value.product_configuration_value &&
@@ -136,7 +137,7 @@ export default function ProductConfiguration({
                         <Link
                           href={generateSlugToHref(variant?.link)}
                           className={twMerge(
-                            'rounded-[10px] p-2 lg:p-3 border border-gray-300 text-gray-500 relative overflow-hidden font-extrabold',
+                            'rounded-[10px] p-2 lg:p-3 border border-gray-300 relative overflow-hidden font-semibold',
                             isActived ? 'border-primary' : '',
                           )}
                         >
@@ -158,7 +159,7 @@ export default function ProductConfiguration({
                             });
                           }}
                           className={twMerge(
-                            'rounded-[10px] p-2 lg:p-3 border border-gray-300 relative overflow-hidden font-extrabold',
+                            'rounded-[10px] p-2 lg:p-3 border border-gray-300 relative overflow-hidden font-semibold',
                             isActived ? 'border-primary' : '',
                             !variant?.is_in_stock &&
                               'cursor-not-allowed relative before:content-[attr(data-content)] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-white before:z-10 before:opacity-50',

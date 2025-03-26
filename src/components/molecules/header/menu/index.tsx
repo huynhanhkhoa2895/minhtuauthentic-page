@@ -170,33 +170,25 @@ const Menu = ({
       </div>
 
       {dataDisplayPopup.display && (
-        <div
-          className={'absolute'}
-          style={{
-            top: `${menuCategoryChildrenPosition.top}px`,
-            left: `${menuCategoryChildrenPosition.left}px`,
-            height: `${menuCategoryChildrenPosition.height}px`,
+        <MenuPopup
+          menuCategoryChildrenPosition={menuCategoryChildrenPosition}
+          menu={menu}
+          data={dataDisplayPopup}
+          onMouseEnter={() => {
+            if (refTimeout.current) {
+              clearTimeout(refTimeout.current);
+            }
           }}
-        >
-          <MenuPopup
-            menu={menu}
-            data={dataDisplayPopup}
-            onMouseEnter={() => {
-              if (refTimeout.current) {
-                clearTimeout(refTimeout.current);
-              }
-            }}
-            onMouseLeave={() => {
-              refTimeout.current = setTimeout(() => {
-                setDataDisplayPopup({
-                  type: '',
-                  display: false,
-                  data: [],
-                });
-              }, 50);
-            }}
-          />
-        </div>
+          onMouseLeave={() => {
+            refTimeout.current = setTimeout(() => {
+              setDataDisplayPopup({
+                type: '',
+                display: false,
+                data: [],
+              });
+            }, 50);
+          }}
+        />
       )}
     </>
   );

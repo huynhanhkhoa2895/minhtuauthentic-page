@@ -53,8 +53,7 @@ export default function PromotionDescription({
         item.key === SETTING_KEY.PRODUCT_DETAIL_OFFER_SPECIAL_CONTENT.KEY,
     );
     // const active = index === indexDisplay;
-    let xhtml : ReactNode = <></>;
-    console.log('index', index)
+    let xhtml: ReactNode = <></>;
     switch (index) {
       case 0:
         xhtml = (
@@ -67,9 +66,13 @@ export default function PromotionDescription({
         );
         break;
       case 1:
-        xhtml =  <>{
-          variant_id && <PromotionDescriptionCoupons variant_id={variant_id} />
-        }</>;
+        xhtml = (
+          <>
+            {variant_id && (
+              <PromotionDescriptionCoupons variant_id={variant_id} />
+            )}
+          </>
+        );
         break;
       default:
         xhtml = <></>;

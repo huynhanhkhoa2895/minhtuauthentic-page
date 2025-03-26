@@ -36,10 +36,14 @@ export default function ProductOverview({
   return (
     <div
       className={
-        'p-3 grid grid-cols-1 lg:grid-cols-2 rounded-[10px] shadow-custom mt-3 bg-white gap-3'
+        'p-3 grid grid-cols-1 lg:grid-cols-2 rounded-[10px] shadow-custom mt-3 bg-white gap-3 relative'
       }
     >
-      <ProductDetailImage product={product} setIsOpen={setIsOpen} />
+      <ProductDetailImage
+        containerClassName={'h-max lg:sticky top-0 bg-white'}
+        product={product}
+        setIsOpen={setIsOpen}
+      />
       <ProductProperty
         product={product}
         productConfigurations={productConfigurations || []}

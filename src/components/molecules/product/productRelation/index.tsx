@@ -1,5 +1,5 @@
 import { ProductDto } from '@/dtos/Product.dto';
-import ImageWithFallback from '@/components/atoms/ImageWithFallback';
+import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import { twMerge } from 'tailwind-merge';
 import { calculatePricePercent, generateSlugToHref } from '@/utils';
 import Link from 'next/link';

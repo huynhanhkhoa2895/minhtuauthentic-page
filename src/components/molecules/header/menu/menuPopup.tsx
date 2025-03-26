@@ -12,10 +12,12 @@ const MenuPopup = ({
   data,
   onMouseEnter,
   onMouseLeave,
+  menuCategoryChildrenPosition,
   menu,
 }: {
   data: PopupDisplay;
   menu: ResponseMenuDto;
+  menuCategoryChildrenPosition: { top: number; left: number; height: number };
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }) => {
@@ -30,7 +32,9 @@ const MenuPopup = ({
 
   useEffect(() => {
     if (document && document.getElementById('main-body')) {
-      const width = document?.getElementById('main-body')?.getBoundingClientRect()?.width || 0;
+      const width =
+        document?.getElementById('main-body')?.getBoundingClientRect()?.width ||
+        0;
       setWidthContainer(width - wMenu);
     }
   }, []);
@@ -75,9 +79,13 @@ const MenuPopup = ({
           onMouseLeave={onMouseLeave}
           style={{
             width: bgWH.width || widthContainer,
+            top: `${menuCategoryChildrenPosition.top}px`,
+            left: `${wMenu}px`,
+            height: `${menuCategoryChildrenPosition.height}px`,
+            maxWidth: widthContainer,
           }}
           className={
-            'absolute max-lg:hidden h-full lg:w-[53vw] bg-white z-[20] top-0 left-[200px] ml-2 p-2 overflow-auto'
+            'absolute max-lg:hidden h-full lg:w-[53vw] bg-white z-[20] top-0 left-[200px] ml-2 p-2 overflow-auto shadow-custom'
           }
         >
           {renderItem()}

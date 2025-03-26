@@ -1,5 +1,3 @@
-import Image from 'next/image';
-import Logo from '@/static/images/logo.png';
 import HeaderItem from '@/components/molecules/header/item';
 import { IconPhone } from '@/components/icons/phone';
 import IconTruck from '@/components/icons/truck';
@@ -12,7 +10,6 @@ import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import { Button, Dropdown } from 'antd/es';
 import useUser from '@/hooks/useUser';
 import { useRouter } from 'next/router';
-import HeaderCart from '@/components/icons/header-cart';
 import CartPreview from '@/components/molecules/header/cartPreview';
 import { CloseCircleOutlined, BarsOutlined } from '@ant-design/icons';
 import OrderContext from '@/contexts/orderContext';
@@ -21,15 +18,24 @@ import IconWifi from '@/components/icons/wifi';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import { SETTING_KEY } from '@/config/enum';
 import dynamic from 'next/dynamic';
-const InputSearch = dynamic(
-  () => import('@/components/molecules/header/inputSearch'),
-  {
-    ssr: false,
-  },
-);
 
 import NavMenuHeader from '@/components/organisms/MobileMenu/navMenu/header';
-type Props = { menu: ResponseMenuDto | undefined; settings: SettingsDto[] };
+import LogoComponent from '@/components/atoms/logo';
+import { LogoProps } from '@/config/type';
+import { isDesktop } from 'react-device-detect';
+const InputSearchDesktop = dynamic(
+    () => import('@/components/molecules/header/InputSearch/desktop'),
+    {
+        ssr: false,
+    },
+);
+const HeaderCart = dynamic(() => import('@/components/icons/header-cart'), {
+    ssr: false,
+});
+type Props = {
+  menu?: ResponseMenuDto | undefined;
+  settings?: SettingsDto[];
+};
 export const Header = ({ menu, settings }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
@@ -72,26 +78,26 @@ export const Header = ({ menu, settings }: Props) => {
         id={'header'}
         className={'bg-primary lg:py-[10px] sticky top-0 left-0 z-[100]'}
       >
-        <NavMenuHeader className={'lg:hidden'} isMobile={true} />
+        <NavMenuHeader
+          className={'lg:hidden'}
+          isMobile={true}
+          settings={settings}
+        />
         <div
           className={
             'max-lg:hidden container mx-auto flex justify-between items-center gap-[10px]'
           }
         >
           <Link className={'shrink-0'} href={'/'}>
-            <Image
-              src={Logo}
-              height={54}
-              width={227}
-              className={'object-contain w-[230px]] h-[60px] '}
-              alt={
-                'Minh Tu Authentic, Nước hoa chính hãng Tphcm, Quận Tân Phú, Mỹ phẩm'
-              }
+            <LogoComponent
+              position={LogoProps.HEADER}
+              settings={settings || []}
+              className={'object-contain w-[230px] h-[60px] '}
             />
           </Link>
 
           <ButtonMenu menu={menu} />
-          <InputSearch />
+          {isDesktop && <InputSearchDesktop key={'input-search-desktop'} />}
           <HeaderItem
             className={'w-max'}
             icon={<IconPhone className={'w-[24px] h-[24px]'} />}

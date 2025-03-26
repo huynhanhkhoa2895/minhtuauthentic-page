@@ -16,13 +16,14 @@ import Image from 'next/image';
 import NavMenuHeader from '@/components/organisms/MobileMenu/navMenu/header';
 import NavMenuContent from '@/components/organisms/MobileMenu/navMenu/content';
 import Loading from '@/components/atoms/loading';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { SettingsDto } from '@/dtos/Settings.dto';
 type Props = {
   menu: ResponseMenuDto;
   className?: string;
+  settings?: SettingsDto[];
 };
-export default function NavMenu({ menu, className }: Props) {
+export default function NavMenu({ menu, className, settings }: Props) {
   const router = useRouter();
   const appCtx = useContext(appContext);
   const { menuDisplay } = useMenu(menu);
@@ -78,9 +79,13 @@ export default function NavMenu({ menu, className }: Props) {
         className,
       )}
     >
-      <NavMenuHeader />
-      <div className={'flex w-full h-full'}>
-        <div className={'h-[calc(100svh-152px)] overflow-auto w-[100px]'}>
+      <NavMenuHeader settings={settings} />
+      <div className={'flex w-full h-full bg-[rgb(254_242_242/1)] '}>
+        <div
+          className={
+            'h-[calc(100svh-152px)] overflow-y-auto overflow-x-hidden w-[100px] text-primary'
+          }
+        >
           {menuDisplay.map((item, index) => {
             let xhtml: ReactNode = null;
             const _item = item.data as StaticComponentDto;
@@ -131,9 +136,12 @@ export default function NavMenu({ menu, className }: Props) {
             return (
               <div
                 key={index}
-                className={
-                  'flex flex-col gap-1 p-2 first:border-t border-b border-b-white items-center justify-center text-center last:border-b-0 text-[14px] w-[100px] h-[100px] shrink-0'
-                }
+                className={twMerge(
+                  'relative flex flex-col gap-1 p-2 first:border-t border-b border-b-white items-center justify-center text-center last:border-b-0 text-[14px] w-[100px] h-[100px] shrink-0',
+                  (itemDebounceMenu?.data as any)?.id &&
+                    (itemDebounceMenu?.data as any)?.id === _item?.id &&
+                    'border-l-4 border-l-red-500 bg-white menu-select',
+                )}
                 onClick={onClick}
               >
                 {xhtml}
@@ -142,9 +150,9 @@ export default function NavMenu({ menu, className }: Props) {
           })}
         </div>
         <div
-          className={
-            'pb-[calc(100%-63px-61px)] overflow-auto bg-white text-black w-[calc(100%-100px)]'
-          }
+          className={twMerge(
+            'pb-[calc(100%-63px-61px)] overflow-auto bg-white text-black w-[calc(100%-100px)]',
+          )}
         >
           {loading ? (
             <div className={'flex items-center justify-center w-full h-full'}>

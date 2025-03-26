@@ -14,6 +14,7 @@ import { ProductDto } from '@/dtos/Product.dto';
 import { ResponseCategoryFilterPageDto } from '@/dtos/responseCategoryFilterPage.dto';
 import { SlugDto } from '@/dtos/Slug.dto';
 import { getFilterFromQuery, parseQueryString } from '@/utils';
+import { forEach } from 'lodash';
 
 export type TypeAppState = {
   objFilterByValue: Record<string, Record<string, string>>;
@@ -78,35 +79,37 @@ export const CategoryFilterProvider = ({
   const [filters, setFilters] = useState<Record<string, (number | string)[]>>(
     parseQueryString(queryString.toString()),
   );
-  const [count, setCount] = useState(0);
   const refTimer = React.useRef<NodeJS.Timeout | null>(null);
+  const refTimerUpdateRoute = React.useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
-    const _filters: Record<string, (string | number)[]> = {};
-    if (dataSlug?.model === Entity.CATEGORIES) {
-      _filters['categories'] = [dataSlug.model_id as number];
-    } else if (dataSlug?.model === Entity.BRANDS) {
-      _filters['brands'] = [dataSlug.model_id as number];
+    if (dataSlug) {
+      const object = getFinalFilter(getFilterFromQuery(queryString.toString()));
+      if (router.query?.page && page !== Number(router.query?.page)) {
+        setPage(Number(router.query?.page));
+      }
+      setFilters(object);
     }
-    setFilters(Object.assign(_filters, filters));
   }, [dataSlug]);
 
   useEffect(() => {
     const handleRouteComplete = () => {
-      // setFilters(parseQueryString(params.toString()));
+      const queryString = new URLSearchParams(
+        router.query as Record<string, string>,
+      );
+      const filter = getFinalFilter(getFilterFromQuery(queryString.toString()));
 
       if (refTimer.current) {
         clearTimeout(refTimer.current as NodeJS.Timeout);
         refTimer.current = null;
       }
       refTimer.current = setTimeout(() => {
-        const filter = getFilterFromQuery(queryString.toString());
         setLoading(true);
         setPage(Number(queryString.get('page')) || 1);
         setSortBy(queryString.get('sort') || CATEGORY_FILTER.SORT_BY.DATE_DESC);
         setLimit(Number(queryString.get('limit')) || 12);
         setSearch(queryString.get('search') || '');
         setFilters(filter);
-        // setFilters(filter);
         refreshData()
           .catch((err) => {})
           .finally(() => {
@@ -115,16 +118,20 @@ export const CategoryFilterProvider = ({
               refTimer.current = null;
             }
           });
-      });
+      }, 500);
     };
     router.events.on('routeChangeComplete', handleRouteComplete);
     return () => {
       router.events.on('routeChangeComplete', handleRouteComplete);
-      refTimer?.current && clearTimeout(refTimer.current as NodeJS.Timeout);
       if (loading) setLoading(false);
     };
-  }, [router]);
-  const updateRouter = (key: string, value: string) => {
+  }, [router.query]);
+  const updateRouter = (key: string, value: string | object) => {
+    const params = getQueryString(key, value);
+    window.location.href = `${window.location.origin}/${window.location.pathname}?${params.toString()}`;
+  };
+
+  const getQueryString = (key: string, value: string | object) => {
     if (key === 'filter') {
       const keysArray = Array.from(queryString.keys());
       keysArray.map((key) => {
@@ -133,25 +140,34 @@ export const CategoryFilterProvider = ({
         }
       });
       Object.keys(value).forEach((key) => {
-        value[key].forEach((item) => {
-          queryString.append(`filter[${key}][]`, item.toString());
+        (value as any)[key].forEach((item: string, index: number) => {
+          queryString.append(
+            `filter[${key}][${index}]`,
+            item.toString() as string,
+          );
         });
       });
     } else {
       if (queryString.has(key)) {
         queryString.delete(key);
       }
-      queryString.append(key, value);
+      queryString.append(key, value as string);
     }
 
-    router.push(
-      {
-        pathname: router.pathname,
-        query: queryString.toString(),
-      },
-      router.asPath.split('?')[0] + '?' + queryString,
-      { shallow: true },
-    );
+    if (key !== 'page') {
+      queryString.delete('page');
+      queryString.append('page', '1');
+    }
+    return queryString;
+  };
+
+  const getFinalFilter = (filter: Record<string, (string | number)[]>) => {
+    if (dataSlug?.model === Entity.CATEGORIES) {
+      filter['categories'] = [dataSlug.model_id as number];
+    } else if (dataSlug?.model === Entity.BRANDS) {
+      filter['brands'] = [dataSlug.model_id as number];
+    }
+    return filter;
   };
 
   const refreshData = async () => {

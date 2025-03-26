@@ -8,6 +8,7 @@ type Props = {
   products: ProductDto[];
   isShowConfiguration?: boolean;
   title?: string;
+  rightTitle?: string | ReactNode;
   setting?: SettingsDto;
   buttonText?: string;
   promotion?: PromotionsDto;
@@ -19,6 +20,7 @@ export default function ProductList({
   setting,
   promotion,
   buttonText,
+  rightTitle,
 }: Props) {
   return (
     <div
@@ -27,9 +29,13 @@ export default function ProductList({
         'w-full shadow-custom bg-white my-1 lg:my-3 p-1 lg:p-3 max-lg:overflow-hidden'
       }
     >
-      <p className={'text-2xl font-[700] lg:font-bold text-primary mb-3'}>
-        {title}
-      </p>
+      <div className={'flex justify-between items-center'}>
+        <p className={'text-2xl font-[700] lg:font-bold text-primary mb-3'}>
+          {title}
+        </p>
+        {rightTitle}
+      </div>
+
       <SectionSwiper
         slidesPerView={5}
         slidePerViewMobile={2}

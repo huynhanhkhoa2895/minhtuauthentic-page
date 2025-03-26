@@ -1,29 +1,21 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import OrderSuccessTemplate from '@/components/templates/OrderSuccessTemplate';
-import getDefaultSeverSide from '@/utils/getDefaultServerSide';
 import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
 import Layout from '@/components/templates/Layout';
-
-export const getServerSideProps = async () => {
-  const resDefault = await getDefaultSeverSide();
-  return {
-    props: resDefault,
-  };
-};
+import { PageSetting } from '@/config/type';
 
 export default function OderSuccess({
   menu,
   footerContent,
   settings,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: PageSetting) {
   return (
     <>
       <Header settings={settings} menu={menu} />
       <Layout settings={settings} menu={menu}>
         <OrderSuccessTemplate />
       </Layout>
-      <Footer footerContent={footerContent} />
+      <Footer settings={settings} footerContent={footerContent} />
     </>
   );
 }

@@ -8,7 +8,7 @@ export default async function handler(
   if (req.method === 'GET') {
     const query: any = req.query;
     const queryPram = new URLSearchParams(query).toString();
-    const url = `${process.env.BE_URL}/api/users/validate?${queryPram}`;
+    const url = `${process.env.BE_URL}/api/pages/customers/validate?${queryPram}`;
     fetch(url, {
       method: 'GET',
     })

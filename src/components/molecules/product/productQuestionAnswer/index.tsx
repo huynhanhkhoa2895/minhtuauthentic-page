@@ -17,15 +17,18 @@ export default function ProductQuestionAnswer({ questions }: Props) {
         <h3 className={'uppercase'}>Câu hỏi thường gặp</h3>
       </div>
       <div className={'p-3'}>
-        <Collapse defaultActiveKey={['1']}>
+        <Collapse accordion>
           {questions.map((item, index) => {
             return (
               <Collapse.Panel
-                header={item.question}
+                header={<span className={'font-bold'}>{item.question}</span>}
                 key={index.toString()}
-                className={'border-b border-gray-500'}
+                className={' border-b border-gray-500'}
               >
-                <p>{item.answer}</p>
+                <div
+                  className={'container-html'}
+                  dangerouslySetInnerHTML={{ __html: item.answer || '' }}
+                />
               </Collapse.Panel>
             );
           })}
