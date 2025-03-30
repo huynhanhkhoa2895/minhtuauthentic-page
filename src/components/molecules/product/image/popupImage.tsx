@@ -13,6 +13,8 @@ import PopupImageItem from '@/components/molecules/product/image/popupImageItem'
 import LeftOutlined from '@ant-design/icons/lib/icons/LeftOutlined';
 import RightOutlined from '@ant-design/icons/lib/icons/RightOutlined';
 import ProductDetailContext from '@/contexts/productDetailContext';
+import PopupSlideContent from '@/components/molecules/product/image/popupSlideContent';
+
 type Props = {
   open: boolean;
   product: ProductDto;
@@ -113,18 +115,12 @@ export default function PopupImage({ open, product, image, setIsOpen }: Props) {
         {images.map((image, index) => (
           <SwiperSlide
             key={image.url + '_' + index}
-            onClick={(e) => {
-              if (!(e.target as HTMLElement).closest('img')) {
-                setIsOpen && setIsOpen({ display: false, image: null });
-              }
-            }}
+            className="relative flex justify-center items-center h-full w-full"
           >
-            <ImageWithFallback
-              className={'object-contain h-full w-auto m-auto'}
+            <PopupSlideContent
               image={image}
-              alt={product.title || product.name}
-              unoptimized={true}
-              quality={100}
+              product={product}
+              setIsOpen={setIsOpen}
             />
           </SwiperSlide>
         ))}

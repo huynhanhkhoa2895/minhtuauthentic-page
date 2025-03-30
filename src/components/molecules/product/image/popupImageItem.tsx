@@ -1,22 +1,26 @@
 import { twMerge } from 'tailwind-merge';
 import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import { ImageDto } from '@/dtos/Image.dto';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
+
 type Props = {
   imageItem: ImageDto;
   isActive: boolean;
   setImageActive: (image: ImageDto) => void;
 };
+
 export default function PopupImageItem({
   imageItem,
   isActive,
   setImageActive,
 }: Props) {
   const [active, setActive] = useState<boolean>(isActive);
-  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
     setActive(isActive);
   }, [isActive]);
+
   const renderImage = useMemo(() => {
     return (
       <ImageWithFallback
@@ -24,15 +28,14 @@ export default function PopupImageItem({
         image={imageItem}
         onMouseEnter={() => {
           const timeout = setTimeout(() => {
-            console.log('setImageActive');
             setImageActive(imageItem);
           }, 70);
-          setHoverTimeout(timeout);
+          hoverTimeoutRef.current = timeout;
         }}
         onMouseLeave={() => {
-          if (hoverTimeout) {
-            clearTimeout(hoverTimeout);
-            console.log('clearTimeout');
+          if (hoverTimeoutRef.current) {
+            clearTimeout(hoverTimeoutRef.current as NodeJS.Timeout);
+            hoverTimeoutRef.current = null;
           }
         }}
         alt={imageItem.alt || ''}
@@ -41,7 +44,7 @@ export default function PopupImageItem({
         }
       />
     );
-  }, [hoverTimeout]);
+  }, [imageItem, setImageActive]);
 
   return (
     <div
