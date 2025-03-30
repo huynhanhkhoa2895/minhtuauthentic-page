@@ -41,7 +41,7 @@ const ProductDetailImage = ({
             <ImageWithFallback
               image={imageItem}
               className={
-                'w-full h-full object-contain hover:scale-105 transition-transform duration-300 cursor-pointer border-[1.5px] border-[#e4e4e4]'
+                'w-full h-full object-contain hover:scale-105 transition-transform duration-300 cursor-pointer border-[3px] border-[#e4e4e4]'
               }
               onClick={() => handleClickImage(imageItem)}
               product={product}
