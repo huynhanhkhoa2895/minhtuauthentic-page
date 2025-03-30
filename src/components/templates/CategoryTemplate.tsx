@@ -57,7 +57,7 @@ export default function CategoryTemplate({
         <div className={'container mx-auto'}>
           <div
             className={
-              'grid grid-cols-1 lg:grid-cols-6 gap-3 w-full min-h-[50vh]'
+              'grid grid-cols-1 lg:grid-cols-6 gap-3 w-full min-h-[50vh] rounded-[10px] border-gray-500 bg-white shadow-custom'
             }
           >
             <SettingFilter
