@@ -26,6 +26,7 @@ type Props = {
   };
   isSearch?: boolean;
 };
+
 export default function CategoryTemplate({
   slug,
   breadcrumb,
@@ -52,31 +53,34 @@ export default function CategoryTemplate({
         }
         link={generateSlugToHref(breadcrumb?.link || slug?.slug)}
       />
-      <div
-        className={
-          'rounded-[10px] border-gray-500 bg-white shadow-custom grid grid-cols-1 lg:grid-cols-6 gap-3'
-        }
-      >
-        {data?.settings && (
-          <SettingFilter
-            className={'hidden lg:!block'}
-            settings={data?.settings}
-          />
-        )}
-        <ContentFilter
-          products={data?.products || []}
-          settings={data?.settings}
-          total={data?.total || 0}
-          title={data?.title}
-          menu={menu}
-          slugData={
-            new SlugDto({
-              model: slug?.model,
-              model_id: slug?.model_id,
-              slug: slug?.slug,
-            })
-          }
-        />
+      <div className={'flex flex-col gap-3'}>
+        <div className={'container mx-auto'}>
+          <div
+            className={
+              'grid grid-cols-1 lg:grid-cols-6 gap-3 w-full min-h-[50vh]'
+            }
+          >
+            <SettingFilter
+              settings={data?.settings}
+              className={'lg:col-span-1'}
+            />
+            <ContentFilter
+              products={data?.products || []}
+              settings={data?.settings}
+              slugData={
+                new SlugDto({
+                  model: slug?.model,
+                  model_id: slug?.model_id,
+                  slug: slug?.slug,
+                })
+              }
+              total={data?.total || 0}
+              title={data?.title}
+              category={data?.category}
+              menu={menu}
+            />
+          </div>
+        </div>
       </div>
       {description && (
         <div

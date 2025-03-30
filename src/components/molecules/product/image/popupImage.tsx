@@ -13,6 +13,8 @@ import PopupImageItem from '@/components/molecules/product/image/popupImageItem'
 import LeftOutlined from '@ant-design/icons/lib/icons/LeftOutlined';
 import RightOutlined from '@ant-design/icons/lib/icons/RightOutlined';
 import ProductDetailContext from '@/contexts/productDetailContext';
+import PopupSlideContent from '@/components/molecules/product/image/popupSlideContent';
+
 type Props = {
   open: boolean;
   product: ProductDto;
@@ -111,13 +113,14 @@ export default function PopupImage({ open, product, image, setIsOpen }: Props) {
         }}
       >
         {images.map((image, index) => (
-          <SwiperSlide key={image.url + '_' + index}>
-            <ImageWithFallback
-              className={'object-contain h-full w-auto m-auto'}
+          <SwiperSlide
+            key={image.url + '_' + index}
+            className="relative flex justify-center items-center h-full w-full"
+          >
+            <PopupSlideContent
               image={image}
-              alt={product.title || product.name}
-              unoptimized={true}
-              quality={100}
+              product={product}
+              setIsOpen={setIsOpen}
             />
           </SwiperSlide>
         ))}
@@ -158,7 +161,9 @@ export default function PopupImage({ open, product, image, setIsOpen }: Props) {
           <div className={'h-[120px] w-full overflow-auto'}>{renderImage}</div>
           <button
             type="button"
-            className={'w-6 h-6 absolute top-3 right-3 cursor-pointer'}
+            className={
+              'w-8 h-8 absolute top-3 right-3 grid place-items-center cursor-pointer bg-white rounded-full'
+            }
             onClick={() => {
               setIsOpen && setIsOpen({ display: false, image: null });
             }}

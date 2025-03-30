@@ -13,6 +13,8 @@ import { Pagination, Button } from 'antd/es';
 import Filter from '@/components/icons/filter';
 import { CategoryDto } from '@/dtos/Category.dto';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
+import Link from 'next/link';
+import { generateSlugToHref } from '@/utils';
 
 type Props = {
   settings?: ProductFilterOptionDto;
@@ -31,13 +33,16 @@ export default function ContentFilter({
   total,
   menu,
   title,
+  category,
 }: Props) {
   const ctx = useContext(CategoryFilterContext);
   const [_products, setProducts] = useState<ProductDto[]>(products);
   const [isReady, setIsReady] = useState(false);
+
   useEffect(() => {
     ctx?.setTotal && ctx.setTotal(total);
   }, []);
+
   const convertSettingToObject = () => {
     let obj: Record<string, Record<string, string>> = {
       sex: {
@@ -145,9 +150,27 @@ export default function ContentFilter({
       );
     } else if (title) {
       return (
-        <h1 className={'mb-3 lg:mb-6'}>
-          <span className={'text-3xl text-primary font-semibold'}>{title}</span>
-        </h1>
+        <div className="mb-3 lg:mb-6">
+          <h1 className={'mb-2'}>
+            <span className={'text-3xl text-primary font-semibold'}>
+              {title}
+            </span>
+          </h1>
+
+          {category?.children && category?.children?.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-2">
+              {category.children.map((child) => (
+                <Link
+                  key={child.id}
+                  href={generateSlugToHref(child.slugs?.slug)}
+                  className="px-3 py-1 bg-gray-100 hover:bg-primary hover:text-white rounded-md text-sm transition-colors"
+                >
+                  {child.name}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
       );
     }
     return null;
@@ -217,7 +240,9 @@ export default function ContentFilter({
               onChange={(page: number) => {
                 const params = new URLSearchParams(window.location.search);
                 params.set('page', page.toString());
-                window.location.href = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+                window.location.href = `${window.location.origin}${
+                  window.location.pathname
+                }?${params.toString()}`;
               }}
             />
           )}

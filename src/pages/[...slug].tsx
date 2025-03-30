@@ -129,6 +129,7 @@ export const getServerSideProps = async (context: any) => {
     },
   };
 };
+
 export default function Page({
   slug,
   title,

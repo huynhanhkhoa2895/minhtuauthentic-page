@@ -14,11 +14,10 @@ export default function StartRatingInput({ value, onChange }: Props) {
     <>
       <Rate
         tooltips={desc}
-        onChange={setValue}
-        value={_value}
-        onHoverChange={(value: number) => {
-          value && setValue(value);
+        onChange={(value: number) => {
+          setValue(value);
         }}
+        value={_value}
       />
     </>
   );

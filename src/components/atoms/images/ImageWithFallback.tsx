@@ -18,11 +18,13 @@ type Props = {
   quality?: number;
   product?: ProductDto;
   isUseNativeImage?: boolean;
+  onMouseLeave?: (event: unknown) => void;
 };
 const ImageWithFallback = ({
   image,
   isFill,
   onMouseEnter,
+  onMouseLeave,
   onClick,
   alt,
   className,
@@ -57,6 +59,7 @@ const ImageWithFallback = ({
               onClick && image && onClick(image);
             }}
             onMouseEnter={(e) => onMouseEnter && onMouseEnter(e)}
+            onMouseLeave={(e) => onMouseLeave && onMouseLeave(e)}
             src={imgActiveSrc}
             alt={alt || image?.alt || product?.title || product?.name || ''}
             fill={true}
@@ -80,10 +83,12 @@ const ImageWithFallback = ({
             onMouseEnter={(e) => {
               onMouseEnter && onMouseEnter(e);
             }}
+            onMouseLeave={(e) => onMouseLeave && onMouseLeave(e)}
             src={imgActiveSrc}
             alt={alt || image?.alt || product?.title || product?.name || ''}
             width={image?.width || 0}
             height={image?.height || 0}
+            sizes={'(max-width: 768px) 100vw, 33vw'}
             unoptimized={unoptimized == null ? true : unoptimized}
             priority={priority}
             className={className}
@@ -109,6 +114,7 @@ const ImageWithFallback = ({
         onMouseEnter={(e) => {
           onMouseEnter && onMouseEnter(e);
         }}
+        onMouseLeave={(e) => onMouseLeave && onMouseLeave(e)}
         alt={alt || image?.alt || product?.title || product?.name || ''}
         width={image?.width || 0}
         height={image?.height || 0}
