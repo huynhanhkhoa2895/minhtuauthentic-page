@@ -64,7 +64,7 @@ const ProductDetailImage = ({
       <ImageWithFallback
         image={imageActive}
         className={
-          'object-contain cursor-pointer bk-product-image lg:max-w-[568px] m-auto'
+          'object-contain cursor-pointer bk-product-image lg:max-w-[568px] w-full m-auto'
         }
         onClick={(image: ImageDto | null) => {
           setIsOpen && setIsOpen({ display: true, image });
