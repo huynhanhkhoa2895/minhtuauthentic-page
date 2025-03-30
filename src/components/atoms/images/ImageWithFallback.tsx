@@ -114,6 +114,7 @@ const ImageWithFallback = ({
         onMouseEnter={(e) => {
           onMouseEnter && onMouseEnter(e);
         }}
+        onMouseLeave={(e) => onMouseLeave && onMouseLeave(e)}
         alt={alt || image?.alt || product?.title || product?.name || ''}
         width={image?.width || 0}
         height={image?.height || 0}

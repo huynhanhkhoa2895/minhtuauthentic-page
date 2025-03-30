@@ -111,7 +111,14 @@ export default function PopupImage({ open, product, image, setIsOpen }: Props) {
         }}
       >
         {images.map((image, index) => (
-          <SwiperSlide key={image.url + '_' + index}>
+          <SwiperSlide
+            key={image.url + '_' + index}
+            onClick={(e) => {
+              if (!(e.target as HTMLElement).closest('img')) {
+                setIsOpen && setIsOpen({ display: false, image: null });
+              }
+            }}
+          >
             <ImageWithFallback
               className={'object-contain h-full w-auto m-auto'}
               image={image}
