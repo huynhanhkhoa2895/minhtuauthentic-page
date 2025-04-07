@@ -19,7 +19,6 @@ import { KEYCODE, SEARCH_KEYWORD } from '@/config/enum';
 import Tag from 'antd/es/tag';
 import { createPortal } from 'react-dom';
 import { SearchData } from '@/config/type';
-import { isMobile } from 'react-device-detect';
 import MenuFooter from '@/components/organisms/MobileMenu/menuFooter';
 import { SettingsDto } from '@/dtos/Settings.dto';
 import NavbarMenuListButton from '@/components/organisms/MobileMenu/navMenu/header/listHeaderButton';
@@ -41,7 +40,7 @@ export default function SearchContainer({
   isMobile,
 }: Props) {
   const ctx = useContext(SearchContext);
-  const [data, setData] = useState<SearchData>();
+  const [data, setData] = useState<SearchData | undefined>(undefined);
   const [urlSearch, setUrlSearch] = useState<string>('');
   const [height, setHeight] = useState<number>(0);
   const [loading, startTransition] = useTransition();
@@ -78,6 +77,8 @@ export default function SearchContainer({
   useEffect(() => {
     if (ctx?.isOpenSearch && inputRef.current) {
       inputRef.current.focus();
+    } else if (!ctx?.isOpenSearch) {
+      setData(undefined);
     }
   }, [ctx?.isOpenSearch]);
 

@@ -24,13 +24,13 @@ import LogoComponent from '@/components/atoms/logo';
 import { LogoProps } from '@/config/type';
 import { isDesktop } from 'react-device-detect';
 const InputSearchDesktop = dynamic(
-    () => import('@/components/molecules/header/InputSearch/desktop'),
-    {
-        ssr: false,
-    },
+  () => import('@/components/molecules/header/InputSearch/desktop'),
+  {
+    ssr: false,
+  },
 );
 const HeaderCart = dynamic(() => import('@/components/icons/header-cart'), {
-    ssr: false,
+  ssr: false,
 });
 type Props = {
   menu?: ResponseMenuDto | undefined;
