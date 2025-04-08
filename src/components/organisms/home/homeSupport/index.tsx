@@ -37,12 +37,12 @@ export default function HomeSupport({ contents }: Props) {
                   'Minh Tu Authentic, Nước hoa chính hãng Tphcm, Quận Tân Phú, Mỹ phẩm'
                 }
               />
-              <div>
-                <p className={'text-[14px] font-[700] lg:font-bold'}>
-                  {_item.title}
-                </p>
-                <p className={'mt-1 text-[12px]'}>{_item.description}</p>
-              </div>
+              <div
+                className={'container-html'}
+                dangerouslySetInnerHTML={{
+                  __html: _item?.description || '',
+                }}
+              />
             </>
           );
         }}
