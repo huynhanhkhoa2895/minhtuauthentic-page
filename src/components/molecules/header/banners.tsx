@@ -32,7 +32,7 @@ export const Banners = ({
       <Image
         src={
           isMobile
-            ? imageDetail?.image?.thumbnail_url || ''
+            ? imageDetail?.image?.thumbnail_url || imageDetail?.image?.url || ''
             : imageDetail?.image?.url || ''
         }
         alt={imageDetail?.image?.alt || 'minhtuauthentic'}
