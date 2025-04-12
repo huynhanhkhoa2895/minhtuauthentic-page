@@ -10,10 +10,10 @@ import AppContext from '@/contexts/appContext';
 import { createPortal } from 'react-dom';
 import { twMerge } from 'tailwind-merge';
 type Props = {
-  isNoNeedFix?: boolean;
+  isFixed?: boolean;
   className?: string;
 };
-export default function MenuFooter({ isNoNeedFix, className }: Props) {
+export default function MenuFooter({ isFixed, className }: Props) {
   const user = useUser();
   const appCtx = useContext(AppContext);
   const router = useRouter();
@@ -88,8 +88,8 @@ export default function MenuFooter({ isNoNeedFix, className }: Props) {
     return (
       <div
         className={twMerge(
-          'lg:hidden bg-primary text-white w-full shadow-custom rounded-tr-2xl rounded-tl-2xl z-[1001]',
-          !isNoNeedFix && 'fixed bottom-0 left-0 z-10',
+          'lg:hidden bg-primary text-white w-full shadow-custom rounded-tr-2xl rounded-tl-2xl ',
+          isFixed && 'fixed bottom-0 left-0 z-[1001]',
           className,
         )}
       >
@@ -106,9 +106,11 @@ export default function MenuFooter({ isNoNeedFix, className }: Props) {
 
   return (
     <>
-      {isNoNeedFix
-        ? renderFooter()
-        : createPortal(renderFooter() as ReactNode, document.body)}
+      {
+      isFixed
+        ? createPortal(renderFooter() as ReactNode, document.body)
+        : renderFooter()
+        }
     </>
   );
 }

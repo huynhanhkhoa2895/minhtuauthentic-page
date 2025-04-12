@@ -76,7 +76,7 @@ export default function Layout({
       </div>
       {isMobile && menu && <NavMenu menu={menu} settings={settings} />}
       <Socials />
-      <MenuFooter />
+      <MenuFooter isFixed={true} />
       <PopupProduct />
       {isMobile && (
         <SearchContainer

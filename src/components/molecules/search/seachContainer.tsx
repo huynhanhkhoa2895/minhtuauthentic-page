@@ -298,6 +298,7 @@ export default function SearchContainer({
     return (
       <div
         key={'search-container'}
+        style={{ height: isMobile ? `${height}px` : 'auto' }}
         className={
           'flex flex-col gap-3 p-[1.5rem_1rem_1.5rem_1rem] lg:p-6 overflow-auto'
         }
@@ -333,8 +334,8 @@ export default function SearchContainer({
                   }
                 >
                   <div
-                    className={'overflow-auto'}
-                    style={{ height: isMobile ? `${height}px` : 'auto' }}
+                    className={'overflow-auto flex flex-col h-full'}
+                    
                   >
                     <div className={'bg-primary'}>
                       <NavbarMenuListButton settings={settings} />
@@ -363,7 +364,7 @@ export default function SearchContainer({
                       </div>
                     </div>
                     {renderContent()}
-                    <MenuFooter isNoNeedFix={true} />
+                    <MenuFooter isFixed={false} />
                   </div>
                 </div>,
                 document.body,
