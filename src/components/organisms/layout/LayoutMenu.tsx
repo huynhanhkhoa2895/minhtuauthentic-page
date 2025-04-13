@@ -51,8 +51,6 @@ export default function LayoutMenu({menu} : Props) {
     };
   }, []);
 
-  console.log('menu', appCtx?.isOpenMenu);
-
   return <>
     {menu && (
       <div
