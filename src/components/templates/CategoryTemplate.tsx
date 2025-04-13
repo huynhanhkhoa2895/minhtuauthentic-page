@@ -1,4 +1,3 @@
-import SettingFilter from '@/components/organisms/categoryFilter/settingFilter';
 import ContentFilter from '@/components/organisms/categoryFilter/ContentFilter';
 import { CategoryFilterProvider } from '@/contexts/categoryFilterContext';
 import { ResponseSlugPageDto } from '@/dtos/responseSlugPage.dto';
@@ -9,9 +8,17 @@ import BreadcrumbComponent from '@/components/molecules/breakcrumb';
 import { Entity } from '@/config/enum';
 import { ResponseMenuDto } from '@/dtos/responseMenu.dto';
 import dynamic from 'next/dynamic';
+import { isDesktop } from 'react-device-detect';
 
 const NavFilterMobile = dynamic(
   () => import('@/components/organisms/MobileMenu/navFilterMobile'),
+  {
+    ssr: false,
+  },
+);
+
+const SettingFilter = dynamic(
+  () => import('@/components/organisms/categoryFilter/settingFilter'),
   {
     ssr: false,
   },
@@ -60,10 +67,14 @@ export default function CategoryTemplate({
               'grid grid-cols-1 lg:grid-cols-6 gap-3 w-full min-h-[50vh] rounded-[10px] border-gray-500 bg-white shadow-custom'
             }
           >
-            <SettingFilter
-              settings={data?.settings}
-              className={'lg:col-span-1'}
-            />
+            {
+              isDesktop && (
+                <SettingFilter
+                  settings={data?.settings}
+                  className={'lg:col-span-1'}
+                />
+              )
+            }
             <ContentFilter
               products={data?.products || []}
               settings={data?.settings}

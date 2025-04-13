@@ -1,21 +1,26 @@
-import { Button, Checkbox, Tree } from 'antd/es';
+import { Button, Checkbox, Input } from 'antd/es';
 import {
   Fragment,
   useContext,
   useEffect,
-  useMemo,
-  useRef,
   useState,
 } from 'react';
 import CategoryFilterContext from '@/contexts/categoryFilterContext';
 import { twMerge } from 'tailwind-merge';
+
+type ValueProps = {
+  id: string | number;
+  name: string;
+}
+
 type Props = {
   title: string;
-  value: Partial<{ id: string | number; name: string }>[];
+  value: Partial<ValueProps>[];
   filterKey: string;
   entity?: string;
   isNav?: boolean;
 };
+
 export default function SettingFilterItem({
   title,
   value,
@@ -24,6 +29,8 @@ export default function SettingFilterItem({
   isNav,
 }: Props) {
   const [check, setCheck] = useState<Record<string | number, boolean>>({});
+  const [valueFilter, setValueFilter] = useState<Partial<ValueProps>[]>([]);
+  const [search, setSearch] = useState<string>('');
   const ctx = useContext(CategoryFilterContext);
   useEffect(() => {
     const _check: Record<string | number, boolean> = {};
@@ -33,6 +40,19 @@ export default function SettingFilterItem({
     setCheck(_check);
     // setDebounceCheck(_check);
   }, [ctx?.filters]);
+
+  useEffect(() => {
+    if (search) {
+      setValueFilter(value.filter((item: Partial<ValueProps>) => {
+        if((item?.name || '').toLowerCase().includes(search.toLowerCase())) {
+          return item;
+        }
+        return;
+      }));
+    } else {
+      setValueFilter(value as ValueProps[]);
+    }
+  }, [search]);
 
   const onClickCheck = (id: string | number) => {
     let _filter = { ...ctx?.filters };
@@ -52,7 +72,7 @@ export default function SettingFilterItem({
   const renderValue = () => {
     return (
       <>
-        {((value as any[]) || []).map((item: any, index: number) => {
+        {((valueFilter as ValueProps[]) || []).map((item: ValueProps, index: number) => {
           return (
             <Fragment key={filterKey + '_' + item.name + '_' + item.id + '_'}>
               {isNav ? (
@@ -95,13 +115,14 @@ export default function SettingFilterItem({
   };
   return (
     <div className={'flex flex-col gap-2 mb-3'}>
-      <p
+      <div
         className={
           'font-semibold text-[16px] lg:pb-2 lg:border-b lg:border-gray-500'
         }
       >
-        {title}
-      </p>
+        <span className={'text-primary'}>{title}</span>
+        <Input className='p-0' placeholder="Tìm kiếm" variant="borderless" onChange={(e) => setSearch(e.target.value)}  />
+      </div>
       <div
         className={
           'lg:max-h-[220px] overflow-auto flex max-lg:flex-wrap lg:flex-col max-lg:gap-1 filter-button'

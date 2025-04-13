@@ -87,7 +87,7 @@ export default function SearchContainer({
     if (!debouceValue || debouceValue.length < 1) return;
     startTransition(async () => {
       fetch(
-        `/api/search/product?search=${debouceValue}&limit=${isMobile ? 12 : 10}`,
+        `/api/search/product?search=${debouceValue}&limit=${isMobile ? 12 : 8}`,
       )
         .then((res) => res.json())
         .then((data) => {
@@ -123,13 +123,13 @@ export default function SearchContainer({
     return (
       <div className={'flex flex-col lg:col-span-2 gap-3'}>
         {data?.products.length || loading ? (
-          <ul className={'grid grid-cols-3 lg:grid-cols-5'}>
+          <ul className={'grid grid-cols-3 lg:grid-cols-4'}>
             {(data?.products || []).map((item: ProductDto, index: number) => {
               const variant = item?.variants?.[0];
               return (
                 <li
                   key={index}
-                  className={'shadow-[-1px_1px_#e1e1e1] p-[10px]'}
+                  className={'shadow-[-1px_1px_#e1e1e1] p-[3px]'}
                 >
                   <a
                     className={'flex flex-col gap-3'}
