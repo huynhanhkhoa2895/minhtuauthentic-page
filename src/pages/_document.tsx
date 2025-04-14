@@ -6,7 +6,7 @@ export default function Document() {
   return (
     <Html lang="vi">
       <Head>
-        {process.env.NODE_ENV === 'development' && (
+        {process.env.NO_INDEX === 'true' && (
           <meta name="robots" content="noindex,nofollow" />
         )}
 
