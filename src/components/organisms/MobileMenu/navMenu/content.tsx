@@ -203,7 +203,7 @@ export default function NavMenuContent({ setting, menu, brands }: Props) {
           {(item.data || []).map((_item, index) => {
             const url =
               generateSlugToHref(_menu?.category?.slugs?.slug) +
-              `?${item.name}=${_item.value}`;
+              `?filter[${item.name}][0]=${_item.value}`;
             return (
               <Fragment key={'content-filter-' + index}>
                 {renderItemDetail(item.name, url, _item)}
