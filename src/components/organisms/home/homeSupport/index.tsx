@@ -16,12 +16,12 @@ export default function HomeSupport({ contents }: Props) {
     <>
       <SectionSwiper
         classNameContainer={
-          'mt-3 border border-primary p-10 rounded-[10px] bg-white'
+          'mt-3 border border-primary p-3 lg:p-10 rounded-[10px] bg-white'
         }
         classNameLeft={'lg:left-[-11px]'}
         classNameRight={'lg:right-[-11px]'}
-        classNameItems={'flex items-center gap-3 justify-center'}
-        slidePerViewMobile={4}
+        classNameItems={'flex items-center gap-1 lg:gap-3 justify-center'}
+        slidePerViewMobile={2}
         data={contents || []}
         renderItem={(item) => {
           const _item = item as StaticContentsDto;

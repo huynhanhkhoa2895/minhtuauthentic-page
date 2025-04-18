@@ -1,9 +1,5 @@
 import { ResponseHomePageDto } from '@/dtos/responseHomePage.dto';
-import MenuWrapper from '@/components/molecules/header/menu/menuWrapper';
 import BlockUnderSlide from '@/components/organisms/home/blockUnderSlide';
-import HomeCategory from '@/components/organisms/home/homeCategory';
-import HomeNews from '@/components/organisms/home/homeNews';
-import HomeBrand from '@/components/organisms/home/homeBrand';
 import { SETTING_KEY } from '@/config/enum';
 import Header from '@/components/organisms/header';
 import Footer from '@/components/organisms/footer';
@@ -13,8 +9,7 @@ import Layout from '@/components/templates/Layout';
 import dynamic from 'next/dynamic';
 import { ReactNode } from 'react';
 import { PageSetting } from '@/config/type';
-import { SettingsDto } from '@/dtos/Settings.dto';
-import HomeSupport from '@/components/organisms/home/homeSupport';
+import LazyLoadHome from '@/components/organisms/home/layzyLoadHome';
 
 const HomeBanner = dynamic(
   () => import('@/components/organisms/home/homeBanner'),
@@ -54,6 +49,7 @@ export default function Home({
   homePage: ResponseHomePageDto;
   settingsHome: Record<string, SettingOptionDto | undefined>;
 } & PageSetting) {
+  
   return (
     <>
       <Header settings={settings} menu={menu} />
@@ -78,29 +74,7 @@ export default function Home({
             />
           ) as ReactNode)}
 
-        <HomeCategory
-          homeBlockFeaturedCategory={homePage?.homeBlockFeaturedCategory || []}
-          homeCategory={homePage?.homeCategory || []}
-          bannerUnderCategory={homePage?.bannerUnderCategory}
-          settingsHome={settingsHome}
-        />
-
-        {homePage?.homeNews && (
-          <HomeNews
-            content={homePage?.homeNews}
-            setting={settingsHome[SETTING_KEY.NEWS_SECTION.KEY]}
-          />
-        )}
-        {homePage?.homeBrand && (
-          <HomeBrand
-            contents={homePage?.homeBrand}
-            setting={settingsHome[SETTING_KEY.BRAND_SECTION.KEY]}
-          />
-        )}
-
-        {homePage?.homeSupport && (
-          <HomeSupport contents={homePage?.homeSupport} />
-        )}
+        <LazyLoadHome homePage={homePage} settingsHome={settingsHome} />
       </Layout>
       <Footer settings={settings} footerContent={footerContent} />
     </>
