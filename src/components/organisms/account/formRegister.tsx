@@ -10,12 +10,10 @@ import {
 import FormControl from '@/components/molecules/form/FormControl';
 import { UserDto } from '@/dtos/User.dto';
 import useUser from '@/hooks/useUser';
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { handleDataFetch } from '@/utils/api';
-import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import useGoogleToken from '@/hooks/useGoogleToken';
 import WelcomeText from '@/components/atoms/account/welcomeText';
 import LoginOptions from '@/components/atoms/account/LoginOptions';

@@ -11,7 +11,6 @@ import { Nunito_Sans } from 'next/font/google';
 const nunitoSans = Nunito_Sans({
   subsets: ['latin'],
 });
-import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import useSettings from '@/hooks/useSettings';
 import { SearchProvider } from '@/contexts/searchContext';
 
@@ -30,11 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <AppProvider>
         <OrderProvider>
           <SearchProvider>
-            <GoogleReCaptchaProvider
-              reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_SITE_KEY || ''}
-            >
-              <Component className={nunitoSans.className} {..._pageProps} />
-            </GoogleReCaptchaProvider>
+            <Component className={nunitoSans.className} {..._pageProps} />
             <ToastContainer />
           </SearchProvider>
         </OrderProvider>

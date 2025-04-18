@@ -3,6 +3,7 @@ import Footer from '@/components/organisms/footer';
 import RegisterTemplate from '@/components/templates/RegisterTemplate';
 import Layout from '@/components/templates/Layout';
 import { PageSetting, ServerSideProps } from '@/config/type';
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 
 export default function Register({
   menu,
@@ -13,7 +14,11 @@ export default function Register({
     <>
       <Header settings={settings} menu={menu} />
       <Layout settings={settings} menu={menu}>
-        <RegisterTemplate />
+        <GoogleReCaptchaProvider
+          reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_SITE_KEY || ''}
+        >
+          <RegisterTemplate />
+        </GoogleReCaptchaProvider>
       </Layout>
       <Footer settings={settings} footerContent={footerContent} />
     </>

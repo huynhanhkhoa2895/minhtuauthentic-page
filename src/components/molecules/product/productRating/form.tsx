@@ -4,7 +4,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Input } from 'antd/es';
 import StartRatingInput from '@/components/atoms/product/startRatingInput';
 import { toast } from 'react-toastify';
-import useGoogleToken from '@/hooks/useGoogleToken';
 
 const schema = yup.object({
   name: yup.string().required('Trường này là bắt buộc'),
@@ -21,7 +20,6 @@ type Props = {
 };
 
 export default function FormProductRating({ product_id, refreshData }: Props) {
-  const { handleReCaptchaVerify } = useGoogleToken('minhturating');
   const {
     handleSubmit,
     control,
@@ -42,13 +40,12 @@ export default function FormProductRating({ product_id, refreshData }: Props) {
     <form
       onSubmit={handleSubmit(async (data) => {
         data.is_active = false;
-        const token = await handleReCaptchaVerify();
         const rs = await fetch('/api/product/rate/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ ...data, token }),
+          body: JSON.stringify({ ...data }),
         })
           .then((res) => res.json())
           .then((res) => {
