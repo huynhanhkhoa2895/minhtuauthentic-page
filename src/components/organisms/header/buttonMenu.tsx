@@ -10,12 +10,13 @@ import appContext from '@/contexts/appContext';
 const ButtonMenu = ({ menu }: { menu: ResponseMenuDto | undefined }) => {
   const appCtx = useContext(appContext);
   const [isReady, setIsReady] = useState<boolean>(false);
+  const {pathname} = useRouter();
   useEffect(() => {
     setIsReady(true);
   }, []);
   const handleClickMenu = () => {
     const offset = window.scrollY;
-    if (offset < 50) {
+    if (pathname === '/' && offset < 50) {
       window.scroll({ top: 0, left: 0, behavior: 'smooth' });
     } else {
       appCtx?.setIsOpenMenu && appCtx.setIsOpenMenu(!appCtx.isOpenMenu);
