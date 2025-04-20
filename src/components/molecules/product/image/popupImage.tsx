@@ -1,14 +1,12 @@
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { ProductDto } from '@/dtos/Product.dto';
 import { useProductImageDetail } from '@/hooks/useProductImageDetail';
 import { ImageDto } from '@/dtos/Image.dto';
-import ImageWithFallback from '@/components/atoms/images/ImageWithFallback';
 import Close from '@/components/icons/close';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectFade, Pagination, Navigation } from 'swiper/modules';
+import { EffectCreative, Pagination, Navigation } from 'swiper/modules';
 import { Swiper as SwiperClass } from 'swiper/types';
-import { VariantDto } from '@/dtos/Variant.dto';
 import PopupImageItem from '@/components/molecules/product/image/popupImageItem';
 import LeftOutlined from '@ant-design/icons/lib/icons/LeftOutlined';
 import RightOutlined from '@ant-design/icons/lib/icons/RightOutlined';
@@ -94,7 +92,7 @@ export default function PopupImage({ open, product, image, setIsOpen }: Props) {
     return (
       <Swiper
         className={'h-full'}
-        modules={[Pagination, EffectFade, Navigation]}
+        modules={[Pagination, EffectCreative, Navigation]}
         effect={'fade'}
         loop={true}
         slidesPerView={1}
@@ -149,7 +147,7 @@ export default function PopupImage({ open, product, image, setIsOpen }: Props) {
             }
           >
             <div className={'relative h-full max-lg:px-3'}>
-              {renderSwiper}
+              {images.length > 0 && renderSwiper}
               {images.length > 0 && (
                 <>
                   {renderNavigatorButton('prev')}
